@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <link type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet" />
+    @Styles.Render("~/css/dragline")
+    @RenderSection("PageStyles", false)
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/breezejs/1.4.11/breeze.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.9/d3.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/snap.js/1.9.2/snap.min.js"></script>
+    @Scripts.Render("~/javascript/dragline")
+    @RenderSection("PageScripts", false)
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="Logo">
+        <img src="~/images/dragline-48px.png" style="width: 40px;" />
+      </a>
+
+      <button type="button" id="btnMobileNav" data-nav="#ulNav">
+        <i class="fa fa-bars"></i>
+      </button>
+    </nav>
+
+    <ul id="ulNav">
+      <li>
+        <a href="~/principles">
+          <i class="fa fa-gavel"></i>
+          <span>Principles</span>
+        </a>
+        <ul>
+          <li><a>Submenu Item</a></li>
+          <li><a>Submenu Item</a></li>
+          <li><a>Submenu Item</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="~/styling">
+          <i class="fa fa-paw"></i>
+          <span>Styling</span>
+        </a>
+      </li>
+      <li>
+        <a href="~/libraries">
+          <i class="fa fa-book"></i>
+          <span>Libraries</span>
+        </a>
+      </li>
+      <li>
+        <a href="~/components">
+          <i class="fa fa-cogs"></i>
+          <span>Components</span>
+        </a>
+      </li>
+      <li>
+        <a href="~/patterns">
+          <i class="fa fa-cubes"></i>
+          <span>Patterns</span>
+        </a>
+      </li>
+    </ul>
+
+    @RenderBody()
+  </body>
+</html>

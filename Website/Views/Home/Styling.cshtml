@@ -1,0 +1,1599 @@
+﻿@{
+  ViewBag.Title = "Styling";
+}
+
+@section PageScripts
+{
+  <script type="text/javascript" src="~/scripts/index.js"></script>
+}
+
+<ul id="ulContents" style="padding-left: 20px; position: fixed; right: 0; top: 60px;" class="Unstyled Width-25"></ul>
+
+<div class="Width-75">
+  <h1>Styling</h1>
+
+  <article>
+    <h2 id="ResponsiveDesign">Responsive Design</h2>
+
+    <p>
+      Responsive design is a core part of the dragline. In fact, instead of
+      desktops being the first-class device, dragline treats mobile devices as
+      the first-class device to force developers to think <em>and rethink</em>
+      as they design and develop web applications.
+    </p>
+
+    <p>
+      Responsive design is an approach for crafting web site that give users
+      optimal viewing experiences across as many devices as possible. This is
+      handled primarily with the use of media queries - to determine
+      characteristics of the user's device - and fluid designs: using percentages
+      as the primary unit of measurement for all containers or using ems when
+      relative sizing needs to be based on the font size. Pixels and points should
+      only be used for font sizes, padding, margins, borders, and outlines.
+    </p>
+
+    <p>
+      While dragline attempts to make responsive design transparent, there are
+      still some areas developers need to pay attention.
+    </p>
+
+    <h3 id="ResponsiveImages">Images</h3>
+
+    <p>
+      Add the <code>Responsive</code> class to <code>&lt;img&gt;</code> elements
+      for images that should fluidly change size based on the device (most images
+      larger than 300 pixels).
+    </p>
+
+    <h3 id="Tables">Tables &amp; Other Large Blocks</h3>
+
+    <p>
+      For tables and other large block elements that won't fit on smaller devices,
+      place them in a containing <code>&lt;div&gt;</code> element with the
+      <code>Responsive</code> class so it seamlessly scrolls on smaller devices
+      while not requiring the user to scroll the whole page.
+    </p>
+
+    <h3 id="UnobtrusiveDesign">Unobtrusive JavaScript</h3>
+
+    <p>
+      Unobtrusive JavaScript is an approach for using JavaScript in web pages that
+      uses the following three principles:
+    </p>
+
+    <ol>
+      <li>
+        Separate the behavior and presentation layers. JavaScript sprinkled in
+        the HTML is frowned upon and should be moved into a separate script file
+        whenever possible.
+      </li>
+      <li>
+        Use best practices such as namespacing, callbacks, chaining, and handling
+        browser inconsistencies.
+      </li>
+      <li>
+        Progressive enhancement to support user ages that don't support advanced
+        JavaScript functionality (most often referred to as "polyfill").
+      </li>
+    </ol>
+  </article>
+
+  <article>
+    <h2>Semantic HTML</h2>
+
+    <p>
+      A semantic element clearly describes its meaning to both the browser and the
+      developer. When possible and it makes sense, use semantic elements over
+      non-semantic elements.
+    </p>
+
+    <p>
+      Examples of semantic elements are: <code>&lt;form&gt;</code>,
+      <code>&lt;table&gt;</code>, <code>&lt;img&gt;</code>,
+      <code>&lt;nav&gt;</code>, <code>&lt;header&gt;</code>, and
+      <code>&lt;section&gt;</code>.
+    </p>
+
+    <p>
+      Examples of non-semantic elements are: <code>&lt;div&gt;</code> and
+      <code>&lt;span&gt;</code>.
+    </p>
+
+    <p>
+      That doesn't mean avoid <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code>
+      elements. Many web sites can be found that use <code>
+        &lt;div
+        id="nav""&gt;
+      </code> or <code>&lt;span class="small-bold"&gt;</code>. In the
+      former case, the <code>&lt;nav&gt;</code> should be used, while in the latter
+      class <code>&lt;small&gt;</code> and <code>&lt;em&gt;</code> should be used.
+    </p>
+  </article>
+
+  <article>
+    <h2 id="BlockElements">Block Elements</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Formatting</th>
+          <th>Element</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <address>
+              Mark Sisson<br />
+              2320 Pinehurst<br />
+              Tustin, CA 92782<br />
+            </address>
+          </td>
+          <td><code>&lt;address&gt;</code></td>
+        </tr>
+        <tr>
+          <td><blockquote>Quotes</blockquote></td>
+          <td><code>&lt;blockquote&gt;</code></td>
+        </tr>
+        <tr>
+          <td>
+            <blockquote>
+              Choose a job you love, and you will never have to work a day in your life.
+              <footer>Confucius</footer>
+            </blockquote>
+          </td>
+          <td>
+            <code>&lt;footer&gt;</code> inside <code>&lt;blockquote&gt;</code>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <blockquote class="Text-Right">
+              There's a tremendous bias against taking risks. Everyone is trying to optimize their ass-covering.
+              <footer>Elon Musk</footer>
+            </blockquote>
+          </td>
+          <td><code>&lt;blockquote class="Text-Right"&gt;</code></td>
+        </tr>
+        <tr>
+          <td>
+            <dl>
+              <dt>Definitions</dt>
+              <dd>statements of the exact meaning of words, especially in a dictionary.</dd>
+            </dl>
+          </td>
+          <td><code>&lt;dl&gt;</code></td>
+        </tr>
+        <tr>
+          <td>
+            <ol>
+              <li>Bullet #1</li>
+              <li>Bullet #2</li>
+              <li>Bullet #3</li>
+            </ol>
+          </td>
+          <td><code>&lt;ol&gt;</code></td>
+        </tr>
+        <tr>
+          <td>
+            <ul>
+              <li>Bullet #1</li>
+              <li>Bullet #2</li>
+              <li>Bullet #3</li>
+            </ul>
+          </td>
+          <td><code>&lt;ul&gt;</code></td>
+        </tr>
+        <tr>
+          <td>
+<pre>
+  if (linesOfCode > 1)
+    return &lt;pre&gt;
+</pre>
+          </td>
+          <td><code>&lt;s&gt;</code></td>
+        </tr>
+        <tr>
+          <td><samp>Sample Output</samp></td>
+          <td><code>&lt;samp&gt;</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="Centering">Centering</h3>
+
+    <p>
+      Block elements must be centered by setting the left and right margins to
+      <code>auto</code> and giving them a width. An element is made both block and
+      centered by using the <code>Block-Centered</code> class.
+    </p>
+
+    <div class="Block-Centered Width-50">
+      <pre>Centered</pre>
+    </div>
+
+    <h3 id="Floats">Floats</h3>
+
+    <p>
+      Elements can be floated left or right by using the <code>Float-Left</code>
+      and <code>Float-Right</code> classes respectively.
+    </p>
+
+    <div class="Float-Left">Floated left.</div>
+
+    <div class="Float-Right">Floated right.</div>
+
+    <div class="Clear-After"></div>
+
+    <h4 id="ClearingFloats">Clearing Floats</h4>
+
+    <p>
+      Floated elements can easily be cleared by adding the <code>Clear</code> class
+      to the <em>parent element</em> or if one does not exist by creating a block
+      level element such as <code>&lt;div&gt;</code> and giving it the
+      <code>Clear-After</code> class.
+    </p>
+
+    <div class="Clear">
+      <div class="Float-Left">Floated left.</div>
+
+      <div class="Float-Right">Floated right.</div>
+
+      <div class="Text-Center">Text within the floats.</div>
+    </div>
+
+    <div>Text after the floats are cleared.</div>
+  </article>
+
+  <article>
+    <h2 id="Buttons">Buttons</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Example</th>
+          <th>Class</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <button type="button">Button</button>
+          </td>
+          <td>
+            None
+          </td>
+          <td>Default button style; for ordinary buttons (most use cases).</td>
+        </tr>
+        <tr>
+          <td>
+            <button type="button" class="Dark">Dark</button>
+          </td>
+          <td>
+            <code>Dark</code>
+          </td>
+          <td>Default button style; use with a dark theme.</td>
+        </tr>
+        <tr>
+          <td>
+            <button type="button" class="Light">Light</button>
+          </td>
+          <td>
+            <code>Light</code>
+          </td>
+          <td>Default button style; use with a light theme.</td>
+        </tr>
+        <tr>
+          <td>
+            <button type="button" class="Suggested">Suggested</button>
+          </td>
+          <td>
+            <code>Suggested</code>
+          </td>
+          <td>
+            Use for the happy path action on forms and to emphasize the strongest
+            call to action on a page. It should never appear more than once on the
+            screen (excluding modal dialogs). Not every page needs a primary
+            button.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button type="button" class="Risky">Risky</button>
+          </td>
+          <td>
+            <code>Risky</code>
+          </td>
+          <td>
+            Use for a call to action on a page that has irrevocable consequences
+            (or consequences that are difficult to recover from), such as delete
+            or removal actions. It should never appear more than once on the screen
+            (excluding modal dialogs).
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </article>
+
+  <article>
+    <h2 id="Colors">Colors &amp; Icons</h2>
+
+    <p>
+      See <a href="http://confluence/display/MKT/CASH+Suite">
+        this Confluence
+        article
+      </a> for colors and icons.
+    </p>
+  </article>
+
+  <article>
+    <h2 id="Dates">Dates</h2>
+
+    <p>
+      Use relative dates when a general understanding of sequence is sufficient to
+      communicate meaning. Use absolute dates when precision is needed, for example
+      in logging or supporting an exact understanding of an event sequence.
+    </p>
+
+    <h3 id="Tooltips">Tooltips</h3>
+
+    <p>
+      Use tooltips over relative dates that show the localized date of the week,
+      date, time, and time zone of the event.
+    </p>
+
+    <h3 id="Internationalization">Internationalization</h3>
+
+    <p>
+      There are numerous international date formats; the cost to support them all
+      is not justifiable, so our intention is to use formats that are easy to understand.
+    </p>
+
+    <h3 id="PastEvents">Past Events</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Time of Event</th>
+          <th>Displayed Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Within the last minute</td>
+          <td>Just now</td>
+        </tr>
+        <tr>
+          <td>Less than 1 hour</td>
+          <td><var>X</var> minutes ago</td>
+        </tr>
+        <tr>
+          <td>Within an hour</td>
+          <td>1 hour ago</td>
+        </tr>
+        <tr>
+          <td>More than 1 hour</td>
+          <td><var>X</var> hours ago</td>
+        </tr>
+        <tr>
+          <td>1 day ago (by date, not hours)</td>
+          <td>Yesterday</td>
+        </tr>
+        <tr>
+          <td>More than 1 day</td>
+          <td><var>X</var> days ago</td>
+        </tr>
+        <tr>
+          <td>7 days ago</td>
+          <td>1 week ago</td>
+        </tr>
+        <tr>
+          <td>More than 1 week</td>
+          <td>Datestamp: i.e. "Feb 30 2014"</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="FutureEvents">Future Events</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Time of Event</th>
+          <th>Displayed Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Within the next minute</td>
+          <td>Now</td>
+        </tr>
+        <tr>
+          <td>Within the first minute</td>
+          <td>In 1 minute</td>
+        </tr>
+        <tr>
+          <td>Less than 1 hour</td>
+          <td>In <var>X</var> minutes</td>
+        </tr>
+        <tr>
+          <td>Within an hour</td>
+          <td>In 1 hour</td>
+        </tr>
+        <tr>
+          <td>More than 1 hour</td>
+          <td>In <var>X</var> hours</td>
+        </tr>
+        <tr>
+          <td>In 1 day (by date, not hours)</td>
+          <td>Tomorrow</td>
+        </tr>
+        <tr>
+          <td>More than 1 day</td>
+          <td>In <var>X</var> days</td>
+        </tr>
+        <tr>
+          <td>In 7 days</td>
+          <td>In 1 week</td>
+        </tr>
+        <tr>
+          <td>More than 1 week</td>
+          <td>Datestamp: i.e. "Feb 30 2014"</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="AbsoluteDates">Absolute Dates</h3>
+
+    <p>
+      Absolute dates should be displayed using one of the following levels
+      (depending on granularity).
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Granularity</th>
+          <th>Displayed Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Date only</td>
+          <td>Feb 30 2014</td>
+        </tr>
+        <tr>
+          <td>Date + time</td>
+          <td>Feb 30 2014 11:59 PM</td>
+        </tr>
+        <tr>
+          <td>Date + time + timezone</td>
+          <td>Feb 30 2014 11:59 PM PST</td>
+        </tr>
+      </tbody>
+    </table>
+  </article>
+
+  <article>
+    <h2 id="Forms">Forms</h2>
+
+    <p>
+      Forms allow users to enter data that is used by the application. They're one
+      of the more difficult things to design because each browser renders form
+      elements differently. Proper form design needs to take into account the
+      sequence of forms and the interface elements.
+    </p>
+
+    <p>
+      Always use <code>&lt;label&gt;</code> elements with forms, otherwise screen
+      readers will have trouble reading your page. If you need to hide the labels
+      for design or because they're redundant with your watermarks, use the
+      <code>ScreenReader</code> class.
+    </p>
+
+    <p>
+      Use the <code>placeholder</code> attribute on forms to tell users the
+      expected format of input for more complicated inputs such as dates and phone
+      numbers; alternatively they can be used to tell the user what is expected
+      instead of using labels where screen real estate is lacking.
+    </p>
+
+    <p>
+      Since dragline doesn't support older browsers, third party client-side
+      validation libraries should be avoided when possible. Instead use the
+      <code>pattern</code> attribute with a regular expression and allow the
+      browser to natively validate and/or the <code>type</code> attribute on an
+      <code>&lt;input&gt;</code> element.
+    </p>
+
+    <p>
+      By default, all form controls are set to <code>width: 100%;</code>. Wrap the
+      labels and form controls with a <code>&lt;div&gt;</code> element that has the
+      <code>Form-Group</code> class for optimum spacing.
+    </p>
+
+    <form>
+      <div class="Form-Group">
+        <label>Email Address</label>
+        <input type="email" placeholder="first.last@domainname.topleveldomain" />
+      </div>
+
+      <div class="Form-Group">
+        <label>Password</label>
+        <input type="password" pattern="^(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[0-9]+)(?=.*[^A-Za-z0-9 ]+).{8,}$" />
+      </div>
+
+      <div class="Form-Group">
+        <label class="Checkable">
+          <input type="checkbox" />
+          Remember Me
+        </label>
+      </div>
+
+      <button type="submit" class="Default">Submit</button>
+    </form>
+
+    <h3 id="InlineForms">Inline Forms</h3>
+
+    <form class="Inline">
+      <div class="Form-Group">
+        <label class="ScreenReader">Email Address</label>
+        <input type="email" placeholder="first.last@domainname.topleveldomain" />
+      </div>
+
+      <div class="Form-Group">
+        <label class="ScreenReader">Password</label>
+        <input type="password" pattern="^(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[0-9]+)(?=.*[^A-Za-z0-9 ]+).{8,}$" />
+      </div>
+
+      <div class="Form-Group">
+        <label class="Checkable">
+          <input type="checkbox" />
+          Remember Me
+        </label>
+      </div>
+
+      <button type="submit" class="Default">Submit</button>
+    </form>
+
+    <h3 id="HorizontalForms">Horizontal Forms</h3>
+
+    <p>Just use the grid to make forms horizontal.</p>
+
+    <form class="Inline">
+      <div class="Row">
+        <div class="Column Width-20 Text-Right">
+          <label>Email Address</label>
+        </div>
+
+        <div class="Column Width-80">
+          <input type="email" class="Width-80" placeholder="first.last@domainname.topleveldomain" />
+        </div>
+      </div>
+
+      <div class="Row">
+        <div class="Column Width-20 Text-Right">
+          <label>Password</label>
+        </div>
+
+        <div class="Column Width-80">
+          <input type="password" pattern="^(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[0-9]+)(?=.*[^A-Za-z0-9 ]+).{8,}$" />
+        </div>
+      </div>
+
+      <div class="Row">
+        <div class="Column Width-20 Text-Right"></div>
+
+        <div class="Column Width-80">
+          <label class="Checkable">
+            <input type="checkbox" />
+            Remember Me
+          </label>
+        </div>
+      </div>
+
+      <div class="Row">
+        <div class="Column Width-20"></div>
+        <div class="Column Width-80">
+          <button type="submit" class="Default">Submit</button>
+        </div>
+      </div>
+    </form>
+
+    <h3 id="WithIcons">With Icons</h3>
+
+    <p>Add feedback icons with the <code>Has-Icon</code> class.</p>
+
+    <form class="Inline">
+      <div class="Form-Group Icon-Left">
+        <label class="ScreenReader">Search</label>
+        <input type="search" />
+        <i class="fa fa-search"></i>
+      </div>
+
+      <div class="Form-Group Icon-Right">
+        <label class="ScreenReader">Email Address</label>
+        <input type="email" placeholder="first.last@domainname.topleveldomain" />
+        <i class="fa fa-user"></i>
+      </div>
+
+      <div class="Form-Group Icon-Right">
+        <label class="ScreenReader">Password</label>
+        <input type="password" pattern="^(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[0-9]+)(?=.*[^A-Za-z0-9 ]+).{8,}$" />
+        <i class="fa fa-key"></i>
+      </div>
+
+      <div class="Form-Group">
+        <label class="Checkable">
+          <input type="checkbox" />
+          Remember Me
+        </label>
+      </div>
+
+      <button type="submit" class="Default">Submit</button>
+    </form>
+  </article>
+
+  <article>
+    <h2 id="Grid">Grid System</h2>
+
+    <p>
+      Grid systems are used for creating page layouts through a series of rows and
+      columns that house content. There is no pre-defined set of columns that
+      should be used (e.g. two, three, four, etc.) There are two options within the
+      grid system: unpadded (the default) and padded.
+    </p>
+
+    <h3 id="GridBest">Best Practices</h3>
+
+    <ul>
+      <li>Padding must be consistent within the same container: either use it or don't.</li>
+      <li>When using padding, both vertical and horizontal must be used; don't use one without the other.</li>
+      <li>Objects should always line up when possible.</li>
+      <li>Use the Width-* classes to set the width of a column.</li>
+    </ul>
+
+    <h3 id="GridVertical">Vertical Best Practices</h3>
+
+    <ul>
+      <li>The minimum padding when used is 10px.</li>
+      <li>When positioning elements vertically with padding, use multiples of 10px.</li>
+    </ul>
+
+    <h3 id="GridHorizontal">Horizontal Best Practices</h3>
+
+    <ul>
+      <li>Horizontally distributed elements with padding should be set 20px apart.</li>
+      <li>Avoid making anything just one column wide.</li>
+    </ul>
+
+    <div id="divGridExample">
+      <div class="Row-Padded">
+        <div class="Column Width-20">20%</div>
+        <div class="Column Width-10">10%</div>
+        <div class="Column Width-40">40%</div>
+        <div class="Column Width-10">10%</div>
+        <div class="Column Width-10">10%</div>
+        <div class="Column Width-10">10%</div>
+      </div>
+
+      <div class="Row-Padded">
+        <div class="Column Width-50">50%</div>
+        <div class="Column Width-50">50%</div>
+      </div>
+
+      <div class="Row-Padded">
+        <div class="Column Width-33">33%</div>
+        <div class="Column Width-33">33%</div>
+        <div class="Column Width-33">33%</div>
+      </div>
+
+      <div class="Row-Padded">
+        <div class="Column Width-25">25%</div>
+        <div class="Column Width-25">25%</div>
+        <div class="Column Width-25">25%</div>
+        <div class="Column Width-25">25%</div>
+      </div>
+
+      <div class="Row-Padded">
+        <div class="Column Width-20">20%</div>
+        <div class="Column Width-20">20%</div>
+        <div class="Column Width-20">20%</div>
+        <div class="Column Width-20">20%</div>
+        <div class="Column Width-20">20%</div>
+      </div>
+
+      <div class="Row-Padded">
+        <div class="Column Width-10">10%</div>
+        <div class="Column Width-10">10%</div>
+        <div class="Column Width-10">10%</div>
+        <div class="Column Width-10">10%</div>
+        <div class="Column Width-10">10%</div>
+        <div class="Column Width-10">10%</div>
+        <div class="Column Width-10">10%</div>
+        <div class="Column Width-10">10%</div>
+        <div class="Column Width-10">10%</div>
+        <div class="Column Width-10">10%</div>
+      </div>
+    </div>
+
+    <h3 id="GridResponsive">Responsive Stacking</h3>
+
+    <p>
+      All widths less than 50% will stack on top of each other and switch to 100%
+      width on mobile devices such as phones and tablets.
+    </p>
+  </article>
+
+  <article>
+    <h2 id="Iconography">Iconography</h2>
+
+    <p>
+      Icons help users navigate the interface, make the meaning of buttons clearer,
+      and prepare users for what's happening next. When using an icon, consider
+      where it is currently used and make sure its meaning is at least similar.
+      Never repurpose an existing icon for a different action. Distributing icons
+      as images presents challenges when they need to scale or change color.
+      Instead, the preferred delivery of icons are those from the FontAwesome font.
+      They are pixel perfect at 14px, but as vector graphics they scale well to
+      other sizes.
+    </p>
+
+    <h3 id="IconImages">Images</h3>
+
+    <p>
+      When using icons that are images, make sure they support retina displays.
+      Use SVGs when possible, falling back to PNGs.
+    </p>
+  </article>
+
+  <article>
+    <h2 id="Images">Images</h2>
+
+    <div id="divImageExample">
+      <div class="Text-Center">
+        <img src="~/images/image-example.svg" class="Rounded" />
+
+        <div>
+          <code>Rounded</code>
+        </div>
+      </div>
+
+      <div class="Text-Center">
+        <img src="~/images/image-example.svg" class="Circle" />
+
+        <div>
+          <code>Circle</code>
+        </div>
+      </div>
+
+      <div class="Text-Center">
+        <img src="~/images/image-example.svg" class="Bordered" />
+
+        <div>
+          <code>Bordered</code>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article>
+    <h2 id="InlineElements">Inline Elements</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Formatting</th>
+          <th>Element</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Bold</strong></td>
+          <td><code>&lt;strong&gt;</code></td>
+        </tr>
+        <tr>
+          <td><code>Code</code></td>
+          <td><code>&lt;code&gt;</code></td>
+        </tr>
+        <tr>
+          <td><del>Deleted Text</del></td>
+          <td><code>&lt;del&gt;</code></td>
+        </tr>
+        <tr>
+          <td><mark>Highlight Text</mark></td>
+          <td><code>&lt;mark&gt;</code></td>
+        </tr>
+        <tr>
+          <td><ins>Inserted Text</ins></td>
+          <td><code>&lt;ins&gt;</code></td>
+        </tr>
+        <tr>
+          <td><em>Italics</em></td>
+          <td><code>&lt;em&gt;</code></td>
+        </tr>
+        <tr>
+          <td><small>Small Text</small></td>
+          <td><code>&lt;small&gt;</code></td>
+        </tr>
+        <tr>
+          <td><s>Strikethrough</s></td>
+          <td><code>&lt;s&gt;</code></td>
+        </tr>
+        <tr>
+          <td><u>Underline</u></td>
+          <td><code>&lt;u&gt;</code></td>
+        </tr>
+        <tr>
+          <td><kbd>User Input</kbd></td>
+          <td><code>&lt;kbd&gt;</code></td>
+        </tr>
+        <tr>
+          <td><var>Variable</var></td>
+          <td><code>&lt;var&gt;</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="AlternateElements">Alternate Elements</h3>
+
+    <p>
+      Avoid using <code>&lt;b&gt;</code> and <code>&lt;i&gt;</code>.
+      <code>&lt;b&gt;</code> is meant to emphasize words or phrases without
+      conveying additional importance, which is counterintuitive.
+      <code>&lt;i&gt;</code> is similarly meant for voice and technical terms,
+      which also adds emphasis and is counterintuitive.
+    </p>
+
+    <h3 id="Alignment">Alignment</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Formatting</th>
+          <th>Class</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="Text-Left">Left aligned text.</td>
+          <td><code>Text-Left</code></td>
+        </tr>
+        <tr>
+          <td class="Text-Center">Center aligned text.</td>
+          <td><code>Text-Center</code></td>
+        </tr>
+        <tr>
+          <td class="Text-Right">Right aligned text.</td>
+          <td><code>Text-Right</code></td>
+        </tr>
+        <tr>
+          <td>Justified text.</td>
+          <td><code>Text-Justify</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="Abbreviations">Abbreviations &amp; Acronyms</h3>
+
+    <p>
+      For expanded text on hover of an abbreviation or
+      <abbr title="Three Letter Acronym">TLA</abbr>, include the title attribute
+      with the <code>&lt;abbr&gt;</code> element.
+    </p>
+  </article>
+
+  <article>
+    <h2 id="Lists">Lists</h2>
+
+    <p>
+      Lists are used for placing a number of connected items together, one below
+      the other. Ordered lists should be used when the items need to be printed
+      consecutively because their order is important; unordered lists should be
+      used when the order doesn't matter.
+    </p>
+
+    <ol>
+      <li>Alpha</li>
+      <li>Bravo</li>
+      <li>Charlie</li>
+      <li>Delta</li>
+      <li>Echo</li>
+      <li>Foxtrot</li>
+    </ol>
+
+    <div>
+      <ul>
+        <li>Alpha</li>
+        <li>Bravo</li>
+        <li>Charlie</li>
+        <li>Delta</li>
+        <li>Echo</li>
+        <li>Foxtrot</li>
+      </ul>
+    </div>
+
+    <h3>Unstyled</h3>
+
+    <p>
+      Add the <code>Unstyled</code> class to a list to remove the padding,
+      margin, and numbering or bullets.
+    </p>
+
+    <ul class="Unstyled">
+      <li>Alpha</li>
+      <li>Bravo</li>
+      <li>Charlie</li>
+      <li>Delta</li>
+      <li>Echo</li>
+      <li>Foxtrot</li>
+    </ul>
+
+    <h3>Paneled</h3>
+
+    <p>
+      Add the <code>Paneled</code> class to a list to format each list item such
+      that it creates the visual effect of a panel. Paneled lists should
+      typically be used on unordered lists only, as the numbering will be removed
+      but the option is left open to use on ordered lists in the event order is
+      important and to allow for proper semantics.
+    </p>
+
+    <ul class="Paneled Float-Left Width-33">
+      <li>Alpha</li>
+      <li>Bravo</li>
+      <li>Charlie</li>
+      <li>Delta</li>
+      <li>Echo</li>
+      <li>Foxtrot</li>
+    </ul>
+  </article>
+
+  <article>
+    <h2 id="PrinterFriendly">Printer-Friendly</h2>
+
+    <p>
+      When making a page printer friendly, you can use the
+      <code>Print-Block</code>, <code>Print-Hidden</code>,
+      <code>Print-Inline</code>, and <code>Print-Inline-Block</code> classes to
+      the display for printing.
+    </p>
+  </article>
+
+  <article>
+    <h2 id="Tables">Tables</h2>
+
+    <p>
+      The default styling of tables does away with vertical column borders for a
+      more elegant look. Note that this can cause conflicts with older plugins that
+      use tables for structuring such as date pickers.
+    </p>
+
+    <p>
+      When constructing tables, be sure to always use <code>&lt;thead&gt;</code>
+      and <code>&lt;tbody&gt;</code> elements within the table, and
+      <code>&lt;tfoot&gt;</code> elements when footers are used. These elements not
+      only ensure proper stucture and formatting, but also make the tables printer
+      friendly.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Email Address</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>john.stegall@wolterskluwer.com</td>
+          <td>John</td>
+          <td>Stegall</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>tle@wolterskluwer.com</td>
+          <td>Thanh</td>
+          <td>Le</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>michael.lin@wolterskluwer.com</td>
+          <td>Michael</td>
+          <td>Lin</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>robby.millsap@wolterskluwer.com</td>
+          <td>Robby</td>
+          <td>Millsap</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>tim.pau@wolterskluwer.com</td>
+          <td>Tim</td>
+          <td>Pau</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>eric.lee@wolterskluwer.com</td>
+          <td>Eric</td>
+          <td>Lee</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>mark.sisson@wolterskluwer.com</td>
+          <td>Mark</td>
+          <td>Sisson</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="CheckbookStyle">Checkbook Style</h3>
+
+    <p>
+      For tables that look like a checkbook and have every other row with a colored
+      background, use the <code>Striped</code> class.
+    </p>
+
+    <table class="Striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Email Address</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>john.stegall@wolterskluwer.com</td>
+          <td>John</td>
+          <td>Stegall</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>tle@wolterskluwer.com</td>
+          <td>Thanh</td>
+          <td>Le</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>michael.lin@wolterskluwer.com</td>
+          <td>Michael</td>
+          <td>Lin</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>robby.millsap@wolterskluwer.com</td>
+          <td>Robby</td>
+          <td>Millsap</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>tim.pau@wolterskluwer.com</td>
+          <td>Tim</td>
+          <td>Pau</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>eric.lee@wolterskluwer.com</td>
+          <td>Eric</td>
+          <td>Lee</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>mark.sisson@wolterskluwer.com</td>
+          <td>Mark</td>
+          <td>Sisson</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="Bordered">Bordered</h3>
+
+    <p>
+      Add the <code>Bordered</code> class for borders on all sides of the table and
+      cells.
+    </p>
+
+    <table class="Bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Email Address</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>john.stegall@wolterskluwer.com</td>
+          <td>John</td>
+          <td>Stegall</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>tle@wolterskluwer.com</td>
+          <td>Thanh</td>
+          <td>Le</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>michael.lin@wolterskluwer.com</td>
+          <td>Michael</td>
+          <td>Lin</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>robby.millsap@wolterskluwer.com</td>
+          <td>Robby</td>
+          <td>Millsap</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>tim.pau@wolterskluwer.com</td>
+          <td>Tim</td>
+          <td>Pau</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>eric.lee@wolterskluwer.com</td>
+          <td>Eric</td>
+          <td>Lee</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>mark.sisson@wolterskluwer.com</td>
+          <td>Mark</td>
+          <td>Sisson</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="HotTracking">Hot Tracking</h3>
+
+    <p>
+      Hot tracking is a technique used to highlight the row the mouse cursor is
+      hovering over to help users see what row has focus. Hot tracking can be
+      added to a table by adding the <code>Hot-Tracking</code> class to the table.
+    </p>
+
+    <table class="Hot-Tracking">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Email Address</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>john.stegall@wolterskluwer.com</td>
+          <td>John</td>
+          <td>Stegall</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>tle@wolterskluwer.com</td>
+          <td>Thanh</td>
+          <td>Le</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>michael.lin@wolterskluwer.com</td>
+          <td>Michael</td>
+          <td>Lin</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>robby.millsap@wolterskluwer.com</td>
+          <td>Robby</td>
+          <td>Millsap</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>tim.pau@wolterskluwer.com</td>
+          <td>Tim</td>
+          <td>Pau</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>eric.lee@wolterskluwer.com</td>
+          <td>Eric</td>
+          <td>Lee</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>mark.sisson@wolterskluwer.com</td>
+          <td>Mark</td>
+          <td>Sisson</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="ContextualRows">Contextual Rows</h3>
+
+    <p>Contextual classes are available for table rows.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Email Address</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Class</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="Active">
+          <td>1</td>
+          <td>john.stegall@wolterskluwer.com</td>
+          <td>John</td>
+          <td>Stegall</td>
+          <td><code>Active</code></td>
+        </tr>
+        <tr class="Error">
+          <td>2</td>
+          <td>tle@wolterskluwer.com</td>
+          <td>Thanh</td>
+          <td>Le</td>
+          <td><code>Error</code></td>
+        </tr>
+        <tr class="Warning">
+          <td>3</td>
+          <td>michael.lin@wolterskluwer.com</td>
+          <td>Michael</td>
+          <td>Lin</td>
+          <td><code>Warning</code></td>
+        </tr>
+        <tr class="Success">
+          <td>4</td>
+          <td>robby.millsap@wolterskluwer.com</td>
+          <td>Robby</td>
+          <td>Millsap</td>
+          <td><code>Success</code></td>
+        </tr>
+        <tr class="Info">
+          <td>5</td>
+          <td>tim.pau@wolterskluwer.com</td>
+          <td>Tim</td>
+          <td>Pau</td>
+          <td><code>Info</code></td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>eric.lee@wolterskluwer.com</td>
+          <td>Eric</td>
+          <td>Lee</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </article>
+
+  <article>
+    <h2 id="Typography">Typography</h2>
+
+    <p>
+      The default font is Georgia, falling back to Helvetica, Arial, and finally
+      sans-serif. The default font size is 14px with a 1.5em line-spacing; this is
+      applied to the body and all paragraphs.
+    </p>
+
+    <h3 id="Contextual">Contextual Coloring</h3>
+
+    <p>
+      Apply contextual classes to any element to change the color of text.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Format</th>
+          <th>Class</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <span class="Error">This is error text.</span>
+          </td>
+          <td>
+            <code>Error</code>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="Info">This is informational text.</span>
+          </td>
+          <td>
+            <code>Info</code>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="Success">This is success text.</span>
+          </td>
+          <td>
+            <code>Success</code>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="Warning">This is warning text.</span>
+          </td>
+          <td>
+            <code>Warning</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="Headings">Headings</h3>
+
+    <p>
+      All headings <code>&lt;h1&gt;</code> through <code>&lt;h6&gt;</code> are available.
+      Headings should always be used in hierarchical order (e.g. do not use an
+      <code>&lt;h4&gt;</code> after an <code>&lt;h2&gt;</code>).
+    </p>
+
+    <p>
+      When using <code>&lt;a&gt;</code> elements as bookmarks, only bookmark against
+      <code>&lt;h2&gt;</code> and <code>&lt;h3&gt;</code> elements.
+    </p>
+
+    <table id="tblHeadings">
+      <thead>
+        <tr>
+          <th>Element</th>
+          <th>Pixel Size</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <h1>h1 Header</h1>
+          </td>
+          <td>36</td>
+        </tr>
+        <tr>
+          <td>
+            <h2>h2 Header</h2>
+          </td>
+          <td>30</td>
+        </tr>
+        <tr>
+          <td>
+            <h3>h3 Header</h3>
+          </td>
+          <td>24</td>
+        </tr>
+        <tr>
+          <td>
+            <h4>h4 Header</h4>
+          </td>
+          <td>20</td>
+        </tr>
+        <tr>
+          <td>
+            <h5>h5 Header</h5>
+          </td>
+          <td>16</td>
+        </tr>
+        <tr>
+          <td>
+            <h6>h6 Header</h6>
+          </td>
+          <td>14</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4 id="SecondaryText">Secondary Text</h4>
+
+    <p>
+      Create secondary text within a heading by using the
+      <code>&lt;small&gt;</code> tag.
+    </p>
+
+    <h2>This heading <small>has small text</small></h2>
+  </article>
+
+  <article>
+    <h2 id="WritingStyle">Writing Style</h2>
+
+    <p>
+      Writing style prescribes the characteristics of voice and tone. It is made
+      up of four principles that reflect how to communicate with users.
+    </p>
+
+    <p>Use US English spelling. Title case buttons and titles.</p>
+
+    <h3 id="BeHuman">Be Human</h3>
+
+    <p>
+      Write in a formal conversational voice (as though you're speaking with
+      someone but without slang). Use standard vocabulary and a natural tone,
+      and employ contractions so sentences flow naturally.
+    </p>
+
+    <div class="Row-Padded">
+      <div class="Column Width-50 Language-Example">
+        <div class="Bad">
+          <i class="fa fa-times"></i>
+          <span>Bad</span>
+        </div>
+
+        <p>
+          Access denied. Please contact the CASH Administrator for assistance.
+        </p>
+
+        <div class="Good">
+          <i class="fa fa-check"></i>
+          <span>Good</span>
+        </div>
+
+        <p>
+          You don't have permission to do create a location. Talk to your
+          administrator to have the location created, or ask for permission to do
+          so yourself.
+        </p>
+      </div>
+
+      <div class="Column Width-50">
+        <strong>Improvements Explained</strong>
+
+        <ul>
+          <li>
+            Be explicit about the action the user cannot perform.
+          </li>
+          <li>
+            Use conversational voice – if you were talking to someone, you'd rarely "ask for assistance," but instead ask for help for something explicitly.
+          </li>
+          <li>
+            Give clear advice on what to do next, including linking the person (or people) to email.
+          </li>
+          <li>
+            Administrator doesn't need to be capitalized.
+          </li>
+          <li>
+            CASH isn't needed as a modifier to administrator, the user is in CASH and should know they need to speak with the CASH administrator (don't treat the users like their idiots).
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 id="BeClear">Be Clear</h3>
+
+    <div class="Row-Padded">
+      <div class="Column Width-50 Language-Example">
+        <div class="Bad">
+          <i class="fa fa-times"></i>
+          <span>Bad</span>
+        </div>
+
+        <p>
+          If you would like to merge these two borrowers, please execute the
+          following:
+        </p>
+
+        <div class="Good">
+          <i class="fa fa-check"></i>
+          <span>Good</span>
+        </div>
+
+        <p>
+          You can merge these two borrowers by executing the following:
+        </p>
+      </div>
+
+      <div class="Column Width-50">
+        <strong>Improvements Explained</strong>
+
+        <ul>
+          <li>
+            Eliminate future tense. People use software to perform tasks in the
+            present.
+          </li>
+          <li>
+            The conditional phrasing isn't necessary (e.g. "If …"), that message
+            wouldn't be necessary if the user wasn't already trying to perform the
+            given task.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 id="BeConsistent">Be Consistent</h3>
+
+    <div class="Row-Padded">
+      <div class="Column Width-50 Language-Example">
+        <div class="Bad">
+          <i class="fa fa-times"></i>
+          <span>Bad</span>
+        </div>
+
+        <p>
+          This page allows you to manage all your visualizations.
+        </p>
+
+        <div class="Good">
+          <i class="fa fa-check"></i>
+          <span>Good</span>
+        </div>
+
+        <p>
+          Manage your favourite visualizations on this page.
+        </p>
+      </div>
+
+      <div class="Column Width-50">
+        <strong>Improvements Explained</strong>
+
+        <ul>
+          <li>
+            The page is an inanimate display, it can't allow anything.
+          </li>
+          <li>
+            The adjective "all" is not necessary.
+          </li>
+          <li>
+            Favourite is British English, not US English.
+          </li>
+          <li>
+            Use conversational tone.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 id="BeHelpful">Be Helpful</h3>
+
+    <div class="Row-Padded">
+      <div class="Column Width-50 Language-Example">
+        <div class="Bad">
+          <i class="fa fa-times"></i>
+          <span>Bad</span>
+        </div>
+
+        <p>Unspecified error.</p>
+
+        <div class="Good">
+          <i class="fa fa-check"></i>
+          <span>Good</span>
+        </div>
+
+        <p>
+          The import can't be rolled back because imported data was changed by
+          other users.
+        </p>
+      </div>
+
+      <div class="Column Width-50">
+        <strong>Improvements Explained</strong>
+
+        <ul>
+          <li>
+            Writing good error messages is tricky. Titles should be informative yet
+            concise. The message should explain what happened so it's obvious to
+            the user on how to recover from the error.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </article>
+</div>
+
+<script type="text/javascript">
+  $("#ulContents").Index({ Offset: 60 });
+</script>
