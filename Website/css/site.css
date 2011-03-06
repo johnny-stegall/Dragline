@@ -1,0 +1,133 @@
+﻿/******************************************************************************
+* Site styling (overrides)
+******************************************************************************/
+a.Logo > img
+{
+  width: 40px;
+}
+
+article
+{
+  margin-bottom: 50px;
+}
+
+article:before,
+article:after
+{
+  content: " ";
+  display: table;
+}
+
+article:after
+{
+  clear: both;
+}
+
+code
+{
+  background: #ABCCE2;
+  color: #0768A9;
+}
+
+/******************************************************************************
+* Index page styling
+******************************************************************************/
+div.Topic > h2
+{
+  margin-bottom: 50px;
+}
+
+div.Topic > h2 > a > i
+{
+  border-radius: 50%;
+  color: #FFF;
+  display: inline-block;
+  padding: 40px;
+}
+
+/******************************************************************************
+* Styling page styling
+******************************************************************************/
+#divGridExample > div.Row-Padded > div
+{
+  background: #EEE;
+  border: 1px solid #999;
+  padding: 1em;
+  text-align: center;
+}
+
+#divImageExample > div
+{
+  display: inline-block;
+  text-align: center;
+}
+
+#tblHeadings > tbody > tr > td:last-child
+{
+  vertical-align: middle;
+}
+
+div.Language-Example
+{
+  border: 1px solid #DDD;
+  padding: 20px;
+}
+
+div.Language-Example > div.Bad
+{
+  color: #E8112D;
+  font-weight: bold;
+}
+
+div.Language-Example > div.Good
+{
+  color: #7BC143;
+  font-weight: bold;
+}
+
+/******************************************************************************
+* Component page styling
+******************************************************************************/
+#divBadgeExample
+{
+  position: relative;
+}
+
+#divBadgeExample > .Badge
+{
+  margin: -10px 0 0 -15px;
+  vertical-align: top;
+  z-index: 2;
+}
+
+div.ProgressBar
+{
+  background: #EEE;
+  border-radius: 3px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25) inset;
+  height: 25px;
+  width: 250px;
+}
+
+div.ProgressBar > span
+{
+  background-color: #0768A9;
+  border-radius: 3px;
+  display: block;
+  height: 25px;
+  text-indent: -9999px;
+}
+
+meter.Categorized::-webkit-meter-optimum-value
+{
+  background-image: linear-gradient(90deg, #8BCF69 5%,
+                                           #E6D450 5%, #E6D450 15%,
+                                           #F28F68 15%, #F28F68 55%,
+                                           #CF82BF 55%, #CF82BF 95%,
+                                           #719FD1 95%, #719FD1 100%);
+}
+
+#txtConfirmation
+{
+  width: 149px;
+}

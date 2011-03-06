@@ -1,0 +1,761 @@
+﻿/******************************************************************************
+* Apply to all elements
+******************************************************************************/
+*
+{
+  box-sizing: border-box;
+}
+
+*:before,
+*:after
+{
+  box-sizing: border-box;
+}
+
+[draggable]
+{
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/******************************************************************************
+* Structural page styling
+******************************************************************************/
+html
+{
+  font-size: 62.5%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body
+{
+  background-color: #FFF;
+  color: #333;
+  font-family: Georgia, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  height: 100%;
+  line-height: 1.5em;
+  padding: 60px 10px 10px 10px;
+}
+
+article,
+footer,
+header,
+main,
+nav,
+section
+{
+  position: relative;
+}
+
+body > nav
+{
+  background: #0768A9;
+  border: 1px solid transparent;
+  height: 40px;
+  left: 0;
+  margin: 0 -10px;
+  padding: 0 10px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 999;
+}
+
+body > nav a,
+body > #ulNav a
+{
+  color: #FFF;
+  display: inline-block;
+  line-height: 1.75em;
+  transition: color 0.5s ease-in-out;
+}
+
+body > nav a:focus,
+body > nav a:hover,
+body > #ulNav a:focus,
+body > #ulNav a:hover
+{
+  color: #FEFEAA;
+  outline: none;
+  text-decoration: none;
+}
+
+body > #ulNav > li > ul
+{
+  display: none;
+  list-style: none;
+  margin: 0 0 0 20px;
+  padding: 0;
+}
+
+body > #ulNav > li > a.Active + ul
+{
+  display: block;
+}
+
+body > nav > #btnMobileNav
+{
+  background: transparent;
+  border: 0 none;
+  border-radius: 0;
+  color: #FFF;
+  font-size: 21px;
+  margin: 0;
+  outline: none;
+  padding: 0;
+}
+
+body > nav span.Badge
+{
+  background-color: #FFF;
+  color: #0768A9;
+}
+
+body > #ulNav
+{
+  background: #333;
+  height: 100%;
+  left: -100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 40px;
+  transition: all 0.5s ease-in-out;
+  width: 75%;
+  z-index: 9999;
+}
+
+body > #ulNav.Display
+{
+  left: 0;
+}
+
+body > #ulNav > li
+{
+  padding: 3px 10px;
+}
+
+body > #ulNav > li:not(:first-child)
+{
+  border-top: 1px solid #EEE;
+}
+
+body > #ulNav > li i
+{
+  display: inline-block;
+  padding-right: 5px;
+}
+
+/******************************************************************************
+* Form element styling
+******************************************************************************/
+button,
+input,
+select,
+textarea
+{
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5em;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+button[disabled],
+fieldset[disabled] > button,
+input[disabled]:not([type="checkbox"]):not([type="file"]):not([type="image"]):not([type="radio"]),
+input[readonly]:not([type="checkbox"]):not([type="file"]):not([type="image"]):not([type="radio"]),
+select[disabled],
+textarea[disabled],
+textarea[readonly]
+{
+  background-color: #EEE;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+button:focus,
+input:focus,
+select:focus,
+textarea:focus
+{
+  border-color: #66AFE9 !important;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px #0768A9;
+  outline: 0;
+}
+
+fieldset[disabled],
+input[type="checkbox"][disabled],
+input[type="radio"][disabled]
+{
+  cursor: not-allowed;
+}
+
+button,
+input[type="button"],
+input[type="submit"]
+{
+  background: #FFF;
+  border: 1px solid #DDD;
+  border-radius: 3px;
+  color: #333;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: normal;
+  height: 32px;
+  line-height: 1.5em;
+  margin-bottom: 0;
+  padding: 5px 10px;
+  text-align: center;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+button:active,
+button.Active,
+input[type="button"]:active,
+input[type="button"].Active,
+input[type="submit"]:active,
+input[type="submit"].Active
+{
+  background-color: #E0E0E0;
+  background-image: none;
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125) !important;
+  outline: 0;
+}
+
+button[disabled],
+input[type="button"][disabled],
+input[type="submit"][disabled],
+fieldset[disabled] > button
+{
+  box-shadow: none;
+  cursor: not-allowed;
+  filter: alpha(opacity=65);
+  opacity: .65;
+  pointer-events: none;
+}
+
+button:focus,
+input[type="button"]:focus,
+input[type="submit"]:focus
+{
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+button:focus,
+input[type="button"]:focus,
+input[type="submit"]:focus,
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover
+{
+  background-color: #E0E0E0;
+  color: #333;
+  text-decoration: none;
+}
+
+fieldset
+{
+  border: 0;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
+input:not([type="checkbox"]):not([type="file"]):not([type="image"]):not([type="radio"]),
+select,
+textarea
+{
+  background-color: #FFF;
+  background-image: none;
+  border: 1px solid #888;
+  border-radius: 3px;
+  color: #444;
+  display: block;
+  height: 32px;
+  line-height: 1.5em;
+  padding: 5px 7px;
+  width: 100%;
+}
+
+input[type="checkbox"],
+input[type="radio"]
+{
+  line-height: normal;
+  margin: 2px 2px 0 0;
+  vertical-align: text-top;
+}
+
+input[type="checkbox"]:focus,
+input[type="file"]:focus,
+input[type="radio"]:focus
+{
+  box-shadow: none;
+  outline: none;
+}
+
+input[type="file"]
+{
+  display: block;
+}
+
+input[type="search"]
+{
+  height: 20px !important;
+}
+
+label
+{
+  display: inline-block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+legend
+{
+  border: 0;
+  border-bottom: 1px solid #e5e5e5;
+  color: #333;
+  display: block;
+  font-size: 21px;
+  line-height: inherit;
+  margin-bottom: 20px;
+  padding: 0;
+  width: 100%;
+}
+
+output
+{
+  color: #555;
+  display: block;
+  font-size: 14px;
+  line-height: 1.5em;
+  padding-top: 7px;
+}
+
+select[multiple],
+select[size]
+{
+  height: auto;
+}
+
+textarea
+{
+  height: auto;
+}
+
+/******************************************************************************
+* Header styling
+******************************************************************************/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6
+{
+  color: inherit;
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+h1,
+h2,
+h3
+{
+  margin: 20px 0 10px 0;
+}
+
+h4,
+h5,
+h6
+{
+  margin: 10px 0;
+}
+
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small
+{
+  color: #999;
+  font-weight: normal;
+  line-height: 1;
+}
+
+h1 small,
+h2 small,
+h3 small
+{
+  font-size: 65%;
+}
+
+h4 small,
+h5 small,
+h6 small
+{
+  font-size: 75%;
+}
+
+h1
+{
+  border-bottom: 1px solid #EEE;
+  font-size: 36px;
+  padding-bottom: 7px;
+}
+
+h2
+{
+  font-size: 30px;
+}
+
+h3
+{
+  font-size: 24px;
+}
+
+h4
+{
+  font-size: 18px;
+}
+
+h5
+{
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+h6
+{
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+/******************************************************************************
+* Text element styling
+******************************************************************************/
+code,
+kbd,
+pre,
+samp
+{
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+a
+{
+  color: #428BCA;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus
+{
+  color: #2A6496;
+  text-decoration: underline;
+}
+
+a:focus
+{
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+abbr
+{
+  border-bottom: 1px dotted #888;
+  cursor: help;
+}
+
+address
+{
+  font-style: normal;
+  line-height: 1.5em;
+  margin-bottom: 20px;
+}
+
+blockquote
+{
+  border-left: 5px solid #eee;
+  font-size: 17.5px;
+  margin: 0 0 20px;
+  padding: 10px 20px;
+}
+
+blockquote:before,
+blockquote:after
+{
+  content: "";
+}
+
+blockquote > footer:before
+{
+  content: '\2014 \00A0';
+}
+
+blockquote > footer
+{
+  color: #888;
+  display: block;
+  font-size: 80%;
+  line-height: 1.5em;
+}
+
+cite
+{
+  font-style: normal;
+}
+
+code
+{
+  background-color: #f9f2f4;
+  border-radius: 4px;
+  color: #c7254e;
+  font-size: 90%;
+  padding: 2px 4px;
+  white-space: nowrap;
+}
+
+kbd
+{
+  background-color: #333;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .25);
+  color: #fff;
+  font-size: 90%;
+  padding: 2px 4px;
+}
+
+p
+{
+  margin: 1em 0 1em;
+}
+
+pre
+{
+  background-color: #F5F5F5;
+  border: 1px solid #DDD;
+  border-radius: 4px;
+  color: #333;
+  display: block;
+  font-size: 13px;
+  line-height: 1.5em;
+  margin: 0 0 10px;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+pre code
+{
+  background-color: transparent;
+  border-radius: 0;
+  color: inherit;
+  font-size: inherit;
+  padding: 0;
+  white-space: pre-wrap;
+}
+
+small
+{
+  font-size: 85%;
+}
+
+/******************************************************************************
+* List styling
+******************************************************************************/
+dl
+{
+  margin: 0;
+}
+
+dt,
+dd
+{
+  line-height: 1.5em;
+}
+
+dt
+{
+  font-weight: bold;
+}
+
+dd
+{
+  margin-left: 0;
+}
+
+ul,
+ol
+{
+  margin-bottom: 10px;
+  margin-top: 0;
+}
+
+ul ul,
+ol ul,
+ul ol,
+ol ol
+{
+  margin-bottom: 0;
+}
+
+/******************************************************************************
+* Table styling
+******************************************************************************/
+table
+{
+  background-color: transparent;
+  margin-bottom: 20px;
+  max-width: 100%;
+  width: 100%;
+}
+
+th
+{
+  text-align: left;
+}
+
+table > thead > tr > th,
+table > tbody > tr > td,
+table > tfoot > tr > td
+{
+  border-top: 1px solid #DDD;
+  line-height: 1.5em;
+  padding: 5px 7px;
+}
+
+table > thead > tr > th
+{
+  border-bottom: 2px solid #DDD;
+  vertical-align: bottom;
+}
+
+table > caption + thead > tr:first-child > th,
+table > colgroup + thead > tr:first-child > th,
+table > thead:first-child > tr:first-child > th,
+table > caption + thead > tr:first-child > td,
+table > colgroup + thead > tr:first-child > td,
+table > thead:first-child > tr:first-child > td
+{
+  border-top: 0;
+}
+
+/******************************************************************************
+* Meter styling
+******************************************************************************/
+meter
+{
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: 0 none;
+  border-radius: 3px;
+  height: 25px;
+  width: 250px;
+}
+
+meter::-webkit-meter-bar
+{
+  background: #EEE;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+meter::-webkit-meter-optimum-value
+{
+  background: #00AA00;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+meter::-webkit-meter-suboptimum-value
+{
+  background: #FAFA00;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+meter::-webkit-meter-even-less-good-value
+{
+  background: #AA0000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+/******************************************************************************
+* Progress bar styling
+******************************************************************************/
+progress
+{
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #EEE;
+  border: 0 none;
+  border-radius: 3px;
+  color: #0768A9;
+  height: 25px;
+  width: 250px;
+}
+
+progress::-webkit-progress-bar
+{
+  border-radius: 3px;
+}
+
+progress[value]::-webkit-progress-bar
+{
+  background: #EEE;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+progress[value]::-webkit-progress-value
+{
+  background: #0768A9;
+}
+
+progress:not([value])
+{
+  display: none;
+}
+
+/******************************************************************************
+* Other element styling
+******************************************************************************/
+figure
+{
+  margin: 0;
+}
+
+img
+{
+  vertical-align: middle;
+}
+
+hr
+{
+  border: 0;
+  border-top: 1px solid #EEE;
+  clear: both;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
