@@ -1,0 +1,140 @@
+﻿/******************************************************************************
+* Modal dialog styles
+******************************************************************************/
+#divBackdrop
+{
+  background: #999;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  transition: all 0.3s;
+  visibility: hidden;
+  width: 100%;
+  z-index: 9998;
+}
+
+#divModal
+{
+	backface-visibility: hidden;
+  background: #FFF;
+  border: 1px solid ;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 0 #333;
+  height: auto;
+  left: 50%;
+  max-width: 800px;
+  min-height: 150px;
+  min-width: 320px;
+  opacity: 0;
+  position: fixed;
+  top: 50%;
+	transform: translate(-50%, -50%);
+  transition: all 0.3s ease-out;
+  visibility: hidden;
+  width: 50%;
+  z-index: 9999;
+}
+
+#divModal.Visible
+{
+  opacity: 1;
+  visibility: visible;
+}
+
+#divModal.Visible ~ #divBackdrop
+{
+  opacity: 0.75;
+  visibility: visible;
+}
+
+/******************************************************************************
+* Modal content styles
+******************************************************************************/
+#divModal > header
+{
+  border-bottom: 1px solid #E0E0E0;
+  padding: 10px;
+}
+
+#divModal > header > h4
+{
+  font-size: 20px;
+  font-weight: normal;
+  line-height: 1.5em;
+  margin-right: 1em;
+}
+
+#divModal > header > button
+{
+  background: transparent;
+  border: 0 none;
+  font-size: 20px;
+  float: right;
+  height: 1.5em;
+  margin-top: 5px;
+  opacity: 0.4;
+  outline: 0 none;
+}
+
+#divModal > section
+{
+  padding: 10px;
+}
+
+/******************************************************************************
+* Modal content styles
+******************************************************************************/
+#divModal.Fade
+{
+}
+
+#divModal.FadeAndScale
+{
+  transform: translate(-50%, -50%) scale(0);
+}
+
+#divModal.FadeAndScale.Visible
+{
+  transform: translate(-50%, -50%) scale(1);
+}
+
+#divModal.Newspaper
+{
+  transform: translate(-50%, -50%) scale(0) rotate(720deg);
+}
+
+#divModal.Newspaper.Visible
+{
+  transform: translate(-50%, -50%) scale(1) rotate(0deg);
+}
+
+#divModal.SlideFromBottom
+{
+  transform: translate(-50%, 150%);
+}
+
+#divModal.SlideFromLeft
+{
+  transform: translate(-150%, -50%);
+}
+
+#divModal.SlideFromRight
+{
+  transform: translate(150%, -50%);
+}
+
+#divModal.SlideFromTop
+{
+  transform: translate(-50%, -150%);
+}
+
+#divModal.SlideFromBottom.Visible,
+#divModal.SlideFromLeft.Visible,
+#divModal.SlideFromRight.Visible,
+#divModal.SlideFromTop.Visible
+{
+	transform: translate(-50%, -50%);
+}
+
