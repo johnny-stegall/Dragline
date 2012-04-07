@@ -1,0 +1,92 @@
+.Toasty
+{
+  height: auto;
+  min-width: 250px;
+  position: fixed;
+  right: 10px;
+  top: 20px;
+  -moz-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  width: 10%;
+  z-index: 9995;
+}
+
+.Toasty > div
+{
+  background: #222;
+  border: 1px solid #000;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #333;
+  color: #FFF;
+  display: none;
+  opacity: 0.75;
+  margin: 10px 0;
+  padding: 10px;
+  position: relative;
+  width: 100%;
+}
+
+.Toasty > div.Error
+{
+  background: #F2DEDE;
+  border: 1px solid #FF8888;
+  color: #AA0000;
+}
+
+.Toasty > div.Information
+{
+  background: #D9EDF7;
+  border: 1px solid #8888FF;
+  color: #0000AA;
+}
+
+.Toasty > div.Light
+{
+  background: #EEE;
+  border: 1px solid #DDD;
+  color: #000;
+}
+
+.Toasty > div.Success
+{
+  background: #DFF0D8;
+  border: 1px solid #88FF88;
+  color: #00AA00;
+}
+
+.Toasty > div.Warning
+{
+  background: #FCF8E3;
+  border: 1px solid #E5B551;
+  color: #8A6D3B;
+}
+
+.Toasty > div > large
+{
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.Toasty > div > button
+{
+  background: transparent;
+  border: 0 none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 20px;
+  opacity: 0.5;
+  padding: 0;
+  position: absolute;
+  right: 5px;
+  top: 0;
+}
+
+.Toasty > div > img
+{
+  float: left;
+  height: 48px;
+  margin-right: 10px;
+  width: 48px;
+}
