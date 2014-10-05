@@ -1,0 +1,199 @@
+﻿@{
+  ViewBag.Title = "AdapTable Unit Tests";
+}
+
+@section PageStyles
+{
+  <link type="text/css" rel="stylesheet" href="~/css/adaptable.css" />
+  <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.15.0.css" />
+}
+
+@section PageScripts
+{
+  <script type="text/javascript" src="//code.jquery.com/qunit/qunit-1.16.0.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/blanket.js/1.1.4/blanket.min.js"></script>
+  <script type="text/javascript" src="~/scripts/adaptable.js" data-cover></script>
+}
+
+<div id="qunit"></div>
+
+<table id="tblAdapTable" class="Hot-Tracking">
+  <thead>
+    <tr>
+      <th class="Mobile-Hidden">Email Address</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Department</th>
+      <th class="Mobile-Hidden">Gender</th>
+      <th class="Mobile-Hidden">Ethnicity</th>
+      <th class="Mobile-Hidden">Hire Date</th>
+      <th>Salary</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody data-bind="foreach: Employees().Items">
+    <tr>
+      <td class="Mobile-Hidden" data-bind="text: Email"></td>
+      <td data-bind="text: FirstName"></td>
+      <td data-bind="text: LastName"></td>
+      <td data-bind="text: Department"></td>
+      <td class="Mobile-Hidden" data-bind="text: Gender"></td>
+      <td class="Mobile-Hidden" data-bind="text: Ethnicity"></td>
+      <td class="Mobile-Hidden" data-bind="text: HireDate"></td>
+      <td data-bind="text: Salary"></td>
+      <td>
+        <i class="fa fa-cog" style="cursor: pointer;" />
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+  // Setup some cached data
+  var AdapTableCache = [];
+  var AdapTableInstance = {};
+  AdapTableInstance.Layout = {};
+  AdapTableInstance.Layout.Columns = [{ "Aggregate": "None", "DataType": "String", "Header": "First Name", "IsFilterable": true, "IsGroupable": false, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "FirstName" }, { "Aggregate": "None", "DataType": "String", "Header": "Last Name", "IsFilterable": true, "IsGroupable": false, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "LastName" }, { "Aggregate": "None", "DataType": "String", "Header": "Email Address", "IsFilterable": true, "IsGroupable": false, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "Email" }, { "Aggregate": "None", "DataType": "String", "Header": "Department", "IsFilterable": true, "IsGroupable": true, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": false, "Name": "Department" }, { "Aggregate": "None", "DataType": "String", "Header": "Gender", "IsFilterable": true, "IsGroupable": true, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "Gender" }, { "Aggregate": "None", "DataType": "String", "Header": "Ethnicity", "IsFilterable": true, "IsGroupable": true, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "Ethnicity" }, { "Aggregate": "None", "DataType": "Timestamp", "Header": "Hire Date", "IsFilterable": true, "IsGroupable": false, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "HireDate" }, { "Aggregate": "Average", "DataType": "Numeric", "Header": "Salary", "IsFilterable": true, "IsGroupable": false, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "Salary" }, { "Aggregate": "None", "DataType": "None", "Header": null, "IsFilterable": false, "IsGroupable": false, "IsHidable": false, "IsMovable": false, "IsSortable": false, "IsVisible": true, "Name": null }];
+  AdapTableInstance.Layout.Query = { "Filters": [], "Groups": ["Department"], "PageSize": 10, "PageIndex": 0, "Sort": "LastName", "SortDirection": null };
+  AdapTableInstance.Data = {};
+  AdapTableInstance.Data.Aggregates = { "Engineering": { "Salary": 47221.75 }, "Marketing": { "Salary": 22222 }, "Support": { "Salary": 56943.875 }, "Operations": { "Salary": 66666 }, "Sales": { "Salary": 55555 } };
+  AdapTableInstance.Data.FilterValues = { "Gender": ["Female", "Male"], "Ethnicity": ["Asian", "Caucasian", "Latino", "Middle Eastern"], "FirstName": ["Bob", "Carlton", "Clement", "Dan", "Dave", "Ed", "Eric", "Erin", "Jennie", "Joanna", "John", "Ken", "Mark", "Michael", "Priya", "Robby", "Samantha", "Tiffany", "Tim", "Vicky"], "Email": ["bob.jensen@wolterskluwer.com", "carlton.edwards@wolterskluwer.com", "clement.cheng@wolterskluwer.com", "dan.jackson@wolterskluwer.com", "dave.wensel@wolterskluwer.com", "ed.santamaria@wolterskluwer.com", "eric.lee@wolterskluwer.com", "erin.mcdermott", "jennie.howard@wolterskluwer.com", "joanna.derfuhs@wolterskluwer.com", "john.stegall@wolterskluwer.com", "ken.charity@wolterskluwer.com", "mark.sisson@wolterskluwer.com", "michael.lin@wolterskluwer.com", "priya.yallapantula@wolterskluwer.com", "robby.millsap@wolterskluwer.com", "samantha.perez@wolterskluwer.com", "tiffany.fujiwara@wolterskluwer.com", "tim.pau@wolterskluwer.com", "vicky.yu@wolterskluwer.com"], "LastName": ["Charity", "Cheng", "Derfuhs", "Edwards", "Fujiwara", "Howard", "Jackson", "Jensen", "Lee", "Lin", "McDermott", "Millsap", "Pau", "Perez", "Santamaria", "Sisson", "Stegall", "Wensel", "Yallapantula", "Yu"], "Department": ["Engineering", "Marketing", "Operations", "Sales", "Support"] };
+  AdapTableInstance.Data.TotalItems = 20;
+  AdapTableInstance.Data.Pages = [];
+  AdapTableInstance.Data.Pages.push({ "Items": [{ "Department": "Engineering", "Email": "eric.lee@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Eric", "Gender": "Male", "HireDate": "2003-10-02T00:00:00", "LastName": "Lee", "Salary": 22222 }, { "Department": "Engineering", "Email": "michael.lin@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Michael", "Gender": "Male", "HireDate": "2011-03-09T00:00:00", "LastName": "Lin", "Salary": 33333 }, { "Department": "Engineering", "Email": "robby.millsap@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Robby", "Gender": "Male", "HireDate": "2012-12-12T00:00:00", "LastName": "Millsap", "Salary": 55555 }, { "Department": "Engineering", "Email": "tim.pau@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Tim", "Gender": "Male", "HireDate": "2002-08-09T00:00:00", "LastName": "Pau", "Salary": 77777 }, { "Department": "Engineering", "Email": "ed.santamaria@wolterskluwer.com", "Ethnicity": "Latino", "FirstName": "Ed", "Gender": "Male", "HireDate": "2012-03-17T00:00:00", "LastName": "Santamaria", "Salary": 77777 }, { "Department": "Engineering", "Email": "mark.sisson@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Mark", "Gender": "Male", "HireDate": "2011-09-11T00:00:00", "LastName": "Sisson", "Salary": 88888 }, { "Department": "Engineering", "Email": "john.stegall@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "John", "Gender": "Male", "HireDate": "2014-02-20T00:00:00", "LastName": "Stegall", "Salary": 11111 }, { "Department": "Engineering", "Email": "priya.yallapantula@wolterskluwer.com", "Ethnicity": "Middle Eastern", "FirstName": "Priya", "Gender": "Female", "HireDate": "2012-07-11T00:00:00", "LastName": "Yallapantula", "Salary": 11111 }, { "Department": "Marketing", "Email": "ken.charity@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Ken", "Gender": "Male", "HireDate": "2011-05-17T00:00:00", "LastName": "Charity", "Salary": 22222 }, { "Department": "Operations", "Email": "tiffany.fujiwara@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Tiffany", "Gender": "Female", "HireDate": "2007-01-12T00:00:00", "LastName": "Fujiwara", "Salary": 66666 }] });
+  AdapTableInstance.Data.Pages.push({ "Items": [{ "Department": "Sales", "Email": "bob.jensen@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Bob", "Gender": "Male", "HireDate": "2013-04-04T00:00:00", "LastName": "Jensen", "Salary": 11111 }, { "Department": "Sales", "Email": "dave.wensel@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Dave", "Gender": "Male", "HireDate": "2000-01-01T00:00:00", "LastName": "Wensel", "Salary": 99999 }, { "Department": "Support", "Email": "clement.cheng@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Clement", "Gender": "Male", "HireDate": "2010-06-05T00:00:00", "LastName": "Cheng", "Salary": 33333 }, { "Department": "Support", "Email": "joanna.derfuhs@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Joanna", "Gender": "Female", "HireDate": "2009-07-28T00:00:00", "LastName": "Derfuhs", "Salary": 44444 }, { "Department": "Support", "Email": "carlton.edwards@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Carlton", "Gender": "Male", "HireDate": "2011-09-09T00:00:00", "LastName": "Edwards", "Salary": 55555 }, { "Department": "Support", "Email": "jennie.howard@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Jennie", "Gender": "Female", "HireDate": "2012-05-19T00:00:00", "LastName": "Howard", "Salary": 88888 }, { "Department": "Support", "Email": "dan.jackson@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Dan", "Gender": "Male", "HireDate": "2008-11-13T00:00:00", "LastName": "Jackson", "Salary": 99999 }, { "Department": "Support", "Email": "erin.mcdermott", "Ethnicity": "Caucasian", "FirstName": "Erin", "Gender": "Female", "HireDate": "2013-04-01T00:00:00", "LastName": "McDermott", "Salary": 44444 }, { "Department": "Support", "Email": "samantha.perez@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Samantha", "Gender": "Female", "HireDate": "2010-06-01T00:00:00", "LastName": "Perez", "Salary": 66666 }, { "Department": "Support", "Email": "vicky.yu@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Vicky", "Gender": "Female", "HireDate": "2010-06-14T00:00:00", "LastName": "Yu", "Salary": 22222 }] });
+  AdapTableCache.push(AdapTableInstance);
+  localStorage.setItem('AdapTable: ' + document.location, JSON.stringify(AdapTableCache));
+
+  QUnit.test("AdapTable Constructor", function(assert)
+  {
+    // Arrange
+    var dependentScripts = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+    var ViewModel =
+    {
+      Employees: ko.observable(AdapTableInstance.Data.Pages[0])
+    };
+
+    ko.applyBindings(ViewModel, $("#tblAdapTable")[0]);
+    localStorage.clear();
+
+    // Act
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: false,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: false,
+      CanSort: false,
+      EnableAdvancedFiltering: false
+    });
+
+    // Assert
+    assert.ok(AdapTable.ScriptLoader);
+
+    window.setTimeout(function()
+    {
+      assert.ok(AdapTable.addActionButton);
+      assert.ok(AdapTable.cacheLayout);
+      assert.equal(tblAdapTable.parent().prop("tagName").toUpperCase(), "DIV");
+      assert.ok(tblAdapTable.parent().hasClass("AdapTable"));
+      assert.ok(tblAdapTable.next().prop("tagName").toUpperCase(), "SECTION");
+      assert.ok(tblAdapTable.prev().prop("tagName").toUpperCase(), "SECTION");
+      assert.equal(tblAdapTable.prev().children("div.Actions").length, 1);
+      assert.equal(tblAdapTable.parent().children().last().prop("tagName").toUpperCase(), "DIV");
+      assert.equal(tblAdapTable.parent().children().last().attr("role"), "menu");
+
+      dependentScripts();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Export Buttons", function(assert)
+  {
+    // Arrange
+    var dependentScripts = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    // Act
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: false,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: false,
+      CanSort: false,
+      EnableAdvancedFiltering: false,
+      ExportToExcelUrl: document.location,
+      ExportToPdfUrl: document.location
+    });
+
+    // Assert
+    window.setTimeout(function()
+    {
+      assert.equal(tblAdapTable.prev().find("i.fa-file-excel-o").length, 1);
+      assert.equal(tblAdapTable.prev().find("i.fa-file-pdf-o").length, 1);
+
+      dependentScripts();
+    }, 1500);
+  });
+
+  /*
+      CanChangeView: true,
+      CanFilter: true,
+      CanGroup: true,
+      CanMoveColumns: true,
+      CanSearch: true,
+      CanSort: true,
+      Data: {},
+      EnableAdvancedFiltering: true,
+      ExcludeFooter: false,
+      MovableColumns: null,
+      Layout: {},
+      ScriptExpiration: 24
+
+      $("#tblAdapTable").AdapTable(
+      {
+        CanChangeView: true,
+        CanFilter: true,
+        CanGroup: true,
+        CanMoveColumns: true,
+        CanSort: true,
+        Data:
+        {
+          Url: "http://localhost:40000/employees",
+          RequestType: "POST",
+          BeforeSend: function()
+          {
+            $.Modal.showDialog($("#spinner"), "Loading, Please Wait...");
+          },
+          Complete: function()
+          {
+            window.setTimeout(function()
+            {
+              $.Modal.hideDialog();
+            }, 100);
+          },
+          Success: function(data)
+          {
+            ViewModel.Employees(ko.mapping.fromJS(data));
+          },
+          Fail: function(jqXHR, textStatus, errorThrown)
+          {
+            throw errorThrown;
+          }
+        },
+        ExcludeFooter: true,
+        ExportToExcelUrl: "http://localhost:40000",
+        ExportToPdfUrl: "http://localhost:40000",
+        Layout:
+        {
+          Url: "http://localhost:40000/layout/13",
+          Success: null,
+          Fail: null
+        },
+        Paging: "Pager"
+      });
+  */
+</script>

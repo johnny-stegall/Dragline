@@ -1,0 +1,167 @@
+﻿@{
+    ViewBag.Title = "Modal Unit Tests";
+}
+
+@section PageStyles
+{
+  <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.15.0.css" />
+}
+
+@section PageScripts
+{
+  <script type="text/javascript" src="//code.jquery.com/qunit/qunit-1.16.0.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/blanket.js/1.1.4/blanket.min.js"></script>
+  <script src="~/scripts/modal.js" data-cover></script>
+}
+
+<div id="qunit"></div>
+
+<div>
+  <button type="button" data-modal="#facePalm" data-title="Fail" data-callback="modalCallback">Modal Dialog (Default)</button>
+  <button type="button" data-modal="#facePalm" data-title="Fail" data-options="{ 'Effect': 'Newspaper' }">Modal Dialog (Newspaper)</button>
+  <button type="button" data-modal="#facePalm" data-title="Fail" data-options="{ 'Effect': 'Fade' }">Modal Dialog (Fade)</button>
+</div>
+
+<script type="text/html" id="facePalm">
+  <div class="Text-Center">
+    <img src="/images/memes/jesus-facepalm.jpg" />
+  </div>
+</script>
+
+<script type="text/javascript">
+  var declarativeCallbacks = 0;
+
+  function modalCallback()
+  {
+    declarativeCallbacks++;
+  }
+
+  QUnit.test("Declarative Modal", function(assert)
+  {
+    // Arrange
+    var modalButtons = $("button[data-modal]");
+    var documentClickEvents = $._data($(document)[0], "events").click;
+    var waitForModal = assert.async();
+
+    // Assert
+    for (var clickIndex = 0; clickIndex < documentClickEvents.length; clickIndex++)
+    {
+      if (documentClickEvents[clickIndex].namespace === "modal.widgets")
+      {
+        assert.equal(documentClickEvents[clickIndex].selector, "[data-modal]");
+        break;
+      }
+    }
+
+    modalButtons.first().trigger("click");
+
+    // Assert
+    window.setTimeout(function()
+    {
+      assert.equal($("#divModal").length, 1);
+      assert.equal($("#divBackdrop").length, 1);
+      assert.equal($("#divModal").next().attr("id"), "divBackdrop");
+      assert.equal($("#divModal > header > h4").text(), "Fail");
+      assert.ok(declarativeCallbacks > 0);
+
+      waitForModal();
+    }, 500);
+  });
+
+  QUnit.test("Modal Show Dialog", function(assert)
+  {
+    // Arrange
+    var facePalm = $("#facePalm");
+    var modalTitle = "Epic Fail";
+    var waitForModal = assert.async();
+
+    // Act
+    $.Modal.showDialog(facePalm, modalTitle, { CloseButton: false });
+
+    // Assert
+    window.setTimeout(function()
+    {
+      assert.equal($("#divModal > header > h4").text(), modalTitle);
+      assert.equal($("#divModal > header > button").css("display"), "none");
+      waitForModal();
+
+      $.Modal.hideDialog();
+    }, 500);
+  });
+
+  QUnit.test("Modal Show Dialog: With Callback", function(assert)
+  {
+    // Arrange
+    var facePalm = $("#facePalm");
+    var modalTitle = "Epic Fail";
+    var waitForModal = assert.async();
+    var callbackInvoked = false;
+
+    // Act
+    $.Modal.showDialog(facePalm, modalTitle, { CloseButton: false }, function()
+    {
+      callbackInvoked = true;
+    });
+
+    // Assert
+    window.setTimeout(function()
+    {
+      assert.equal($("#divModal > header > h4").text(), modalTitle);
+      assert.equal($("#divModal > header > button").css("display"), "none");
+      waitForModal();
+
+      $.Modal.hideDialog();
+    }, 500);
+  });
+
+  QUnit.test("Modal Show Dialog: No Content Element", function(assert)
+  {
+    // Arrange
+    var facePalm = $("#facePalm");
+    var modalTitle = "Epic Fail";
+
+    // Act & Assert
+    assert.throws(function()
+    {
+      $.Modal.showDialog(null, modalTitle, { CloseButton: false });
+    }, "The content element is required.");
+  });
+
+  QUnit.test("Modal Show Dialog: No Title", function(assert)
+  {
+    // Arrange
+    var facePalm = $("#facePalm");
+    var modalTitle = "Epic Fail";
+
+    // Act & Assert
+    assert.throws(function()
+    {
+      $.Modal.showDialog(facePalm, "", { CloseButton: false });
+    }, "The content element is required.");
+  });
+
+  QUnit.test("Modal Hide Dialog", function(assert)
+  {
+    // Arrange
+    var facePalm = $("#facePalm");
+    var modalTitle = "Epic Fail";
+    var waitForModal = assert.async();
+
+    // Act
+    $.Modal.showDialog(facePalm, modalTitle, { CloseButton: false });
+
+    // Assert
+    window.setTimeout(function()
+    {
+      $.Modal.hideDialog();
+
+      window.setTimeout(function()
+      {
+        assert.equal($("#divModal").css("opacity"), 0);
+        assert.equal($("#divBackdrop").css("opacity"), 0);
+
+        waitForModal();
+      }, 500);
+    }, 500);
+  });
+</script>

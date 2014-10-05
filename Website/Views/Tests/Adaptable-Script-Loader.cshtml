@@ -1,0 +1,154 @@
+﻿@{
+  ViewBag.Title = "AdapTable Script Loader Unit Tests";
+}
+
+@section PageStyles
+{
+  <link type="text/css" rel="stylesheet" href="~/css/adaptable.css" />
+  <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.15.0.css" />
+}
+
+@section PageScripts
+{
+  <script type="text/javascript" src="//code.jquery.com/qunit/qunit-1.16.0.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/blanket.js/1.1.4/blanket.min.js"></script>
+  <script type="text/javascript" src="~/scripts/adaptable.js"></script>
+  <script type="text/javascript" src="~/scripts/adaptable/script-loader.js" data-cover></script>
+}
+
+<div id="qunit"></div>
+
+<script type="text/javascript">
+  QUnit.test("AdapTable Script Loader getScript()", function(assert)
+  {
+    // Arrange
+    var getScript = assert.async();
+    localStorage.clear();
+
+    // Act
+    AdapTable.ScriptLoader.getScript("paging.js", null, true);
+
+    // Assert
+    window.setTimeout(function()
+    {
+      var cachedScript = JSON.parse(localStorage.getItem("AdapTable: paging.js"));
+
+      assert.ok(AdapTable.Paging);
+      assert.ok(cachedScript);
+      assert.ok(cachedScript.Script);
+      assert.ok(cachedScript.Expiration > (+new Date()) + (23 * 1000 * 60 * 60));
+      getScript();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Script Loader getScript() No Caching", function(assert)
+  {
+    // Arrange
+    var getScript = assert.async();
+    localStorage.clear();
+
+    // Act
+    AdapTable.ScriptLoader.getScript("paging.js", -1, true);
+
+    // Assert
+    window.setTimeout(function()
+    {
+      assert.ok(AdapTable.Paging);
+      assert.equal(localStorage.getItem("AdapTable: paging.js"), null);
+      getScript();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Script Loader getScript() No Cache Expiration", function(assert)
+  {
+    // Arrange
+    var getScript = assert.async();
+    localStorage.clear();
+
+    // Act
+    AdapTable.ScriptLoader.getScript("paging.js", 0, true);
+
+    // Assert
+    window.setTimeout(function()
+    {
+      var cachedScript = JSON.parse(localStorage.getItem("AdapTable: paging.js"));
+      assert.ok(cachedScript.Expiration > (+new Date()) + (8759 * 1000 * 60 * 60));
+      getScript();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Script Loader getScript() Don't Inject", function(assert)
+  {
+    // Arrange
+    var getScript = assert.async();
+    localStorage.clear();
+
+    // Act
+    AdapTable.ScriptLoader.getScript("views.js", -1, false);
+
+    // Assert
+    window.setTimeout(function()
+    {
+      assert.equal(AdapTable.Views, null);
+      assert.equal(localStorage.getItem("AdapTable: views.js"), null);
+      getScript();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Script Loader getScript() With Callback", function(assert)
+  {
+    // Arrange
+    var getScript = assert.async();
+    var callbackInvoked = false;
+
+    localStorage.clear();
+
+    // Act
+    AdapTable.ScriptLoader.getScript("views.js", -1, true, function()
+    {
+      callbackInvoked = true;
+    });
+
+    // Assert
+    window.setTimeout(function()
+    {
+      assert.ok(callbackInvoked);
+      getScript();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Script Loader getScripts()", function(assert)
+  {
+    // Arrange
+    var scripts = ["sortable.js", "positioning.js", "grouping.js"];
+    var getScripts = assert.async();
+    var dependentScripts = assert.async();
+
+    // Act
+    AdapTable.ScriptLoader.getScripts(scripts, 0);
+
+    // Assert
+    window.setTimeout(function()
+    {
+      assert.ok(AdapTable.Sortable);
+      assert.ok(AdapTable.Positioning);
+      assert.ok(AdapTable.Grouping);
+
+      var sortableScript = JSON.parse(localStorage.getItem("AdapTable: sortable.js"));
+      var positioningScript = JSON.parse(localStorage.getItem("AdapTable: positioning.js"));
+      var groupingScript = JSON.parse(localStorage.getItem("AdapTable: grouping.js"));
+
+      assert.ok(sortableScript);
+      assert.ok(sortableScript.Script);
+      assert.ok(sortableScript.Expiration > (+new Date()) + (23 * 1000 * 60 * 60));
+      assert.ok(positioningScript);
+      assert.ok(positioningScript.Script);
+      assert.ok(positioningScript.Expiration > (+new Date()) + (23 * 1000 * 60 * 60));
+      assert.ok(groupingScript);
+      assert.ok(groupingScript.Script);
+      assert.ok(groupingScript.Expiration > (+new Date()) + (23 * 1000 * 60 * 60));
+
+      getScripts();
+    }, 1000);
+  });
+</script>
