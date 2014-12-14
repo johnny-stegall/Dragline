@@ -1,0 +1,228 @@
+﻿@{
+    ViewBag.Title = "DropDown Unit Tests";
+}
+
+@section PageStyles
+{
+  <link rel="stylesheet" href="~/css/dropdown.css" />
+  <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.15.0.css" />
+}
+
+@section PageScripts
+{
+  <script type="text/javascript" src="//code.jquery.com/qunit/qunit-1.16.0.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/blanket.js/1.1.4/blanket.min.js"></script>
+  <script src="~/scripts/dropdown.js" data-cover></script>
+}
+
+<div id="qunit"></div>
+
+<div>
+  <button type="button" id="btnDropDown" data-dropdown="#ulDropDown">DropDown</button>
+  <button type="button" id="btnNotDeclarative">DropDown</button>
+  <button type="button" id="btnFailDropDown">DropDown</button>
+</div>
+
+<ul id="ulDropDown" style="display: none;">
+  <li>
+    <a href="#">Action #1</a>
+  </li>
+  <li>
+    <a href="#">Action #2</a>
+  </li>
+  <li>
+    <a href="#">Action #3</a>
+  </li>
+</ul>
+
+<ul id="ulDropDown2" style="display: none;">
+  <li>
+    <a href="#">Action #1</a>
+  </li>
+  <li>
+    <a href="#">Action #2</a>
+  </li>
+  <li>
+    <a href="#">Action #3</a>
+  </li>
+</ul>
+
+<script type="text/javascript">
+  /****************************************************************************
+  * Cleanup after each test.
+  ****************************************************************************/
+  QUnit.testDone(function()
+  {
+    $("#btnNotDeclarative").DropDown("destroy");
+  });
+
+  QUnit.test("DropDown Constructor", function(assert)
+  {
+    // Arrange
+    var btnDropDown = $("#btnNotDeclarative");
+    var menu = $("#ulDropDown2");
+
+    // Act
+    btnDropDown.DropDown({ Menu: "#ulDropDown2" });
+
+    // Assert
+    assert.ok(btnDropDown.data("DropDown").Menu);
+    assert.ok(menu.hasClass("DropDown"));
+    assert.equal(menu.attr("data-role"), "DropDown");
+    assert.ok(menu.data("DropDown Activator"));
+
+    // Cleanup
+    btnDropDown.DropDown("destroy");
+  });
+
+  QUnit.test("DropDown Constructor: Declarative", function(assert)
+  {
+    // Arrange
+    var btnDropDown = $("#btnDropDown");
+    var menu = $("#ulDropDown");
+
+    // Assert
+    assert.ok(btnDropDown.data("DropDown").Menu);
+    assert.ok(menu.hasClass("DropDown"));
+    assert.equal(menu.attr("data-role"), "DropDown");
+    assert.equal(menu.data("activator"), null);
+  });
+
+  QUnit.test("DropDown Constructor: No Menu", function(assert)
+  {
+    // Arrange
+    var btnDropDown = $("#btnFailDropDown");
+
+    // Act & Assert
+    assert.throws(function()
+    {
+      btnDropDown.DropDown({ Menu: "#doesntExist" });
+    }, "The dropdown target could not be found.");
+  });
+
+  QUnit.test("DropDown Destructor", function(assert)
+  {
+    // Arrange
+    var btnDropDown = $("#btnNotDeclarative");
+    var menu = $("#ulDropDown2");
+    btnDropDown.DropDown({ Menu: "#ulDropDown" });
+
+    // Act
+    btnDropDown.DropDown("destroy");
+
+    // Assert
+    assert.ok(!btnDropDown.hasClass("Active"));
+    assert.equal(btnDropDown.attr("data-dropdown"), null);
+    assert.equal(btnDropDown.data("dropdown"), null);
+    assert.equal(btnDropDown.data("DropDown"), null);
+    assert.ok(!menu.is(":visible"));
+    assert.equal(menu.data("DropDown Activator"), null);
+    assert.equal($._data(btnDropDown, "events"), null);
+    assert.equal($._data(menu, "events"), null);
+  });
+
+  QUnit.test("Declarative DropDown Destructor", function(assert)
+  {
+    // Arrange
+    var btnDropDown = $("#btnDropDown");
+
+    // Act
+    btnDropDown.DropDown("destroy");
+
+    // Assert
+    assert.ok(!btnDropDown.hasClass("Active"));
+    assert.equal(btnDropDown.attr("data-dropdown"), null);
+    assert.equal(btnDropDown.data("dropdown"), null);
+    assert.equal(btnDropDown.data("DropDown"), null);
+    assert.equal($._data(btnDropDown, "events"), null);
+  });
+
+  QUnit.test("Toggle Menu", function(assert)
+  {
+    // Arrange
+    var btnDropDown = $("#btnNotDeclarative");
+    var menu = $("#ulDropDown2");
+    btnDropDown.DropDown({ Menu: "#ulDropDown2" });
+
+    // Act
+    btnDropDown.click();
+    var toggledVisible = menu.is(":visible");
+    var isActive = btnDropDown.hasClass("Active");
+    var hasFocus = btnDropDown.is(":focus");
+
+    $(document).click();
+    var toggledInvisible = !menu.is(":visible");
+    var notActive = !btnDropDown.hasClass("Active");
+
+    // Assert
+    assert.ok(toggledVisible);
+    assert.ok(isActive);
+    assert.ok(hasFocus);
+    assert.ok(toggledInvisible);
+    assert.ok(notActive);
+  });
+
+  QUnit.test("Disabled Toggle", function(assert)
+  {
+    // Arrange
+    var btnDropDown = $("#btnNotDeclarative").attr("disabled", true);
+    var menu = $("#ulDropDown2");
+    btnDropDown.DropDown({ Menu: "#ulDropDown2" });
+
+    // Act
+    btnDropDown.click();
+    var toggledVisible = menu.is(":visible");
+    var isActive = btnDropDown.hasClass("Active");
+
+    // Assert
+    assert.ok(!toggledVisible);
+    assert.ok(!isActive);
+
+    // Cleanup
+    btnDropDown.removeAttr("disabled");
+  });
+
+  QUnit.test("Right-Clicks Do Nothing", function(assert)
+  {
+    // Arrange
+    var btnDropDown = $("#btnNotDeclarative");
+    var menu = $("#ulDropDown2");
+    btnDropDown.DropDown({ Menu: "#ulDropDown2" });
+
+    // Act
+    btnDropDown.click();
+    $("nav").click({ which: 3 });
+
+    var toggledVisible = menu.is(":visible");
+    var isActive = btnDropDown.hasClass("Active");
+
+    // Assert
+    assert.ok(toggledVisible);
+    assert.ok(isActive);
+  });
+
+  QUnit.test("Arrow Key Highlight", function(assert)
+  {
+    // Arrange
+    var btnDropDown = $("#btnNotDeclarative");
+    var menu = $("#ulDropDown2");
+    btnDropDown.DropDown({ Menu: "#ulDropDown2" });
+
+    // Act
+    btnDropDown.click();
+
+    btnDropDown.keydown({ keyCode: 38 });
+    var firstItemLit = menu.children().first().is(":focus");
+
+    menu.keydown({ keyCode: 40 });
+    var lastItemLit = menu.children().last().is(":focus");
+
+    menu.keydown({ keyCode: 27 });
+    var menuFocused = menu.is(":focus");
+
+    // Assert
+    assert.ok(firstItemLit);
+    assert.ok(lastItemLit);
+    assert.ok(menuFocused);
+  });
+</script>
