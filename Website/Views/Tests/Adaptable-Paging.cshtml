@@ -1,0 +1,72 @@
+﻿@{
+  ViewBag.Title = "AdapTable Unit Tests";
+}
+
+@section PageStyles
+{
+  <link type="text/css" rel="stylesheet" href="~/css/adaptable.css" />
+  <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.15.0.css" />
+}
+
+@section PageScripts
+{
+  <script type="text/javascript" src="//code.jquery.com/qunit/qunit-1.16.0.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/blanket.js/1.1.4/blanket.min.js"></script>
+  <script type="text/javascript" src="~/scripts/adaptable.js"></script>
+  <script type="text/javascript" src="~/scripts/adaptable/paging.js" data-cover></script>
+}
+
+<div id="qunit"></div>
+
+<table id="tblAdapTable" class="Hot-Tracking">
+  <thead>
+    <tr>
+      <th class="Mobile-Hidden">Email Address</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Department</th>
+      <th class="Mobile-Hidden">Gender</th>
+      <th class="Mobile-Hidden">Ethnicity</th>
+      <th class="Mobile-Hidden">Hire Date</th>
+      <th>Salary</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody data-bind="foreach: Employees().Items">
+    <tr>
+      <td class="Mobile-Hidden" data-bind="text: Email"></td>
+      <td data-bind="text: FirstName"></td>
+      <td data-bind="text: LastName"></td>
+      <td data-bind="text: Department"></td>
+      <td class="Mobile-Hidden" data-bind="text: Gender"></td>
+      <td class="Mobile-Hidden" data-bind="text: Ethnicity"></td>
+      <td class="Mobile-Hidden" data-bind="text: HireDate"></td>
+      <td data-bind="text: Salary"></td>
+      <td>
+        <i class="fa fa-cog" style="cursor: pointer;" />
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+  QUnit.test("AdapTable Constructor", function(assert)
+  {
+    // Arrange
+    var getScript = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    // Act
+    $("#tblAdapTable").AdapTable();
+
+    // Assert
+    assert.ok(AdapTable.Views);
+
+    window.setTimeout(function()
+    {
+      assert.ok(AdapTable.addActionButton);
+      assert.ok(AdapTable.cacheLayout);
+      getScript();
+    }, 1000);
+  });
+</script>
