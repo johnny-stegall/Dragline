@@ -4,8 +4,8 @@
 * Copyright: 2008 John Stegall
 * License: MIT
 *
-* This plugin turns a DIV element into an accordion. It expects the element to
-* contain a HEADER and SECTION elment that act as the accordion key and
+* This plugin turns a DIV element into an accordion. It expects the DIV to
+* contain HEADER and SECTION elements that act as the accordion key and
 * content.
 ******************************************************************************/
 ;(function($, window, document, undefined)

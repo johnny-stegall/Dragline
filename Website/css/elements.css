@@ -103,7 +103,7 @@ body > nav > #btnMobileNav
   border-radius: 0;
   color: #FFF;
   font-size: 21px;
-  margin: 0;
+  margin: 3px 0 0 10px;
   outline: none;
   padding: 0;
 }
@@ -112,6 +112,12 @@ body > nav span.Badge
 {
   background-color: #FFF;
   color: #0768A9;
+}
+
+body > nav > a.Logo
+{
+  float: right;
+  margin-right: 10px;
 }
 
 body > #ulNav

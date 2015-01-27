@@ -12,6 +12,17 @@ img.Responsive
 ******************************************************************************/
 @media screen and (max-width: 767px)
 {
+  table
+  {
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    width: 100%;
+  }
+
   .Mobile-Hidden
   {
     display: none;
@@ -22,17 +33,6 @@ img.Responsive
     border: 1px solid #DDD;
     margin-bottom: 15px;
     overflow-x: auto;
-    overflow-y: hidden;
-    width: 100%;
-  }
-
-  table
-  {
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
-    border: 1px solid #ddd;
-    margin-bottom: 15px;
-    overflow-x: scroll;
     overflow-y: hidden;
     width: 100%;
   }
@@ -60,6 +60,12 @@ img.Responsive
     margin-left: 180px;
   }
 
+  body > nav > a.Logo
+  {
+    float: none;
+    margin-left: 10px;
+  }
+  
   body > nav > #btnMobileNav
   {
     display: none;
@@ -127,6 +133,31 @@ img.Responsive
   {
     padding: 15px;
     width: 750px;
+  }
+
+  .Width-40
+  {
+    width: 40%;
+  }
+
+  .Width-33
+  {
+    width: 33.33333333%;
+  }
+
+  .Width-25
+  {
+    width: 25%;
+  }
+
+  .Width-20
+  {
+    width: 20%;
+  }
+
+  .Width-10
+  {
+    width: 10%;
   }
 }
 
