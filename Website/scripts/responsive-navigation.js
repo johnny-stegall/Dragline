@@ -31,14 +31,11 @@
   $(document).ready(function()
   {
     // Allow declarative activation
-    $("[data-nav]").on("click.widgets.responsive-navigation", function()
+    $("[data-nav]").click(function()
     {
-      $.Navigation.toggle($(this).data("nav"));
-    });
+      var self = $(this);
 
-    $("body > #ulNav > li > a[href='javascript:void(0);']").on("click.widgets.responsive-navigation", function()
-    {
-      $(this).toggleClass("Active");
-    })
+      $.Navigation.toggle(self.data("nav"));
+    });
   });
 })(jQuery, window, document);

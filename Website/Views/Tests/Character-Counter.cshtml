@@ -164,7 +164,7 @@
 
     // Assert
     assert.equal(lblCount.text(), "Characters Remaining: 40");
-    assert.equal(lblCount.css("color"), "rgb(0, 136, 0)");
+    assert.equal(lblCount.css("color"), "rgb(122, 193, 67)");
   });
 
   QUnit.test("updateCount < 50%", function(assert)
@@ -181,7 +181,7 @@
 
     // Assert
     assert.equal(lblCount.text(), "Characters Remaining: 25");
-    assert.equal(lblCount.css("color"), "rgb(255, 123, 0)");
+    assert.equal(lblCount.css("color"), "rgb(168, 158, 52)");
   });
 
   QUnit.test("updateCount < 75%", function(assert)
@@ -198,6 +198,6 @@
 
     // Assert
     assert.equal(lblCount.text(), "Characters Remaining: 12");
-    assert.equal(lblCount.css("color"), "rgb(170, 0, 0)");
+    assert.equal(lblCount.css("color"), "rgb(239, 62, 66)");
   });
 </script>

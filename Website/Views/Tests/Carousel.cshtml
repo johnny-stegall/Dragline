@@ -17,13 +17,14 @@
 
 <div id="qunit"></div>
 
-<div id="divCarousel">
-  <img src="~/images/memes/binders-full-of-women.png" />
-  <img src="~/images/memes/challenge-accepted.png" />
-  <img src="~/images/memes/challenge-considered.png" />
-  <img src="~/images/memes/challenge-denied.png" />
-  <img src="~/images/memes/jesus-facepalm.png" />
-  <img src="~/images/memes/stole-my-poop-again.png" />
+<div id="divCarousel" style="width: 400px; height: 400px;">
+  <img src="~/images/memes/challenge-accepted.jpg" />
+  <img src="~/images/memes/expecting-batmobile.jpg" />
+  <img src="~/images/memes/grumpy-cat.jpg" />
+  <img src="~/images/memes/jesus-facepalm.jpg" />
+  <img src="~/images/memes/one-does-not-simply-fill-binders-with-women.jpg" />
+  <img src="~/images/memes/test-in-production.jpg" />
+  <img src="~/images/memes/what-if-i-told-you.jpg" />
 </div>
 
 <script type="text/javascript">
@@ -37,7 +38,7 @@
       divCarousel.Carousel("destroy");
   });
 
-  QUnit.test("Carousel Constructor", function(assert)
+  QUnit.test("Constructor", function(assert)
   {
     // Arrange
     var waitForImage = assert.async();
@@ -63,7 +64,7 @@
     });
   });
 
-  QUnit.test("Carousel Constructor: Show Indicators", function(assert)
+  QUnit.test("Show Indicators", function(assert)
   {
     // Arrange
     var divCarousel = $("#divCarousel");
@@ -77,7 +78,7 @@
     assert.ok(divCarousel.find("ol > li").first().hasClass("Active"));
   });
 
-  QUnit.test("Carousel Constructor: Show Next/Previous", function(assert)
+  QUnit.test("Show Next/Previous", function(assert)
   {
     // Arrange
     var divCarousel = $("#divCarousel");
@@ -96,7 +97,7 @@
     assert.ok(divCarousel.find("a.Right > i").hasClass("fa-chevron-right"));
   });
 
-  QUnit.test("Carousel Constructor: Slide Left", function(assert)
+  QUnit.test("Slide Left", function(assert)
   {
     // Arrange
     var divCarousel = $("#divCarousel");
@@ -120,7 +121,7 @@
     assert.ok(firstSeat.width() > 0);
   });
 
-  QUnit.test("Carousel Constructor: Don't Wrap", function(assert)
+  QUnit.test("Non-wrapping", function(assert)
   {
     // Arrange
     var waitForRotation = assert.async();
@@ -128,6 +129,7 @@
     divCarousel.Carousel({ Wrap: false });
     var lastSeatIndex;
 
+    // Act
     divCarousel.Carousel("rotate", "prev", function()
     {
       lastSeatIndex = divCarousel.Carousel("getSeatIndex");
@@ -136,12 +138,11 @@
     });
 
     waitForRotation = assert.async();
-    divCarousel.Carousel("rotate", 5, function()
+    divCarousel.Carousel("rotate", 6, function()
     {
       lastSeatIndex = divCarousel.Carousel("getSeatIndex");
       waitForRotation();
 
-      // Act
       waitForRotation = assert.async();
       divCarousel.Carousel("rotate", "next", function()
       {
@@ -154,7 +155,7 @@
     });
   });
 
-  QUnit.test("Carousel Destructor", function(assert)
+  QUnit.test("Destructor", function(assert)
   {
     // Arrange
     var divCarousel = $("#divCarousel");
@@ -163,7 +164,7 @@
     // Act
     divCarousel.Carousel("destroy");
 
-    // Act & Assert
+    // Assert
     assert.ok(!divCarousel.data("Carousel"));
     assert.ok(!divCarousel.hasClass("Carousel"));
     assert.equal($._data(divCarousel[0], "events"), null);
@@ -175,12 +176,11 @@
     assert.ok(!divCarousel.children().hasClass("Right"));
     assert.ok(divCarousel.children("header").each(function()
     {
-      return typeof (this.onmouseover) === "undefined"
-        || typeof (this.onmouseout) === "undefined";
+      return typeof (this.onmouseover) === "undefined" || typeof (this.onmouseout) === "undefined";
     }));
   });
 
-  QUnit.test("Carousel Fail", function(assert)
+  QUnit.test("Constructor Without ID", function(assert)
   {
     // Arrange
     var divCarousel = $("div.Carousel");
@@ -257,7 +257,7 @@
       for (var parameterIndex = 5; parameterIndex < rotateParameters.length - 3; parameterIndex++)
       {
         if (oldIndices[parameterIndex] === 0)
-          assert.equal(5, activeIndices[parameterIndex]);
+          assert.equal(6, activeIndices[parameterIndex]);
         else
           assert.equal(oldIndices[parameterIndex] - 1, activeIndices[parameterIndex]);
       }

@@ -205,18 +205,16 @@
       else if (!adaptableCache.Data.Pages[this.Element.data("Layout").Query.PageIndex])
         return false;
 
-      if (this.Options.Data.Success)
+      var queryResult =
       {
-        var queryResult =
-        {
-          Aggregates: adaptableCache.Data.Aggregates,
-          FilterValues: adaptableCache.Data.FilterValues,
-          Items: adaptableCache.Data.Pages[this.Element.data("Layout").Query.PageIndex].Items,
-          TotalItems: adaptableCache.Data.TotalItems
-        };
+        Aggregates: adaptableCache.Data.Aggregates,
+        FilterValues: adaptableCache.Data.FilterValues,
+        Items: adaptableCache.Data.Pages[this.Element.data("Layout").Query.PageIndex].Items,
+        TotalItems: adaptableCache.Data.TotalItems
+      };
 
+      if (this.Options.Data.Success)
         this.Options.Data.Success.call(this, queryResult);
-      }
 
       this.Element.data("Data", queryResult);
       return true;

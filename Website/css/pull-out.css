@@ -1,0 +1,70 @@
+﻿.Pull-Out
+{
+  border: 1px solid #DDD;
+  transition: bottom, left, right, top 0.35s ease-out;
+}
+
+.Pull-Out.Inline
+{
+  position: absolute;
+}
+
+.Pull-Out.Fixed
+{
+  position: fixed;
+}
+
+.Pull-Out > i.fa-chevron-bottom,
+.Pull-Out > i.fa-chevron-left,
+.Pull-Out > i.fa-chevron-right,
+.Pull-Out > i.fa-chevron-top
+{
+  background: #E3E3E3;
+  border: 1px solid #DDD;
+  border-radius: 3px;
+  cursor: pointer;
+  display: inline-block;
+  position: absolute;
+}
+
+.Pull-Out > i.fa-chevron-left.Anchor-Bottom,
+.Pull-Out > i.fa-chevron-right.Anchor-Bottom
+{
+  bottom: 0;
+}
+
+.Pull-Out > i.fa-chevron-left.Anchor-Middle,
+.Pull-Out > i.fa-chevron-right.Anchor-Middle
+{
+  top: 50%;
+}
+
+.Pull-Out > i.fa-chevron-left.Anchor-Middle,
+.Pull-Out > i.fa-chevron-right.Anchor-Middle
+{
+  top: 0;
+}
+
+.Pull-Out > i.fa-chevron-bottom
+{
+  left: 50%;
+}
+
+.Pull-Out > i.fa-chevron-left
+{
+  margin-top: -5px;
+  padding: 5px 2px 5px 3px;
+  left: -16px;
+}
+
+.Pull-Out > i.fa-chevron-right
+{
+  margin-top: -5px;
+  padding: 5px 2px 5px 3px;
+  right: -16px;
+}
+
+.Pull-Out > i.fa-chevron-top
+{
+  left: 50%;
+}

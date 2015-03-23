@@ -16,7 +16,7 @@ img.Responsive
   {
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar;
-    border: 1px solid #ddd;
+    border: 1px solid #DDD;
     margin-bottom: 15px;
     overflow-x: scroll;
     overflow-y: hidden;
@@ -81,7 +81,6 @@ img.Responsive
     margin: 0 50px;
     padding: 0;
     position: fixed;
-    text-align: center;
     top: 0;
     visibility: visible;
     width: 100%;
@@ -183,7 +182,7 @@ img.Responsive
 }
 
 /******************************************************************************
-* Desktop displays
+* Desktop computers
 ******************************************************************************/
 @media screen and (min-width: 1200px)
 {

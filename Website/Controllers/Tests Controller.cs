@@ -99,6 +99,11 @@ namespace Dragline.Controllers
       return View();
     }
 
+    public ActionResult Metaform()
+    {
+      return View();
+    }
+
     public ActionResult Modal()
     {
       return View();

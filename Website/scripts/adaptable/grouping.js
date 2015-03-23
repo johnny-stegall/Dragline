@@ -176,7 +176,7 @@
         newGroupRow.append(tableCell);
       }
 
-      if (!this.Instance.Element.find("th:nth-child(" + (columnIndex + 1) + ")").is(":visible"))
+      if (!this.Instance.Element.find("th:eq(" + columnIndex + ")").is(":visible"))
         newGroupRow.children(":last").hide();
     }
 
@@ -218,7 +218,7 @@
       for (var groupIndex = 0; groupIndex < groups.length; groupIndex++)
       {
         var group = groups[groupIndex];
-        var groupCellText = row.children(":nth-child(" + (group.ColumnIndex + 1) + ")").text().trim();
+        var groupCellText = row.children(":eq(" + group.ColumnIndex + ")").text().trim();
 
         if (group.Current !== groupCellText)
         {
@@ -296,7 +296,7 @@
       groupList.append("<li>" + column.Header + "</li>");
     else
     {
-      groupList.children(":nth-child(" + (index + 1) + ")")
+      groupList.children(":eq(" + index + ")")
         .before("<li>" + column.Header + "</li>");
     }
 

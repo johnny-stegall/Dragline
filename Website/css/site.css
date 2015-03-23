@@ -23,12 +23,6 @@ article:after
   clear: both;
 }
 
-code
-{
-  background: #ABCCE2;
-  color: #0768A9;
-}
-
 /******************************************************************************
 * Index page styling
 ******************************************************************************/
@@ -50,7 +44,7 @@ div.Topic > h2 > a > i
 ******************************************************************************/
 #divGridExample > div.Row-Padded > div
 {
-  background: #EEE;
+  background: #F5F5F5;
   border: 1px solid #999;
   padding: 1em;
   text-align: center;
@@ -102,7 +96,7 @@ div.Language-Example > div.Good
 
 div.ProgressBar
 {
-  background: #EEE;
+  background: #F5F5F5;
   border-radius: 3px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25) inset;
   height: 25px;
@@ -127,7 +121,8 @@ meter.Categorized::-webkit-meter-optimum-value
                                            #719FD1 95%, #719FD1 100%);
 }
 
+#txtPassword,
 #txtConfirmation
 {
-  width: 149px;
+  width: 150px;
 }

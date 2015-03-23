@@ -12,7 +12,7 @@
 {
   "use strict";
 
-  var defaults =
+  var _defaults =
   {
     Direction: "Right",
     Interval: 5000,
@@ -31,7 +31,7 @@
   var Carousel = function(element, options)
   {
     this.Element = element;
-    this.Options = $.extend({}, defaults, options);
+    this.Options = $.extend({}, _defaults, options);
     this.Direction = this.Options.Direction;
     this.Timer = null;
     this.IsSliding = false;

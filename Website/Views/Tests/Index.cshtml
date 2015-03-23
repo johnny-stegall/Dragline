@@ -71,7 +71,7 @@
     $("html, body").animate({ scrollTop: 0 });
   });
 
-  QUnit.test("Index Constructor", function(assert)
+  QUnit.test("Constructor", function(assert)
   {
     // Arrange
     var waitForScroll = assert.async();
@@ -111,7 +111,7 @@
     }, 2000);
   });
 
-  QUnit.test("Index Constructor: Targeted", function(assert)
+  QUnit.test("Targeted Constructor", function(assert)
   {
     // Arrange
     var ulContents = $("#ulContents");
@@ -143,7 +143,7 @@
     assert.equal(ulContents.find("[href='#h12.3'] > ul > li").length, h1_h2_3_h3_Count);
   });
 
-  QUnit.test("Index Constructor: Offset", function(assert)
+  QUnit.test("Constructor With Offset", function(assert)
   {
     // Arrange
     var ulContents = $("#ulContents");
@@ -157,7 +157,7 @@
     assert.equal(ulContents.position().top, OFFSET);
   });
 
-  QUnit.test("Index Destructor", function(assert)
+  QUnit.test("Destructor", function(assert)
   {
     // Arrange
     var ulContents = $("#ulContents");

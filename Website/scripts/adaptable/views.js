@@ -113,7 +113,7 @@
     var column = this.Instance.Element
       .children(this.Instance.Options.ExcludeFooter ? ":not(tfoot)" : "")
       .children("tr:not([role='group'])")
-      .children(":nth-child(" + (columnIndex + 1) + ")");
+      .children(":eq(" + columnIndex + ")");
 
     if (isVisible)
       column.show();

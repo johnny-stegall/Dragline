@@ -237,9 +237,6 @@
       Placeholder: null
     }, options);
 
-    if (settings.UnitTest)
-      return new Movable($(this), settings);
-
     // This proves bondage is a good thing
     return this.each(function()
     {

@@ -7,7 +7,7 @@ div.Accordion-Horizontal *
 div.Accordion-Vertical > header,
 div.Accordion-Horizontal > header
 {
-  background: #EEE;
+  background: #F5F5F5;
   border: 1px solid #DDD;
   border-radius: 5px;
   cursor: pointer;

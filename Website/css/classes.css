@@ -138,7 +138,7 @@ section.Container:after
 
 .Warning
 {
-  color: #EF9801;
+  color: #D38601;
 }
 
 .Width-100
@@ -237,20 +237,20 @@ blockquote.Text-Right > footer:after
 button.Dark
 {
   background: #666;
-  border: 1px solid #666;
+  border: 1px solid #444;
   color: #FFF;
 }
 
 button.Dark:focus,
 button.Dark:hover
 {
-  background: #888;
+  background: #999;
   border: 1px solid #888;
 }
 
 button.DropDown:after
 {
-  border-top: 4px solid;
+  border-top: 4px solid #000;
   border-right: 4px solid transparent;
   border-left: 4px solid transparent;
   content: "";
@@ -261,32 +261,45 @@ button.DropDown:after
   width: 0;
 }
 
+button.Light
+{
+  background: #999;
+  border: 1px solid #888;
+}
+
+button.Light:focus,
+button.Light:hover
+{
+  background: #CCC;
+  border: 1px solid #BBB;
+}
+
 button.Suggested
 {
   background: #0768A9;
-  border: 1px solid #0768A9;
+  border: 1px solid #2A668F;
   color: #FFF;
 }
 
 button.Suggested:focus,
 button.Suggested:hover
 {
-  background: #136898;
-  border: 1px solid #136898;
+  background: #000088;
+  border: 1px solid #0000AA;
   color: #FFF;
 }
 
 button.Risky
 {
   background: #AA0000;
-  border: 1px solid #AA0000;
+  border: 1px solid #CC0000;
   color: #FFF;
 }
 
 button.Risky:focus,
 button.Risky:hover
 {
-  background: #CC0000;
+  background: #AA0000;
   border: 1px solid #CC0000;
   color: #FFF;
 }
@@ -305,7 +318,7 @@ div.Buttons-Vertical > button,
 div.Buttons-Vertical > .Button
 {
   background-color: #FFF;
-  border-color: #CCC;
+  border-color: #DDD;
   color: #333;
   float: left;
   position: relative;
@@ -320,8 +333,8 @@ div.Buttons > .Button:hover,
 div.Buttons-Vertical > button:hover,
 div.Buttons-Vertical > .Button:hover
 {
-  background-color: #E0E0E0;
-  border-color: #CCC !important;
+  background-color: #E3E3E3;
+  border-color: #DDD !important;
   box-shadow: none;
   outline: none;
   z-index: 2;
@@ -332,7 +345,7 @@ div.Buttons > .Button:active,
 div.Buttons-Vertical > button:active,
 div.Buttons-Vertical > .Button:active
 {
-  background-color: #E0E0E0;
+  background-color: #E3E3E3;
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
   outline: 0;
 }
@@ -525,7 +538,7 @@ label.ScreenReader
 
 li.Divider
 {
-  background-color: #E0E0E0;
+  background-color: #E3E3E3;
   height: 1px;
   margin: 10px 0;
   overflow: hidden;
@@ -547,7 +560,7 @@ ol.Breadcrumb > li
 
 ol.Breadcrumb > li + li:before
 {
-  color: #CCC;
+  color: #333;
   content: "/\00a0";
   padding: 0 5px;
 }
@@ -635,7 +648,7 @@ span.Badge:empty
 
 span.Link
 {
-  color: #428BCA;
+  color: #0768A9;
   cursor: pointer;
   text-decoration: none;
 }
@@ -643,7 +656,7 @@ span.Link
 span.Link:hover,
 span.Link:focus
 {
-  color: #2A6496;
+  color: #000088;
   text-decoration: underline;
 }
 
@@ -666,22 +679,22 @@ table > tbody > tr.Active > td
 
 table > tbody > tr.Error > td
 {
-  background: #F2DEDE;
+  background-color: #F2DEDE;
 }
 
 table > tbody > tr.Info > td
 {
-  background: #D9EDF7;
+  background-color: #D9EDF7;
 }
 
 table > tbody > tr.Success > td
 {
-  background: #DFF0D8;
+  background-color: #DFF0D8;
 }
 
 table > tbody > tr.Warning > td
 {
-  background: #FCF8E3;
+  background-color: #FCF8E3;
 }
 
 table.Bordered
@@ -703,30 +716,10 @@ table.Bordered > thead > tr > th
 
 table.Striped > tbody > tr:nth-child(odd) > td
 {
-  background-color: #F9F9F9;
+  background-color: #F5F5F5;
 }
 
 table.Hot-Tracking > tbody > tr:hover > td
 {
   background-color: #F5F5F5;
-}
-
-tr.Error > td
-{
-  background-color: #F2DEDE;
-}
-
-tr.Info > td
-{
-  background-color: #D9EDF7;
-}
-
-tr.Success > td
-{
-  background-color: #DFF0D8;
-}
-
-tr.Warning > td
-{
-  background-color: #FCF8E3;
 }

@@ -12,11 +12,11 @@
 {
   "use strict";
 
-  var defaults =
+  var _defaults =
   {
-    Color: "#008800",
+    Color: "#00AA00",
     Danger: "#AA0000",
-    Warning: "#FF7B00"
+    Warning: "#D38601"
   };
 
   /****************************************************************************
@@ -28,7 +28,7 @@
   var CharacterCounter = function(element, options)
   {
     this.Element = element;
-    this.Options = $.extend({}, defaults, options);
+    this.Options = $.extend({}, _defaults, options);
 
     if (!element.prop("for") || element.prop("for") === "")
       throw "The for attribute is required.";

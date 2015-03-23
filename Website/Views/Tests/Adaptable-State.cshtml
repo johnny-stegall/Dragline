@@ -79,22 +79,20 @@
     ko.applyBindings(ViewModel, tblAdapTable[0]);
     localStorage.clear();
 
-    var adaptable = tblAdapTable.AdapTable(
+    tblAdapTable.AdapTable(
     {
       CanChangeView: false,
       CanFilter: false,
       CanGroup: false,
       CanMoveColumns: false,
       CanSearch: false,
-      CanSort: false,
-      EnableAdvancedFiltering: false,
-      UnitTest: true
+      CanSort: false
     });
 
     window.setTimeout(function()
     {
       // Act
-      adaptable.cacheLayout(AdapTableInstance.Layout);
+      tblAdapTable.AdapTable("cacheLayout", AdapTableInstance.Layout);
       var cachedLayout = JSON.parse(localStorage.getItem("AdapTable: " + document.location));
 
       // Assert

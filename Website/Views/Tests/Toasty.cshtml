@@ -19,7 +19,7 @@
 <div id="divToasty"></div>
 
 <script type="text/javascript">
-  QUnit.test("Toasty Constructor", function(assert)
+  QUnit.test("Constructor", function(assert)
   {
     // Arrange
     var divToasty = $("#divToasty");
@@ -242,16 +242,20 @@
   {
     // Arrange
     var divToasty = $("#divToasty");
-    divToasty.Toasty();
+    divToasty
+      .empty()
+      .Toasty()
+      .Toasty("removeAll");
 
+    // Act
     for (var toastIndex = 0; toastIndex < 10; toastIndex++)
       $.Toasty.add({ Title: "Limit 3", Text: "This toast alert won't show up if there are already 3 other alerts.", MaxMessages: 3 });
 
-    // Act
+    // Assert
     assert.equal(divToasty.children(":visible").length, 3);
   });
 
-  QUnit.test("Toast: Message Only", function(assert)
+  QUnit.test("Toast With Message Only", function(assert)
   {
     // Arrange
     var text = "This toast has no title.";
@@ -265,7 +269,7 @@
     assert.ok(divToasty.children().last().children().last().text(), text);
   });
 
-  QUnit.test("Toast: CssClass", function(assert)
+  QUnit.test("Toast With CssClass", function(assert)
   {
     // Arrange
     var cssClass = "Something";
@@ -279,7 +283,7 @@
     assert.ok(divToasty.children().last().hasClass(cssClass));
   });
 
-  QUnit.test("Fail Toast: No Parameters", function(assert)
+  QUnit.test("Toast Without Parameters", function(assert)
   {
     // Arrange
     var divToasty = $("#divToasty");
@@ -289,7 +293,7 @@
     assert.throws($.Toasty.add, "No message parameters supplied.");
   });
 
-  QUnit.test("Fail Toast: Type & CssClass Parameters", function(assert)
+  QUnit.test("Toast With Type & CssClass Parameters", function(assert)
   {
     // Arrange
     var divToasty = $("#divToasty");

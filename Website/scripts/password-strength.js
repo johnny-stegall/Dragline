@@ -11,7 +11,7 @@
 {
   "use strict";
 
-  var defaults =
+  var _defaults =
   {
     Confirmation:
     {
@@ -33,7 +33,7 @@
   var PasswordStrength = function(element, options)
   {
     this.Element = element;
-    this.Options = $.extend({}, defaults, options);
+    this.Options = $.extend({}, _defaults, options);
     this.Strength = null;
       
     element.wrap("<div class=\"PasswordStrength\" />");

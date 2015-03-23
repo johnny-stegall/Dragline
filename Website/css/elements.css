@@ -1,4 +1,20 @@
 ﻿/******************************************************************************
+* Embedded fonts
+******************************************************************************/
+@font-face
+{
+  font-family: Calibri;
+  src: url(fonts/Calibri.ttf);
+}
+
+@font-face
+{
+  font-family: "Shadows Into Light";
+  src: url("fonts/Shadows-Into-Light.ttf");
+  font-weight: bold;
+}
+
+/******************************************************************************
 * Apply to all elements
 ******************************************************************************/
 *
@@ -31,9 +47,9 @@ html
 
 body
 {
-  background-color: #FFF;
+  background: #FFF;
   color: #333;
-  font-family: Georgia, Helvetica, Arial, sans-serif;
+  font-family: Calibri, Arial, Helvitica, sans-serif;
   font-size: 14px;
   height: 100%;
   line-height: 1.5em;
@@ -64,38 +80,6 @@ body > nav
   z-index: 999;
 }
 
-body > nav a,
-body > #ulNav a
-{
-  color: #FFF;
-  display: inline-block;
-  line-height: 1.75em;
-  transition: color 0.5s ease-in-out;
-}
-
-body > nav a:focus,
-body > nav a:hover,
-body > #ulNav a:focus,
-body > #ulNav a:hover
-{
-  color: #FEFEAA;
-  outline: none;
-  text-decoration: none;
-}
-
-body > #ulNav > li > ul
-{
-  display: none;
-  list-style: none;
-  margin: 0 0 0 20px;
-  padding: 0;
-}
-
-body > #ulNav > li > a.Active + ul
-{
-  display: block;
-}
-
 body > nav > #btnMobileNav
 {
   background: transparent;
@@ -111,13 +95,45 @@ body > nav > #btnMobileNav
 body > nav span.Badge
 {
   background-color: #FFF;
-  color: #0768A9;
+  color: #000088;
 }
 
 body > nav > a.Logo
 {
   float: right;
   margin-right: 10px;
+}
+
+body > nav a,
+body > #ulNav a
+{
+  color: #FFF;
+  display: inline-block;
+  line-height: 1.75em;
+  transition: color 0.5s ease-in-out;
+}
+
+body > nav a:focus,
+body > nav a:hover,
+body > #ulNav a:focus,
+body > #ulNav a:hover
+{
+  color: #FFFFAA;
+  outline: none;
+  text-decoration: none;
+}
+
+body > #ulNav > li > ul
+{
+  display: none;
+  list-style: none;
+  margin: 0 0 0 20px;
+  padding: 0;
+}
+
+body > #ulNav > li > a.Active + ul
+{
+  display: block;
 }
 
 body > #ulNav
@@ -147,7 +163,7 @@ body > #ulNav > li
 
 body > #ulNav > li:not(:first-child)
 {
-  border-top: 1px solid #EEE;
+  border-top: 1px solid #DDD;
 }
 
 body > #ulNav > li i
@@ -179,7 +195,7 @@ select[disabled],
 textarea[disabled],
 textarea[readonly]
 {
-  background-color: #EEE;
+  background-color: #E3E3E3;
   cursor: not-allowed;
   opacity: 1;
 }
@@ -189,8 +205,8 @@ input:focus,
 select:focus,
 textarea:focus
 {
-  border-color: #66AFE9 !important;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px #0768A9;
+  border-color: #000088 !important;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px #000088;
   outline: 0;
 }
 
@@ -234,7 +250,7 @@ input[type="button"].Active,
 input[type="submit"]:active,
 input[type="submit"].Active
 {
-  background-color: #E0E0E0;
+  background-color: #E3E3E3;
   background-image: none;
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125) !important;
   outline: 0;
@@ -268,7 +284,7 @@ button:hover,
 input[type="button"]:hover,
 input[type="submit"]:hover
 {
-  background-color: #E0E0E0;
+  background-color: #E3E3E3;
   color: #333;
   text-decoration: none;
 }
@@ -287,9 +303,9 @@ textarea
 {
   background-color: #FFF;
   background-image: none;
-  border: 1px solid #888;
+  border: 1px solid #DDD;
   border-radius: 3px;
-  color: #444;
+  color: #333;
   display: block;
   height: 32px;
   line-height: 1.5em;
@@ -333,7 +349,7 @@ label
 legend
 {
   border: 0;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #DDD;
   color: #333;
   display: block;
   font-size: 21px;
@@ -345,7 +361,7 @@ legend
 
 output
 {
-  color: #555;
+  color: #333;
   display: block;
   font-size: 14px;
   line-height: 1.5em;
@@ -374,7 +390,7 @@ h5,
 h6
 {
   color: inherit;
-  font-family: inherit;
+  font-family: "Shadows Into Light";
   font-weight: 500;
   line-height: 1.1;
 }
@@ -400,7 +416,7 @@ h4 small,
 h5 small,
 h6 small
 {
-  color: #999;
+  color: #666;
   font-weight: normal;
   line-height: 1;
 }
@@ -421,7 +437,7 @@ h6 small
 
 h1
 {
-  border-bottom: 1px solid #EEE;
+  border-bottom: 1px solid #DDD;
   font-size: 36px;
   padding-bottom: 7px;
 }
@@ -466,7 +482,7 @@ samp
 
 a
 {
-  color: #428BCA;
+  color: #0768A9;
   cursor: pointer;
   text-decoration: none;
 }
@@ -474,7 +490,7 @@ a
 a:hover,
 a:focus
 {
-  color: #2A6496;
+  color: #000088;
   text-decoration: underline;
 }
 
@@ -487,7 +503,7 @@ a:focus
 
 abbr
 {
-  border-bottom: 1px dotted #888;
+  border-bottom: 1px dotted #DDD;
   cursor: help;
 }
 
@@ -500,7 +516,7 @@ address
 
 blockquote
 {
-  border-left: 5px solid #eee;
+  border-left: 5px solid #DDD;
   font-size: 17.5px;
   margin: 0 0 20px;
   padding: 10px 20px;
@@ -532,9 +548,9 @@ cite
 
 code
 {
-  background-color: #f9f2f4;
+  background: #A0C4E6;
   border-radius: 4px;
-  color: #c7254e;
+  color: #0768A9;
   font-size: 90%;
   padding: 2px 4px;
   white-space: nowrap;
@@ -545,9 +561,14 @@ kbd
   background-color: #333;
   border-radius: 3px;
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .25);
-  color: #fff;
+  color: #FFF;
   font-size: 90%;
   padding: 2px 4px;
+}
+
+mark
+{
+  background: #FAFA00;
 }
 
 p
@@ -609,8 +630,8 @@ dd
   margin-left: 0;
 }
 
-ul,
-ol
+ol,
+ul
 {
   margin-bottom: 10px;
   margin-top: 0;
@@ -683,7 +704,7 @@ meter
 
 meter::-webkit-meter-bar
 {
-  background: #EEE;
+  background: #E3E3E3;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
 
@@ -715,7 +736,7 @@ progress
   -o-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  background: #EEE;
+  background: #F5F5F5;
   border: 0 none;
   border-radius: 3px;
   color: #0768A9;
@@ -730,13 +751,14 @@ progress::-webkit-progress-bar
 
 progress[value]::-webkit-progress-bar
 {
-  background: #EEE;
+  background: #F5F5F5;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
 
 progress[value]::-webkit-progress-value
 {
   background: #0768A9;
+  border-radius: 3px;
 }
 
 progress:not([value])
@@ -760,7 +782,7 @@ img
 hr
 {
   border: 0;
-  border-top: 1px solid #EEE;
+  border-top: 1px solid #DDD;
   clear: both;
   margin-top: 20px;
   margin-bottom: 20px;

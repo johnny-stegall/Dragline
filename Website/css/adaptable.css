@@ -164,7 +164,7 @@ div.AdapTable div.Grouping > ol
 
 div.AdapTable div.Grouping > ol > li
 {
-  border: 1px solid #CCC;
+  border: 1px solid #DDD;
   border-radius: 5px;
   cursor: move;
   display: inline-block;
@@ -174,7 +174,7 @@ div.AdapTable div.Grouping > ol > li
 
 div.AdapTable div.Grouping > ol > li.ui-sortable-placeholder
 {
-  border: 1px solid #CCC;
+  border: 1px solid #DDD;
   border-radius: 5px;
   cursor: move;
   display: inline-block;
@@ -189,13 +189,13 @@ div.AdapTable div.Grouping > ol > li.ui-sortable-placeholder
 
 div.AdapTable div.Grouping i
 {
-  color: #CCC;
+  color: #E3E3E3;
   font-size: 24px;
 }
 
 div.AdapTable div.Grouping > div.Remove-Grouping
 {
-  color: #CCC;
+  color: #E3E3E3;
   display: none;
   float: right;
   margin-left: 25px;
@@ -290,7 +290,7 @@ div.AdapTable th.AdapTable-Movable
 
 div.AdapTable th.AdapTable-Movable:before
 {
-  color: #BBB;
+  color: #333;
   content: "\f142";
   display: inline-block;
   font-family: FontAwesome;
@@ -318,7 +318,7 @@ div.AdapTable td
 #olAdapTable > .ui-sortable-placeholder
 {
   background: #FFF !important;
-  border: 1px dashed #CCC;
+  border: 1px dashed #DDD;
   visibility: visible !important;
 }
 
@@ -358,6 +358,11 @@ div.AdapTable > section:last-of-type > ol > li:not(:first-child)
 
 @media print
 {
+  div.AdapTable > table > thead
+  {
+    display: table-header-group;
+  }
+
   div.AdapTable > table > tbody > tr[role="group"] > td
   {
     background: #F5F5F5 !important;

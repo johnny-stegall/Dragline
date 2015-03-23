@@ -12,5 +12,20 @@ namespace Dragline.Controllers
     {
       return View();
     }
+
+    public ActionResult Components()
+    {
+      return View();
+    }
+
+    public ActionResult Principles()
+    {
+      return View();
+    }
+
+    public ActionResult Styling()
+    {
+      return View();
+    }
   }
 }

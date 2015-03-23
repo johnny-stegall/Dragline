@@ -9,7 +9,7 @@
 ******************************************************************************/
 // TODO: Finish unit tests
 // BUG: Removing the last group throws a server-side error
-// BUG: Sorting messes up the UI?
+// BUG: Sorting messes up the UI
 // BUG: Filtering is broken with the modal
 // ENHANCEMENT: Lookups to server/client-side filtering with DataType: "Lookup" (remove "Text" and change to "String" DataType)
 // ENHANCEMENT: Add filters operators to "Text" and "Numeric" DataTypes
@@ -25,6 +25,20 @@
   window.AdapTable = (function()
   {
     var basePathRegex = /(^|.*[\\\/])adaptable\.js(?:\?.*|;.*)?$/i;
+    var _defaults =
+    {
+      CanChangeView: true,
+      CanFilter: true,
+      CanGroup: true,
+      CanMoveColumns: true,
+      CanSearch: true,
+      CanSort: true,
+      Data: {},
+      ExcludeFooter: false,
+      MovableColumns: null,
+      Layout: {},
+      ScriptExpiration: 24
+    };
 
     /**************************************************************************
     * The AdapTable object, which is a "static" object definition.
@@ -47,7 +61,7 @@
       _init: function(element, options)
       {
         this.Element = element;
-        this.Options = options;
+        this.Options = $.extend({}, _defaults, options);
 
         loadScriptLoader(this.Options.ScriptExpiration);
 
@@ -58,57 +72,28 @@
           AdapTable.ScriptLoader.getScripts(modules, self.Options.ScriptExpiration, function()
           {
             initializeModules.call(self);
-            self.setupDom();
+            setupDom.call(self);
             self.getLayout();
           });
         });
       },
 
-      /************************************************************************
-      * Keep references to DOM elements and injects additional elements as
-      * necessary.
-      ************************************************************************/
-      setupDom: function()
+      /****************************************************************************
+      * Frees resources used by the plugin and unbinds event-handlers.
+      ****************************************************************************/
+      destroy: function()
       {
-        if (!this.Element.children("thead").length)
-          throw "Table headers are required; no THEAD element found.";
-        else if (!this.Element.find("thead > tr > th").length)
-          throw "Table headers are required; no TH elements found.";
+        this.Element.prev().remove();
+        this.Element.next().remove();
+        this.Element.parent().children("div[role='menu']").remove();
 
         this.Element
-          .wrap("<div class=\"AdapTable\" />")
-          .before("<section />")
-          .after("<section />");
-
-        this.Container = this.Element.parent("div.AdapTable");
-        this.Container.children("section:first-child")
-          .append("<div class=\"Actions\" />")
-          .append("<div style=\"clear: both;\" />");
-
-        this.Menu = $("<div />")
-          .attr("role", "menu")
-          .on("click", function(e) { e.stopPropagation(); });
-
-        this.Container.append(this.Menu);
-
-        $(document).on("click.widgets.adaptable", $.proxy(this.toggleMenu, this));
-
-        if (this.Options.ExportToExcelUrl)
-        {
-          this.addActionButton("fa-file-excel-o", "Export to Excel", function()
-          {
-            $.get(this.Options.ExportToExcelUrl);
-          });
-        }
-
-        if (this.Options.ExportToPdfUrl)
-        {
-          this.addActionButton("fa-file-pdf-o", "Export to PDF", function()
-          {
-            $.get(this.Options.ExportToPdfUrl);
-          });
-        }
-      },
+          .removeData("AdapTable")
+          .removeData("Layout")
+          .removeData("Data")
+          .unwrap("div.AdapTable")
+          .off(".widgets.adaptable");
+      }
     };
 
     /**************************************************************************
@@ -310,6 +295,55 @@
       document.getElementsByTagName("head")[0].appendChild(script);
     }
 
+    /************************************************************************
+    * Keep references to DOM elements and injects additional elements as
+    * necessary.
+    *
+    * @this An instance of AdapTable.
+    ************************************************************************/
+    function setupDom()
+    {
+      if (!this.Element.children("thead").length)
+        throw "Table headers are required; no THEAD element found.";
+      else if (!this.Element.find("thead > tr > th").length)
+        throw "Table headers are required; no TH elements found.";
+
+      this.Element
+        .wrap("<div class=\"AdapTable\" />")
+        .before("<section />")
+        .after("<section />");
+
+      this.Container = this.Element.parent("div.AdapTable");
+      this.Container.children("section:first-child")
+        .append("<div class=\"Actions\" />")
+        .append("<div style=\"clear: both;\" />");
+
+      this.Menu = $("<div />")
+        .attr("role", "menu")
+        .on("click", function(e) { e.stopPropagation(); });
+
+      this.Container.append(this.Menu);
+
+      $(document).on("click.widgets.adaptable", $.proxy(this.toggleMenu, this));
+
+      var self = this;
+      if (this.Options.ExportToExcelUrl)
+      {
+        this.addActionButton("fa-file-excel-o", "Export to Excel", function()
+        {
+          $.get(self.Options.ExportToExcelUrl);
+        });
+      }
+
+      if (this.Options.ExportToPdfUrl)
+      {
+        this.addActionButton("fa-file-pdf-o", "Export to PDF", function()
+        {
+          $.get(self.Options.ExportToPdfUrl);
+        });
+      }
+    }
+
     return AdapTable;
   })();
 
@@ -318,28 +352,46 @@
   ****************************************************************************/
   $.fn.AdapTable = function(options)
   {
-    var settings = $.extend(
-    {
-      CanChangeView: true,
-      CanFilter: true,
-      CanGroup: true,
-      CanMoveColumns: true,
-      CanSearch: true,
-      CanSort: true,
-      Data: {},
-      EnableAdvancedFiltering: true,
-      ExcludeFooter: false,
-      MovableColumns: null,
-      Layout: {},
-      ScriptExpiration: 24,
-      UnitTest: false
-    }, options);
+    var args = arguments;
 
-    if (settings.UnitTest)
+    if (options === undefined || typeof (options) === "object")
     {
-      var adaptable = Object.create(AdapTable);
-      adaptable._init($(this), settings);
-      return adaptable;
+      // This proves bondage is a good thing
+      return this.each(function()
+      {
+        // Allow the plugin to only be instantiated once
+        if ($.data(this, "AdapTable") === undefined)
+        {
+          var adaptable = Object.create(AdapTable);
+          adaptable._init($(this), options);
+          $.data(this, "AdapTable", adaptable);
+        }
+      });
+    }
+    else if (typeof (options) === "string")
+    {
+      // Cache the method call to make it possible to return a value
+      var result;
+
+      this.each(function()
+      {
+        var instance = $.data(this, "AdapTable");
+
+        // Call the method with any parameters also passed
+        if (AdapTable.isPrototypeOf(instance) && typeof (instance[options]) === "function")
+          result = instance[options].apply(instance, Array.prototype.slice.call(args, 1));
+        else
+        {
+          for (var property in instance)
+          {
+            if (typeof (instance[property]) === "object" && typeof (instance[property][options]) === "function")
+              result = instance[property][options].apply(instance[property], Array.prototype.slice.call(args, 1));
+          }
+        }
+      });
+
+      // Return the method's return value; otherwise maintain chainability
+      return result !== undefined ? result : this;
     }
 
     // This proves bondage is a good thing

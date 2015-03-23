@@ -59,7 +59,7 @@
       divAccordion.Accordion("destroy");
   });
 
-  QUnit.test("Accordion Constructor", function(assert)
+  QUnit.test("Constructor", function(assert)
   {
     // Arrange
     var divAccordion = $("#divAccordion");
@@ -74,7 +74,7 @@
     assert.ok($._data(divAccordion[0], "events"));
   });
 
-  QUnit.test("Accordion Constructor: Horizontal", function(assert)
+  QUnit.test("Horizontal Constructor", function(assert)
   {
     // Arrange
     var divAccordion = $("#divAccordion");
@@ -86,7 +86,7 @@
     assert.ok(divAccordion.hasClass("Accordion-Horizontal"));
   });
 
-  QUnit.test("Accordion Constructor: No Keys", function(assert)
+  QUnit.test("Constructor Without Keys", function(assert)
   {
     // Arrange
     var divNotAccordion = $("#divNotAccordion");
@@ -95,7 +95,7 @@
     assert.throws(divNotAccordion.Accordion, "No keys could be found.");
   });
 
-  QUnit.test("Accordion Constructor: Multiple Expanded Keys", function(assert)
+  QUnit.test("Constructor With Multiple Expanded Keys", function(assert)
   {
     // Arrange
     var divAccordion = $("#divAccordion");
@@ -108,7 +108,7 @@
     divAccordion.children("header").removeClass("Expanded");
   });
 
-  QUnit.test("Accordion Destructor", function(assert)
+  QUnit.test("Destructor", function(assert)
   {
     // Arrange
     var divAccordion = $("#divAccordion");
@@ -117,7 +117,7 @@
     // Act
     divAccordion.Accordion("destroy");
 
-    // Act & Assert
+    // Assert
     assert.ok(!divAccordion.data("Accordion"));
     assert.equal($._data(divAccordion[0], "events"), null);
     assert.ok(!divAccordion.hasClass("Accordion-Vertical"));

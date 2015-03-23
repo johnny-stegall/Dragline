@@ -101,7 +101,7 @@
 {
   background: #ACFFFF;
   border-radius: 0.2em;
-  box-shadow: 0 3.5em #EEE; /* container height - part height */
+  box-shadow: 0 3.5em #F5F5F5; /* container height - part height */
   content: "";
   height: 1.5em;
   left: 2.25em; /* (container width - part width) / 2  */

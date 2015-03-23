@@ -115,7 +115,7 @@
         .each(function(rowIndex, tableCell)
         {
           // Get a reference to the actual cell the contains the data
-          var dataCell = $(tableCell).parent().children(":nth-child(" + (columnIndex + 1) + ")");
+          var dataCell = $(tableCell).parent().children(":eq(" + columnIndex + ")");
           var tableRow = $("<tr />");
 
           for (var attribute in tableAttributes.RowAttributes[rowIndex])

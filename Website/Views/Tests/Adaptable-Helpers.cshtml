@@ -50,38 +50,9 @@
   </tbody>
 </table>
 
-<nav id="navMenu" role="menu" style="display: none;">
-  <div>Alpha</div>
-  <div>Bravo</div>
-  <div>Charlie</div>
-  <div>Delta</div>
-  <div>Echo</div>
-  <div>Foxtrot</div>
-  <div>Golf</div>
-  <div>Hotel</div>
-  <div>India</div>
-  <div>Juliett</div>
-  <div>Kilo</div>
-  <div>Lima</div>
-  <div>Mike</div>
-  <div>November</div>
-  <div>Oscar</div>
-  <div>Papa</div>
-  <div>Quebec</div>
-  <div>Romeo</div>
-  <div>Sierra</div>
-  <div>Tango</div>
-  <div>Uniform</div>
-  <div>Victor</div>
-  <div>Whiskey</div>
-  <div>Xray</div>
-  <div>Yankee</div>
-  <div>Zulu</div>
-</nav>
-
 <script type="text/javascript">
   // Setup some cached data
-  var AdapTableCache = [];
+  var AdapTableCache = { Instances: [] };
   var AdapTableInstance = {};
   AdapTableInstance.Layout = {};
   AdapTableInstance.Layout.Columns = [{ "Aggregate": "None", "DataType": "String", "Header": "First Name", "IsFilterable": true, "IsGroupable": false, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "FirstName" }, { "Aggregate": "None", "DataType": "String", "Header": "Last Name", "IsFilterable": true, "IsGroupable": false, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "LastName" }, { "Aggregate": "None", "DataType": "String", "Header": "Email Address", "IsFilterable": true, "IsGroupable": false, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "Email" }, { "Aggregate": "None", "DataType": "String", "Header": "Department", "IsFilterable": true, "IsGroupable": true, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": false, "Name": "Department" }, { "Aggregate": "None", "DataType": "String", "Header": "Gender", "IsFilterable": true, "IsGroupable": true, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "Gender" }, { "Aggregate": "None", "DataType": "String", "Header": "Ethnicity", "IsFilterable": true, "IsGroupable": true, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "Ethnicity" }, { "Aggregate": "None", "DataType": "Timestamp", "Header": "Hire Date", "IsFilterable": true, "IsGroupable": false, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "HireDate" }, { "Aggregate": "Average", "DataType": "Numeric", "Header": "Salary", "IsFilterable": true, "IsGroupable": false, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "Salary" }, { "Aggregate": "None", "DataType": "None", "Header": null, "IsFilterable": false, "IsGroupable": false, "IsHidable": false, "IsMovable": false, "IsSortable": false, "IsVisible": true, "Name": null }];
@@ -93,8 +64,8 @@
   AdapTableInstance.Data.Pages = [];
   AdapTableInstance.Data.Pages.push({ "Items": [{ "Department": "Engineering", "Email": "eric.lee@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Eric", "Gender": "Male", "HireDate": "2003-10-02T00:00:00", "LastName": "Lee", "Salary": 22222 }, { "Department": "Engineering", "Email": "michael.lin@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Michael", "Gender": "Male", "HireDate": "2011-03-09T00:00:00", "LastName": "Lin", "Salary": 33333 }, { "Department": "Engineering", "Email": "robby.millsap@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Robby", "Gender": "Male", "HireDate": "2012-12-12T00:00:00", "LastName": "Millsap", "Salary": 55555 }, { "Department": "Engineering", "Email": "tim.pau@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Tim", "Gender": "Male", "HireDate": "2002-08-09T00:00:00", "LastName": "Pau", "Salary": 77777 }, { "Department": "Engineering", "Email": "ed.santamaria@wolterskluwer.com", "Ethnicity": "Latino", "FirstName": "Ed", "Gender": "Male", "HireDate": "2012-03-17T00:00:00", "LastName": "Santamaria", "Salary": 77777 }, { "Department": "Engineering", "Email": "mark.sisson@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Mark", "Gender": "Male", "HireDate": "2011-09-11T00:00:00", "LastName": "Sisson", "Salary": 88888 }, { "Department": "Engineering", "Email": "john.stegall@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "John", "Gender": "Male", "HireDate": "2014-02-20T00:00:00", "LastName": "Stegall", "Salary": 11111 }, { "Department": "Engineering", "Email": "priya.yallapantula@wolterskluwer.com", "Ethnicity": "Middle Eastern", "FirstName": "Priya", "Gender": "Female", "HireDate": "2012-07-11T00:00:00", "LastName": "Yallapantula", "Salary": 11111 }, { "Department": "Marketing", "Email": "ken.charity@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Ken", "Gender": "Male", "HireDate": "2011-05-17T00:00:00", "LastName": "Charity", "Salary": 22222 }, { "Department": "Operations", "Email": "tiffany.fujiwara@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Tiffany", "Gender": "Female", "HireDate": "2007-01-12T00:00:00", "LastName": "Fujiwara", "Salary": 66666 }] });
   AdapTableInstance.Data.Pages.push({ "Items": [{ "Department": "Sales", "Email": "bob.jensen@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Bob", "Gender": "Male", "HireDate": "2013-04-04T00:00:00", "LastName": "Jensen", "Salary": 11111 }, { "Department": "Sales", "Email": "dave.wensel@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Dave", "Gender": "Male", "HireDate": "2000-01-01T00:00:00", "LastName": "Wensel", "Salary": 99999 }, { "Department": "Support", "Email": "clement.cheng@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Clement", "Gender": "Male", "HireDate": "2010-06-05T00:00:00", "LastName": "Cheng", "Salary": 33333 }, { "Department": "Support", "Email": "joanna.derfuhs@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Joanna", "Gender": "Female", "HireDate": "2009-07-28T00:00:00", "LastName": "Derfuhs", "Salary": 44444 }, { "Department": "Support", "Email": "carlton.edwards@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Carlton", "Gender": "Male", "HireDate": "2011-09-09T00:00:00", "LastName": "Edwards", "Salary": 55555 }, { "Department": "Support", "Email": "jennie.howard@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Jennie", "Gender": "Female", "HireDate": "2012-05-19T00:00:00", "LastName": "Howard", "Salary": 88888 }, { "Department": "Support", "Email": "dan.jackson@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Dan", "Gender": "Male", "HireDate": "2008-11-13T00:00:00", "LastName": "Jackson", "Salary": 99999 }, { "Department": "Support", "Email": "erin.mcdermott", "Ethnicity": "Caucasian", "FirstName": "Erin", "Gender": "Female", "HireDate": "2013-04-01T00:00:00", "LastName": "McDermott", "Salary": 44444 }, { "Department": "Support", "Email": "samantha.perez@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Samantha", "Gender": "Female", "HireDate": "2010-06-01T00:00:00", "LastName": "Perez", "Salary": 66666 }, { "Department": "Support", "Email": "vicky.yu@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Vicky", "Gender": "Female", "HireDate": "2010-06-14T00:00:00", "LastName": "Yu", "Salary": 22222 }] });
-  AdapTableCache.push(AdapTableInstance);
-  localStorage.setItem('AdapTable: ' + document.location, JSON.stringify(AdapTableCache));
+  AdapTableCache.Instances.push(AdapTableInstance);
+  localStorage.setItem("AdapTable: " + document.location, JSON.stringify(AdapTableCache));
 
   QUnit.test("AdapTable Helper: addActionButton", function(assert)
   {
@@ -111,22 +82,20 @@
     ko.applyBindings(ViewModel, tblAdapTable[0]);
     localStorage.clear();
 
-    var adaptable = tblAdapTable.AdapTable(
+    tblAdapTable.AdapTable(
     {
       CanChangeView: false,
       CanFilter: false,
       CanGroup: false,
       CanMoveColumns: false,
       CanSearch: false,
-      CanSort: false,
-      EnableAdvancedFiltering: false,
-      UnitTest: true
+      CanSort: false
     });
 
     // Act
     window.setTimeout(function()
     {
-      adaptable.addActionButton("fa-anchor", tooltip, function()
+      tblAdapTable.AdapTable("addActionButton", "fa-anchor", tooltip, function()
       {
         callbackExecuted = true;
       });
@@ -147,11 +116,12 @@
   QUnit.test("AdapTable Helper: bubbleArrayElements Right-to-Left", function(assert)
   {
     // Arrange
+    var tblAdapTable = $("#tblAdapTable");
     var array = [0, 1, 2, 3, 4, 5, 6];
     var expected = [0, 1, 2, 4, 3, 5, 6];
 
     // Act
-    AdapTable.bubbleArrayElements(array, 4, 3);
+    tblAdapTable.AdapTable("bubbleArrayElements", array, 4, 3);
 
     // Assert
     assert.deepEqual(array, expected);
@@ -160,11 +130,12 @@
   QUnit.test("AdapTable Helper: bubbleArrayElements Left-to-Right", function(assert)
   {
     // Arrange
+    var tblAdapTable = $("#tblAdapTable");
     var array = [0, 1, 2, 3, 4, 5, 6];
     var expected = [0, 1, 2, 4, 3, 5, 6];
 
     // Act
-    AdapTable.bubbleArrayElements(array, 3, 4);
+    tblAdapTable.AdapTable("bubbleArrayElements", array, 3, 4);
 
     // Assert
     assert.deepEqual(array, expected);
@@ -173,11 +144,12 @@
   QUnit.test("AdapTable Helper: bubbleArrayElements Right-to-Left 2+", function(assert)
   {
     // Arrange
+    var tblAdapTable = $("#tblAdapTable");
     var array = [0, 1, 2, 3, 4, 5, 6];
     var expected = [0, 5, 1, 2, 3, 4, 6];
 
     // Act
-    AdapTable.bubbleArrayElements(array, 5, 1);
+    tblAdapTable.AdapTable("bubbleArrayElements", array, 5, 1);
 
     // Assert
     assert.deepEqual(array, expected);
@@ -186,11 +158,12 @@
   QUnit.test("AdapTable Helper: bubbleArrayElements Left-to-Right 2+", function(assert)
   {
     // Arrange
+    var tblAdapTable = $("#tblAdapTable");
     var array = [0, 1, 2, 3, 4, 5, 6];
     var expected = [0, 2, 3, 4, 5, 1, 6];
 
     // Act
-    AdapTable.bubbleArrayElements(array, 1, 5);
+    tblAdapTable.AdapTable("bubbleArrayElements", array, 1, 5);
 
     // Assert
     assert.deepEqual(array, expected);
@@ -199,11 +172,12 @@
   QUnit.test("AdapTable Helper: bubbleArrayElements Right-to-Left Left-Edge", function(assert)
   {
     // Arrange
+    var tblAdapTable = $("#tblAdapTable");
     var array = [0, 1, 2, 3, 4, 5, 6];
     var expected = [5, 0, 1, 2, 3, 4, 6];
 
     // Act
-    AdapTable.bubbleArrayElements(array, 5, 0);
+    tblAdapTable.AdapTable("bubbleArrayElements", array, 5, 0);
 
     // Assert
     assert.deepEqual(array, expected);
@@ -212,11 +186,12 @@
   QUnit.test("AdapTable Helper: bubbleArrayElements Right-to-Left Both Edges", function(assert)
   {
     // Arrange
+    var tblAdapTable = $("#tblAdapTable");
     var array = [0, 1, 2, 3, 4, 5, 6];
     var expected = [6, 0, 1, 2, 3, 4, 5];
 
     // Act
-    AdapTable.bubbleArrayElements(array, 6, 0);
+    tblAdapTable.AdapTable("bubbleArrayElements", array, 6, 0);
 
     // Assert
     assert.deepEqual(array, expected);
@@ -225,11 +200,12 @@
   QUnit.test("AdapTable Helper: bubbleArrayElements Left-to-Right Right-Edge", function(assert)
   {
     // Arrange
+    var tblAdapTable = $("#tblAdapTable");
     var array = [0, 1, 2, 3, 4, 5, 6];
     var expected = [0, 2, 3, 4, 5, 6, 1];
 
     // Act
-    AdapTable.bubbleArrayElements(array, 1, 6);
+    tblAdapTable.AdapTable("bubbleArrayElements", array, 1, 6);
 
     // Assert
     assert.deepEqual(array, expected);
@@ -238,11 +214,12 @@
   QUnit.test("AdapTable Helper: bubbleArrayElements Left-to-Right Both Edges", function(assert)
   {
     // Arrange
+    var tblAdapTable = $("#tblAdapTable");
     var array = [0, 1, 2, 3, 4, 5, 6];
     var expected = [1, 2, 3, 4, 5, 6, 0];
 
     // Act
-    AdapTable.bubbleArrayElements(array, 0, 6);
+    tblAdapTable.AdapTable("bubbleArrayElements", array, 0, 6);
 
     // Assert
     assert.deepEqual(array, expected);
@@ -255,22 +232,20 @@
     var tblAdapTable = $("#tblAdapTable");
     localStorage.clear();
 
-    var adaptable = tblAdapTable.AdapTable(
+    tblAdapTable.AdapTable(
     {
       CanChangeView: false,
       CanFilter: false,
       CanGroup: false,
       CanMoveColumns: false,
       CanSearch: false,
-      CanSort: false,
-      EnableAdvancedFiltering: false,
-      UnitTest: true
+      CanSort: false
     });
 
     tblAdapTable.data("Layout", AdapTableInstance.Layout);
 
     // Act
-    var column = adaptable.findColumn("Header", "First Name");
+    var column = tblAdapTable.AdapTable("findColumn", "Header", "First Name");
 
     // Assert
     assert.equal(column, expected);
@@ -283,22 +258,20 @@
     var tblAdapTable = $("#tblAdapTable");
     localStorage.clear();
 
-    var adaptable = tblAdapTable.AdapTable(
+    tblAdapTable.AdapTable(
     {
       CanChangeView: false,
       CanFilter: false,
       CanGroup: false,
       CanMoveColumns: false,
       CanSearch: false,
-      CanSort: false,
-      EnableAdvancedFiltering: false,
-      UnitTest: true
+      CanSort: false
     });
 
     tblAdapTable.data("Layout", AdapTableInstance.Layout);
 
     // Act
-    var column = adaptable.findColumn("Name", "FirstName");
+    var column = tblAdapTable.AdapTable("findColumn", "Name", "FirstName");
 
     // Assert
     assert.equal(column, expected);
@@ -315,27 +288,26 @@
     fakeClickEvent.target = tblAdapTable[0];
     localStorage.clear();
 
-    var adaptable = tblAdapTable.AdapTable(
+    tblAdapTable.AdapTable(
     {
       CanChangeView: false,
       CanFilter: false,
       CanGroup: false,
       CanMoveColumns: false,
       CanSearch: false,
-      CanSort: false,
-      EnableAdvancedFiltering: false,
-      UnitTest: true
+      CanSort: false
     });
 
     window.setTimeout(function()
     {
       // Act
-      adaptable.toggleMenu(fakeClickEvent, navMenu);
+      tblAdapTable.AdapTable("toggleMenu", fakeClickEvent, navMenu);
 
       // Assert
+      var adaptable = tblAdapTable.data("AdapTable");
       assert.ok(adaptable.Menu.is(":visible"));
 
-      adaptable.toggleMenu(fakeClickEvent);
+      tblAdapTable.AdapTable("toggleMenu", fakeClickEvent);
 
       assert.ok(!adaptable.Menu.is(":visible"));
 

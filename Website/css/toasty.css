@@ -30,37 +30,37 @@
 
 .Toasty > div.Error
 {
-  background: #F2DEDE;
-  border: 1px solid #FF8888;
+  background: #F9B3AB;
+  border: 1px solid #AA0000;
   color: #AA0000;
 }
 
 .Toasty > div.Information
 {
-  background: #D9EDF7;
-  border: 1px solid #8888FF;
+  background: #A0C4E6;
+  border: 1px solid #0000AA;
   color: #0000AA;
 }
 
 .Toasty > div.Light
 {
-  background: #EEE;
+  background: #F5F5F5;
   border: 1px solid #DDD;
   color: #000;
 }
 
 .Toasty > div.Success
 {
-  background: #DFF0D8;
-  border: 1px solid #88FF88;
+  background: #CAE3B2;
+  border: 1px solid #00AA00;
   color: #00AA00;
 }
 
 .Toasty > div.Warning
 {
-  background: #FCF8E3;
-  border: 1px solid #E5B551;
-  color: #8A6D3B;
+  background: #F7EDAC;
+  border: 1px solid #D38601;
+  color: #D38601;
 }
 
 .Toasty > div > large

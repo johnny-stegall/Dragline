@@ -36,21 +36,21 @@
 
       var layout = this.Instance.Element.data("Layout");
 
-      if ((operator === "IN" || operator === "NOT IN") && layout.Query.Filters)
-      {
-        for (var filterIndex = 0; filterIndex < layout.Query.Filters.length; filterIndex++)
-        {
-          if (layout.Query.Filters[filterIndex].Column === columnName)
-          {
-            layout.Query.Filters[filterIndex].Operator = operator;
-            layout.Query.Filters[filterIndex].Operand = operand;
-            this.Instance.cacheLayout(layout);
-            return;
-          }
-        }
-      }
-      else
+      if (!layout.Query.Filters)
         layout.Query.Filters = [];
+
+      var filterExists = layout.Query.Filters.filter(function(filter, index)
+      {
+        if (filter.Column === columnName)
+          return true;
+      });
+
+      if (filterExists.length)
+      {
+        filterExists[0].Operator = operator;
+        filterExists[0].Operand = operand;
+        return;
+      }
 
       layout.Query.Filters.push(
       {
@@ -79,7 +79,6 @@
         buildFilterButtonsAndMoreMenu.call(this, divFilters);
         buildMoreButton.call(this, divFilters);
         buildSearchBox.call(this, divFilters);
-        buildAdvancedLink.call(this, divFilters);
 
         divFilters.append("<div />");
       }
@@ -110,28 +109,6 @@
         }
       }
     }
-  }
-
-  /**************************************************************************
-  * Builds the "Advanced" hyperlink that toggles advanced filtering.
-  *
-  * @this An instance of AdapTable.Filtering.
-  * @param divFilters {jQuery} The DIV element that will contain the filter
-  * buttons.
-  **************************************************************************/
-  function buildAdvancedLink(divFilters)
-  {
-    // TODO: Remove this when advanced filtering is implemented
-    return;
-
-    if (!this.Instance.Options.EnableAdvancedFiltering)
-      return;
-
-    var advancedLink = $("<a />")
-      .attr("href", "javascript:void(0);")
-      .on("click.widgets.adaptable", toggleAdvancedMode);
-
-    divFilters.append(advancedLink);
   }
 
   /**************************************************************************
@@ -237,10 +214,10 @@
   * button for a column that can use lookup values.
   *
   * @this An instance of AdapTable.Filtering.
-  * @param divFilterValues {jQuery} The DIV element that will contain the
+  * @param formFilterValues {jQuery} The FORM element that will contain the
   * menu.
   **************************************************************************/
-  function buildLookupFilters(divFilterValues)
+  function buildLookupFilters(formFilterValues)
   {
     var cachedData = JSON.parse(localStorage.getItem(this.Instance.STORAGE_PREFIX + document.location));
     var adaptableInstance = cachedData.Instances[$("div.AdapTable").index(this.Instance.Container)];
@@ -266,7 +243,7 @@
       lookupList.append(listItem);
     });
 
-    divFilterValues.append(lookupList);
+    formFilterValues.append(lookupList);
   }
 
   /**************************************************************************
@@ -526,14 +503,6 @@
     }
 
     this.Instance.toggleMenu(e, formFilterValues);
-  }
-
-  /****************************************************************************
-  * Toggles the advanced filtering mode.
-  ****************************************************************************/
-  function toggleAdvancedMode()
-  {
-    // TODO: Implement this
   }
 
   /****************************************************************************

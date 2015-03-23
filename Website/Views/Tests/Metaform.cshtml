@@ -1,0 +1,816 @@
+﻿@{
+    ViewBag.Title = "Metaform Unit Tests";
+}
+
+@section PageStyles
+{
+  <link rel="stylesheet" href="~/css/metaform.css" />
+  <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.15.0.css" />
+}
+
+@section PageScripts
+{
+  <script type="text/javascript" src="~/scripts/jquery-simulate.js"></script>
+  <script type="text/javascript" src="~/scripts/jquery-ui-1.11.1.js"></script>
+  <script type="text/javascript" src="//code.jquery.com/qunit/qunit-1.16.0.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/blanket.js/1.1.4/blanket.min.js"></script>
+  <script type="text/javascript" src="~/scripts/knockout-metaform.js" data-cover></script>
+}
+
+<div id="qunit"></div>
+
+<form id="frmParty" class="Inline" data-bind="metaform: { Model: Metaform }">
+  <div class="Buttons" data-bind="with: Metaform">
+    <button type="button" data-bind="click: Party.toggleEmptyFields">
+      <i class="fa fa-eye-slash"></i>
+      <span>Hide Empty Fields</span>
+    </button>
+    <button type="button" data-bind="click: Party.toggleEditMode">
+      <i class="fa fa-pencil"></i>
+      <span>Edit Layout</span>
+    </button>
+    <button type="button" data-bind="click: Party.saveLayout, visible: EditMode">
+      <i class="fa fa-floppy-o"></i>
+      <span>Save Layout</span>
+    </button>
+    <button type="button" data-bind="click: Party.resetLayout, visible: EditMode">
+      <i class="fa fa-eraser"></i>
+      <span>Reset Layout</span>
+    </button>
+    <button id="btnAddSection" data-bind="click: Party.addSection, visible: EditMode">
+      <i class="fa fa-plus-square"></i>
+      <span>Add Section</span>
+    </button>
+    <button id="btnAddSection" data-bind="click: Party.addField, visible: EditMode">
+      <i class="fa fa-plus-circle"></i>
+      <span>Add Field</span>
+    </button>
+  </div>
+</form>
+
+<script type="text/javascript">
+  var Party =
+  {
+    Layouts: {},
+    ViewModel:
+    {
+      Party: ko.observable({ "Addresses": ko.observable([]), "UserDefined": {} }),
+      PartyId: ko.observable(),
+      PartyType: ko.observable("company"),
+      SelectedContact: ko.observable("3")
+    },
+
+    /****************************************************************************
+    * Helper method to get the right address; used by a Knockout computed
+    * observable.
+    ****************************************************************************/
+    getAddress: function(type)
+    {
+      if (Party.ViewModel.Party().Addresses().length < 1)
+        return {};
+
+      for (var addressIndex = 0; addressIndex < Party.ViewModel.Party().Addresses().length; addressIndex++)
+      {
+        if (Party.ViewModel.Party().Addresses()[addressIndex].Type() === type)
+          return Party.ViewModel.Party().Addresses()[addressIndex];
+      }
+
+      return {};
+    },
+
+    /****************************************************************************
+    * If a layout has been persisted in local storage it is loaded, otherwise a
+    * default layout is loaded.
+    ****************************************************************************/
+    loadLayout: function()
+    {
+      if (!Party.ViewModel.Metaform)
+        Party.ViewModel.Metaform = ko.mapping.fromJS(Party.Layouts.CompanyDefault);
+      else
+        ko.mapping.fromJS(Party.Layouts.CompanyDefault, Party.ViewModel.Metaform);
+    },
+
+    /****************************************************************************
+    * Toggles edit mode of the form layout.
+    ****************************************************************************/
+    toggleEditMode: function(data, event)
+    {
+      var clickedButton = $(event.target);
+
+      if (clickedButton.prop("tagName").toUpperCase() !== "BUTTON")
+        clickedButton = clickedButton.parent();
+
+      if (clickedButton.hasClass("Active"))
+      {
+        clickedButton.nextAll().hide();
+        clickedButton.removeClass("Active");
+        data.EditMode(false);
+      }
+      else
+      {
+        clickedButton.nextAll().show();
+        clickedButton.addClass("Active")
+        data.EditMode(true);
+      }
+    },
+
+    /****************************************************************************
+    * Toggles the display of empty fields.
+    ****************************************************************************/
+    toggleEmptyFields: function(data, event)
+    {
+      var clickedButton = $(event.target);
+
+      if (clickedButton.prop("tagName").toUpperCase() !== "BUTTON")
+        clickedButton = clickedButton.parent();
+
+      var buttonIcon = clickedButton.children("i");
+      var buttonLabel = clickedButton.children("span");
+
+      buttonIcon.removeClass("fa-eye fa-eye-slash");
+
+      if (data.DisplayEmpty())
+      {
+        buttonLabel.text("Show Empty Fields");
+        buttonIcon.addClass("fa-eye");
+        data.DisplayEmpty(false);
+      }
+      else
+      {
+        buttonLabel.text("Hide Empty Fields");
+        buttonIcon.addClass("fa-eye-slash");
+        data.DisplayEmpty(true);
+      }
+    },
+
+    /****************************************************************************
+    * Wire event-handlers.
+    ****************************************************************************/
+    wireEvents: function()
+    {
+      $("form").submit(function(e)
+      {
+        e.preventDefault();
+      })
+    }
+  };
+
+  Party.ViewModel.InfoType = ko.computed(function()
+  {
+    if (Party.ViewModel.SelectedContact() === "4")
+      return "email";
+    else
+      return "tel";
+  });
+
+  Party.ViewModel.BusinessAddress = ko.computed(function()
+  {
+    return Party.getAddress("Business");
+  })
+
+  $(document).ready(function()
+  {
+    Party.wireEvents();
+  });
+</script>
+<script type="text/javascript">
+Party.Layouts.CompanyDefault =
+{
+  DisplayEmpty: true,
+  EditMode: false,
+  Fieldsets:
+  [
+    {
+      "Title": "Details",
+      "Styling":
+      {
+        "width": "70%"
+      },
+      "Fields":
+      [
+        {
+          "Label": "Name",
+          "Type": "text",
+          "Attributes":
+          {
+            "data-bind": "value: Party().Name",
+            "maxlength": 50,
+            "pattern": "^[A-Za-z ,.'-]*$",
+            "placeholder": "Wolters-Kluwer Financial Services",
+            "required": true
+          }
+        },
+        {
+          "Label": "DBA",
+          "Type": "text",
+          "Attributes":
+          {
+            "data-bind": "value: Party().DBA",
+            "maxlength": 100,
+            "pattern": "^[A-Za-z ,.'-]*$"
+          }
+        },
+        {
+          "Label": "Legal Structure",
+          "Type": "select",
+          "Attributes":
+          {
+            "data-bind": "value: Party().LegalStructure"
+          }
+        },
+        {
+          "Label": "Tax ID",
+          "Type": "text",
+          "Attributes":
+          {
+            "data-bind": "value: Party().TaxId",
+            "maxlength": 9,
+            "pattern": "^[0-9]{9}$",
+            "placeholder": "557891234",
+            "required": true,
+            "title": "Numbers only, no hyphens"
+          }
+        },
+        {
+          "Label": "NAICS Code",
+          "Type": "select",
+          "Attributes":
+          {
+            "data-bind": "value: Party().NaicsCode"
+          }
+        },
+        {
+          "Label": "NAICS Desc",
+          "Type": "text",
+          "Attributes":
+          {
+            "data-bind": "value: Party().NaicsDesc",
+            "readonly": true
+          }
+        },
+        {
+          "Label": "NAICS Industry",
+          "Type": "text",
+          "Attributes":
+          {
+            "data-bind": "value: Party().NaicsIndustry",
+            "readonly": true
+          }
+        },
+      ]
+    },
+    {
+      "Title": "Banking",
+      "Styling":
+      {
+        "width": "70%"
+      },
+      "Fields":
+      [
+        {
+          "Label": "Core Number",
+          "Type": "text",
+          "Attributes":
+          {
+            "data-bind": "value: Party().CoreNumber",
+            "maxlength": 50,
+            "pattern": "^[0-9A-Za-z]{1,50}$"
+          }
+        },
+        {
+          "Label": "Anniversary",
+          "Type": "date",
+          "Attributes":
+          {
+            "data-bind": "value: Party().Anniversary"
+          }
+        },
+        {
+          "Label": "Relationship",
+          "Type": "select",
+          "Attributes":
+          {
+            "data-bind": "value: Party().Relationship"
+          }
+        },
+        {
+          "Label": "Referral",
+          "Type": "text",
+          "Attributes":
+          {
+            "data-bind": "value: Party().Referral",
+          }
+        },
+        {
+          "Label": "Representative",
+          "Type": "text",
+          "Attributes":
+          {
+            "data-bind": "value: Party().Representative",
+          }
+        },
+        {
+          "Label": "Credit Score",
+          "Type": "number",
+          "Attributes":
+          {
+            "data-bind": "value: Party().CreditScore",
+            "max": "800",
+            "min": "400",
+            "step": "1"
+          }
+        },
+        {
+          "Label": "Score Date",
+          "Type": "date",
+          "Attributes":
+          {
+            "data-bind": "value: Party().ScoreDate"
+          }
+        },
+        {
+          "Label": "Risk Score",
+          "Type": "number",
+          "Attributes":
+          {
+            "data-bind": "value: Party().RiskScore",
+            "max": "10.0",
+            "min": "1.0",
+            "step": "0.1"
+          }
+        }
+      ]
+    },
+    {
+      "Title": "Addresses",
+      "Styling":
+      {
+        "width": "70%"
+      },
+      "Fields":
+      [
+        {
+          "Label": "Line 1",
+          "Type": "text",
+          "Attributes":
+          {
+            "data-bind": "value: BusinessAddress().Line1",
+            "maxlength": 100,
+            "pattern": "^[A-Za-z0-9 ,.'-]*$",
+            "placeholder": "100 South 5th St."
+          }
+        },
+        {
+          "Label": "Line 2",
+          "Type": "text",
+          "Attributes":
+          {
+            "data-bind": "value: BusinessAddress().Line2",
+            "maxlength": 100,
+            "pattern": "^[A-Za-z0-9 ,.'-]*$",
+            "placeholder": "Suite 700"
+          }
+        },
+        {
+          "Label": "City",
+          "Type": "text",
+          "Attributes":
+          {
+            "data-bind": "value: BusinessAddress().City",
+            "maxlength": 50,
+            "pattern": "^[A-Za-z ,.'-]*$",
+            "placeholder": "Minneapolis"
+          }
+        },
+        {
+          "Label": "State",
+          "Type": "select",
+          "Attributes":
+          {
+            "data-bind": "value: BusinessAddress().State",
+          }
+        },
+        {
+          "Label": "Province",
+          "Type": "text",
+          "Attributes":
+          {
+            "data-bind": "value: BusinessAddress().Province",
+            "maxlength": 50,
+            "pattern": "^[A-Za-z0-9 ,.'-]*$"
+          }
+        },
+        {
+          "Label": "Postal Code",
+          "Type": "text",
+          "Attributes":
+          {
+            "data-bind": "value: BusinessAddress().PostalCode",
+            "required": true,
+            "pattern": "^[0-9]{5}$"
+          }
+        },
+        {
+          "Label": "Country",
+          "Type": "select",
+          "Attributes":
+          {
+            "data-bind": "value: BusinessAddress().Country",
+          }
+        }
+      ]
+    },
+    {
+      "Title": "User-Defined",
+      "Styling":
+      {
+        "width": "70%"
+      },
+      "Fields":
+      [
+        {
+          "ContainerStyling":
+          {
+            "width": "100%"
+          },
+          "Label": "Notes",
+          "Type": "textarea",
+          "Attributes":
+          {
+            "data-bind": "value: Party().UserDefined.Notes",
+          }
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script type="text/javascript">
+  /****************************************************************************
+  * Cleanup after each test.
+  ****************************************************************************/
+  QUnit.testStart(function()
+  {
+    Party.loadLayout();
+    ko.applyBindings(Party.ViewModel, $("#frmParty")[0]);
+  });
+
+  QUnit.testDone(function()
+  {
+    var frmParty = $("#frmParty");
+    frmParty.children("fieldset").remove();
+    ko.cleanNode(frmParty[0]);
+    localStorage.removeItem("Metaform: " + document.location);
+  });
+
+  QUnit.test("Initialization", function(assert)
+  {
+    // Arrange
+    var frmParty = $("#frmParty");
+
+    // Assert
+    assert.ok(frmParty.hasClass("Metaform"));
+    assert.equal(frmParty.children("fieldset").length, 4);
+    assert.equal(frmParty.find("fieldset > ol.Forms").length, 4);
+
+    for (var fieldsetIndex = 0; fieldsetIndex < Party.ViewModel.Metaform.Fieldsets().length; fieldsetIndex++)
+    {
+      var fieldset = ko.mapping.toJS(Party.ViewModel.Metaform.Fieldsets()[fieldsetIndex]);
+      var fieldList = frmParty.find("fieldset:eq(" + fieldsetIndex + ") > ol.Forms");
+
+      assert.ok(frmParty.children("fieldset:eq(" + fieldsetIndex + ")").css("width"));
+      assert.equal(frmParty.find("fieldset:eq(" + fieldsetIndex + ") > header").text(), fieldset.Title);
+      assert.equal(fieldList.children("li.Form-Group").length, fieldset.Fields.length);
+
+      for (var fieldIndex = 0; fieldIndex < fieldset.Fields.length; fieldIndex++)
+      {
+        var listItem = fieldList.children("li.Form-Group:eq(" + fieldIndex + ")");
+
+        assert.equal(listItem.children("label").text(), fieldset.Fields[fieldIndex].Label);
+        assert.ok(listItem.children("label").attr("for"));
+        assert.ok(listItem.children(":last").attr("id"));
+        assert.ok(listItem.children(":last").hasClass("Editable"));
+
+        switch (fieldset.Fields[fieldIndex].Type)
+        {
+          case "select":
+          case "textarea":
+            assert.equal(listItem.children(":last").prop("tagName").toLowerCase(), fieldset.Fields[fieldIndex].Type);
+            break;
+          default:
+            assert.equal(listItem.children(":last").attr("type"), fieldset.Fields[fieldIndex].Type);
+            break;
+        }
+
+        for (var attribute in fieldset.Fields[fieldIndex].Attributes)
+          assert.ok(listItem.children(":last").attr(attribute));
+      }
+    }
+  });
+
+  QUnit.test("Initialized with Caching", function(assert)
+  {
+    // Arrange
+    var frmParty = $("#frmParty");
+
+    var metaformBinding = frmParty.data("bind");
+    metaformBinding = metaformBinding.substr(0, metaformBinding.length - 2) + ", Options: { CacheExpiration: 0 } }";
+    frmParty.attr("data-bind", metaformBinding);
+
+    frmParty.children("fieldset").remove();
+    ko.cleanNode(frmParty[0]);
+
+    // Act
+    ko.applyBindings(Party.ViewModel, $("#frmParty")[0]);
+
+    // Assert
+    assert.ok(localStorage.getItem("Metaform: " + document.location));
+  });
+
+  QUnit.test("Toggle Empty Fields", function(assert)
+  {
+    // Arrange
+    var frmParty = $("#frmParty");
+    var divButtons = frmParty.children("div.Buttons");
+
+    var emptyFields = frmParty
+      .find("input")
+      .add("select")
+      .add("textarea")
+      .filter(function(index, element)
+      {
+        return !$(this).val();
+      });
+
+    // Act
+    divButtons.children("button:first").click();
+    var buttonHideEmpty = !Party.ViewModel.Metaform.DisplayEmpty();
+    var buttonEmptyAreHidden = !emptyFields.is(":visible");
+
+    divButtons.children("button:first").click();
+    var buttonShowEmpty = Party.ViewModel.Metaform.DisplayEmpty();
+    var buttonEmptyAreVisible = emptyFields.is(":visible");
+
+    Party.ViewModel.Metaform.DisplayEmpty(false);
+    var toggledHideEmpty = !emptyFields.is(":visible");
+
+    Party.ViewModel.Metaform.DisplayEmpty(true);
+    var toggledShowEmpty = emptyFields.is(":visible");
+
+    // Assert
+    assert.ok(buttonHideEmpty);
+    assert.ok(buttonEmptyAreHidden);
+    assert.ok(buttonShowEmpty);
+    assert.ok(buttonEmptyAreVisible);
+    assert.ok(toggledHideEmpty);
+    assert.ok(toggledShowEmpty);
+  });
+
+  QUnit.test("Toggle Edit Mode", function(assert)
+  {
+    // Arrange
+    var frmParty = $("#frmParty");
+    var divButtons = frmParty.children("div.Buttons");
+
+    // Act
+    divButtons.children("button:nth-child(2)").click();
+
+    var buttonEditIsActive = Party.ViewModel.Metaform.EditMode();
+    var buttonIsMovable = frmParty.find("ol.Forms").hasClass("Movable");
+    var buttonIsSortable = frmParty.find("ol.Forms").hasClass("ui-sortable");
+
+    divButtons.children("button:nth-child(2)").click();
+
+    var buttonEditIsDisabled = !Party.ViewModel.Metaform.EditMode();
+    var buttonNotMovable = !frmParty.find("ol.Forms").hasClass("Movable");
+    var buttonNotSortable = !frmParty.find("ol.Forms").hasClass("ui-sortable");
+
+    Party.ViewModel.Metaform.EditMode(true);
+
+    var toggledIsMovable = frmParty.find("ol.Forms").hasClass("Movable");
+    var toggledIsSortable = frmParty.find("ol.Forms").hasClass("ui-sortable");
+
+    Party.ViewModel.Metaform.EditMode(false);
+
+    var toggledNotMovable = !frmParty.find("ol.Forms").hasClass("Movable");
+    var toggledNotSortable = !frmParty.find("ol.Forms").hasClass("ui-sortable");
+
+    // Assert
+    assert.ok(buttonEditIsActive);
+    assert.ok(buttonIsMovable);
+    assert.ok(buttonIsSortable);
+    assert.ok(buttonEditIsDisabled);
+    assert.ok(buttonNotMovable);
+    assert.ok(buttonNotSortable);
+    assert.ok(toggledIsMovable);
+    assert.ok(toggledIsSortable);
+    assert.ok(toggledNotMovable);
+    assert.ok(toggledNotSortable);
+  });
+
+  QUnit.test("Fieldset Collapse/Expansion", function(assert)
+  {
+    // Arrange
+    var frmParty = $("#frmParty");
+    var waitForCollapse = assert.async();
+    var waitForExpansion = assert.async();
+
+    // Act
+    var fieldsetToggle = frmParty.find("fieldset:first > i.fa-chevron-up, fieldset:first > i.fa-chevron-down");
+    fieldsetToggle.click();
+
+    window.setTimeout(function()
+    {
+      var collapsedHeight = fieldsetToggle.parent().outerHeight();
+      fieldsetToggle.click();
+      waitForCollapse();
+
+      window.setTimeout(function()
+      {
+        var expandedHeight = fieldsetToggle.parent().outerHeight();
+
+        // Assert
+        assert.equal(collapsedHeight, 30);
+        assert.ok(expandedHeight > 30);
+        waitForExpansion();
+      }, 1000);
+    }, 1000);
+  });
+
+  QUnit.test("Remove a Field", function(assert)
+  {
+    // Arrange
+    var frmParty = $("#frmParty");
+
+    Party.ViewModel.Metaform.EditMode(true);
+
+    // Act
+    var legalStructureDeleteIcon = $("form.Metaform > fieldset:first > ol.Forms > li:eq(2) > i.fa-close");
+    legalStructureDeleteIcon.click();
+
+    var wasLegalStructure = Party.ViewModel.Metaform.Fieldsets()[0].Fields()[2].Label();
+    var wasLegalStructureLabel = $("form.Metaform > fieldset:first > ol.Forms > li:eq(2) > label").text();
+
+    Party.ViewModel.Metaform.Fieldsets()[0].Fields.splice(0, 1);
+
+    var wasName = Party.ViewModel.Metaform.Fieldsets()[0].Fields()[0].Label();
+    var wasNameLabel = $("form.Metaform > fieldset:first > ol.Forms > li:first > label").text();
+
+    // Assert
+    assert.notEqual(wasLegalStructure, "Legal Structure");
+    assert.notEqual(wasLegalStructureLabel, "Legal Structure");
+    assert.notEqual(wasName, "Name");
+    assert.notEqual(wasNameLabel, "Name");
+  });
+
+  QUnit.test("Remove a FIELDSET", function(assert)
+  {
+    // Arrange
+    var frmParty = $("#frmParty");
+
+    Party.ViewModel.Metaform.EditMode(true);
+
+    // Act
+    var bankingFieldsetIcon = $("form.Metaform > fieldset:eq(1) > i.fa-close");
+    bankingFieldsetIcon.click();
+
+    var secondSectionTitle = Party.ViewModel.Metaform.Fieldsets()[1].Title();
+    var secondSectionHeader = $("form.Metaform > fieldset:eq(1) > header").text();
+
+    Party.ViewModel.Metaform.Fieldsets.splice(0, 1);
+
+    var firstSectionTitle = Party.ViewModel.Metaform.Fieldsets()[0].Title();
+    var firstSectionHeader = $("form.Metaform > fieldset:first > header").text();
+
+    // Assert
+    assert.notEqual(secondSectionTitle, "Banking");
+    assert.notEqual(secondSectionHeader, "Banking");
+    assert.notEqual(firstSectionTitle, "Details");
+    assert.notEqual(firstSectionHeader, "Details");
+  });
+
+  QUnit.test("Drag-and-Drop Field Within the Same FIELDSET", function(assert)
+  {
+    // Arrange
+    var frmParty = $("#frmParty");
+    var expectedIndex = 4;
+
+    Party.ViewModel.Metaform.EditMode(true);
+
+    var dragAnchor = frmParty.find("fieldset:first > ol.Movable > li.Form-Group:first > i.Anchor");
+
+    // Act
+    dragAnchor.simulate("drag",
+    {
+      dx: 0,
+      dy: 100,
+      handle: "corner"
+    });
+
+    var detailFields = Party.ViewModel.Metaform.Fieldsets()[0].Fields();
+    var nameFieldIndex = -1;
+    for (var fieldIndex = 0; fieldIndex < detailFields.length; fieldIndex++)
+    {
+      if (detailFields[fieldIndex].Label() === "Name")
+      {
+        nameFieldIndex = fieldIndex;
+        break;
+      }
+    }
+
+    // Assert
+    assert.equal(nameFieldIndex, expectedIndex);
+  });
+
+  QUnit.test("Drag-and-Drop Field Between FIELDSETs", function(assert)
+  {
+    // Arrange
+    var frmParty = $("#frmParty");
+    var expectedIndex = 7;
+
+    Party.ViewModel.Metaform.EditMode(true);
+
+    var dragAnchor = frmParty.find("fieldset:first > ol.Movable > li.Form-Group:first > i.Anchor");
+
+    // Act
+    dragAnchor.simulate("drag",
+    {
+      dx: 0,
+      dy: 250,
+      handle: "corner"
+    });
+
+    var detailFields = Party.ViewModel.Metaform.Fieldsets()[1].Fields();
+    var nameFieldIndex = -1;
+    for (var fieldIndex = 0; fieldIndex < detailFields.length; fieldIndex++)
+    {
+      if (detailFields[fieldIndex].Label() === "Name")
+      {
+        nameFieldIndex = fieldIndex;
+        break;
+      }
+    }
+
+    // Assert
+    assert.equal(nameFieldIndex, expectedIndex);
+  });
+
+  QUnit.test("Load Cached Layout", function(assert)
+  {
+    // Arrange
+    var frmParty = $("#frmParty");
+
+    var metaformBinding = frmParty.data("bind");
+    metaformBinding = metaformBinding.substr(0, metaformBinding.length - 2) + ", Options: { CacheExpiration: 0 } }";
+    frmParty.attr("data-bind", metaformBinding);
+
+    frmParty.children("fieldset").remove();
+    ko.cleanNode(frmParty[0]);
+
+    ko.applyBindings(Party.ViewModel, $("#frmParty")[0]);
+
+    frmParty.children("fieldset").remove();
+    ko.cleanNode(frmParty[0]);
+    Party.ViewModel.Metaform = null;
+
+    var cachedLayout = JSON.parse(localStorage.getItem("Metaform: " + document.location));
+    cachedLayout.Layout.Fieldsets.splice(2, 2);
+    localStorage.setItem("Metaform: " + document.location, JSON.stringify(cachedLayout));
+
+    // Act
+    ko.applyBindings(Party.ViewModel, $("#frmParty")[0]);
+
+    // Assert
+    assert.equal(frmParty.children("fieldset").length, 2);
+  });
+
+  QUnit.test("Don't Load Expired Cached Layout", function(assert)
+  {
+    // Arrange
+    var frmParty = $("#frmParty");
+
+    var metaformBinding = frmParty.data("bind");
+    metaformBinding = metaformBinding.substr(0, metaformBinding.length - 2) + ", Options: { CacheExpiration: 0 } }";
+    frmParty.attr("data-bind", metaformBinding);
+
+    frmParty.children("fieldset").remove();
+    ko.cleanNode(frmParty[0]);
+
+    ko.applyBindings(Party.ViewModel, $("#frmParty")[0]);
+
+    frmParty.children("fieldset").remove();
+    ko.cleanNode(frmParty[0]);
+    Party.ViewModel.Metaform = null;
+
+    var cachedLayout = JSON.parse(localStorage.getItem("Metaform: " + document.location));
+    cachedLayout.Layout.Fieldsets.splice(2, 2);
+    cachedLayout.Expiration = new Date(2010, 1, 1);
+    localStorage.setItem("Metaform: " + document.location, JSON.stringify(cachedLayout));
+
+    // Act
+    ko.applyBindings(Party.ViewModel, $("#frmParty")[0]);
+
+    // Assert
+    assert.equal(frmParty.children("fieldset").length, 0);
+  });
+</script>

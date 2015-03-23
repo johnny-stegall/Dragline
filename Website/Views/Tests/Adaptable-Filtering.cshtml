@@ -13,6 +13,8 @@
   <script type="text/javascript" src="//code.jquery.com/qunit/qunit-1.16.0.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/blanket.js/1.1.4/blanket.min.js"></script>
   <script type="text/javascript" src="~/scripts/adaptable.js"></script>
+  <script type="text/javascript" src="~/scripts/adaptable/script-loader.js"></script>
+  <script type="text/javascript" src="~/scripts/adaptable/state.js"></script>
   <script type="text/javascript" src="~/scripts/adaptable/filtering.js" data-cover></script>
 }
 
@@ -50,23 +52,611 @@
 </table>
 
 <script type="text/javascript">
-  QUnit.test("AdapTable Constructor", function(assert)
+  // Setup some cached data
+  var AdapTableCache = { Instances: [] };
+  var AdapTableInstance = {};
+  AdapTableInstance.Layout = {};
+  AdapTableInstance.Layout.Columns = [{ "Aggregate": "None", "DataType": "String", "Header": "First Name", "IsFilterable": true, "IsGroupable": false, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "FirstName" }, { "Aggregate": "None", "DataType": "String", "Header": "Last Name", "IsFilterable": true, "IsGroupable": false, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "LastName" }, { "Aggregate": "None", "DataType": "String", "Header": "Email Address", "IsFilterable": true, "IsGroupable": false, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "Email" }, { "Aggregate": "None", "DataType": "String", "Header": "Department", "IsFilterable": true, "IsGroupable": true, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": false, "Name": "Department" }, { "Aggregate": "None", "DataType": "String", "Header": "Gender", "IsFilterable": true, "IsGroupable": true, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "Gender" }, { "Aggregate": "None", "DataType": "String", "Header": "Ethnicity", "IsFilterable": true, "IsGroupable": true, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "Ethnicity" }, { "Aggregate": "None", "DataType": "Timestamp", "Header": "Hire Date", "IsFilterable": true, "IsGroupable": false, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "HireDate" }, { "Aggregate": "Average", "DataType": "Numeric", "Header": "Salary", "IsFilterable": true, "IsGroupable": false, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "Salary" }, { "Aggregate": "None", "DataType": "None", "Header": null, "IsFilterable": false, "IsGroupable": false, "IsHidable": false, "IsMovable": false, "IsSortable": false, "IsVisible": true, "Name": null }];
+  AdapTableInstance.Layout.Query = { "Filters": [], "Groups": ["Department"], "PageSize": 10, "PageIndex": 0, "Sort": "LastName", "SortDirection": null };
+  AdapTableInstance.Data = {};
+  AdapTableInstance.Data.Aggregates = { "Engineering": { "Salary": 47221.75 }, "Marketing": { "Salary": 22222 }, "Support": { "Salary": 56943.875 }, "Operations": { "Salary": 66666 }, "Sales": { "Salary": 55555 } };
+  AdapTableInstance.Data.FilterValues = { "Gender": ["Female", "Male"], "Ethnicity": ["Asian", "Caucasian", "Latino", "Middle Eastern"], "FirstName": ["Bob", "Carlton", "Clement", "Dan", "Dave", "Ed", "Eric", "Erin", "Jennie", "Joanna", "John", "Ken", "Mark", "Michael", "Priya", "Robby", "Samantha", "Tiffany", "Tim", "Vicky"], "Email": ["bob.jensen@wolterskluwer.com", "carlton.edwards@wolterskluwer.com", "clement.cheng@wolterskluwer.com", "dan.jackson@wolterskluwer.com", "dave.wensel@wolterskluwer.com", "ed.santamaria@wolterskluwer.com", "eric.lee@wolterskluwer.com", "erin.mcdermott", "jennie.howard@wolterskluwer.com", "joanna.derfuhs@wolterskluwer.com", "john.stegall@wolterskluwer.com", "ken.charity@wolterskluwer.com", "mark.sisson@wolterskluwer.com", "michael.lin@wolterskluwer.com", "priya.yallapantula@wolterskluwer.com", "robby.millsap@wolterskluwer.com", "samantha.perez@wolterskluwer.com", "tiffany.fujiwara@wolterskluwer.com", "tim.pau@wolterskluwer.com", "vicky.yu@wolterskluwer.com"], "LastName": ["Charity", "Cheng", "Derfuhs", "Edwards", "Fujiwara", "Howard", "Jackson", "Jensen", "Lee", "Lin", "McDermott", "Millsap", "Pau", "Perez", "Santamaria", "Sisson", "Stegall", "Wensel", "Yallapantula", "Yu"], "Department": ["Engineering", "Marketing", "Operations", "Sales", "Support"] };
+  AdapTableInstance.Data.TotalItems = 20;
+  AdapTableInstance.Data.Pages = [];
+  AdapTableInstance.Data.Pages.push({ "Items": [{ "Department": "Engineering", "Email": "eric.lee@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Eric", "Gender": "Male", "HireDate": "2003-10-02T00:00:00", "LastName": "Lee", "Salary": 22222 }, { "Department": "Engineering", "Email": "michael.lin@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Michael", "Gender": "Male", "HireDate": "2011-03-09T00:00:00", "LastName": "Lin", "Salary": 33333 }, { "Department": "Engineering", "Email": "robby.millsap@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Robby", "Gender": "Male", "HireDate": "2012-12-12T00:00:00", "LastName": "Millsap", "Salary": 55555 }, { "Department": "Engineering", "Email": "tim.pau@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Tim", "Gender": "Male", "HireDate": "2002-08-09T00:00:00", "LastName": "Pau", "Salary": 77777 }, { "Department": "Engineering", "Email": "ed.santamaria@wolterskluwer.com", "Ethnicity": "Latino", "FirstName": "Ed", "Gender": "Male", "HireDate": "2012-03-17T00:00:00", "LastName": "Santamaria", "Salary": 77777 }, { "Department": "Engineering", "Email": "mark.sisson@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Mark", "Gender": "Male", "HireDate": "2011-09-11T00:00:00", "LastName": "Sisson", "Salary": 88888 }, { "Department": "Engineering", "Email": "john.stegall@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "John", "Gender": "Male", "HireDate": "2014-02-20T00:00:00", "LastName": "Stegall", "Salary": 11111 }, { "Department": "Engineering", "Email": "priya.yallapantula@wolterskluwer.com", "Ethnicity": "Middle Eastern", "FirstName": "Priya", "Gender": "Female", "HireDate": "2012-07-11T00:00:00", "LastName": "Yallapantula", "Salary": 11111 }, { "Department": "Marketing", "Email": "ken.charity@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Ken", "Gender": "Male", "HireDate": "2011-05-17T00:00:00", "LastName": "Charity", "Salary": 22222 }, { "Department": "Operations", "Email": "tiffany.fujiwara@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Tiffany", "Gender": "Female", "HireDate": "2007-01-12T00:00:00", "LastName": "Fujiwara", "Salary": 66666 }] });
+  AdapTableInstance.Data.Pages.push({ "Items": [{ "Department": "Sales", "Email": "bob.jensen@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Bob", "Gender": "Male", "HireDate": "2013-04-04T00:00:00", "LastName": "Jensen", "Salary": 11111 }, { "Department": "Sales", "Email": "dave.wensel@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Dave", "Gender": "Male", "HireDate": "2000-01-01T00:00:00", "LastName": "Wensel", "Salary": 99999 }, { "Department": "Support", "Email": "clement.cheng@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Clement", "Gender": "Male", "HireDate": "2010-06-05T00:00:00", "LastName": "Cheng", "Salary": 33333 }, { "Department": "Support", "Email": "joanna.derfuhs@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Joanna", "Gender": "Female", "HireDate": "2009-07-28T00:00:00", "LastName": "Derfuhs", "Salary": 44444 }, { "Department": "Support", "Email": "carlton.edwards@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Carlton", "Gender": "Male", "HireDate": "2011-09-09T00:00:00", "LastName": "Edwards", "Salary": 55555 }, { "Department": "Support", "Email": "jennie.howard@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Jennie", "Gender": "Female", "HireDate": "2012-05-19T00:00:00", "LastName": "Howard", "Salary": 88888 }, { "Department": "Support", "Email": "dan.jackson@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Dan", "Gender": "Male", "HireDate": "2008-11-13T00:00:00", "LastName": "Jackson", "Salary": 99999 }, { "Department": "Support", "Email": "erin.mcdermott", "Ethnicity": "Caucasian", "FirstName": "Erin", "Gender": "Female", "HireDate": "2013-04-01T00:00:00", "LastName": "McDermott", "Salary": 44444 }, { "Department": "Support", "Email": "samantha.perez@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Samantha", "Gender": "Female", "HireDate": "2010-06-01T00:00:00", "LastName": "Perez", "Salary": 66666 }, { "Department": "Support", "Email": "vicky.yu@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Vicky", "Gender": "Female", "HireDate": "2010-06-14T00:00:00", "LastName": "Yu", "Salary": 22222 }] });
+  AdapTableCache.Instances.push(AdapTableInstance);
+  localStorage.setItem("AdapTable: " + document.location, JSON.stringify(AdapTableCache));
+
+  /****************************************************************************
+  * Cleanup after each test.
+  ****************************************************************************/
+  QUnit.testDone(function()
+  {
+    var tblAdapTable = $("#tblAdapTable");
+    tblAdapTable.AdapTable("destroy");
+    tblAdapTable.children("tbody").empty();
+    ko.cleanNode(tblAdapTable[0]);
+    localStorage.clear();
+    localStorage.setItem('AdapTable: ' + document.location, JSON.stringify(AdapTableCache));
+  });
+
+  QUnit.test("AdapTable Filtering: Initialization", function(assert)
   {
     // Arrange
-    var getScript = assert.async();
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    var filterableColumns = AdapTableInstance.Layout.Columns.filter(function(value, index)
+    {
+      return value.IsFilterable;
+    });
+
+    // Act
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Assert
+    window.setTimeout(function()
+    {
+      assert.ok(AdapTable.Filtering);
+      
+      var adaptable = tblAdapTable.data("AdapTable");
+      assert.equal(adaptable.Filtering.Instance, adaptable);
+      assert.ok(!adaptable.Filtering.Column);
+      assert.equal($._data(tblAdapTable[0], "events").repaint.length, 1);
+
+      var topSection = tblAdapTable.prev();
+      var filterDiv = topSection.children("div.Filters");
+      assert.equal(filterDiv.length, 1);
+
+      assert.equal(filterDiv.children("button.Filter").length, 3);
+      assert.equal(filterDiv.children("button.Filter:first").text(), "First Name: All");
+      assert.equal(filterDiv.children("button.Filter:nth-child(2)").text(), "Last Name: All");
+      assert.equal(filterDiv.children("button.Filter:last").text(), "Email Address: All");
+
+      assert.equal(filterDiv.children("button.More").length, 1);
+      assert.equal(filterDiv.children("ol.More-Filters").length, 1);
+      assert.equal(filterDiv.find("ol.More-Filters > li").length, filterableColumns.length - 3);
+      assert.equal(filterDiv.find("ol.More-Filters > li > label").length, filterableColumns.length - 3);
+      assert.equal(filterDiv.find("ol.More-Filters > li > label > input[type='checkbox']").length, filterableColumns.length - 3);
+
+      assert.equal(filterDiv.children("input[type='search']").length, 1);
+      assert.equal(filterDiv.children("button.Search").length, 1);
+      assert.ok(filterDiv.find("button.Search > i").hasClass("fa-search"));
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: Initialization - No Search", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
     var tblAdapTable = $("#tblAdapTable");
 
     // Act
-    $("#tblAdapTable").AdapTable();
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: false,
+      CanSort: false
+    });
 
     // Assert
-    assert.ok(AdapTable.Views);
-
     window.setTimeout(function()
     {
-      assert.ok(AdapTable.addActionButton);
-      assert.ok(AdapTable.cacheLayout);
-      getScript();
+      var adaptable = tblAdapTable.data("AdapTable");
+      var topSection = tblAdapTable.prev();
+      var filterDiv = topSection.children("div.Filters");
+
+      assert.equal(filterDiv.children("input[type='search']").length, 0);
+      assert.equal(filterDiv.children("button.Search").length, 0);
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: addFilter", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      tblAdapTable.AdapTable("addFilter", "FirstName", "=", "John");
+
+      var layout = tblAdapTable.data("Layout");
+      var filterExists = layout.Query.Filters.filter(function(value, index)
+      {
+        if (value.Column === "FirstName" && value.Operator === "=" && value.Operand === "John")
+          return true;
+      });
+
+      assert.equal(filterExists.length, 1);
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: addFilter - IN", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      tblAdapTable.AdapTable("addFilter", "FirstName", "IN", "John, Mark");
+
+      var layout = tblAdapTable.data("Layout");
+      var filterExists = layout.Query.Filters.filter(function(value, index)
+      {
+        if (value.Column === "FirstName" && value.Operator === "IN" && value.Operand === "John, Mark")
+          return true;
+      });
+
+      assert.equal(filterExists.length, 1);
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: addFilter - LIKE", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      tblAdapTable.AdapTable("addFilter", "LastName", "LIKE", "%St%");
+
+      var layout = tblAdapTable.data("Layout");
+      var filterExists = layout.Query.Filters.filter(function(value, index)
+      {
+        if (value.Column === "LastName" && value.Operator === "LIKE" && value.Operand === "%St%")
+          return true;
+      });
+
+      assert.equal(filterExists.length, 1);
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: addFilter - Update", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      tblAdapTable.AdapTable("addFilter", "FirstName", "=", "John");
+      tblAdapTable.AdapTable("addFilter", "FirstName", "=", "Mark");
+
+      var layout = tblAdapTable.data("Layout");
+
+      assert.equal(layout.Query.Filters.length, 1);
+      assert.equal(layout.Query.Filters[0].Operand, "Mark");
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: addFilter - Duplicate", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      tblAdapTable.AdapTable("addFilter", "FirstName", "=", "John");
+      tblAdapTable.AdapTable("addFilter", "FirstName", "=", "John");
+
+      var layout = tblAdapTable.data("Layout");
+
+      assert.equal(layout.Query.Filters.length, 1);
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: addFilter - No Column", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      assert.throws(function()
+      {
+        tblAdapTable.AdapTable("addFilter", null, "IN", "1, 2, 3");
+      }, "Cannot create a filter: no column was specified.");
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: addFilter - No Operator", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      assert.throws(function()
+      {
+        tblAdapTable.AdapTable("addFilter", "FirstName", "", "1, 2, 3");
+      }, "Cannot create a filter: no operator was specified.");
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: addFilter - No Operand", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      assert.throws(function()
+      {
+        tblAdapTable.AdapTable("addFilter", "FirstName", "IN", null);
+      }, "Cannot create a filter: no operand was specified.");
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: removeFilter", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      tblAdapTable.AdapTable("addFilter", "FirstName", "=", "John");
+      tblAdapTable.AdapTable("removeFilter", "FirstName");
+
+      var layout = tblAdapTable.data("Layout");
+      var filterExists = layout.Query.Filters.filter(function(value, index)
+      {
+        if (value.Column === "FirstName" && value.Operator === "=" && value.Operand === "John")
+          return true;
+      });
+
+      assert.equal(filterExists.length, 0);
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: removeFilter - No Column Specified", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      assert.throws(function()
+      {
+        tblAdapTable.AdapTable("removeFilter", "");
+      }, "Cannot remove a filter: no column name was specified.");
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: Search Box", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      var topSection = tblAdapTable.prev();
+      var filterDiv = topSection.children("div.Filters");
+
+      var searchBox = filterDiv.children("input[type='search']");
+      var searchButton = filterDiv.children("button.Search");
+      
+      searchBox.val("Stegall");
+      searchButton.click();
+
+      var layout = tblAdapTable.data("Layout");
+      var filterExists = layout.Query.Filters.filter(function(value, index)
+      {
+        if (value.Column === "" && value.Operator === "LIKE" && value.Operand === "Stegall")
+          return true;
+      });
+
+      assert.equal(filterExists.length, 1);
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: Filter Button - Lookups", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      var firstNameColumn = AdapTableInstance.Layout.Columns[0];
+      var firstNameFilterValuesCount = AdapTableInstance.Data.FilterValues[firstNameColumn.Name].length;
+
+      filterButton = tblAdapTable.parent().find("section > div.Filters > button:first")
+        .click();
+
+      assert.equal($._data(filterButton[0], "events").click.length, 1);
+
+      var adaptable = tblAdapTable.data("AdapTable");
+      assert.ok(adaptable.Menu);
+      assert.equal(adaptable.Menu.find("form > ul").length, 1);
+      assert.equal(adaptable.Menu.find("ul > li").length, firstNameFilterValuesCount);
+      assert.equal(adaptable.Menu.find("ul > li > label").length, firstNameFilterValuesCount);
+      assert.equal(adaptable.Menu.find("ul > li > label > input[type='checkbox']").length, firstNameFilterValuesCount);
+
+      var firstLookupFilter = adaptable.Menu.find("ul > li:first > label > input[type='checkbox']");
+      firstLookupFilter.click();
+
+      var layout = tblAdapTable.data("Layout");
+      var filterExists = layout.Query.Filters.filter(function(value, index)
+      {
+        if (value.Column === "FirstName" && value.Operator === "IN" && value.Operand === "Bob")
+          return true;
+      });
+
+      assert.equal(filterExists.length, 1);
+
+      firstLookupFilter.click();
+      filterExists = layout.Query.Filters.filter(function(value, index)
+      {
+        if (value.Column === "FirstName" && value.Operator === "IN" && value.Operand === "Bob")
+          return true;
+      });
+
+      assert.equal(filterExists.length, 0);
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: Other Filter Types", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      var adaptable = tblAdapTable.data("AdapTable");
+      var filterDiv = tblAdapTable.parent().find("div.Filters");
+      var moreButton = filterDiv.children("button.More");
+      var HireDateIndex = 4;
+      var SalaryDateIndex = 5;
+
+      moreButton.click();
+
+      assert.equal(adaptable.Menu.children("ol.More-Filters:visible").length, 1);
+
+      adaptable.Menu.find("ol.More-Filters > li:nth-child(" + HireDateIndex + ") > label > input[type='checkbox']").click();
+      adaptable.Menu.find("ol.More-Filters > li:nth-child(" + SalaryDateIndex + ") > label > input[type='checkbox']").click();
+
+      assert.equal(filterDiv.children(":last").prop("tagName").toUpperCase(), "DIV");
+
+      var additionalFiltersDiv = filterDiv.children(":last");
+      assert.equal(additionalFiltersDiv.children().length, 2);
+
+      additionalFiltersDiv.find("button:first").click();
+
+      assert.equal(adaptable.Menu.find("form > div > label > [type='radio']").length, 2);
+      assert.equal(adaptable.Menu.find("form > div:first > label").text().substr(0, 15), "Within the last");
+      assert.equal(adaptable.Menu.find("form > div:nth-child(2) > label").text().substr(0, 7), "Between");
+      assert.equal(adaptable.Menu.find("form > div").length, 3);
+      assert.equal(adaptable.Menu.find("form > div > button").length, 2);
+      assert.equal(adaptable.Menu.find("form > div > button.Suggested").length, 1);
+      assert.throws(adaptable.Menu.find("form > div:last > button.Suggested").click, "No options are checked.");
+
+      adaptable.Menu.find("form > div:first > label:first > input[type='radio']").click();
+      adaptable.Menu.find("form > div:first > label:first > input[type='number']").val(10);
+      adaptable.Menu.find("form > div:first > label:first > select").val("Hours");
+      adaptable.Menu.find("form > div:last > button.Suggested").click();
+
+      var layout = tblAdapTable.data("Layout");
+      var filterExists = layout.Query.Filters.filter(function(value, index)
+      {
+        if (value.Column === "HireDate" && value.Operator === ">=")
+          return true;
+      });
+
+      assert.equal(filterExists.length, 1);
+
+      additionalFiltersDiv.find("button:last").click();
+
+      assert.equal(adaptable.Menu.find("form > input[type='number']").length, 1);
+      assert.equal(adaptable.Menu.find("form > div").length, 1);
+      assert.equal(adaptable.Menu.find("form > div > button").length, 2);
+      assert.equal(adaptable.Menu.find("form > div > button.Suggested").length, 1);
+
+      adaptable.Menu.find("form > input[type='number']").val("33333");
+      adaptable.Menu.find("form > div > button.Suggested").click();
+
+      filterExists = layout.Query.Filters.filter(function(value, index)
+      {
+        if (value.Column === "Salary" && value.Operator === "=" && value.Operand === "33333")
+          return true;
+      });
+
+      assert.equal(filterExists.length, 1);
+
+      waitForDependencies();
     }, 1000);
   });
 </script>

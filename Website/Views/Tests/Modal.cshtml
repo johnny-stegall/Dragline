@@ -43,32 +43,31 @@
     var documentClickEvents = $._data($(document)[0], "events").click;
     var waitForModal = assert.async();
 
-    // Assert
+    // Act & Assert
     for (var clickIndex = 0; clickIndex < documentClickEvents.length; clickIndex++)
     {
-      if (documentClickEvents[clickIndex].namespace === "modal.widgets")
+      if (documentClickEvents[clickIndex].namespace === "widgets.modal")
       {
         assert.equal(documentClickEvents[clickIndex].selector, "[data-modal]");
         break;
       }
     }
 
-    modalButtons.first().trigger("click");
+    modalButtons.first().click();
 
-    // Assert
     window.setTimeout(function()
     {
       assert.equal($("#divModal").length, 1);
       assert.equal($("#divBackdrop").length, 1);
       assert.equal($("#divModal").next().attr("id"), "divBackdrop");
-      assert.equal($("#divModal > header > h4").text(), "Fail");
+      assert.equal($("#divModal > header > span").text(), "Fail");
       assert.ok(declarativeCallbacks > 0);
 
       waitForModal();
     }, 500);
   });
 
-  QUnit.test("Modal Show Dialog", function(assert)
+  QUnit.test("showDialog()", function(assert)
   {
     // Arrange
     var facePalm = $("#facePalm");
@@ -81,7 +80,7 @@
     // Assert
     window.setTimeout(function()
     {
-      assert.equal($("#divModal > header > h4").text(), modalTitle);
+      assert.equal($("#divModal > header > span").text(), modalTitle);
       assert.equal($("#divModal > header > button").css("display"), "none");
       waitForModal();
 
@@ -89,7 +88,7 @@
     }, 500);
   });
 
-  QUnit.test("Modal Show Dialog: With Callback", function(assert)
+  QUnit.test("showDialog() With Callback", function(assert)
   {
     // Arrange
     var facePalm = $("#facePalm");
@@ -106,7 +105,7 @@
     // Assert
     window.setTimeout(function()
     {
-      assert.equal($("#divModal > header > h4").text(), modalTitle);
+      assert.equal($("#divModal > header > span").text(), modalTitle);
       assert.equal($("#divModal > header > button").css("display"), "none");
       waitForModal();
 
@@ -114,7 +113,7 @@
     }, 500);
   });
 
-  QUnit.test("Modal Show Dialog: No Content Element", function(assert)
+  QUnit.test("showDialog() Without Content", function(assert)
   {
     // Arrange
     var facePalm = $("#facePalm");
@@ -127,7 +126,7 @@
     }, "The content element is required.");
   });
 
-  QUnit.test("Modal Show Dialog: No Title", function(assert)
+  QUnit.test("showDialog() Without Title", function(assert)
   {
     // Arrange
     var facePalm = $("#facePalm");
@@ -140,7 +139,7 @@
     }, "The content element is required.");
   });
 
-  QUnit.test("Modal Hide Dialog", function(assert)
+  QUnit.test("hideDialog()", function(assert)
   {
     // Arrange
     var facePalm = $("#facePalm");
@@ -162,6 +161,130 @@
 
         waitForModal();
       }, 500);
+    }, 500);
+  });
+
+  QUnit.test("prompt()", function(assert)
+  {
+    // Arrange
+    var waitForModal = assert.async();
+    var promptTitle = "Call to Action";
+    var promptMessage = "This is prompting you to respond to a call to action.";
+    var buttonText = "No, I don't want to";
+    var callbackInvoked = false;
+
+    // Act
+    $.Modal.prompt(promptTitle,
+      promptMessage,
+      [
+        {
+          Callback: function()
+          {
+            callbackInvoked = true;
+            $.Modal.hideDialog();
+          },
+          CssClasses: "Suggested",
+          Text: buttonText
+        }]);
+
+    // Assert
+    window.setTimeout(function()
+    {
+      var divModal = $("#divModal");
+
+      assert.ok(divModal.is(":visible"));
+      assert.equal(divModal.find("header > span").text(), promptTitle);
+      assert.ok(divModal.find("section > p").hasClass("Text-Center"));
+      assert.equal(divModal.find("section > p").text(), promptMessage);
+      assert.ok(divModal.find("section button").hasClass("Suggested"));
+      assert.equal(divModal.find("section button").text(), buttonText);
+
+      divModal.find("section button").click();
+      assert.ok(callbackInvoked);
+
+      waitForModal();
+    }, 500);
+  });
+
+  QUnit.test("promptToDelete()", function(assert)
+  {
+    // Arrange
+    var waitForModal = assert.async();
+    var promptTitle = "Confirm Removal";
+    var promptMessage = "Are you sure you want to delete this?";
+    var callbackInvoked = false;
+
+    // Act
+    $.Modal.promptToDelete(function()
+    {
+      callbackInvoked = true;
+    });
+
+    // Assert
+    window.setTimeout(function()
+    {
+      var divModal = $("#divModal");
+
+      assert.equal(divModal.find("header > span").text(), promptTitle);
+      assert.ok(divModal.find("section > p").hasClass("Text-Center"));
+      assert.equal(divModal.find("section > p").text(), promptMessage);
+      assert.equal(divModal.find("section button:first").text(), "Delete");
+      assert.equal(divModal.find("section button:last").text(), "Cancel");
+
+      divModal.find("section button:first").click();
+      assert.ok(callbackInvoked);
+
+      window.setTimeout(function()
+      {
+        $.Modal.hideDialog();
+        waitForModal();
+      }, 500)
+    }, 500);
+  });
+
+  QUnit.test("promptToSave()", function(assert)
+  {
+    // Arrange
+    var waitForModal = assert.async();
+    var promptTitle = "Unsaved Changes";
+    var promptMessage = "There are unsaved changes. What would you like to do?";
+    var callbackScore = 0;
+
+    // Act
+    $.Modal.promptToSave(function()
+    {
+      callbackScore++;
+    },
+    function()
+    {
+      callbackScore += 2;
+    },
+    $.Modal.hideDialog);
+
+    // Assert
+    window.setTimeout(function()
+    {
+      var divModal = $("#divModal");
+
+      assert.ok(divModal.is(":visible"));
+      assert.equal(divModal.find("header > span").text(), promptTitle);
+      assert.equal(divModal.find("section > p").text(), promptMessage);
+      assert.ok(divModal.find("section button").hasClass("Suggested"));
+      assert.equal(divModal.find("section button:first").text(), "Save and Continue");
+      assert.equal(divModal.find("section button:eq(1)").text(), "Continue Without Saving");
+      assert.equal(divModal.find("section button:last").text(), "Cancel");
+
+      divModal.find("section button:first").click();
+      assert.equal(callbackScore, 1);
+
+      divModal.find("section button:eq(1)").click();
+      assert.equal(callbackScore, 3);
+
+      window.setTimeout(function()
+      {
+        $.Modal.hideDialog();
+        waitForModal();
+      }, 500)
     }, 500);
   });
 </script>

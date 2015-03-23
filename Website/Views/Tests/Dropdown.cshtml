@@ -17,35 +17,35 @@
 
 <div id="qunit"></div>
 
-<div>
-  <button type="button" id="btnDropDown" data-dropdown="#ulDropDown">DropDown</button>
+<div style="position: relative;">
+  <button type="button" id="btnDropDown" data-dropdown="#ulDropDown-Declarative">DropDown</button>
   <button type="button" id="btnNotDeclarative">DropDown</button>
   <button type="button" id="btnFailDropDown">DropDown</button>
+
+  <ul id="ulDropDown" style="display: none;">
+    <li>
+      <a href="#">Action #1</a>
+    </li>
+    <li>
+      <a href="#">Action #2</a>
+    </li>
+    <li>
+      <a href="#">Action #3</a>
+    </li>
+  </ul>
+
+  <ul id="ulDropDown-Declarative" style="display: none;">
+    <li>
+      <a href="#">Action #4</a>
+    </li>
+    <li>
+      <a href="#">Action #5</a>
+    </li>
+    <li>
+      <a href="#">Action #6</a>
+    </li>
+  </ul>
 </div>
-
-<ul id="ulDropDown" style="display: none;">
-  <li>
-    <a href="#">Action #1</a>
-  </li>
-  <li>
-    <a href="#">Action #2</a>
-  </li>
-  <li>
-    <a href="#">Action #3</a>
-  </li>
-</ul>
-
-<ul id="ulDropDown2" style="display: none;">
-  <li>
-    <a href="#">Action #1</a>
-  </li>
-  <li>
-    <a href="#">Action #2</a>
-  </li>
-  <li>
-    <a href="#">Action #3</a>
-  </li>
-</ul>
 
 <script type="text/javascript">
   /****************************************************************************
@@ -53,17 +53,18 @@
   ****************************************************************************/
   QUnit.testDone(function()
   {
-    $("#btnNotDeclarative").DropDown("destroy");
+    if ($("#btnNotDeclarative").data("DropDown"))
+      $("#btnNotDeclarative").DropDown("destroy");
   });
 
-  QUnit.test("DropDown Constructor", function(assert)
+  QUnit.test("Constructor", function(assert)
   {
     // Arrange
     var btnDropDown = $("#btnNotDeclarative");
-    var menu = $("#ulDropDown2");
+    var menu = $("#ulDropDown");
 
     // Act
-    btnDropDown.DropDown({ Menu: "#ulDropDown2" });
+    btnDropDown.DropDown({ Menu: "#ulDropDown" });
 
     // Assert
     assert.ok(btnDropDown.data("DropDown").Menu);
@@ -75,11 +76,11 @@
     btnDropDown.DropDown("destroy");
   });
 
-  QUnit.test("DropDown Constructor: Declarative", function(assert)
+  QUnit.test("Declarative Constructor", function(assert)
   {
     // Arrange
     var btnDropDown = $("#btnDropDown");
-    var menu = $("#ulDropDown");
+    var menu = $("#ulDropDown-Declarative");
 
     // Assert
     assert.ok(btnDropDown.data("DropDown").Menu);
@@ -88,7 +89,7 @@
     assert.equal(menu.data("activator"), null);
   });
 
-  QUnit.test("DropDown Constructor: No Menu", function(assert)
+  QUnit.test("Constructor Without Menu", function(assert)
   {
     // Arrange
     var btnDropDown = $("#btnFailDropDown");
@@ -100,11 +101,11 @@
     }, "The dropdown target could not be found.");
   });
 
-  QUnit.test("DropDown Destructor", function(assert)
+  QUnit.test("Destructor", function(assert)
   {
     // Arrange
     var btnDropDown = $("#btnNotDeclarative");
-    var menu = $("#ulDropDown2");
+    var menu = $("#ulDropDown");
     btnDropDown.DropDown({ Menu: "#ulDropDown" });
 
     // Act
@@ -121,7 +122,7 @@
     assert.equal($._data(menu, "events"), null);
   });
 
-  QUnit.test("Declarative DropDown Destructor", function(assert)
+  QUnit.test("Destroy Declarative DropDown", function(assert)
   {
     // Arrange
     var btnDropDown = $("#btnDropDown");
@@ -141,8 +142,8 @@
   {
     // Arrange
     var btnDropDown = $("#btnNotDeclarative");
-    var menu = $("#ulDropDown2");
-    btnDropDown.DropDown({ Menu: "#ulDropDown2" });
+    var menu = $("#ulDropDown");
+    btnDropDown.DropDown({ Menu: "#ulDropDown" });
 
     // Act
     btnDropDown.click();
@@ -150,7 +151,7 @@
     var isActive = btnDropDown.hasClass("Active");
     var hasFocus = btnDropDown.is(":focus");
 
-    $(document).click();
+    btnDropDown.click();
     var toggledInvisible = !menu.is(":visible");
     var notActive = !btnDropDown.hasClass("Active");
 
@@ -162,12 +163,35 @@
     assert.ok(notActive);
   });
 
+  QUnit.test("Toggle Menu Document Clear", function(assert)
+  {
+    // Arrange
+    var btnDropDown = $("#btnNotDeclarative");
+    var menu = $("#ulDropDown");
+    btnDropDown.DropDown({ Menu: "#ulDropDown" });
+
+    // Act
+    btnDropDown.click();
+    var toggledVisible = menu.is(":visible");
+    var isActive = btnDropDown.hasClass("Active");
+
+    $(document).click();
+    var toggledInvisible = !menu.is(":visible");
+    var notActive = !btnDropDown.hasClass("Active");
+
+    // Assert
+    assert.ok(toggledVisible);
+    assert.ok(isActive);
+    assert.ok(toggledInvisible);
+    assert.ok(notActive);
+  });
+
   QUnit.test("Disabled Toggle", function(assert)
   {
     // Arrange
     var btnDropDown = $("#btnNotDeclarative").attr("disabled", true);
-    var menu = $("#ulDropDown2");
-    btnDropDown.DropDown({ Menu: "#ulDropDown2" });
+    var menu = $("#ulDropDown");
+    btnDropDown.DropDown({ Menu: "#ulDropDown" });
 
     // Act
     btnDropDown.click();
@@ -186,8 +210,8 @@
   {
     // Arrange
     var btnDropDown = $("#btnNotDeclarative");
-    var menu = $("#ulDropDown2");
-    btnDropDown.DropDown({ Menu: "#ulDropDown2" });
+    var menu = $("#ulDropDown");
+    btnDropDown.DropDown({ Menu: "#ulDropDown" });
 
     // Act
     btnDropDown.click();
@@ -205,8 +229,8 @@
   {
     // Arrange
     var btnDropDown = $("#btnNotDeclarative");
-    var menu = $("#ulDropDown2");
-    btnDropDown.DropDown({ Menu: "#ulDropDown2" });
+    var menu = $("#ulDropDown");
+    btnDropDown.DropDown({ Menu: "#ulDropDown" });
 
     // Act
     btnDropDown.click();

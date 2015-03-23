@@ -6,12 +6,12 @@
 
 ul.Index li > a
 {
-  color: #999;
+  color: #0768A9;
 }
 
 ul.Index li.Active > a
 {
-  color: #428BCA;
+  color: #0000AA;
   font-weight: bold;
 }
 

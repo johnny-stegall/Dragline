@@ -14,7 +14,7 @@
 {
   "use strict";
 
-  var defaults =
+  var _defaults =
   {
     Offset: 0,
     Target: null
@@ -29,7 +29,7 @@
   var Index = function(element, options)
   {
     this.Element = element;
-    this.Options = $.extend({}, defaults, options);
+    this.Options = $.extend({}, _defaults, options);
 
     if (!this.Options.Target)
       this.Options.Target = $("body");

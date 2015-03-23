@@ -12,13 +12,12 @@
 {
   "use strict";
 
-  var defaults =
+  var _defaults =
   {
     FadeIn: 500,
     FadeOut: 1000,
     HangTime: 5000,
-    MaxMessages: 0,
-    UnitTest: false
+    MaxMessages: 0
   };
 
   /****************************************************************************
@@ -42,7 +41,7 @@
       element.addClass("Toasty");
         
       this.Element = element;
-      this.Options = $.extend({}, defaults, options);
+      this.Options = $.extend({}, _defaults, options);
     },
     
     /****************************************************************************
