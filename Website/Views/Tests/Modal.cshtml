@@ -57,10 +57,10 @@
 
     window.setTimeout(function()
     {
-      assert.equal($("#divModal").length, 1);
+      assert.equal($("#dlgModal").length, 1);
       assert.equal($("#divBackdrop").length, 1);
-      assert.equal($("#divModal").next().attr("id"), "divBackdrop");
-      assert.equal($("#divModal > header > span").text(), "Fail");
+      assert.equal($("#dlgModal").next().attr("id"), "divBackdrop");
+      assert.equal($("#dlgModal > header > span").text(), "Fail");
       assert.ok(declarativeCallbacks > 0);
 
       waitForModal();
@@ -80,8 +80,8 @@
     // Assert
     window.setTimeout(function()
     {
-      assert.equal($("#divModal > header > span").text(), modalTitle);
-      assert.equal($("#divModal > header > button").css("display"), "none");
+      assert.equal($("#dlgModal > header > span").text(), modalTitle);
+      assert.equal($("#dlgModal > header > button").css("display"), "none");
       waitForModal();
 
       $.Modal.hideDialog();
@@ -105,8 +105,8 @@
     // Assert
     window.setTimeout(function()
     {
-      assert.equal($("#divModal > header > span").text(), modalTitle);
-      assert.equal($("#divModal > header > button").css("display"), "none");
+      assert.equal($("#dlgModal > header > span").text(), modalTitle);
+      assert.equal($("#dlgModal > header > button").css("display"), "none");
       waitForModal();
 
       $.Modal.hideDialog();
@@ -156,7 +156,7 @@
 
       window.setTimeout(function()
       {
-        assert.equal($("#divModal").css("opacity"), 0);
+        assert.equal($("#dlgModal").css("opacity"), 0);
         assert.equal($("#divBackdrop").css("opacity"), 0);
 
         waitForModal();
@@ -190,16 +190,16 @@
     // Assert
     window.setTimeout(function()
     {
-      var divModal = $("#divModal");
+      var dlgModal = $("#dlgModal");
 
-      assert.ok(divModal.is(":visible"));
-      assert.equal(divModal.find("header > span").text(), promptTitle);
-      assert.ok(divModal.find("section > p").hasClass("Text-Center"));
-      assert.equal(divModal.find("section > p").text(), promptMessage);
-      assert.ok(divModal.find("section button").hasClass("Suggested"));
-      assert.equal(divModal.find("section button").text(), buttonText);
+      assert.ok(dlgModal.is(":visible"));
+      assert.equal(dlgModal.find("header > span").text(), promptTitle);
+      assert.ok(dlgModal.find("section > p").hasClass("Text-Center"));
+      assert.equal(dlgModal.find("section > p").text(), promptMessage);
+      assert.ok(dlgModal.find("section button").hasClass("Suggested"));
+      assert.equal(dlgModal.find("section button").text(), buttonText);
 
-      divModal.find("section button").click();
+      dlgModal.find("section button").click();
       assert.ok(callbackInvoked);
 
       waitForModal();
@@ -223,15 +223,15 @@
     // Assert
     window.setTimeout(function()
     {
-      var divModal = $("#divModal");
+      var dlgModal = $("#dlgModal");
 
-      assert.equal(divModal.find("header > span").text(), promptTitle);
-      assert.ok(divModal.find("section > p").hasClass("Text-Center"));
-      assert.equal(divModal.find("section > p").text(), promptMessage);
-      assert.equal(divModal.find("section button:first").text(), "Delete");
-      assert.equal(divModal.find("section button:last").text(), "Cancel");
+      assert.equal(dlgModal.find("header > span").text(), promptTitle);
+      assert.ok(dlgModal.find("section > p").hasClass("Text-Center"));
+      assert.equal(dlgModal.find("section > p").text(), promptMessage);
+      assert.equal(dlgModal.find("section button:first").text(), "Delete");
+      assert.equal(dlgModal.find("section button:last").text(), "Cancel");
 
-      divModal.find("section button:first").click();
+      dlgModal.find("section button:first").click();
       assert.ok(callbackInvoked);
 
       window.setTimeout(function()
@@ -264,20 +264,20 @@
     // Assert
     window.setTimeout(function()
     {
-      var divModal = $("#divModal");
+      var dlgModal = $("#dlgModal");
 
-      assert.ok(divModal.is(":visible"));
-      assert.equal(divModal.find("header > span").text(), promptTitle);
-      assert.equal(divModal.find("section > p").text(), promptMessage);
-      assert.ok(divModal.find("section button").hasClass("Suggested"));
-      assert.equal(divModal.find("section button:first").text(), "Save and Continue");
-      assert.equal(divModal.find("section button:eq(1)").text(), "Continue Without Saving");
-      assert.equal(divModal.find("section button:last").text(), "Cancel");
+      assert.ok(dlgModal.is(":visible"));
+      assert.equal(dlgModal.find("header > span").text(), promptTitle);
+      assert.equal(dlgModal.find("section > p").text(), promptMessage);
+      assert.ok(dlgModal.find("section button").hasClass("Suggested"));
+      assert.equal(dlgModal.find("section button:first").text(), "Save and Continue");
+      assert.equal(dlgModal.find("section button:eq(1)").text(), "Continue Without Saving");
+      assert.equal(dlgModal.find("section button:last").text(), "Cancel");
 
-      divModal.find("section button:first").click();
+      dlgModal.find("section button:first").click();
       assert.equal(callbackScore, 1);
 
-      divModal.find("section button:eq(1)").click();
+      dlgModal.find("section button:eq(1)").click();
       assert.equal(callbackScore, 3);
 
       window.setTimeout(function()

@@ -1,7 +1,7 @@
 ﻿/******************************************************************************
 * jQuery Character Counter Plugin
 * Author: John Stegall
-* Copyright: 2008 John Stegall
+* Copyright: 2008-2015 John Stegall
 * License: MIT
 *
 * Displays a counter for INPUT and TEXTAREA elements that displays the

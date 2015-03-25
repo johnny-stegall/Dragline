@@ -1,7 +1,7 @@
 ﻿/******************************************************************************
 * jQuery DropDown Plugin
 * Author: John Stegall
-* Copyright: 2008 John Stegall
+* Copyright: 2008-2015 John Stegall
 * License: MIT
 *
 * Displays a dropdown menu when clicking a button.

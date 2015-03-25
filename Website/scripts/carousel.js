@@ -1,7 +1,7 @@
 ﻿/******************************************************************************
 * jQuery Carousel Plugin
 * Author: John Stegall
-* Copyright: 2010 John Stegall
+* Copyright: 2010-2015 John Stegall
 * License: MIT
 *
 * This plugin turns an element (typically a DIV) into a carousel. Images to

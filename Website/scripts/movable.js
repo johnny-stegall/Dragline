@@ -1,7 +1,7 @@
 ﻿/******************************************************************************
 * jQuery Movable Plugin
 * Author: John Stegall
-* Copyright: 2010 John Stegall
+* Copyright: 2010-2015 John Stegall
 * License: MIT
 *
 * This plugin allows DIV OR LI elements to be drag-and-dropped and if they're

@@ -1,7 +1,7 @@
 /******************************************************************************
 * jQuery Accordion Plugin
 * Author: John Stegall
-* Copyright: 2008 John Stegall
+* Copyright: 2008-2015 John Stegall
 * License: MIT
 *
 * This plugin turns a DIV element into an accordion. It expects the element to

@@ -1,7 +1,7 @@
 /******************************************************************************
 * jQuery Index Plugin
 * Author: John Stegall
-* Copyright: 2007 John Stegall
+* Copyright: 2007-2015 John Stegall
 * License: MIT
 *
 * This plugin turns an UL element into a table of contents. It will search

@@ -1,7 +1,7 @@
 ﻿/******************************************************************************
 * Knockout Metaform Binding
 * Author: John Stegall
-* Copyright: 2010 John Stegall
+* Copyright: 2010-2015 John Stegall
 * License: MIT
 *
 * This binding creates standardized form fields (INPUT, SELECT, and TEXTAREA)

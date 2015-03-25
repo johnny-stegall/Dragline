@@ -15,7 +15,7 @@
   z-index: 9998;
 }
 
-#divModal
+#dlgModal
 {
 	backface-visibility: hidden;
   background: #FFF;
@@ -37,13 +37,13 @@
   z-index: 9999;
 }
 
-#divModal.Visible
+#dlgModal.Visible
 {
   opacity: 1;
   visibility: visible;
 }
 
-#divModal.Visible ~ #divBackdrop
+#dlgModal.Visible ~ #divBackdrop
 {
   opacity: 0.75;
   visibility: visible;
@@ -52,13 +52,13 @@
 /******************************************************************************
 * Modal content styles
 ******************************************************************************/
-#divModal > header
+#dlgModal > header
 {
   border-bottom: 1px solid #DDD;
   padding: 10px;
 }
 
-#divModal > header > span
+#dlgModal > header > span
 {
   font-size: 20px;
   font-weight: normal;
@@ -66,7 +66,7 @@
   margin: 10px 1em 0 0;
 }
 
-#divModal > header > button
+#dlgModal > header > button
 {
   background: transparent;
   border: 0 none;
@@ -78,7 +78,7 @@
   outline: 0 none;
 }
 
-#divModal > section
+#dlgModal > section
 {
   padding: 10px;
 }
@@ -86,54 +86,54 @@
 /******************************************************************************
 * Modal content styles
 ******************************************************************************/
-#divModal.Fade
+#dlgModal.Fade
 {
 }
 
-#divModal.FadeAndScale
+#dlgModal.FadeAndScale
 {
   transform: translate(-50%, -50%) scale(0);
 }
 
-#divModal.FadeAndScale.Visible
+#dlgModal.FadeAndScale.Visible
 {
   transform: translate(-50%, -50%) scale(1);
 }
 
-#divModal.Newspaper
+#dlgModal.Newspaper
 {
   transform: translate(-50%, -50%) scale(0) rotate(720deg);
 }
 
-#divModal.Newspaper.Visible
+#dlgModal.Newspaper.Visible
 {
   transform: translate(-50%, -50%) scale(1) rotate(0deg);
 }
 
-#divModal.SlideFromBottom
+#dlgModal.SlideFromBottom
 {
   transform: translate(-50%, 150%);
 }
 
-#divModal.SlideFromLeft
+#dlgModal.SlideFromLeft
 {
   transform: translate(-150%, -50%);
 }
 
-#divModal.SlideFromRight
+#dlgModal.SlideFromRight
 {
   transform: translate(150%, -50%);
 }
 
-#divModal.SlideFromTop
+#dlgModal.SlideFromTop
 {
   transform: translate(-50%, -150%);
 }
 
-#divModal.SlideFromBottom.Visible,
-#divModal.SlideFromLeft.Visible,
-#divModal.SlideFromRight.Visible,
-#divModal.SlideFromTop.Visible
+#dlgModal.SlideFromBottom.Visible,
+#dlgModal.SlideFromLeft.Visible,
+#dlgModal.SlideFromRight.Visible,
+#dlgModal.SlideFromTop.Visible
 {
 	transform: translate(-50%, -50%);
 }
@@ -143,7 +143,7 @@
 ******************************************************************************/
 @media screen and (max-width: 767px)
 {
-  #divModal
+  #dlgModal
   {
     max-width: 720px;
     min-width: 300px;

@@ -1,7 +1,7 @@
 ﻿/******************************************************************************
 * jQuery Modal Plugin
 * Author: John Stegall
-* Copyright: 2008-2014 John Stegall
+* Copyright: 2008-2015 John Stegall
 * License: MIT
 *
 * Displays the contents of an element in a modal dialog.
@@ -38,8 +38,8 @@
       if (Modal.Dialog)
         return;
 
-      Modal.Dialog = $("<div />")
-        .attr("id", "divModal")
+      Modal.Dialog = $("<dialog />")
+        .attr("id", "dlgModal")
         .attr("role", "dialog")
         .attr("aria-hidden", "true");
 
@@ -133,9 +133,9 @@
           newButton.addClass(buttons[buttonIndex].CssClasses);
 
         if (buttons[buttonIndex].Callback)
-          $("body").on("click.widgets.modal", "#divModal > section button:eq(" + buttonIndex + ")", buttons[buttonIndex].Callback);
+          $("body").on("click.widgets.modal", "#dlgModal > section button:eq(" + buttonIndex + ")", buttons[buttonIndex].Callback);
         else
-          $("body").on("click.widgets.modal", "#divModal > section button:eq(" + buttonIndex + ")", this.hideDialog);
+          $("body").on("click.widgets.modal", "#dlgModal > section button:eq(" + buttonIndex + ")", this.hideDialog);
 
         buttonDiv.append(newButton);
       }

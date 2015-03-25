@@ -1,7 +1,7 @@
 ﻿/******************************************************************************
 * jQuery Password Strength Plugin
 * Author: John Stegall
-* Copyright: 2007 John Stegall
+* Copyright: 2007-2015 John Stegall
 * License: MIT
 *
 * Displays password strength under an INPUT element. Also provides callback
