@@ -2,7 +2,7 @@
 {
   if (!window.AdapTable)
     throw "AdapTable core is not loaded.";
-  else if (!jQuery.ui)
+  else if (!jQuery.ui.sortable)
     throw "jQuery UI isn't detected; grouping and column positioning require jQuery UI.";
 
   /****************************************************************************

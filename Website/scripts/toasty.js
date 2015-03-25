@@ -1,7 +1,7 @@
 /******************************************************************************
 * jQuery Toast Alert Plugin
 * Author: John Stegall
-* Copyright: 2010 John Stegall
+* Copyright: 2010-2015 John Stegall
 * License: MIT
 *
 * Creates toast messages in the specified element. Constructed using standard

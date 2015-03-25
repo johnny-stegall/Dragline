@@ -182,6 +182,7 @@
     <Content Include="scripts\character-counter.js" />
     <Content Include="scripts\dropdown.js" />
     <Content Include="scripts\index.js" />
+    <Content Include="scripts\jquery-simulate.js" />
     <Content Include="scripts\jquery-ui-1.11.1.js" />
     <Content Include="scripts\jquery.form.js" />
     <Content Include="scripts\knockout-bindings.js" />
@@ -189,12 +190,14 @@
     <Content Include="scripts\modal.js" />
     <Content Include="scripts\movable.js" />
     <Content Include="scripts\password-strength.js" />
+    <Content Include="scripts\pull-out.js" />
     <Content Include="scripts\responsive-navigation.js" />
     <Content Include="scripts\tipoff.js" />
     <Content Include="scripts\toasty.js" />
     <Content Include="scripts\todo.infinite scrolling.js" />
     <Content Include="scripts\todo.infinite-scrolling.js" />
     <Content Include="scripts\todo.popover.js" />
+    <Content Include="scripts\todo.tipoff.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

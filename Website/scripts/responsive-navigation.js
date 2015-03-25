@@ -1,7 +1,7 @@
 ﻿/******************************************************************************
 * jQuery Responsive Navigation Plugin
 * Author: John Stegall
-* Copyright: 2009 John Stegall
+* Copyright: 2009-2015 John Stegall
 * License: MIT
 *
 * This plugin toggles responsive navigation for mobile devices.

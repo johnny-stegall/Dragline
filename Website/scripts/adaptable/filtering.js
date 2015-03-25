@@ -459,10 +459,10 @@
   **************************************************************************/
   function setWildcardFilter(e)
   {
-    if (e.keyCode !== 13)
+    if (e.type === "keypress" && e.keyCode !== 13)
       return;
 
-    this.addFilter("", "LIKE", $(e.target).val());
+    this.addFilter("", "LIKE", $(e.target).parents("div.Filters").children("input[type='search']").val());
     this.Instance.getData();
   }
 

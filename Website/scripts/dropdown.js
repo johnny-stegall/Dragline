@@ -29,10 +29,9 @@
       .attr("data-role", "DropDown");
 
     if (!this.Element.data("dropdown"))
-    {
       this.Menu.data("DropDown Activator", this.Element);
-      wireEvents.call(this);
-    }
+
+    wireEvents.call(this);
   };
 
   DropDown.prototype =
@@ -55,8 +54,7 @@
         .off(".widgets.dropdown")
         .trigger("blur");
 
-      if ($("[data-dropdown]").length === 0)
-        $(document).off(".widgets.dropdown");
+      $(document).off(".widgets.dropdown");
     }
   };
 
@@ -125,7 +123,7 @@
     else if (!~selectedIndex)
       selectedIndex = 0;
 
-    menuItems.eq(selectedIndex).focus();
+    menuItems[selectedIndex].focus();
   }
 
   /**************************************************************************
@@ -176,6 +174,22 @@
     this.Element
       .on("click.widgets.dropdown", toggleMenu)
       .on("keydown.widgets.dropdown", highlightMenu);
+
+    var documentEvents = $._data(document, "events");
+
+    if (documentEvents && documentEvents.keydown)
+    {
+      for (var eventIndex = 0; eventIndex < documentEvents.keydown.length; eventIndex++)
+      {
+        if (documentEvents.keydown[eventIndex].namespace === "widgets.dropdown")
+          return;
+      }
+    }
+
+    $(document)
+      .on("click.widgets.dropdown", clearMenus)
+      .on("click.widgets.dropdown", "[data-dropdown]", toggleMenu)
+      .on("keydown.widgets.dropdown", "[data-dropdown], [role='DropDown']", highlightMenu);
   }
 
   /****************************************************************************
@@ -227,10 +241,5 @@
 
       self.DropDown(options);
     });
-
-    $(document)
-      .on("click.widgets.dropdown", clearMenus)
-      .on("click.widgets.dropdown", "[data-dropdown]", toggleMenu)
-      .on("keydown.widgets.dropdown", "[data-dropdown], [role='DropDown']", highlightMenu);
   });
 })(jQuery, window, document);

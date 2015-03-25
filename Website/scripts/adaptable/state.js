@@ -91,16 +91,17 @@
   AdapTable.saveLayout = function()
   {
     var self = this;
+
     $.post(this.Options.Layout.Url, this.Element.data("Layout"))
-      .done(function()
+      .done(function(data, textStatus, jqXHR)
       {
         if (self.Options.Layout.Success)
-          self.Options.Layout.Success();
+          self.Options.Layout.Success.call(self, data, textStatus, jqXHR);
       })
-      .fail(function()
+      .fail(function(jqXHR, textStatus, errorThrown)
       {
         if (self.Options.Layout.Fail)
-          self.Options.Layout.Fail();
+          self.Options.Layout.Fail.call(self, jqXHR, textStatus, errorThrown);
       });
   }
 
@@ -249,7 +250,11 @@
 
         cacheData.call(self, data);
       },
-      error: this.Options.Data.Fail,
+      error: function(jqXHR, textStatus, errorThrown)
+      {
+        if (self.Options.Data.Fail)
+          self.Options.Data.Fail.call(self, jqXHR, textStatus, errorThrown)
+      },
       complete: this.Options.Data.Complete
     });
   }

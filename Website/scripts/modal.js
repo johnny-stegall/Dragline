@@ -215,6 +215,15 @@
       else if (!title || typeof (title) !== "string")
         throw "Modal dialog title is required.";
 
+      if (typeof (element) === "string")
+        element = $(element);
+
+      if (typeof (options) === "function")
+      {
+        callback = options;
+        options = null;
+      }
+
       options = $.extend({ CloseButton: true, Effect: "Slide From Top" }, options);
 
       Modal.buildDialog();
@@ -251,5 +260,5 @@ $(document).on("click.widgets.modal", "[data-modal]", function()
   if (typeof (options) === "string")
     options = JSON.parse(options.replace(/'/g, "\""));
 
-  $.Modal.showDialog($(self.data("modal")), self.data("title"), options, self.data("callback"));
+  $.Modal.showDialog(self.data("modal"), self.data("title"), options, self.data("callback"));
 });

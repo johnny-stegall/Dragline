@@ -1,7 +1,7 @@
 ﻿/******************************************************************************
 * jQuery AdapTable Plugin
 * Author: John Stegall
-* Copyright: 2011-2015
+* Copyright: 2010-2015 John Stegall
 * License: MIT
 *
 * Adds various customizations to a TABLE element.
