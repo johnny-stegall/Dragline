@@ -29,6 +29,13 @@
       var lazyColumns = Lazy(this.Instance.Element.data("Layout").Columns);
 
       lazyColumns
+        .where({ IsVisible: true })
+        .each(function(column)
+        {
+          toggleColumnVisibility.call(self, lazyColumns.indexOf(column), true);
+        });
+
+      lazyColumns
         .where({ IsHidable: true, IsVisible: false })
         .each(function(column)
         {

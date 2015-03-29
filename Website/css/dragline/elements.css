@@ -13,13 +13,6 @@
   src: url(fonts/Calibri.ttf);
 }
 
-@font-face
-{
-  font-family: Bliss;
-  src: url("fonts/Calibri Bold.ttf");
-  font-weight: bold;
-}
-
 /******************************************************************************
 * Apply to all elements
 ******************************************************************************/
@@ -54,7 +47,7 @@ html
 body
 {
   background: #FFF;
-  color: #474747;
+  color: #333;
   font-family: Calibri, Arial, Helvitica, sans-serif;
   font-size: 14px;
   height: 100%;
@@ -74,7 +67,7 @@ section
 
 body > nav
 {
-  background: #0081C6;
+  background: #0000AA;
   border: 1px solid transparent;
   height: 40px;
   left: 0;
@@ -101,7 +94,7 @@ body > nav > #btnMobileNav
 body > nav span.Badge
 {
   background-color: #FFF;
-  color: #0E7398;
+  color: #0768A9;
 }
 
 body > nav > a.Logo
@@ -124,7 +117,7 @@ body > nav a:hover,
 body > #ulNav a:focus,
 body > #ulNav a:hover
 {
-  color: #F7EDAC;
+  color: #FFFFAA;
   outline: none;
   text-decoration: none;
 }
@@ -144,7 +137,7 @@ body > #ulNav > li > a.Active + ul
 
 body > #ulNav
 {
-  background: #474747;
+  background: #333;
   height: 100%;
   left: -100%;
   list-style: none;
@@ -169,7 +162,7 @@ body > #ulNav > li
 
 body > #ulNav > li:not(:first-child)
 {
-  border-top: 1px solid #C3C3C3;
+  border-top: 1px solid #DDD;
 }
 
 body > #ulNav > li i
@@ -187,11 +180,11 @@ select,
 textarea
 {
   background-color: #FFF;
-  border: 1px solid #C3C3C3;
+  border: 1px solid #DDD;
   border-radius: 3px;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
   box-sizing: border-box !important;
-  color: #474747;
+  color: #333;
   font-family: inherit;
   font-size: 14px;
   line-height: 1.5em;
@@ -232,7 +225,7 @@ button
 button:active,
 button.Active
 {
-  background-color: #E5E5E5;
+  background-color: #E3E3E3;
   background-image: none;
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
   outline: 0;
@@ -258,8 +251,8 @@ button:focus
 button:focus,
 button:hover
 {
-  background-color: #E5E5E5;
-  color: #474747;
+  background-color: #E3E3E3;
+  color: #333;
   text-decoration: none;
 }
 
@@ -291,7 +284,7 @@ select[disabled],
 textarea[disabled],
 textarea[readonly]
 {
-  background-color: #E5E5E5;
+  background-color: #E3E3E3;
   cursor: not-allowed;
   opacity: 1;
 }
@@ -301,8 +294,8 @@ input:focus,
 select:focus,
 textarea:focus
 {
-  border-color: #0E7398;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px #0E7398;
+  border-color: #0768A9;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px #0768A9;
   outline: 0;
 }
 
@@ -360,8 +353,8 @@ label
 legend
 {
   border: 0;
-  border-bottom: 1px solid #E5E5E5;
-  color: #474747;
+  border-bottom: 1px solid #DDD;
+  color: #333;
   display: block;
   font-size: 21px;
   line-height: inherit;
@@ -372,7 +365,7 @@ legend
 
 output
 {
-  color: #474747;
+  color: #333;
   display: block;
   font-size: 14px;
   line-height: 1.5em;
@@ -390,7 +383,7 @@ h5,
 h6
 {
   color: inherit;
-  font-family: Bliss;
+  font-family: "Shadows Into Light";
   font-weight: 500;
   line-height: 1.1;
 }
@@ -416,7 +409,7 @@ h4 small,
 h5 small,
 h6 small
 {
-  color: #8D8D8D;
+  color: #666;
   font-weight: normal;
   line-height: 1;
 }
@@ -437,7 +430,7 @@ h6 small
 
 h1
 {
-  border-bottom: 1px solid #C3C3C3;
+  border-bottom: 1px solid #DDD;
   font-size: 36px;
   padding-bottom: 7px;
 }
@@ -482,7 +475,7 @@ samp
 
 a
 {
-  color: #0081C6;
+  color: #0768A9;
   cursor: pointer;
   text-decoration: none;
 }
@@ -490,7 +483,7 @@ a
 a:hover,
 a:focus
 {
-  color: #0E7398;
+  color: #000088;
   text-decoration: underline;
 }
 
@@ -503,7 +496,7 @@ a:focus
 
 abbr
 {
-  border-bottom: 1px dotted #C3C3C3;
+  border-bottom: 1px dotted #DDD;
   cursor: help;
 }
 
@@ -516,7 +509,7 @@ address
 
 blockquote
 {
-  border-left: 5px solid #C3C3C3;
+  border-left: 5px solid #DDD;
   font-size: 17.5px;
   margin: 0 0 20px;
   padding: 10px 20px;
@@ -548,9 +541,9 @@ cite
 
 code
 {
-  background-color: #B4CDD9;
+  background-color: #A0C4E6;
   border-radius: 4px;
-  color: #0081C6;
+  color: #0768A9;
   font-size: 90%;
   padding: 2px 4px;
   white-space: nowrap;
@@ -558,7 +551,7 @@ code
 
 kbd
 {
-  background-color: #474747;
+  background-color: #333;
   border-radius: 3px;
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .25);
   color: #FFF;
@@ -568,7 +561,7 @@ kbd
 
 mark
 {
-  background: #DDD00C;
+  background: #FAFA00;
 }
 
 p
@@ -578,10 +571,10 @@ p
 
 pre
 {
-  background-color: #F2F2F2;
-  border: 1px solid #C3C3C3;
+  background-color: #F5F5F5;
+  border: 1px solid #DDD;
   border-radius: 4px;
-  color: #474747;
+  color: #333;
   display: block;
   font-size: 13px;
   line-height: 1.5em;
@@ -670,14 +663,14 @@ table > thead > tr > th,
 table > tbody > tr > td,
 table > tfoot > tr > td
 {
-  border-top: 1px solid #C3C3C3;
+  border-top: 1px solid #DDD;
   line-height: 1.5em;
   padding: 5px 7px;
 }
 
 table > thead > tr > th
 {
-  border-bottom: 2px solid #C3C3C3;
+  border-bottom: 2px solid #DDD;
   vertical-align: bottom;
 }
 
@@ -709,25 +702,25 @@ meter
 
 meter::-webkit-meter-bar
 {
-  background: #EBEBEB;
+  background: #E3E3E3;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
 
 meter::-webkit-meter-optimum-value
 {
-  background: #7AC143;
+  background: #00AA00;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
 
 meter::-webkit-meter-suboptimum-value
 {
-  background: #DDD00C;
+  background: #FAFA00;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
 
 meter::-webkit-meter-even-less-good-value
 {
-  background: #EF3E42;
+  background: #AA0000;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
 
@@ -741,10 +734,10 @@ progress
   -o-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  background: #EEE;
+  background: #F5F5F5;
   border: 0 none;
   border-radius: 3px;
-  color: #0E7398;
+  color: #0768A9;
   height: 25px;
   width: 250px;
 }
@@ -756,13 +749,14 @@ progress::-webkit-progress-bar
 
 progress[value]::-webkit-progress-bar
 {
-  background: #F2F2F2;
+  background: #F5F5F5;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
 
 progress[value]::-webkit-progress-value
 {
-  background: #0E7398;
+  background: #0768A9;
+  border-radius: 3px;
 }
 
 progress:not([value])
@@ -786,7 +780,7 @@ img
 hr
 {
   border: 0;
-  border-top: 1px solid #C3C3C3;
+  border-top: 1px solid #DDD;
   clear: both;
   margin-top: 20px;
   margin-bottom: 20px;

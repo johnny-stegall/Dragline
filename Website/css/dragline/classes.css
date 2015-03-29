@@ -55,7 +55,7 @@ section.Container:after
 
 .Error
 {
-  color: #EF3E42;
+  color: #AA0000;
 }
 
 .Float-Left
@@ -80,7 +80,7 @@ section.Container:after
 
 .Info
 {
-  color: #0081C6;
+  color: #0000AA;
 }
 
 .Invisible
@@ -113,7 +113,7 @@ section.Container:after
 
 .Success
 {
-  color: #7AC143;
+  color: #00AA00;
 }
 
 .Text-Center
@@ -138,7 +138,7 @@ section.Container:after
 
 .Warning
 {
-  color: #A89E34;
+  color: #D38601;
 }
 
 .Width-100
@@ -206,22 +206,22 @@ section.Container:after
 ******************************************************************************/
 a.Error:hover
 {
-  color: #A6232D;
+  color: #880000;
 }
 
 a.Info:hover
 {
-  color: #0E7398;
+  color: #0768A9;
 }
 
 a.Success:hover
 {
-  color: #00985F;
+  color: #008800;
 }
 
 a.Warning:hover
 {
-  color: #A89E34;
+  color: #D38601;
 }
 
 blockquote.Text-Right > footer:before
@@ -236,16 +236,16 @@ blockquote.Text-Right > footer:after
 
 button.Dark
 {
-  background: #8D8D8D;
-  border: 1px solid #8D8D8D;
+  background: #666;
+  border: 1px solid #444;
   color: #FFF;
 }
 
 button.Dark:focus,
 button.Dark:hover
 {
-  background: #474747;
-  border: 1px solid #474747;
+  background: #999;
+  border: 1px solid #888;
 }
 
 button.DropDown:after
@@ -263,29 +263,36 @@ button.DropDown:after
 
 button.Light
 {
-  background: #EBEBEB;
-  border: 1px solid #C3C3C3;
+  background: #999;
+  border: 1px solid #888;
+}
+
+button.Light:focus,
+button.Light:hover
+{
+  background: #CCC;
+  border: 1px solid #BBB;
 }
 
 button.Suggested
 {
-  background: #0081C6;
-  border: 1px solid #0081C6;
+  background: #0768A9;
+  border: 1px solid #2A668F;
   color: #FFF;
 }
 
 button.Suggested:focus,
 button.Suggested:hover
 {
-  background: #136898;
-  border: 1px solid #136898;
+  background: #000088;
+  border: 1px solid #0000AA;
   color: #FFF;
 }
 
 button.Risky
 {
-  background: #EF3E42;
-  border: 1px solid #EF3E42;
+  background: #AA0000;
+  border: 1px solid #CC0000;
   color: #FFF;
 }
 
@@ -311,8 +318,8 @@ div.Buttons-Vertical > button,
 div.Buttons-Vertical > .Button
 {
   background-color: #FFF;
-  border-color: #C3C3C3;
-  color: #474747;
+  border-color: #DDD;
+  color: #333;
   float: left;
   position: relative;
 }
@@ -326,8 +333,8 @@ div.Buttons > .Button:hover,
 div.Buttons-Vertical > button:hover,
 div.Buttons-Vertical > .Button:hover
 {
-  background-color: #E5E5E5;
-  border-color: #C3C3C3;
+  background-color: #E3E3E3;
+  border-color: #DDD;
   box-shadow: none;
   outline: none;
   z-index: 2;
@@ -338,7 +345,7 @@ div.Buttons > .Button:active,
 div.Buttons-Vertical > button:active,
 div.Buttons-Vertical > .Button:active
 {
-  background-color: #E0E0E0;
+  background-color: #E3D3D3;
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
   outline: 0;
 }
@@ -474,7 +481,7 @@ img.Circle
 img.Bordered
 {
   background-color: #FFF;
-  border: 1px solid #C3C3C3;
+  border: 1px solid #DDD;
   display: inline-block;
   max-width: 100%;
   padding: 5px;
@@ -531,7 +538,7 @@ label.ScreenReader
 
 li.Divider
 {
-  background-color: #E5E5E5;
+  background-color: #E3E3E3;
   height: 1px;
   margin: 10px 0;
   overflow: hidden;
@@ -539,7 +546,7 @@ li.Divider
 
 ol.Breadcrumb
 {
-  background-color: #F2F2F2;
+  background-color: #F5F5F5;
   border-radius: 4px;
   list-style: none;
   margin-bottom: 20px;
@@ -553,7 +560,7 @@ ol.Breadcrumb > li
 
 ol.Breadcrumb > li + li:before
 {
-  color: #474747;
+  color: #333;
   content: "/\00a0";
   padding: 0 5px;
 }
@@ -583,7 +590,7 @@ ol.Paneled > li,
 ul.Paneled > li
 {
   background-color: #FFF;
-  border: 1px solid #C3C3C3;
+  border: 1px solid #DDD;
   display: block;
   margin-bottom: -1px;
   padding: 10px 15px;
@@ -620,7 +627,7 @@ section.Container
 
 span.Badge
 {
-  background-color: #C6C1B8;
+  background-color: #999;
   border-radius: 10px;
   color: #FFF;
   display: inline-block;
@@ -641,7 +648,7 @@ span.Badge:empty
 
 span.Link
 {
-  color: #0081C6;
+  color: #0768A9;
   cursor: pointer;
   text-decoration: none;
 }
@@ -649,7 +656,7 @@ span.Link
 span.Link:hover,
 span.Link:focus
 {
-  color: #0E7398;
+  color: #000088;
   text-decoration: underline;
 }
 
@@ -667,39 +674,39 @@ table > tbody > tr > td.NoPad
 
 table > tbody > tr.Active > td
 {
-  background-color: #F2F2F2;
+  background-color: #F5F5F5;
 }
 
 table > tbody > tr.Error > td
 {
-  background-color: #F9B3AB;
+  background-color: #F2DEDE;
 }
 
 table > tbody > tr.Info > td
 {
-  background-color: #A0C4E6;
+  background-color: #D9EDF7;
 }
 
 table > tbody > tr.Success > td
 {
-  background-color: #CAE3B2;
+  background-color: #DFF0D8;
 }
 
 table > tbody > tr.Warning > td
 {
-  background-color: #F7EDAC;
+  background-color: #FCF8E3;
 }
 
 table.Bordered
 {
-  border: 1px solid #C3C3C3;
+  border: 1px solid #DDD;
 }
 
 table.Bordered > thead > tr > th,
 table.Bordered > tbody > tr > td,
 table.Bordered > tfoot > tr > td
 {
-  border: 1px solid #C3C3C3;
+  border: 1px solid #DDD;
 }
 
 table.Bordered > thead > tr > th
@@ -709,10 +716,10 @@ table.Bordered > thead > tr > th
 
 table.Striped > tbody > tr:nth-child(odd) > td
 {
-  background-color: #F2F2F2;
+  background-color: #F5F5F5;
 }
 
 table.Hot-Tracking > tbody > tr:hover > td
 {
-  background-color: #F2F2F2;
+  background-color: #F5F5F5;
 }

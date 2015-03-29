@@ -27,7 +27,7 @@
   * @param startIndex {int} The start index.
   * @param endIndex {int} The end index.
   **************************************************************************/
-  AdapTable.bubbleArrayElements = function(array, startIndex, endIndex)
+  AdapTable.bubbleArrayItems = function(array, startIndex, endIndex)
   {
     var index;
     if (startIndex < endIndex)

@@ -30,14 +30,14 @@
 
 .Toasty > div.Error
 {
-  background: #F9B3AB;
+  background: #F2DEDE;
   border: 1px solid #AA0000;
   color: #AA0000;
 }
 
 .Toasty > div.Information
 {
-  background: #A0C4E6;
+  background: #D9EDF7;
   border: 1px solid #0000AA;
   color: #0000AA;
 }
@@ -51,14 +51,14 @@
 
 .Toasty > div.Success
 {
-  background: #CAE3B2;
+  background: #DFF0D8;
   border: 1px solid #00AA00;
   color: #00AA00;
 }
 
 .Toasty > div.Warning
 {
-  background: #F7EDAC;
+  background: #FCF8E3;
   border: 1px solid #D38601;
   color: #D38601;
 }

@@ -34,18 +34,20 @@
       e.stopPropagation();
       buildSortableList.call(this);
 
-      this.DraggableList.sortable(
-      {
-        containment: this.Container,
-        cursorAt: { left: 0, top: 0 },
-        distance: 0,
-        items: ".AdapTable-Sortable",
-        stop: $.proxy(handleColumnDrop, this),
-        tolerance: "pointer"
-      }).disableSelection();
+      this.DraggableList
+        .sortable(
+        {
+          containment: this.Container,
+          cursorAt: { left: 5, top: 5 },
+          distance: 0,
+          items: ".AdapTable-Sortable",
+          stop: $.proxy(handleColumnDrop, this),
+          tolerance: "pointer"
+        })
+        .disableSelection();
 
       if (this.Instance.Options.CanGroup)
-        this.DraggableList.sortable("option", "connectWith", "div.Grouping > ol");
+        this.DraggableList.sortable("option", "connectWith", "div.Add-Group, div.Groups > ol");
       else
         this.DraggableList.sortable("option", "axis", "x");
 
@@ -53,8 +55,7 @@
 
       this.StartIndex = $(e.target)
         .closest("th")
-        .prevAll()
-        .size() + 1;
+        .index() + 1;
 
       copyDragEvent.call(this, e);
 
@@ -63,6 +64,31 @@
       {
         placeholder.css("height", this.Instance.Element.height());
         placeholder.append("<div style=\"height: 100%;\" />");
+      }
+    },
+
+    /**************************************************************************
+    * Toggles a user's ability to select text with the mouse.
+    **************************************************************************/
+    toggleTextSelection: function()
+    {
+      var body = $(document.body);
+
+      if (!body.attr("unselectable"))
+      {
+        body
+          .removeAttr("unselectable")
+          .removeClass("Disable-Text-Selection")
+          .off("selectstart");
+      }
+      else
+      {
+        body
+          .attr("unselectable", "on")
+          .addClass("Disable-Text-Selection")
+          .on("selectstart.widgets.adaptable", false);
+
+        window.getSelection().removeAllRanges();
       }
     }
   };
@@ -158,7 +184,7 @@
 
     this.DraggableList
       .insertBefore(this.Instance.Element)
-      .find("li:visible > table")
+      .find("li > table")
       .each(function(tableIndex)
       {
         $(this).css("width", tableAttributes.HeaderWidths[tableIndex] + "px");
@@ -174,7 +200,7 @@
   function copyDragEvent(e)
   {
     this.DraggedRow = this.DraggableList.children(":nth-child(" + this.StartIndex + ")");
-    toggleTextSelection();
+    this.toggleTextSelection();
 
     // Clone the initial event and trigger the sortable with it
     this.DraggedRow.trigger($.extend($.Event(e.type),
@@ -248,13 +274,16 @@
       .addClass("AdapTable-Disabled")
       .sortable("disable");
 
-    this.EndIndex = this.DraggedRow.prevAll().size() + 1;
-
     if (ui.item.parent()[0] === this.DraggableList[0])
+    {
+      this.EndIndex = this.DraggedRow.index() + 1;
       this.Instance.Positioning.rearrangeColumns();
+    }
     else
     {
+      this.EndIndex = this.DraggedRow.index();
       var column = Lazy(this.Instance.Element.data("Layout").Columns).findWhere({ Header: ui.item.find("th").text() });
+
       if (column.IsGroupable)
         this.Instance.Grouping.addGroup(column.Name, this.EndIndex);
       else
@@ -264,31 +293,6 @@
     this.DraggableList.remove();
     this.DraggableList = null;
     this.DraggedRow = null;
-    toggleTextSelection();
-  }
-
-  /**************************************************************************
-  * Toggles a user's ability to select text with the mouse.
-  **************************************************************************/
-  function toggleTextSelection()
-  {
-    var body = $(document.body);
-
-    if (!body.attr("unselectable"))
-    {
-      body
-        .removeAttr("unselectable")
-        .removeClass("Disable-Text-Selection")
-        .off("selectstart");
-    }
-    else
-    {
-      body
-        .attr("unselectable", "on")
-        .addClass("Disable-Text-Selection")
-        .on("selectstart.widgets.adaptable", false);
-
-      window.getSelection().removeAllRanges();
-    }
+    this.toggleTextSelection();
   }
 })();

@@ -1,7 +1,4 @@
-﻿// BUG: Removing the last group throws a server-side error
-// BUG: Removing groups always removes the last group
-// BUG: The UI for removing groups isn't obvious
-;(function()
+﻿;(function()
 {
   "use strict";
 
@@ -37,7 +34,7 @@
 
       var layout = this.Instance.Element.data("Layout");
 
-      if (!index)
+      if (index === null)
         index = layout.Query.Groups.length;
 
       if (layout.Query.Groups.indexOf(columnName) < 0)
@@ -49,6 +46,8 @@
         this.Instance.getData();
         this.Instance.cacheLayout(layout);
       }
+
+      this.Instance.Container.find("div.Grouping > div.Add-Group").sortable("disable");
     },
 
     /**************************************************************************
@@ -57,7 +56,7 @@
     applyGrouping: function()
     {
       addGroupDropTargets.call(this);
-      this.Instance.Container.find("div.Grouping > ol > li:not(.Add-Group)").remove();
+      this.Instance.Container.find("div.Groups > ol > li").remove();
 
       var self = this;
       var query = this.Instance.Element.data("Layout").Query;
@@ -80,15 +79,19 @@
     **************************************************************************/
     removeGroup: function(columnName)
     {
+      var layout = this.Instance.Element.data("Layout");
       var column = Lazy(layout.Columns).findWhere({ Name: columnName });
+
       if (!column)
         return;
 
-      var layout = this.Instance.Element.data("Layout");
-      layout.Query.Groups.splice(layout.Query.Groups.indexOf(column, 1));
+      layout.Query.Groups.splice(layout.Query.Groups.indexOf(columnName), 1);
       column.IsVisible = true;
       this.Instance.getData();
       this.Instance.cacheLayout(layout);
+
+      if (!layout.Query.Groups.length)
+        this.Instance.Container.find("div.Grouping > div.Add-Group").sortable("enable");
     }
   };
 
@@ -99,54 +102,62 @@
   **************************************************************************/
   function addGroupDropTargets()
   {
-    if (this.Instance.Container.find("div.Grouping").length)
+    if (this.Instance.Container.find("div.Groups").length)
       return;
 
-    var groupIcon = $("<i />")
-      .addClass("fa fa-cubes")
-      .attr("title", "Drag and drop a column here to group by that column");
-
-    var groupListItem = $("<li />")
-      .addClass("Add-Group")
-      .append(groupIcon);
-
-    var self = this;
-
     var olGroups = $("<ol />")
-      .append(groupListItem)
       .sortable(
       {
         axis: "x",
-        connectWith: ".Remove-Grouping",
+        connectWith: "div.Remove-Group",
         containment: this.Instance.Container,
-        cursorAt: { left: 0, top: 0 },
-        items: "li:not(.Add-Group)",
+        cursorAt: { left: 5, top: 5 },
+        items: "li",
         out: restoreTableColumn,
         over: $.proxy(handleColumnGrouping, this),
         start: $.proxy(recordStartIndex, this),
         stop: $.proxy(handleColumnDrop, this),
         update: $.proxy(recordEndIndex, this)
-      }).disableSelection();
+      })
+      .disableSelection();
+
+    var addGroupIcon = $("<i />")
+      .addClass("fa fa-cubes")
+      .attr("title", "Drag and drop a column here to group by that column");
+
+    var divAddGroup = $("<div />")
+      .addClass("Add-Group")
+      .append(addGroupIcon)
+      .sortable(
+      {
+        out: restoreTableColumn,
+        over: $.proxy(handleColumnGrouping, this),
+        start: $.proxy(recordStartIndex, this),
+        stop: $.proxy(handleColumnDrop, this),
+        update: $.proxy(recordEndIndex, this)
+      })
+      .disableSelection();
 
     var removeGroupIcon = $("<i />")
       .addClass("fa fa-trash-o")
       .attr("title", "Drag and drop a grouped column here to stop grouping by that column");
 
-    var divRemoveGrouping = $("<div />")
-      .addClass("Remove-Grouping")
+    var divRemoveGroup = $("<div />")
+      .addClass("Remove-Group")
       .append(removeGroupIcon)
       .sortable(
       {
-        containment: this.Instance.Container,
         update: $.proxy(deleteGroup, this)
-      }).disableSelection();
+      })
+      .disableSelection();
 
-    var divGrouping = $("<div />")
-      .addClass("Grouping")
-      .append(divRemoveGrouping)
-      .append(olGroups);
+    var divGroups = $("<div />")
+      .addClass("Groups")
+      .append(olGroups)
+      .append(divAddGroup)
+      .append(divRemoveGroup);
 
-    this.Instance.Container.children("section:first-child").prepend(divGrouping);
+    this.Instance.Container.children("section:first-child").prepend(divGroups);
   }
 
   /**************************************************************************
@@ -296,18 +307,15 @@
     this.addGroup(columnName, index);
 
     var column = Lazy(this.Instance.Element.data("Layout").Columns).findWhere({ Name: columnName });
-    var groupList = this.Instance.Container.find("div.Grouping > ol");
+    var groupList = this.Instance.Container.find("div.Groups > ol");
     
     if (!groupList.children().length)
       groupList.append("<li>" + column.Header + "</li>");
     else
     {
-      groupList.children(":nth-child(" + (index + 1) + ")")
-        .before("<li>" + column.Header + "</li>");
+      groupList.children(":nth-child(" + index + ")")
+        .after("<li>" + column.Header + "</li>");
     }
-
-    this.Instance.Container.find("li.Add-Group").hide();
-    this.Instance.Container.find("div.Remove-Grouping").show();
   }
 
   /**************************************************************************
@@ -322,12 +330,6 @@
     ui.item.remove();
 
     var layout = this.Instance.Element.data("Layout");
-    if (!layout.Query.Groups.length)
-    {
-      this.Instance.Container.find("div.Remove-Grouping").hide();
-      this.Instance.Container.find("div.Grouping > i").show();
-    }
-
     this.removeGroup(ui.item.text());
   }
 
@@ -341,17 +343,15 @@
   function handleColumnDrop(e, ui)
   {
     if (!ui.item.parent().length)
-      deleteGroup(e, ui);
-    else if(this.Instance.Sortable.EndIndex && this.Instance.Sortable.StartIndex != this.Instance.Sortable.EndIndex)
+      return;
+    else if (this.Instance.Sortable.EndIndex !== null && this.Instance.Sortable.StartIndex !== this.Instance.Sortable.EndIndex)
     {
       var layout = this.Instance.Element.data("Layout");
 
-      this.Instance.bubbleArrayElements(layout.Query.Groups, this.Instance.Sortable.StartIndex, this.Instance.Sortable.EndIndex);
+      this.Instance.bubbleArrayItems(layout.Query.Groups, this.Instance.Sortable.StartIndex, this.Instance.Sortable.EndIndex);
       this.Instance.getData();
       this.Instance.cacheLayout(layout);
     }
-
-    ui.item.remove();
   }
 
   /**************************************************************************
@@ -368,37 +368,11 @@
       return;
 
     var column = Lazy(this.Instance.Element.data("Layout").Columns).findWhere({ Header: ui.item.find("th").text().trim() });
-    var background = column.IsGroupable ? "inherit" : "#F2DEDE";
-    var border = column.IsGroupable ? "1px solid #CCC" : "1px solid #FF8888";
-    var color = column.IsGroupable ? "inherit" : "#AA0000";
 
     ui.item.children().hide();
     ui.item
-      .data("CSS",
-      {
-        background: ui.item.css("background"),
-        border: ui.item.css("border"),
-        borderRadius: ui.item.css("borderRadius"),
-        color: ui.item.css("color"),
-        display: ui.item.css("display"),
-        height: ui.item.css("height"),
-        margin: ui.item.css("margin"),
-        padding: ui.item.css("padding"),
-        width: ui.item.css("width")
-      })
-      .css(
-      {
-        background: background,
-        border: border,
-        borderRadius: "5px",
-        color: color,
-        display: "inline-block",
-        height: "auto",
-        margin: "5px 3px 0 3px",
-        padding: "5px",
-        width: "auto"
-      })
-      .append("<span>" + ui.item.find("th").text().trim() + "</span>");
+      .append("<span>" + ui.item.find("th").text().trim() + "</span>")
+      .addClass(column.IsGroupable ? "Group" : "Cannot-Group");
   }
 
   /**************************************************************************
@@ -411,7 +385,12 @@
   function recordEndIndex(e, ui)
   {
     if (!ui.sender)
+    {
       this.Instance.Sortable.EndIndex = ui.item.index();
+      this.Instance.Sortable.toggleTextSelection();
+    }
+
+    ui.item.remove();
   }
 
   /**************************************************************************
@@ -424,6 +403,7 @@
   function recordStartIndex(e, ui)
   {
     this.Instance.Sortable.StartIndex = ui.item.index();
+    this.Instance.Sortable.toggleTextSelection();
   }
 
   /**************************************************************************
@@ -437,13 +417,9 @@
   {
     if (ui.item.children("table").length)
     {
-      ui.item
-        .css(ui.item.data("CSS"))
-        .data("CSS", null);
-
+      ui.item.removeClass("Group Cannot-Group");
       ui.item.children("span").hide();
-      ui.item.children("table").show();
-      ui.item.children("div").show();
+      ui.item.children("table, div").show();
     }
   }
 
