@@ -22,27 +22,31 @@
 <table id="tblAdapTable" class="Hot-Tracking">
   <thead>
     <tr>
-      <th class="Mobile-Hidden">Email Address</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Department</th>
-      <th class="Mobile-Hidden">Gender</th>
-      <th class="Mobile-Hidden">Ethnicity</th>
-      <th class="Mobile-Hidden">Hire Date</th>
-      <th>Salary</th>
-      <th></th>
+      <th>Type</th>
+      <th>Breed</th>
+      <th>Name</th>
+      <th>How Acquired</th>
+      <th>Acquisition Date</th>
+      <th>Acquisition Age</th>
+      <th>Acquisition Price</th>
+      <th>Loss Date</th>
+      <th>Loss Reason</th>
+      <th>
+        <i class="fa fa-cog" style="cursor: pointer;" />
+      </th>
     </tr>
   </thead>
-  <tbody data-bind="foreach: Employees().Items">
+  <tbody data-bind="foreach: Pets">
     <tr>
-      <td class="Mobile-Hidden" data-bind="text: Email"></td>
-      <td data-bind="text: FirstName"></td>
-      <td data-bind="text: LastName"></td>
-      <td data-bind="text: Department"></td>
-      <td class="Mobile-Hidden" data-bind="text: Gender"></td>
-      <td class="Mobile-Hidden" data-bind="text: Ethnicity"></td>
-      <td class="Mobile-Hidden" data-bind="text: HireDate"></td>
-      <td data-bind="text: Salary"></td>
+      <td data-bind="text: Type"></td>
+      <td data-bind="text: Breed"></td>
+      <td data-bind="text: Name"></td>
+      <td data-bind="text: $data['How Acquired']"></td>
+      <td class="Text-Right" data-bind="text: $data['Acquisition Date'].toDateString()"></td>
+      <td class="Text-Right" data-bind="text: $data['Acquisition Age']"></td>
+      <td class="Text-Right" data-bind="text: $data['Acquisition Price']"></td>
+      <td class="Text-Right" data-bind="text: $data['Loss Date'].toDateString()"></td>
+      <td data-bind="text: $data['Loss Reason']"></td>
       <td>
         <i class="fa fa-cog" style="cursor: pointer;" />
       </td>
@@ -51,19 +55,196 @@
 </table>
 
 <script type="text/javascript">
+  var Setup =
+  {
+    Pets:
+    [
+      { "Type": "Lizard", "Breed": "Water Dragon", "Name": "Leviathan", "Acquisition Date": new Date("6/10/1993"), "Acquisition Age": .5, "How Acquired": "Purchased", "Acquisition Price": 40, "Loss Date": new Date("8/12/1998"), "Loss Reason": "Sold" },
+      { "Type": "Dog", "Breed": "Rotweiler", "Name": "Hercules", "Acquisition Date": new Date("1/5/1993"), "Acquisition Age": 0.5, "How Acquired": "Purchased", "Acquisition Price": 600, "Loss Date": new Date("9/1/1998"), "Loss Reason": "Put down by step mom" },
+      { "Type": "Dog", "Breed": "Rotweiler", "Name": "Mel", "Acquisition Date": new Date("4/2/1994"), "Acquisition Age": 0.5, "How Acquired": "Daughter of Hercules", "Acquisition Price": 0, "Loss Date": new Date("9/1/1998"), "Loss Reason": "Put down by step mom" },
+      { "Type": "Scorpion", "Breed": "Emperor", "Name": "Sting", "Acquisition Date": new Date("11/4/1994"), "Acquisition Age": 1, "How Acquired": "Purchased", "Acquisition Price": 34.99, "Loss Date": new Date("4/10/1995"), "Loss Reason": "Black Widows" },
+      { "Type": "Cat", "Breed": "Unknown", "Name": "Chocolate", "Acquisition Date": new Date("5/3/1998"), "Acquisition Age": 1, "How Acquired": "Found", "Acquisition Price": 0, "Loss Date": new Date("6/19/2012"), "Loss Reason": "Old Age" },
+      { "Type": "Lizard", "Breed": "Asian Water Monitor", "Name": "Vincent", "Acquisition Date": new Date("6/6/1999"), "Acquisition Age": 0.5, "How Acquired": "Purchased", "Acquisition Price": 119.99, "Loss Date": new Date("5/20/2001"), "Loss Reason": "Ex-girlfriend let out" },
+      { "Type": "Lizard", "Breed": "Leopard Gecko", "Name": "Phallic", "Acquisition Date": new Date("10/12/1999"), "Acquisition Age": 0.5, "How Acquired": "Purchased", "Acquisition Price": 29.99, "Loss Date": new Date("4/23/2012"), "Loss Reason": "Black Widows" },
+      { "Type": "Lizard", "Breed": "Leopard Gecko", "Name": "Snarky", "Acquisition Date": new Date("10/12/1999"), "Acquisition Age": 0.5, "How Acquired": "Purchased", "Acquisition Price": 29.99, "Loss Date": new Date("4/23/2012"), "Loss Reason": "Black Widows" },
+      { "Type": "Lizard", "Breed": "Leopard Gecko", "Name": "Twitch", "Acquisition Date": new Date("10/12/1999"), "Acquisition Age": 0.5, "How Acquired": "Purchased", "Acquisition Price": 29.99, "Loss Date": new Date("4/23/2012"), "Loss Reason": "Black Widows" },
+      { "Type": "Ferret", "Breed": "", "Name": "Hoppy", "Acquisition Date": new Date("6/20/2000"), "Acquisition Age": 3, "How Acquired": "Given", "Acquisition Price": 0, "Loss Date": new Date("5/13/2001"), "Loss Reason": "Given away" },
+      { "Type": "Ferret", "Breed": "", "Name": "Klepty", "Acquisition Date": new Date("6/20/2000"), "Acquisition Age": 3, "How Acquired": "Given", "Acquisition Price": 0, "Loss Date": new Date("5/13/2001"), "Loss Reason": "Given away" },
+      { "Type": "Lizard", "Breed": "Double Crested Green Basilisk", "Name": "Dumbass", "Acquisition Date": new Date("9/13/2001"), "Acquisition Age": 0.5, "How Acquired": "Purchased", "Acquisition Price": 149.99, "Loss Date": new Date("1/28/2003"), "Loss Reason": "Died" },
+      { "Type": "Cat", "Breed": "Smoosh Face Tabby", "Name": "Clyde", "Acquisition Date": new Date("10/20/2002"), "Acquisition Age": 4, "How Acquired": "Adopted", "Acquisition Price": 120, "Loss Date": new Date("2/1/2003"), "Loss Reason": "Given back" },
+      { "Type": "Cat", "Breed": "Black Tabby", "Name": "Calysto", "Acquisition Date": new Date("10/20/2002"), "Acquisition Age": 4, "How Acquired": "Adopted", "Acquisition Price": 120, "Loss Date": new Date("2/1/2003"), "Loss Reason": "Given back" },
+      { "Type": "Bird", "Breed": "Eclectus", "Name": "Xanth", "Acquisition Date": new Date("4/13/2003"), "Acquisition Age": 1, "How Acquired": "Purchased", "Acquisition Price": 1099, "Loss Date": new Date("8/19/2004"), "Loss Reason": "Given away" },
+      { "Type": "Cat", "Breed": "Unknown", "Name": "Jaz", "Acquisition Date": new Date("7/13/2003"), "Acquisition Age": 3, "How Acquired": "Adopted", "Acquisition Price": 120, "Loss Date": new Date("9/9/2004"), "Loss Reason": "Put down due to IBD" },
+      { "Type": "Bird", "Breed": "Greenwing Macaw", "Name": "Trixy", "Acquisition Date": new Date("2/20/2005"), "Acquisition Age": 0.5, "How Acquired": "Purchased", "Acquisition Price": 1300, "Loss Date": new Date(""), "Loss Reason": "" },
+      { "Type": "Lizard", "Breed": "Madagascar Crested Gecko", "Name": "Leather", "Acquisition Date": new Date("11/3/2006"), "Acquisition Age": 1, "How Acquired": "Purchased", "Acquisition Price": 39.99, "Loss Date": new Date("4/23/2012"), "Loss Reason": "Black Widows" },
+      { "Type": "Lizard", "Breed": "Madagascar Crested Gecko", "Name": "Suede", "Acquisition Date": new Date("11/3/2006"), "Acquisition Age": 1, "How Acquired": "Purchased", "Acquisition Price": 0, "Loss Date": new Date("4/23/2012"), "Loss Reason": "Black Widows" },
+      { "Type": "Lizard", "Breed": "Madagascar Crested Gecko", "Name": "Tailless", "Acquisition Date": new Date("11/3/2006"), "Acquisition Age": 1, "How Acquired": "Purchased", "Acquisition Price": 0, "Loss Date": new Date("5/30/2012"), "Loss Reason": "Let go" },
+      { "Type": "Snake", "Breed": "Boa Constrictor", "Name": "Knot", "Acquisition Date": new Date("2/4/2007"), "Acquisition Age": 0.5, "How Acquired": "Purchased", "Acquisition Price": 89.99, "Loss Date": new Date("5/5/2012"), "Loss Reason": "Sold" },
+      { "Type": "Lizard", "Breed": "Australian Frilled Dragon", "Name": "Zeal", "Acquisition Date": new Date("10/5/2008"), "Acquisition Age": 1, "How Acquired": "Purchased", "Acquisition Price": 99.98, "Loss Date": new Date("4/23/2012"), "Loss Reason": "Black Widows" },
+      { "Type": "Cat", "Breed": "Silver Bengal", "Name": "Phoebe", "Acquisition Date": new Date("3/3/2010"), "Acquisition Age": 0.5, "How Acquired": "Purchased", "Acquisition Price": 500, "Loss Date": new Date("4/30/2012"), "Loss Reason": "Gave away" },
+      { "Type": "Snake", "Breed": "Ball Python", "Name": "Morningstar", "Acquisition Date": new Date("3/9/2010"), "Acquisition Age": 4, "How Acquired": "Purchased", "Acquisition Price": 129.99, "Loss Date": new Date("4/23/2012"), "Loss Reason": "Black Widows" },
+      { "Type": "Cat", "Breed": "[F1] Savannah", "Name": "Ragnarok", "Acquisition Date": new Date("9/13/2011"), "Acquisition Age": 1.5, "How Acquired": "Purchased", "Acquisition Price": 400, "Loss Date": new Date(""), "Loss Reason": "" }
+    ],
+    ViewModel:
+    {
+      Pets: ko.observable([])
+    },
+
+    calculateAggregates: function()
+    {
+      var aggregates = {};
+      var groupedValues = {};
+
+      for (var petIndex = 0; petIndex < this.Pets.length; petIndex++)
+      {
+        if (!groupedValues[this.Pets[petIndex].Type])
+          groupedValues[this.Pets[petIndex].Type] = {};
+
+        for (var property in this.Pets[petIndex])
+        {
+          if (typeof (this.Pets[petIndex][property]) === "number")
+          {
+            if (!groupedValues[this.Pets[petIndex].Type][property])
+              groupedValues[this.Pets[petIndex].Type][property] = [];
+
+            groupedValues[this.Pets[petIndex].Type][property].push(this.Pets[petIndex][property]);
+          }
+        }
+      }
+
+      for (var type in groupedValues)
+      {
+        aggregates[type] = {};
+
+        for (var property in groupedValues[type])
+        {
+          aggregates[type][property] = 0;
+
+          for (var valueIndex = 0; valueIndex < groupedValues[type][property].length; valueIndex++)
+            aggregates[type][property] += groupedValues[type][property][valueIndex];
+
+          aggregates[type][property] /= groupedValues[type][property].length;
+        }
+      }
+
+      return aggregates;
+    },
+
+    determineIfGroupable: function(property)
+    {
+      switch (property)
+      {
+        case "Name":
+        case "Acquisition Date":
+        case "Acquisition Price":
+        case "Loss Date":
+          return false;
+        default:
+          return true;
+      }
+    },
+
+    determineIfHidable: function(property)
+    {
+      if (property === "Name" || property === "Type")
+        return false;
+      else
+        return true;
+    },
+
+    determineIfSortable: function(property)
+    {
+      if (property === "Loss Reason")
+        return false;
+      else
+        return true;
+    },
+
+    getColumns: function()
+    {
+      var columns = [];
+
+      for (var property in this.Pets[0])
+      {
+        columns.push(
+        {
+          "Aggregate": typeof (this.Pets[0][property]) === "number" ? "Average" : "None",
+          "DataType": this.getDataType(this.Pets[0][property]),
+          "Header": property,
+          "IsFilterable": true,
+          "IsGroupable": this.determineIfGroupable(property),
+          "IsHidable": this.determineIfHidable(property),
+          "IsMovable": true,
+          "IsSortable": this.determineIfSortable(property),
+          "IsVisible": true,
+          "Name": property.replace(" ", "")
+        });
+      }
+
+      columns.push({ "Aggregate": "None", "DataType": "None", "Header": null, "IsFilterable": false, "IsGroupable": false, "IsHidable": false, "IsMovable": false, "IsSortable": false, "IsVisible": true, "Name": null });
+
+      return columns;
+    },
+
+    getDataType: function(value)
+    {
+      switch (typeof (value))
+      {
+        case "string":
+          return "String";
+        case "number":
+          return "Numeric";
+        default:
+          if (value.getDate)
+            return "Timestamp";
+          else
+            return "None";
+      }
+    },
+
+    getFilterValues: function()
+    {
+      var filterValues = {};
+
+      for (var property in this.Pets)
+      {
+        filterValues[property] = [];
+
+        for (var petIndex = 0; petIndex < this.Pets.length; petIndex++)
+        {
+          if (filterValues[property].indexOf(this.Pets[petIndex][property]) < 0)
+            filterValues[property].push(this.Pets[petIndex][property]);
+        }
+      }
+    },
+
+    getPagesOfData: function()
+    {
+      var pages = [];
+
+      for (var pageIndex = 0; pageIndex < this.Pets.length / 10; pageIndex++)
+      {
+        pages.push(
+        {
+          "Items": Setup.Pets.slice((pageIndex * 10), ((pageIndex + 1) * 10))
+        });
+      }
+
+      return pages;
+    }
+  };
+
   // Setup some cached data
   var AdapTableCache = { Instances: [] };
   var AdapTableInstance = {};
   AdapTableInstance.Layout = {};
-  AdapTableInstance.Layout.Columns = [{ "Aggregate": "None", "DataType": "String", "Header": "First Name", "IsFilterable": true, "IsGroupable": false, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "FirstName" }, { "Aggregate": "None", "DataType": "String", "Header": "Last Name", "IsFilterable": true, "IsGroupable": false, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "LastName" }, { "Aggregate": "None", "DataType": "String", "Header": "Email Address", "IsFilterable": true, "IsGroupable": false, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "Email" }, { "Aggregate": "None", "DataType": "String", "Header": "Department", "IsFilterable": true, "IsGroupable": true, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": false, "Name": "Department" }, { "Aggregate": "None", "DataType": "String", "Header": "Gender", "IsFilterable": true, "IsGroupable": true, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "Gender" }, { "Aggregate": "None", "DataType": "String", "Header": "Ethnicity", "IsFilterable": true, "IsGroupable": true, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "Ethnicity" }, { "Aggregate": "None", "DataType": "Timestamp", "Header": "Hire Date", "IsFilterable": true, "IsGroupable": false, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "HireDate" }, { "Aggregate": "Average", "DataType": "Numeric", "Header": "Salary", "IsFilterable": true, "IsGroupable": false, "IsHidable": true, "IsMovable": true, "IsSortable": true, "IsVisible": true, "Name": "Salary" }, { "Aggregate": "None", "DataType": "None", "Header": null, "IsFilterable": false, "IsGroupable": false, "IsHidable": false, "IsMovable": false, "IsSortable": false, "IsVisible": true, "Name": null }];
-  AdapTableInstance.Layout.Query = { "Filters": [], "Groups": ["Department"], "PageSize": 10, "PageIndex": 0, "Sort": "LastName", "SortDirection": null };
+  AdapTableInstance.Layout.Columns = Setup.getColumns();
+  AdapTableInstance.Layout.Query = { "Filters": [], "Groups": ["Type"], "PageSize": 10, "PageIndex": 0, "Sort": "Acquisition Date", "SortDirection": null };
   AdapTableInstance.Data = {};
-  AdapTableInstance.Data.Aggregates = { "Engineering": { "Salary": 47221.75 }, "Marketing": { "Salary": 22222 }, "Support": { "Salary": 56943.875 }, "Operations": { "Salary": 66666 }, "Sales": { "Salary": 55555 } };
-  AdapTableInstance.Data.FilterValues = { "Gender": ["Female", "Male"], "Ethnicity": ["Asian", "Caucasian", "Latino", "Middle Eastern"], "FirstName": ["Bob", "Carlton", "Clement", "Dan", "Dave", "Ed", "Eric", "Erin", "Jennie", "Joanna", "John", "Ken", "Mark", "Michael", "Priya", "Robby", "Samantha", "Tiffany", "Tim", "Vicky"], "Email": ["bob.jensen@wolterskluwer.com", "carlton.edwards@wolterskluwer.com", "clement.cheng@wolterskluwer.com", "dan.jackson@wolterskluwer.com", "dave.wensel@wolterskluwer.com", "ed.santamaria@wolterskluwer.com", "eric.lee@wolterskluwer.com", "erin.mcdermott", "jennie.howard@wolterskluwer.com", "joanna.derfuhs@wolterskluwer.com", "john.stegall@wolterskluwer.com", "ken.charity@wolterskluwer.com", "mark.sisson@wolterskluwer.com", "michael.lin@wolterskluwer.com", "priya.yallapantula@wolterskluwer.com", "robby.millsap@wolterskluwer.com", "samantha.perez@wolterskluwer.com", "tiffany.fujiwara@wolterskluwer.com", "tim.pau@wolterskluwer.com", "vicky.yu@wolterskluwer.com"], "LastName": ["Charity", "Cheng", "Derfuhs", "Edwards", "Fujiwara", "Howard", "Jackson", "Jensen", "Lee", "Lin", "McDermott", "Millsap", "Pau", "Perez", "Santamaria", "Sisson", "Stegall", "Wensel", "Yallapantula", "Yu"], "Department": ["Engineering", "Marketing", "Operations", "Sales", "Support"] };
-  AdapTableInstance.Data.TotalItems = 20;
-  AdapTableInstance.Data.Pages = [];
-  AdapTableInstance.Data.Pages.push({ "Items": [{ "Department": "Engineering", "Email": "eric.lee@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Eric", "Gender": "Male", "HireDate": "2003-10-02T00:00:00", "LastName": "Lee", "Salary": 22222 }, { "Department": "Engineering", "Email": "michael.lin@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Michael", "Gender": "Male", "HireDate": "2011-03-09T00:00:00", "LastName": "Lin", "Salary": 33333 }, { "Department": "Engineering", "Email": "robby.millsap@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Robby", "Gender": "Male", "HireDate": "2012-12-12T00:00:00", "LastName": "Millsap", "Salary": 55555 }, { "Department": "Engineering", "Email": "tim.pau@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Tim", "Gender": "Male", "HireDate": "2002-08-09T00:00:00", "LastName": "Pau", "Salary": 77777 }, { "Department": "Engineering", "Email": "ed.santamaria@wolterskluwer.com", "Ethnicity": "Latino", "FirstName": "Ed", "Gender": "Male", "HireDate": "2012-03-17T00:00:00", "LastName": "Santamaria", "Salary": 77777 }, { "Department": "Engineering", "Email": "mark.sisson@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Mark", "Gender": "Male", "HireDate": "2011-09-11T00:00:00", "LastName": "Sisson", "Salary": 88888 }, { "Department": "Engineering", "Email": "john.stegall@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "John", "Gender": "Male", "HireDate": "2014-02-20T00:00:00", "LastName": "Stegall", "Salary": 11111 }, { "Department": "Engineering", "Email": "priya.yallapantula@wolterskluwer.com", "Ethnicity": "Middle Eastern", "FirstName": "Priya", "Gender": "Female", "HireDate": "2012-07-11T00:00:00", "LastName": "Yallapantula", "Salary": 11111 }, { "Department": "Marketing", "Email": "ken.charity@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Ken", "Gender": "Male", "HireDate": "2011-05-17T00:00:00", "LastName": "Charity", "Salary": 22222 }, { "Department": "Operations", "Email": "tiffany.fujiwara@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Tiffany", "Gender": "Female", "HireDate": "2007-01-12T00:00:00", "LastName": "Fujiwara", "Salary": 66666 }] });
-  AdapTableInstance.Data.Pages.push({ "Items": [{ "Department": "Sales", "Email": "bob.jensen@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Bob", "Gender": "Male", "HireDate": "2013-04-04T00:00:00", "LastName": "Jensen", "Salary": 11111 }, { "Department": "Sales", "Email": "dave.wensel@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Dave", "Gender": "Male", "HireDate": "2000-01-01T00:00:00", "LastName": "Wensel", "Salary": 99999 }, { "Department": "Support", "Email": "clement.cheng@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Clement", "Gender": "Male", "HireDate": "2010-06-05T00:00:00", "LastName": "Cheng", "Salary": 33333 }, { "Department": "Support", "Email": "joanna.derfuhs@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Joanna", "Gender": "Female", "HireDate": "2009-07-28T00:00:00", "LastName": "Derfuhs", "Salary": 44444 }, { "Department": "Support", "Email": "carlton.edwards@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Carlton", "Gender": "Male", "HireDate": "2011-09-09T00:00:00", "LastName": "Edwards", "Salary": 55555 }, { "Department": "Support", "Email": "jennie.howard@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Jennie", "Gender": "Female", "HireDate": "2012-05-19T00:00:00", "LastName": "Howard", "Salary": 88888 }, { "Department": "Support", "Email": "dan.jackson@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Dan", "Gender": "Male", "HireDate": "2008-11-13T00:00:00", "LastName": "Jackson", "Salary": 99999 }, { "Department": "Support", "Email": "erin.mcdermott", "Ethnicity": "Caucasian", "FirstName": "Erin", "Gender": "Female", "HireDate": "2013-04-01T00:00:00", "LastName": "McDermott", "Salary": 44444 }, { "Department": "Support", "Email": "samantha.perez@wolterskluwer.com", "Ethnicity": "Caucasian", "FirstName": "Samantha", "Gender": "Female", "HireDate": "2010-06-01T00:00:00", "LastName": "Perez", "Salary": 66666 }, { "Department": "Support", "Email": "vicky.yu@wolterskluwer.com", "Ethnicity": "Asian", "FirstName": "Vicky", "Gender": "Female", "HireDate": "2010-06-14T00:00:00", "LastName": "Yu", "Salary": 22222 }] });
+  AdapTableInstance.Data.Aggregates = Setup.calculateAggregates();
+  AdapTableInstance.Data.FilterValues = Setup.getFilterValues();
+  AdapTableInstance.Data.TotalItems = Setup.Pets.length;
+  AdapTableInstance.Data.Pages = Setup.getPagesOfData();
   AdapTableCache.Instances.push(AdapTableInstance);
   localStorage.setItem("AdapTable: " + document.location, JSON.stringify(AdapTableCache));
 

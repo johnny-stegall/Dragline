@@ -125,30 +125,31 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Tests Controller.cs" />
     <Compile Include="Controllers\Home Controller.cs" />
-    <Content Include="css\adaptable.css" />
-    <Content Include="css\carousel.css" />
+    <Content Include="css\dragline\adaptable.css" />
+    <Content Include="css\dragline\carousel.css" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="css\accordion.css" />
-    <Content Include="css\classes.css" />
-    <Content Include="css\character-counter.css" />
-    <Content Include="css\dropdown.css" />
-    <Content Include="css\elements.css" />
-    <Content Include="css\index.css" />
-    <Content Include="css\metaform.css" />
-    <Content Include="css\modal.css" />
-    <Content Include="css\normalize-3.0.0.css" />
-    <Content Include="css\printer-friendly.css" />
-    <Content Include="css\pull-out.css" />
-    <Content Include="css\responsive.css" />
-    <Content Include="css\site.css" />
-    <Content Include="css\password-strength.css" />
-    <Content Include="css\spinner.css" />
-    <Content Include="css\toasty.css" />
+    <Content Include="css\dragline\accordion.css" />
+    <Content Include="css\dragline\classes.css" />
+    <Content Include="css\dragline\character-counter.css" />
+    <Content Include="css\dragline\dropdown.css" />
+    <Content Include="css\dragline\elements.css" />
+    <Content Include="css\dragline\font-awesome-4.3.0.css" />
+    <Content Include="css\dragline\index.css" />
+    <Content Include="css\dragline\metaform.css" />
+    <Content Include="css\dragline\modal.css" />
+    <Content Include="css\dragline\normalize-3.0.0.css" />
+    <Content Include="css\dragline\printer-friendly.css" />
+    <Content Include="css\dragline\pull-out.css" />
+    <Content Include="css\dragline\responsive.css" />
+    <Content Include="css\dragline\ux-guide.css" />
+    <Content Include="css\dragline\password-strength.css" />
+    <Content Include="css\dragline\spinner.css" />
+    <Content Include="css\dragline\toasty.css" />
     <Content Include="Global.asax" />
     <Content Include="images\devices.png" />
     <Content Include="images\dragline-128px.png" />
@@ -166,38 +167,41 @@
     <Content Include="images\memes\test-in-production.jpg" />
     <Content Include="images\memes\what-if-i-told-you.jpg" />
     <Content Include="images\success.png" />
-    <Content Include="scripts\accordion.js" />
-    <Content Include="scripts\adaptable.js" />
-    <Content Include="scripts\adaptable\filtering.js" />
-    <Content Include="scripts\adaptable\grouping.js" />
-    <Content Include="scripts\adaptable\helpers.js" />
-    <Content Include="scripts\adaptable\paging.js" />
-    <Content Include="scripts\adaptable\positioning.js" />
-    <Content Include="scripts\adaptable\script-loader.js" />
-    <Content Include="scripts\adaptable\sortable.js" />
-    <Content Include="scripts\adaptable\sorting.js" />
-    <Content Include="scripts\adaptable\state.js" />
-    <Content Include="scripts\adaptable\views.js" />
-    <Content Include="scripts\carousel.js" />
-    <Content Include="scripts\character-counter.js" />
-    <Content Include="scripts\dropdown.js" />
-    <Content Include="scripts\index.js" />
-    <Content Include="scripts\jquery-simulate.js" />
-    <Content Include="scripts\jquery-ui-1.11.1.js" />
-    <Content Include="scripts\jquery.form.js" />
-    <Content Include="scripts\knockout-bindings.js" />
-    <Content Include="scripts\knockout-metaform.js" />
-    <Content Include="scripts\modal.js" />
-    <Content Include="scripts\movable.js" />
-    <Content Include="scripts\password-strength.js" />
-    <Content Include="scripts\pull-out.js" />
-    <Content Include="scripts\responsive-navigation.js" />
-    <Content Include="scripts\tipoff.js" />
-    <Content Include="scripts\toasty.js" />
-    <Content Include="scripts\todo.infinite scrolling.js" />
-    <Content Include="scripts\todo.infinite-scrolling.js" />
-    <Content Include="scripts\todo.popover.js" />
-    <Content Include="scripts\todo.tipoff.js" />
+    <Content Include="scripts\dragline\accordion.js" />
+    <Content Include="scripts\dragline\adaptable.js" />
+    <Content Include="scripts\dragline\adaptable\filtering.js" />
+    <Content Include="scripts\dragline\adaptable\grouping.js" />
+    <Content Include="scripts\dragline\adaptable\helpers.js" />
+    <Content Include="scripts\dragline\adaptable\paging.js" />
+    <Content Include="scripts\dragline\adaptable\positioning.js" />
+    <Content Include="scripts\dragline\adaptable\script-loader.js" />
+    <Content Include="scripts\dragline\adaptable\sortable.js" />
+    <Content Include="scripts\dragline\adaptable\sorting.js" />
+    <Content Include="scripts\dragline\adaptable\state.js" />
+    <Content Include="scripts\dragline\adaptable\views.js" />
+    <Content Include="scripts\dragline\carousel.js" />
+    <Content Include="scripts\dragline\character-counter.js" />
+    <Content Include="scripts\dragline\dragline.js" />
+    <Content Include="scripts\dragline\dropdown.js" />
+    <Content Include="scripts\dragline\index.js" />
+    <Content Include="scripts\lib\d3-3.4.9.js" />
+    <Content Include="scripts\lib\jquery-2.1.1.js" />
+    <Content Include="scripts\lib\jquery-simulate.js" />
+    <Content Include="scripts\lib\jquery-ui-sortable-1.11.1.js" />
+    <Content Include="scripts\lib\jquery.form-2.82.js" />
+    <Content Include="scripts\dragline\knockout-bindings.js" />
+    <Content Include="scripts\dragline\knockout-metaform.js" />
+    <Content Include="scripts\dragline\modal.js" />
+    <Content Include="scripts\dragline\movable.js" />
+    <Content Include="scripts\dragline\password-strength.js" />
+    <Content Include="scripts\dragline\pull-out.js" />
+    <Content Include="scripts\dragline\responsive-navigation.js" />
+    <Content Include="scripts\dragline\toasty.js" />
+    <Content Include="scripts\lib\knockout-3.3.0.js" />
+    <Content Include="scripts\lib\knockout-mapping-2.41.js" />
+    <Content Include="scripts\lib\lodash-2.4.1.js" />
+    <Content Include="scripts\lib\moment-2.7.0.js" />
+    <Content Include="scripts\lib\requirejs-2.1.17.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -262,8 +266,27 @@
     <Content Include="Views\Tests\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="css\fonts\Calibri.ttf" />
-    <Content Include="css\fonts\Shadows-Into-Light.ttf" />
+    <Content Include="css\dragline\fonts\Calibri.ttf" />
+    <Content Include="css\dragline\fonts\Shadows-Into-Light.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Tests\Adaptable-Filtering.cshtml" />
+    <Content Include="Views\Tests\Adaptable-Grouping.cshtml" />
+    <Content Include="Views\Tests\Adaptable-Helpers.cshtml" />
+    <Content Include="Views\Tests\Adaptable-Paging.cshtml" />
+    <Content Include="Views\Tests\Adaptable-Positioning.cshtml" />
+    <Content Include="Views\Tests\Adaptable-Script-Loader.cshtml" />
+    <Content Include="Views\Tests\Adaptable-State.cshtml" />
+    <Content Include="Views\Tests\Adaptable-Views.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Tests\Metaform.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Tests\Bug-Fixing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="css\dragline\fonts\fontawesome-webfont.eot" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

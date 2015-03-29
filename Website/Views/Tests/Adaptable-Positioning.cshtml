@@ -21,27 +21,31 @@
 <table id="tblAdapTable" class="Hot-Tracking">
   <thead>
     <tr>
-      <th class="Mobile-Hidden">Email Address</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Department</th>
-      <th class="Mobile-Hidden">Gender</th>
-      <th class="Mobile-Hidden">Ethnicity</th>
-      <th class="Mobile-Hidden">Hire Date</th>
-      <th>Salary</th>
-      <th></th>
+      <th>Type</th>
+      <th>Breed</th>
+      <th>Name</th>
+      <th>How Acquired</th>
+      <th>Acquisition Date</th>
+      <th>Acquisition Age</th>
+      <th>Acquisition Price</th>
+      <th>Loss Date</th>
+      <th>Loss Reason</th>
+      <th>
+        <i class="fa fa-cog" style="cursor: pointer;" />
+      </th>
     </tr>
   </thead>
-  <tbody data-bind="foreach: Employees().Items">
+  <tbody data-bind="foreach: Pets">
     <tr>
-      <td class="Mobile-Hidden" data-bind="text: Email"></td>
-      <td data-bind="text: FirstName"></td>
-      <td data-bind="text: LastName"></td>
-      <td data-bind="text: Department"></td>
-      <td class="Mobile-Hidden" data-bind="text: Gender"></td>
-      <td class="Mobile-Hidden" data-bind="text: Ethnicity"></td>
-      <td class="Mobile-Hidden" data-bind="text: HireDate"></td>
-      <td data-bind="text: Salary"></td>
+      <td data-bind="text: Type"></td>
+      <td data-bind="text: Breed"></td>
+      <td data-bind="text: Name"></td>
+      <td data-bind="text: $data['How Acquired']"></td>
+      <td class="Text-Right" data-bind="text: $data['Acquisition Date'].toDateString()"></td>
+      <td class="Text-Right" data-bind="text: $data['Acquisition Age']"></td>
+      <td class="Text-Right" data-bind="text: $data['Acquisition Price']"></td>
+      <td class="Text-Right" data-bind="text: $data['Loss Date'].toDateString()"></td>
+      <td data-bind="text: $data['Loss Reason']"></td>
       <td>
         <i class="fa fa-cog" style="cursor: pointer;" />
       </td>
@@ -50,23 +54,4 @@
 </table>
 
 <script type="text/javascript">
-  QUnit.test("AdapTable Constructor", function(assert)
-  {
-    // Arrange
-    var getScript = assert.async();
-    var tblAdapTable = $("#tblAdapTable");
-
-    // Act
-    $("#tblAdapTable").AdapTable();
-
-    // Assert
-    assert.ok(AdapTable.Views);
-
-    window.setTimeout(function()
-    {
-      assert.ok(AdapTable.addActionButton);
-      assert.ok(AdapTable.cacheLayout);
-      getScript();
-    }, 1000);
-  });
 </script>

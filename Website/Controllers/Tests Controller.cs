@@ -78,6 +78,12 @@ namespace Dragline.Controllers
       return View();
     }
 
+    [ActionName("bug-fixing")]
+    public ActionResult BugFixing()
+    {
+      return View();
+    }
+
     public ActionResult Carousel()
     {
       return View();

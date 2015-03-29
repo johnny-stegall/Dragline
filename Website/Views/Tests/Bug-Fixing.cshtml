@@ -5,17 +5,23 @@
 @section PageStyles
 {
   <link type="text/css" rel="stylesheet" href="~/css/dragline/adaptable.css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/qunit/1.16.0/qunit.min.css" />
 }
 
 @section PageScripts
 {
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/qunit/1.16.0/qunit.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/blanket.js/1.1.4/blanket.min.js"></script>
-  <script type="text/javascript" src="~/scripts/dragline/adaptable.js" data-cover></script>
+  <script type="text/javascript" src="~/scripts/dragline/adaptable.js"></script>
+  <script type="text/javascript" src="~/scripts/dragline/adaptable/filtering.js"></script>
+  <script type="text/javascript" src="~/scripts/dragline/adaptable/grouping.js"></script>
+  <script type="text/javascript" src="~/scripts/dragline/adaptable/helpers.js"></script>
+  <script type="text/javascript" src="~/scripts/dragline/adaptable/paging.js"></script>
+  <script type="text/javascript" src="~/scripts/dragline/adaptable/positioning.js"></script>
+  <script type="text/javascript" src="~/scripts/dragline/adaptable/script-loader.js"></script>
+  <script type="text/javascript" src="~/scripts/dragline/adaptable/sortable.js"></script>
+  <script type="text/javascript" src="~/scripts/dragline/adaptable/state.js"></script>
+  <script type="text/javascript" src="~/scripts/dragline/adaptable/views.js"></script>
 }
 
-<div id="qunit"></div>
+<h1>AdapTable Bug Fixing</h1>
 
 <table id="tblAdapTable" class="Hot-Tracking">
   <thead>
@@ -50,15 +56,6 @@
       </td>
     </tr>
   </tbody>
-</table>
-
-<table id="tblAdapTable-NoThead"></table>
-
-<table id="tblAdapTable-NoTh">
-  <thead>
-    <tr>
-    </tr>
-  </thead>
 </table>
 
 <script type="text/javascript">
@@ -113,7 +110,7 @@
           {
             if (!groupedValues[this.Pets[petIndex].Type][property])
               groupedValues[this.Pets[petIndex].Type][property] = [];
-
+           
             groupedValues[this.Pets[petIndex].Type][property].push(this.Pets[petIndex][property]);
           }
         }
@@ -255,82 +252,13 @@
   AdapTableCache.Instances.push(AdapTableInstance);
   localStorage.setItem("AdapTable: " + document.location, JSON.stringify(AdapTableCache));
 
-  /****************************************************************************
-  * Cleanup after each test.
-  ****************************************************************************/
-  QUnit.testDone(function()
+  $(document).ready(function()
   {
+    Setup.getColumns();
+    Setup.ViewModel.Pets(Setup.Pets);
+
     var tblAdapTable = $("#tblAdapTable");
-    tblAdapTable.AdapTable("destroy");
-    tblAdapTable.children("tbody").empty();
-    ko.cleanNode(tblAdapTable[0]);
-    localStorage.setItem('AdapTable: ' + document.location, JSON.stringify(AdapTableCache));
-  });
-
-  QUnit.test("AdapTable Constructor - Basic", function(assert)
-  {
-    // Arrange
-    var dependentScripts = assert.async();
-    var tblAdapTable = $("#tblAdapTable");
-    var ViewModel =
-    {
-      Employees: ko.observable(AdapTableInstance.Data.Pages[0])
-    };
-
-    ko.applyBindings(ViewModel, tblAdapTable[0]);
-
-    // Act
-    tblAdapTable.AdapTable(
-    {
-      CanChangeView: false,
-      CanFilter: false,
-      CanGroup: false,
-      CanMoveColumns: false,
-      CanSearch: false,
-      CanSort: false
-    });
-
-    // Assert
-    assert.ok(AdapTable.ScriptLoader);
-
-    window.setTimeout(function()
-    {
-      assert.ok(AdapTable.addActionButton);
-      assert.ok(AdapTable.cacheLayout);
-
-      var adaptableContainer = tblAdapTable.parent();
-      assert.equal(adaptableContainer.prop("tagName").toUpperCase(), "DIV");
-      assert.ok(adaptableContainer.hasClass("AdapTable"));
-
-      var headerSection = tblAdapTable.next();
-      assert.ok(headerSection.prop("tagName").toUpperCase(), "SECTION");
-
-      var footerSection = tblAdapTable.prev();
-      assert.ok(footerSection.prop("tagName").toUpperCase(), "SECTION");
-
-      var divActions = footerSection.children("div.Actions");
-      assert.equal(divActions.length, 1);
-      assert.equal(divActions.children("i").length, 0);
-
-      var adaptableMenu = adaptableContainer.children().last();
-      assert.equal(adaptableMenu.prop("tagName").toUpperCase(), "DIV");
-      assert.equal(adaptableMenu.attr("role"), "menu");
-
-      dependentScripts();
-    }, 1000);
-  });
-
-  QUnit.test("AdapTable Constructor - Full", function(assert)
-  {
-    // Arrange
-    var dependentScripts = assert.async();
-    var tblAdapTable = $("#tblAdapTable");
-    var ViewModel =
-    {
-      Employees: ko.observable(AdapTableInstance.Data.Pages[0])
-    };
-
-    ko.applyBindings(ViewModel, tblAdapTable[0]);
+    ko.applyBindings(Setup.ViewModel, tblAdapTable[0]);
 
     // Act
     tblAdapTable.AdapTable(
@@ -344,144 +272,9 @@
       ExcludeFooter: true,
       ExportToExcelUrl: "http://localhost:40000/excel",
       ExportToPdfUrl: "http://localhost:40000/pdf",
-      MovableColumns: ["FirstName", "LastName", "Email"],
+      MovableColumns: ["Breed", "Acquisition Date", "Acquisition Age", "How Acquired", "Acquisition Price", "Loss Date", "Loss Reason"],
       Paging: "Pager",
       ScriptExpiration: 48
     });
-
-    // Assert
-    window.setTimeout(function()
-    {
-      var adaptable = tblAdapTable.data("AdapTable");
-      assert.equal(adaptable.Options.ExcludeFooter, true);
-      assert.equal(adaptable.Options.ScriptExpiration, 48);
-
-      var footerSection = tblAdapTable.prev();
-      assert.ok(footerSection.prop("tagName").toUpperCase(), "SECTION");
-
-      var divActions = footerSection.children("div.Actions");
-      assert.equal(divActions.length, 1);
-      assert.equal(divActions.children("i").length, 3);
-      assert.ok(divActions.children("i:first").hasClass("fa-file-excel-o"));
-      assert.ok(divActions.children("i:nth-child(2)").hasClass("fa-file-pdf-o"));
-
-      var layout = tblAdapTable.data("Layout");
-      for (var columnIndex = 0; columnIndex < layout.Columns.length; columnIndex++)
-      {
-        if (adaptable.Options.MovableColumns.indexOf(layout.Columns[columnIndex].Name) > -1)
-          assert.ok(layout.Columns[columnIndex].IsHidable);
-        else
-          assert.ok(!layout.Columns[columnIndex].IsHideable);
-      }
-
-      assert.ok(AdapTable.Filtering);
-      assert.ok(AdapTable.Grouping);
-      assert.ok(AdapTable.Paging);
-      assert.ok(AdapTable.Positioning);
-      assert.ok(AdapTable.Sortable);
-      assert.ok(AdapTable.Sorting);
-      assert.ok(AdapTable.Views);
-
-      dependentScripts();
-    }, 1000);
-  });
-
-  QUnit.test("AdapTable Constructor - No TH", function(assert)
-  {
-    // Arrange
-    var dependentScripts = assert.async();
-    var tblAdapTable = $("#tblAdapTable-NoTh");
-
-    // Act & Assert
-    window.setTimeout(function()
-    {
-      assert.throws(tblAdapTable.AdapTable, "Table headers are required; no TH elements found.");
-      dependentScripts();
-    }, 1000);
-  });
-
-  QUnit.test("AdapTable Constructor - No THEAD", function(assert)
-  {
-    // Arrange
-    var dependentScripts = assert.async();
-    var tblAdapTable = $("#tblAdapTable-NoThead");
-
-    localStorage.clear();
-
-    // Act & Assert
-    window.setTimeout(function()
-    {
-      assert.throws(tblAdapTable.AdapTable, "Table headers are required; no THEAD element found.");
-      dependentScripts();
-    }, 1000);
-  });
-
-  QUnit.test("AdapTable Destructor", function(assert)
-  {
-    // Arrange
-    var dependentScripts = assert.async();
-    var tblAdapTable = $("#tblAdapTable");
-    var ViewModel =
-    {
-      Employees: ko.observable(AdapTableInstance.Data.Pages[0])
-    };
-
-    ko.applyBindings(ViewModel, tblAdapTable[0]);
-
-    // Act
-    tblAdapTable.AdapTable(
-    {
-      CanChangeView: false,
-      CanFilter: false,
-      CanGroup: false,
-      CanMoveColumns: false,
-      CanSearch: false,
-      CanSort: false
-    });
-
-    // Assert
-    window.setTimeout(function()
-    {
-      tblAdapTable.AdapTable("destroy");
-
-      assert.equal(tblAdapTable.data("AdapTable"), null);
-      assert.equal(tblAdapTable.data("Layout"), null);
-      assert.equal(tblAdapTable.data("Data"), null);
-      assert.equal($._data(tblAdapTable[0], "events"), null);
-      assert.ok(tblAdapTable.next().prop("tagName").toUpperCase() !== "SECTION");
-      assert.ok(tblAdapTable.prev().prop("tagName").toUpperCase() !== "SECTION");
-      assert.ok(!tblAdapTable.parent().hasClass("AdapTable"));
-
-      dependentScripts();
-    }, 1000);
-  });
-
-  QUnit.test("AdapTable Export Buttons", function(assert)
-  {
-    // Arrange
-    var dependentScripts = assert.async();
-    var tblAdapTable = $("#tblAdapTable");
-
-    // Act
-    $("#tblAdapTable").AdapTable(
-    {
-      CanChangeView: false,
-      CanFilter: false,
-      CanGroup: false,
-      CanMoveColumns: false,
-      CanSearch: false,
-      CanSort: false,
-      ExportToExcelUrl: document.location,
-      ExportToPdfUrl: document.location
-    });
-
-    // Assert
-    window.setTimeout(function()
-    {
-      assert.equal(tblAdapTable.prev().find("i.fa-file-excel-o").length, 1);
-      assert.equal(tblAdapTable.prev().find("i.fa-file-pdf-o").length, 1);
-
-      dependentScripts();
-    }, 1500);
   });
 </script>
