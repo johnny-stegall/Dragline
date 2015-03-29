@@ -19,8 +19,8 @@ namespace Dragline
             "~/css/dragline/modal.css",
             "~/css/dragline/toasty.css");
 
-#if DEBUG
       var dependencyBundle = new ScriptBundle("~/scripts/lib");
+#if DEBUG
       dependencyBundle.Include("~/scripts/lib/jquery-{version}.js",
         "~/scripts/lib/jquery-ui-{version}.js",
         "~/scripts/lib/knockout-{version}.js",
@@ -28,7 +28,6 @@ namespace Dragline
         "~/scripts/lib/lazy-{version}.js",
         "~/scripts/lib/moment-{version}.js");
 #else
-      var dependencyBundle = new Bundle("~/scripts/lib");
       dependencyBundle.Include("//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js",
         "~/scripts/lib/jquery-ui-{version}.js",
         "//cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js",
@@ -38,10 +37,10 @@ namespace Dragline
 #endif
 
       var draglineBundle = new ScriptBundle("~/scripts/dragline");
-      draglineBundle.Include("~/scripts/knockout-bindings.js",
-        "~/scripts/modal.js",
-        "~/scripts/responsive-navigation.js",
-        "~/scripts/toasty.js");
+      draglineBundle.Include("~/scripts/dragline/knockout-bindings.js",
+        "~/scripts/dragline/modal.js",
+        "~/scripts/dragline/responsive-navigation.js",
+        "~/scripts/dragline/toasty.js");
 
       bundles.Add(dependencyCssBundle);
       bundles.Add(draglineCssBundle);

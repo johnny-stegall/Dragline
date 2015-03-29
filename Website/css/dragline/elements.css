@@ -3,15 +3,8 @@
 ******************************************************************************/
 @font-face
 {
-  font-family: Bliss;
-  src: url(fonts/Bliss2L.otf);
-}
-
-@font-face
-{
-  font-family: Bliss;
-  src: url(fonts/Bliss2B.otf);
-  font-weight: bold;
+  font-family: "Shadows Into Light";
+  src: url(fonts/Shadows-Into-Light.ttf);
 }
 
 @font-face

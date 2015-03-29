@@ -138,15 +138,14 @@
     <Content Include="css\dragline\character-counter.css" />
     <Content Include="css\dragline\dropdown.css" />
     <Content Include="css\dragline\elements.css" />
-    <Content Include="css\dragline\font-awesome-4.3.0.css" />
     <Content Include="css\dragline\index.css" />
     <Content Include="css\dragline\metaform.css" />
     <Content Include="css\dragline\modal.css" />
-    <Content Include="css\dragline\normalize-3.0.0.css" />
     <Content Include="css\dragline\printer-friendly.css" />
     <Content Include="css\dragline\pull-out.css" />
     <Content Include="css\dragline\responsive.css" />
-    <Content Include="css\dragline\ux-guide.css" />
+    <Content Include="css\lib\normalize-3.0.0.css" />
+    <Content Include="css\site.css" />
     <Content Include="css\dragline\password-strength.css" />
     <Content Include="css\dragline\spinner.css" />
     <Content Include="css\dragline\toasty.css" />
@@ -209,9 +208,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
