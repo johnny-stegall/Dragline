@@ -39,7 +39,7 @@ div.Accordion-Horizontal > section
 div.Accordion-Vertical
 {
   float: left;
-  width: 200px;
+  width: 100%;
 }
 
 div.Accordion-Vertical > section
@@ -60,7 +60,7 @@ div.Accordion-Vertical > header.Expanded + section
 div.Accordion-Horizontal
 {
   float: right;
-  height: 200px;
+  height: 100%;
 }
 
 div.Accordion-Horizontal > header

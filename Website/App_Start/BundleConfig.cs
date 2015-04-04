@@ -39,7 +39,6 @@ namespace Dragline
       var draglineBundle = new ScriptBundle("~/scripts/dragline");
       draglineBundle.Include("~/scripts/dragline/knockout-bindings.js",
         "~/scripts/dragline/modal.js",
-        "~/scripts/dragline/responsive-navigation.js",
         "~/scripts/dragline/toasty.js");
 
       bundles.Add(dependencyCssBundle);

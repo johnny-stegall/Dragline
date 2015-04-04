@@ -180,7 +180,6 @@
     <Content Include="scripts\dragline\adaptable\views.js" />
     <Content Include="scripts\dragline\carousel.js" />
     <Content Include="scripts\dragline\character-counter.js" />
-    <Content Include="scripts\dragline\dragline.js" />
     <Content Include="scripts\dragline\dropdown.js" />
     <Content Include="scripts\dragline\index.js" />
     <Content Include="scripts\lib\d3-3.4.9.js" />
@@ -194,7 +193,6 @@
     <Content Include="scripts\dragline\movable.js" />
     <Content Include="scripts\dragline\password-strength.js" />
     <Content Include="scripts\dragline\pull-out.js" />
-    <Content Include="scripts\dragline\responsive-navigation.js" />
     <Content Include="scripts\dragline\toasty.js" />
     <Content Include="scripts\lib\knockout-3.3.0.js" />
     <Content Include="scripts\lib\knockout-mapping-2.41.js" />

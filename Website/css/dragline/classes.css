@@ -274,6 +274,21 @@ button.Light:hover
   border: 1px solid #BBB;
 }
 
+button.Risky
+{
+  background: #AA0000;
+  border: 1px solid #CC0000;
+  color: #FFF;
+}
+
+button.Risky:focus,
+button.Risky:hover
+{
+  background: #CC0000;
+  border: 1px solid #CC0000;
+  color: #FFF;
+}
+
 button.Suggested
 {
   background: #0768A9;
@@ -289,20 +304,7 @@ button.Suggested:hover
   color: #FFF;
 }
 
-button.Risky
-{
-  background: #AA0000;
-  border: 1px solid #CC0000;
-  color: #FFF;
-}
 
-button.Risky:focus,
-button.Risky:hover
-{
-  background: #CC0000;
-  border: 1px solid #CC0000;
-  color: #FFF;
-}
 
 div.Buttons,
 div.Buttons-Vertical
@@ -345,8 +347,8 @@ div.Buttons > .Button:active,
 div.Buttons-Vertical > button:active,
 div.Buttons-Vertical > .Button:active
 {
-  background-color: #E3D3D3;
-  box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+  background-color: #E3E3E3;
+  box-shadow: 0 0 10px #000;
   outline: 0;
 }
 

@@ -25,7 +25,7 @@ img.Responsive
 
   .Mobile-Hidden
   {
-    display: none;
+    display: none !important;
   }
 
   div.Responsive
@@ -65,55 +65,69 @@ img.Responsive
     float: none;
     margin-left: 10px;
   }
-  
-  body > nav > #btnMobileNav
+
+  body > nav > label[for="chkNavigation"]
   {
     display: none;
   }
 
-  body > #ulNav
+  body > nav > ul
   {
     background-color: transparent;
+    display: block !important;
     font-size: 20px;
     height: auto;
     left: 0;
     line-height: 40px;
-    margin: 0 50px;
-    padding: 0;
+    margin: 0;
+    padding: 0 20px 0 80px;
     position: fixed;
     top: 0;
     visibility: visible;
     width: 100%;
   }
 
-  body > #ulNav > li
+  body > nav > ul > li
   {
     display: inline-block;
     margin: 0 15px;
     padding: 0;
   }
 
-  body > #ulNav > li:not(:first-child)
+  body > nav > ul > li:not(:first-child)
   {
     border-top: 0 none;
   }
 
-  body > #ulNav > li > ul
+  body > nav > ul > li > ul
   {
     background-clip: padding-box;
     background-color: #FFF;
     box-shadow: 0 5px 10px #999;
-    display: none;
-    list-style: none;
     margin: 0;
     min-width: 150px;
-    padding: 5px 0;
     position: absolute;
     top: 40px;
+    transition: all 0.5s ease-in-out;
+  }
+
+  body > nav > ul > li > a:focus + ul
+  {
+    padding: 5px 0;
     z-index: 999;
   }
 
-  body > #ulNav > li > ul > li > a
+  body > nav > ul > li:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(3)) > a > span:first-child
+  {
+    display: none;
+  }
+
+  body > nav > ul > li > a > span:first-child ~ *
+  {
+    display: inline-block;
+  }
+
+  body > nav > ul > li > ul > li > a
   {
     clear: both;
     color: #333;
@@ -123,15 +137,9 @@ img.Responsive
     white-space: nowrap;
   }
 
-  body > #ulNav > li > ul > li > a:hover
+  body > nav > ul > li > ul > li > a:hover
   {
     color: #888;
-  }
-
-  section.Container
-  {
-    padding: 15px;
-    width: 750px;
   }
 
   .Width-40
@@ -164,12 +172,7 @@ img.Responsive
 * Tablets in landscape mode
 ******************************************************************************/
 @media screen and (min-width: 992px)
-{
-  section.Container
-  {
-    width: 970px;
-  }
-  
+{  
   .Column.Width-40,
   .Column.Width-33,
   .Column.Width-25,
@@ -186,8 +189,4 @@ img.Responsive
 ******************************************************************************/
 @media screen and (min-width: 1200px)
 {
-  section.Container
-  {
-    width: 1170px;
-  }
 }
