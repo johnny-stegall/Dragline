@@ -5,15 +5,15 @@ using System.Web.Http;
 
 namespace Dragline
 {
-    public static class WebApiConfig
+  public static class WebApiConfig
+  {
+    public static void Register(HttpConfiguration config)
     {
-        public static void Register(HttpConfiguration config)
-        {
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
-        }
+      // Attribute routing
+      config.MapHttpAttributeRoutes();
+
+      // Convention-based routing
+      config.Routes.MapHttpRoute("RESTful", "{controller}");
     }
+  }
 }

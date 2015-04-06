@@ -26,10 +26,13 @@
     **************************************************************************/
     reflectSorting: function()
     {
-      var self = this;
       var layout = this.Instance.Element.data("Layout");
+      if (!layout)
+        return;
+
+      var self = this;
       var lazyColumns = Lazy(layout.Columns);
-      
+
       lazyColumns
         .where({ IsSortable: true })
         .each(function(column, index)

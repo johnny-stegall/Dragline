@@ -207,12 +207,12 @@
   {
     var self = this;
     var filterButtonCount = 0;
-    var layout = this.Instance.Element.data("Layout");
     var olMoreFilters = $("<ol class=\"More-Filters\" />");
     var filteredColumns = [];
+    var layout = this.Instance.Element.data("Layout");
     var lazyColumns = Lazy(layout.Columns);
 
-    if (layout.Query.Filters.length)
+    if (layout.Query.Filters)
     {
       Lazy(layout.Query.Filters).each(function(filter, filterIndex)
       {

@@ -53,7 +53,7 @@ section.Container:after
   padding: 10px 15px;
 }
 
-.Error
+.Risky
 {
   color: #AA0000;
 }
@@ -176,11 +176,12 @@ section.Container:after
   width: 50%;
 }
 
-.Width-40,
-.Width-33,
-.Width-25,
-.Width-20,
-.Width-10
+.Width-50:not(th),
+.Width-40:not(th),
+.Width-33:not(th),
+.Width-25:not(th),
+.Width-20:not(th),
+.Width-10:not(th)
 {
   width: 100%;
 }
@@ -188,7 +189,7 @@ section.Container:after
 /******************************************************************************
 * Element-specific classes
 ******************************************************************************/
-a.Error:hover
+a.Risky:hover
 {
   color: #880000;
 }
@@ -287,8 +288,6 @@ button.Suggested:hover
   border: 1px solid #0000AA;
   color: #FFF;
 }
-
-
 
 div.Buttons,
 div.Buttons-Vertical
@@ -530,6 +529,79 @@ li.Divider
   overflow: hidden;
 }
 
+nav.Tabs
+{
+  border-bottom: 1px solid #E5E5E5;
+  clear: both;
+  min-height: 200px;
+  position: relative;
+}
+
+nav.Tabs > ol,
+nav.Tabs > ul
+{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav.Tabs > ol > li,
+nav.Tabs > ul > li
+{
+  float: left;
+}
+
+nav.Tabs > ol > li > a,
+nav.Tabs > ul > li > label
+{
+  background: #FFF;
+  border: 1px solid transparent;
+  border-radius: 4px 4px 0 0;
+  color: #474747;
+  cursor: pointer;
+  display: block;
+  margin: 0 2px 0 0;
+  padding: 10px 15px;
+  position: relative;
+  text-decoration: none;
+}
+
+nav.Tabs > ol > li > input[type="radio"],
+nav.Tabs > ul > li > input[type="radio"]
+{
+  display: none;
+}
+
+nav.Tabs > ol > li > content,
+nav.Tabs > ul > li > content
+{
+  background: #FFF;
+  border: 1px solid #E5E5E5;
+  bottom: 0;
+  padding: 20px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 43px;
+}
+
+nav.Tabs > ol > li.Active > a,
+nav.Tabs > ul > li.Active > a,
+nav.Tabs > ol > li > input[type="radio"]:checked + label,
+nav.Tabs > ul > li > input[type="radio"]:checked + label
+{
+  border: 1px solid #E5E5E5;
+  border-bottom: 1px solid #FFF;
+  cursor: default;
+  z-index: 2;
+}
+
+nav.Tabs > ol > li > input[type="radio"]:checked + label + content,
+nav.Tabs > ul > li > input[type="radio"]:checked + label + content
+{
+  z-index: 1;
+}
+
 ol.Breadcrumb
 {
   background-color: #F5F5F5;
@@ -632,6 +704,26 @@ span.Badge:empty
   display: none;
 }
 
+span.Badge.Info
+{
+  background: #0000AA;
+}
+
+span.Badge.Risky
+{
+  background: #AA0000;
+}
+
+span.Badge.Success
+{
+  background: #00AA00;
+}
+
+span.Badge.Warning
+{
+  background: #D38601;
+}
+
 span.Link
 {
   color: #0768A9;
@@ -663,7 +755,7 @@ table > tbody > tr.Active > td
   background-color: #F5F5F5;
 }
 
-table > tbody > tr.Error > td
+table > tbody > tr.Risky > td
 {
   background-color: #F2DEDE;
 }

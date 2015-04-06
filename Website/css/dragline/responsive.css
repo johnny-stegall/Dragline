@@ -142,29 +142,34 @@ img.Responsive
     color: #888;
   }
 
+  .Width-50
+  {
+    width: 50% !important;
+  }
+
   .Width-40
   {
-    width: 40%;
+    width: 40% !important;
   }
 
   .Width-33
   {
-    width: 33.33333333%;
+    width: 33.33333333% !important;
   }
 
   .Width-25
   {
-    width: 25%;
+    width: 25% !important;
   }
 
   .Width-20
   {
-    width: 20%;
+    width: 20% !important;
   }
 
   .Width-10
   {
-    width: 10%;
+    width: 10% !important;
   }
 }
 

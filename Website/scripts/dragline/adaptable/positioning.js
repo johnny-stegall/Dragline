@@ -103,8 +103,12 @@
   **************************************************************************/
   function restoreColumnPosition(e)
   {
+    var layout = this.Instance.Element.data("Layout");
+    if (!layout)
+      return;
+
     var self = this;
-    Lazy(this.Instance.Element.data("Layout").Columns).each(function(column, columnIndex)
+    Lazy(layout.Columns).each(function(column, columnIndex)
     {
       var header = self.Instance.Element.find("th[data-column-name='" + column.Name + "']");
 

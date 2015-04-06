@@ -23,6 +23,10 @@
     **************************************************************************/
     configurePaging: function()
     {
+      var layout = this.Instance.Element.data("Layout");
+      if (!layout || !layout.Query)
+        return;
+
       if (this.Instance.Options.Paging.toLowerCase() === "pager")
         buildPager.call(this);
     }
@@ -162,7 +166,8 @@
   ****************************************************************************/
   function getTotalItems()
   {
-    return this.Instance.Element.data("Data").TotalItems;
+    var data = this.Instance.Element.data("Data");
+    return (data != null) ? data.TotalItems : 0;
   }
 })();
 

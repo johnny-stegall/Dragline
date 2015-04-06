@@ -25,8 +25,12 @@
     **************************************************************************/
     applyView: function()
     {
+      var layout = this.Instance.Element.data("Layout");
+      if (!layout)
+        return;
+
       var self = this;
-      var lazyColumns = Lazy(this.Instance.Element.data("Layout").Columns);
+      var lazyColumns = Lazy(layout.Columns);
 
       lazyColumns
         .where({ IsVisible: true })

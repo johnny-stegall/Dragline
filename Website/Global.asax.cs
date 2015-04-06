@@ -19,10 +19,9 @@ namespace Dragline
       // Tell JSON.Net to ignore circular references
       GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 
-
-      WebApiConfig.Register(GlobalConfiguration.Configuration);
-      FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
       RouteConfig.RegisterRoutes(RouteTable.Routes);
+      GlobalConfiguration.Configure(WebApiConfig.Register);
+      FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
       BundleConfig.RegisterBundles(BundleTable.Bundles);
     }
   }

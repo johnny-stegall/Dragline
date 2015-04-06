@@ -64,12 +64,23 @@
   ****************************************************************************/
   AdapTable.initializeState = function()
   {
-    var usedCachedLayout = loadLayoutFromCache.call(this);
+    if (this.Options.Layout)
+    {
+      var usedCachedLayout = loadLayoutFromCache.call(this);
 
-    if (!usedCachedLayout)
-      loadLayoutFromServer.call(this, validateLayout);
-    else
-      validateLayout.call(this);
+      if (!usedCachedLayout)
+      {
+        var self = this;
+        loadLayoutFromServer.call(this, function()
+        {
+          validateLayout.call(self);
+        });
+
+        return;
+      }
+    }
+
+    validateLayout.call(this);
   }
 
   /****************************************************************************
@@ -80,17 +91,21 @@
   {
     var self = this;
 
-    $.post(this.Options.Layout.Url, this.Element.data("Layout"))
-      .done(function(data, textStatus, jqXHR)
-      {
-        if (self.Options.Layout.Success)
-          self.Options.Layout.Success.call(self, data, textStatus, jqXHR);
-      })
-      .fail(function(jqXHR, textStatus, errorThrown)
-      {
-        if (self.Options.Layout.Fail)
-          self.Options.Layout.Fail.call(self, jqXHR, textStatus, errorThrown);
-      });
+    $.ajax(this.Options.Layout.Url,
+    {
+      method: "POST",
+      data: JSON.stringify(this.Element.data("Layout"))
+    })
+    .done(function(data, textStatus, jqXHR)
+    {
+      if (self.Options.Layout.Success)
+        self.Options.Layout.Success.call(self, data, textStatus, jqXHR);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown)
+    {
+      if (self.Options.Layout.Fail)
+        self.Options.Layout.Fail.call(self, jqXHR, textStatus, errorThrown);
+    });
   }
 
   /**************************************************************************
@@ -217,30 +232,30 @@
 
     $.ajax(this.Options.Data.Url,
     {
-      type: this.Options.Data.RequestType,
+      method: this.Options.Data.RequestType,
       contentType: "application/json",
-      data: ko.mapping.toJSON(this.Element.data("Layout")),
-      success: function(data)
-      {
-        cacheData.call(self, data);
-        identifyColumns.call(self);
+      data: JSON.stringify(this.Element.data("Layout"))
+    })
+    .done(function(data)
+    {
+      cacheData.call(self, data);
+      identifyColumns.call(self);
 
-        if (self.Options.Data.Success)
-          self.Options.Data.Success.call(self, data);
+      if (self.Options.Data.Success)
+        self.Options.Data.Success.call(self, data);
 
-        self.Element.trigger("repaint.widgets.adaptable");
-      },
-      error: function(jqXHR, textStatus, errorThrown)
-      {
-        if (self.Options.Data.Fail)
-          self.Options.Data.Fail.call(self, jqXHR, textStatus, errorThrown)
-      }
+      self.Element.trigger("repaint.widgets.adaptable");
+    })
+    .fail(function(jqXHR, textStatus, errorThrown)
+    {
+      if (self.Options.Data.Fail)
+        self.Options.Data.Fail.call(self, jqXHR, textStatus, errorThrown)
     });
   }
 
   /**************************************************************************
-  * Checks localStorage for the cached layout and if found and not expired,
-  * loads the cached data.
+  * Checks localStorage for a cached layout and if found and not expired,
+  * stores the cache in the TABLE element for quick access.
   *
   * @this An instance of AdapTable.
   * @returns True if the layout was loaded from cache, false otherwise.
@@ -253,14 +268,11 @@
     if (cachedData.Instances.length)
     {
       var adaptableCache = cachedData.Instances[adaptableIndex];
-
-      if (!adaptableCache || !adaptableCache.Layout)
-        return false;
-      else if (adaptableCache.Layout.Expiration < (+new Date()))
-        return false;
-
-      this.Element.data("Layout", adaptableCache.Layout);
-      return true;
+      if (adaptableCache && adaptableCache.Layout && adaptableCache.Layout.Expiration > (+new Date()))
+      {
+        this.Element.data("Layout", adaptableCache.Layout);
+        return true;
+      }
     }
 
     return false;
@@ -277,55 +289,40 @@
     var self = this;
 
     if (!this.Options.Layout.Url || this.Options.Layout.Url.trim().length === 0)
+    {
+      if (callback)
+        callback();
+
       return;
+    }
 
-    $.get(this.Options.Layout.Url)
-      .done(function(layout)
-      {
-        if (!layout)
-        {
-          setInitialLayout.call(self);
-          return;
-        }
-
-        if (!layout.Query)
-          layout.Query = {};
-
-        if (!layout.Query.Filters)
-          layout.Query.Filters = [];
-
-        if (!layout.Query.Groups)
-          layout.Query.Groups = [];
-
+    $.ajax(this.Options.Layout.Url,
+    {
+      method: "GET"
+    })
+    .done(function(layout)
+    {
+      if (layout)
         self.cacheLayout(layout);
 
-        if (callback)
-          callback.call(self);
-      });
+      if (callback)
+        callback.call(self);
+    });
   }
 
   /****************************************************************************
-  * Saves the initial layout; only used when no state layout is restored
-  * from the cache/server.
+  * Populates the layout with the columns in the table. This is only used when
+  * no layout is cached and nothing is pulled from a server.
   *
   * @this An instance of AdapTable.
+  * @param layout {object} The layout.
   ****************************************************************************/
-  function setInitialLayout()
+  function populateColumns(layout)
   {
-    var layout =
-    {
-      Columns: [],
-      Query:
-      {
-        Filters: [],
-        Groups: []
-      }
-    };
-
     var self = this;
-    this.Element.find("thead th").each(function()
+    this.Element.find("thead th").each(function(index, header)
     {
-      var header = $(this);
+      header = $(header);
 
       var column =
       {
@@ -340,7 +337,7 @@
       if (header.text().trim().length > 0)
       {
         column.Header = header.text().trim();
-        column.Name = header.text().trim().replace(/[^a-z0-9]*/ig, "");
+        column.Name = header.data("name");
 
         if (!self.Options.MovableColumns)
           column.IsHidable = header.is(self.Options.MovableColumns);
@@ -348,13 +345,10 @@
           column.IsHidable = header.is(self.Options.MovableColumns);
 
         column.IsMovable = (header.text().trim().length < 1);
-        column.IsVisible = true;
       }
 
       layout.Columns.push(column);
     });
-
-    this.Element.data("Layout", layout);
   }
 
   /**************************************************************************
@@ -364,15 +358,35 @@
   **************************************************************************/
   function validateLayout()
   {
-    var layout = this.Element.data("Layout");
-
-    Lazy(layout.Columns).each(function(column, index)
+    var emptyLayout =
     {
-      if (!column.Name || column.Name.trim() === "")
-        throw new Error("All columns must have a name. Column at index: " + index + " has no name.");
-    });
+      Columns: [],
+      Query:
+      {
+        Filters: [],
+        Groups: [],
+        PageSize: 10,
+		PageIndex: 0
+      },
+    };
 
-    if (layout.Query.Sort || layout.Query.Groups.length || layout.Query.Filters.length)
+    var layout = $.extend(true, {}, emptyLayout, this.Options.Layout, this.Element.data("Layout"));
+    var requiresName = this.Options.CanChangeView || this.Options.CanFilter || this.Options.CanGroup || this.Options.CanMoveColumns || this.Options.CanSort;
+
+    if (requiresName && !layout.Columns.length)
+    {
+      populateColumns.call(this, layout);
+
+      Lazy(layout.Columns).each(function(column, index)
+      {
+        if (!column.Name || column.Name.trim() === "")
+          throw new Error("All columns must have a name. Column at index: " + index + " has no name.");
+      });
+    }
+    
+    this.Element.data("Layout", layout);
+
+    if (this.Options.Data.Url)
       this.getData(true);
     else
       this.Element.trigger("repaint.widgets.adaptable");

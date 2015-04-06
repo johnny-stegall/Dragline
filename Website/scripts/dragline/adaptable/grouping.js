@@ -55,19 +55,21 @@
     **************************************************************************/
     applyGrouping: function()
     {
+      var layout = this.Instance.Element.data("Layout");
+      if (!layout || !layout.Query || !layout.Query.Groups || !layout.Query.Groups.length)
+        return;
+
       addGroupDropTargets.call(this);
       this.Instance.Container.find("div.Groups > ol > li").remove();
 
       var self = this;
-      var query = this.Instance.Element.data("Layout").Query;
-
-      Lazy(query.Groups).each(function(group, index)
+      Lazy(layout.Query.Groups).each(function(group, index)
       {
         createGroup.call(self, group, index);
       });
 
       var data = this.Instance.Element.data("Data");
-      if (data.Pages[query.PageIndex].Items.length)
+      if (data.Pages[layout.Query.PageIndex].Items.length)
         buildGroupRows.call(this);
     },
 

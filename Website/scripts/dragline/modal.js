@@ -40,6 +40,7 @@
 
       Modal.Dialog = $("<dialog />")
         .attr("id", "dlgModal")
+        .attr("open", "")
         .attr("role", "dialog")
         .attr("aria-hidden", "true");
 

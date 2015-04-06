@@ -63,17 +63,19 @@
         this.Element = element;
         this.Options = $.extend({}, _defaults, options);
 
-        loadScriptLoader(this.Options.ScriptExpiration);
-
         var self = this;
-        loadDependencies(this.Options.ScriptExpiration, function()
+
+        loadScriptLoader(this.Options.ScriptExpiration, function()
         {
-          var modules = getUnloadedModules(self.Options);
-          AdapTable.ScriptLoader.getScripts(modules, self.Options.ScriptExpiration, function()
+          loadDependencies(self.Options.ScriptExpiration, function()
           {
-            initializeModules.call(self);
-            setupDom.call(self);
-            self.initializeState();
+            var modules = getUnloadedModules(self.Options);
+            AdapTable.ScriptLoader.getScripts(modules, self.Options.ScriptExpiration, function()
+            {
+              initializeModules.call(self);
+              setupDom.call(self);
+              self.initializeState();
+            });
           });
         });
       },
@@ -259,10 +261,15 @@
     /**************************************************************************
     * Loads the script loader.
     **************************************************************************/
-    function loadScriptLoader(expiration)
+    function loadScriptLoader(expiration, callback)
     {
       if (AdapTable.ScriptLoader)
+      {
+        if (callback)
+          callback();
+
         return;
+      }
 
       var scriptFile = "script-loader.js";
       var cachedScript = JSON.parse(localStorage.getItem(AdapTable.STORAGE_PREFIX + scriptFile));
@@ -270,29 +277,41 @@
       {
         $.ajax(AdapTable.BasePath + AdapTable.SUB_FOLDER + scriptFile,
         {
-          async: false,
-          type: "GET",
-          success: function(script)
+          method: "GET"
+        })
+        .done(function(script)
+        {
+          cachedScript =
           {
-            cachedScript =
-            {
-              Expiration: (+new Date()) + (expiration * 1000 * 60 * 60),
-              Script: script
-            };
+            Expiration: (+new Date()) + (expiration * 1000 * 60 * 60),
+            Script: script
+          };
 
-            localStorage[AdapTable.STORAGE_PREFIX + scriptFile] = JSON.stringify(cachedScript);
-          },
-          error: function(jqXHR, textStatus, errorThrown)
-          {
-            throw new Error("Failed to retrieve: " + scriptFile + ".\n\n" + errorThrown);
-          }
+          localStorage[AdapTable.STORAGE_PREFIX + scriptFile] = JSON.stringify(cachedScript);
+
+          var script = document.createElement("script");
+          script.type = "text/javascript";
+          script.text = cachedScript.Script;
+          document.getElementsByTagName("head")[0].appendChild(script);
+
+          if (callback)
+            callback();
+        })
+        .fail(function(jqXHR, textStatus, errorThrown)
+        {
+          throw new Error("Failed to retrieve: " + scriptFile + ".\n\n" + errorThrown);
         });
       }
+      else if (callback)
+      {
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.text = cachedScript.Script;
+        document.getElementsByTagName("head")[0].appendChild(script);
 
-      var script = document.createElement("script");
-      script.type = "text/javascript";
-      script.text = cachedScript.Script;
-      document.getElementsByTagName("head")[0].appendChild(script);
+        if (callback)
+          callback();
+      }
     }
 
     /************************************************************************
