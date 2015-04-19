@@ -1,12 +1,7 @@
 ﻿.Pull-Out
 {
-  border: 1px solid #DDD;
-  transition: bottom, left, right, top 0.35s ease-out;
-}
-
-.Pull-Out.Inline
-{
   position: absolute;
+  z-index: 998;
 }
 
 .Pull-Out.Fixed
@@ -14,57 +9,200 @@
   position: fixed;
 }
 
-.Pull-Out > i.fa-chevron-bottom,
-.Pull-Out > i.fa-chevron-left,
-.Pull-Out > i.fa-chevron-right,
-.Pull-Out > i.fa-chevron-top
+.Pull-Out > i.fa
 {
-  background: #E3E3E3;
-  border: 1px solid #DDD;
-  border-radius: 3px;
-  cursor: pointer;
-  display: inline-block;
+  padding: 4px 3px;
   position: absolute;
 }
 
-.Pull-Out > i.fa-chevron-left.Anchor-Bottom,
-.Pull-Out > i.fa-chevron-right.Anchor-Bottom
+.Pull-Out > i.fa:hover
 {
-  bottom: 0;
+  visibility: hidden;
 }
 
-.Pull-Out > i.fa-chevron-left.Anchor-Middle,
-.Pull-Out > i.fa-chevron-right.Anchor-Middle
+.Pull-Out > div
+{
+  background: #FFF;
+  border: 0 none;
+  display: block;
+  height: 0;
+  overflow: hidden;
+  padding: 5px;
+  width: 0;
+}
+
+.Pull-Out > div > label:first-child,
+.Pull-Out > i.fa
+{
+  background: #F2F2F2;
+  border: 1px solid #C3C3C3;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.Pull-Out > input[type="checkbox"],
+.Pull-Out > div > label:first-child
+{
+  position: absolute;
+  right: -1px;
+  top: 0;
+}
+
+.Pull-Out > div > label:first-child
+{
+  padding: 4px 7px 4px 6px;
+  transform: rotate(90deg);
+}
+
+.Pull-Out > input[type="checkbox"]:checked ~ div > label:first-child
+{
+  transform: rotate(0deg);
+}
+
+.Pull-Out.Bottom,
+.Pull-Out.Top
+{
+  height: 0;
+  left: 0;
+  width: 100%;
+}
+
+.Pull-Out.Left,
+.Pull-Out.Right
+{
+  height: 100%;
+  padding-top: 40px;
+  top: 0;
+  width: 0;
+}
+
+.Pull-Out.Bottom > i.fa,
+.Pull-Out.Top > i.fa
+{
+  left: 50%;
+}
+
+.Pull-Out.Left > i.fa,
+.Pull-Out.Right > i.fa
 {
   top: 50%;
 }
 
-.Pull-Out > i.fa-chevron-left.Anchor-Middle,
-.Pull-Out > i.fa-chevron-right.Anchor-Middle
+.Pull-Out.Bottom > div,
+.Pull-Out.Top > div
 {
+  transition: height 0.5s ease-in-out;
+}
+
+.Pull-Out.Left > div,
+.Pull-Out.Right > div
+{
+  transition: width 0.5s ease-in-out;
+}
+
+.Pull-Out.Bottom
+{
+  bottom: 0;
+}
+
+.Pull-Out.Bottom > i.fa
+{
+  border-bottom: 0 none;
+  bottom: 0;
+}
+
+.Pull-Out.Bottom > i.fa:before
+{
+  content: "\f077";
+}
+
+.Pull-Out.Bottom > input[type="checkbox"]:checked ~ div,
+.Pull-Out.Bottom > i.fa:hover + div,
+.Pull-Out.Bottom > div:hover
+{
+  border: 1px solid #C3C3C3;
+  height: 300px;
+  width: 100%;
+}
+
+.Pull-Out.Left
+{
+  left: 0;
+}
+
+.Pull-Out.Left > i.fa
+{
+  border-left: 0 none;
+  left: 0;
+}
+
+.Pull-Out.Left > i.fa:before
+{
+  content: "\f054";
+}
+
+.Pull-Out.Left > input[type="checkbox"]:checked ~ div,
+.Pull-Out.Left > i.fa:hover + div,
+.Pull-Out.Left > div:hover
+{
+  border: 1px solid #C3C3C3;
+  height: 100%;
+  width: 300px;
+}
+
+.Pull-Out.Right
+{
+  right: 0;
+}
+
+.Pull-Out.Right > i.fa
+{
+  border-right: 0 none;
+  right: 0;
+}
+
+.Pull-Out.Right > i.fa:before
+{
+  content: "\f053";
+}
+
+.Pull-Out.Right > div
+{
+  position: absolute;
+  right: 0;
+}
+
+.Pull-Out.Right > input[type="checkbox"]:checked ~ div,
+.Pull-Out.Right > i.fa:hover + div,
+.Pull-Out.Right > div:hover
+{
+  border: 1px solid #C3C3C3;
+  height: 100%;
+  width: 300px;
+}
+
+.Pull-Out.Top
+{
+  top: 40px;
+}
+
+.Pull-Out.Top > i.fa
+{
+  border-top: 0 none;
   top: 0;
+
 }
 
-.Pull-Out > i.fa-chevron-bottom
+.Pull-Out.Top > i.fa:before
 {
-  left: 50%;
+  content: "\f078";
 }
 
-.Pull-Out > i.fa-chevron-left
+.Pull-Out.Top > input[type="checkbox"]:checked ~ div,
+.Pull-Out.Top > i.fa:hover + div,
+.Pull-Out.Top > div:hover
 {
-  margin-top: -5px;
-  padding: 5px 2px 5px 3px;
-  left: -16px;
-}
-
-.Pull-Out > i.fa-chevron-right
-{
-  margin-top: -5px;
-  padding: 5px 2px 5px 3px;
-  right: -16px;
-}
-
-.Pull-Out > i.fa-chevron-top
-{
-  left: 50%;
+  border: 1px solid #C3C3C3;
+  height: 300px;
+  width: 100%;
 }

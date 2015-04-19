@@ -176,26 +176,10 @@ section.Container:after
   width: 50%;
 }
 
-.Width-40
-{
-  width: 100%;
-}
-
-.Width-33
-{
-  width: 100%;
-}
-
-.Width-25
-{
-  width: 100%;
-}
-
-.Width-20
-{
-  width: 100%;
-}
-
+.Width-40,
+.Width-33,
+.Width-25,
+.Width-20,
 .Width-10
 {
   width: 100%;
