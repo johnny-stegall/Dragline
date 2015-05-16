@@ -21,6 +21,9 @@
     this.Element = element;
     this.Menu = options ? $(options.Menu) : $(element.data("dropdown"));
 
+    if (this.Element.prop("tagName").toLowerCase() === "button")
+      this.Element.addClass("DropDown");
+
     if (!this.Menu.length)
       throw new Error("The dropdown target could not be found.");
 

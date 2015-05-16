@@ -1,5 +1,5 @@
-div.Accordion-Vertical *,
-div.Accordion-Horizontal *
+div.Accordion-Vertical > *,
+div.Accordion-Horizontal > *
 {
   transition: all 0.3s ease-in-out;
 }

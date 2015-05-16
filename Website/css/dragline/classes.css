@@ -219,240 +219,6 @@ blockquote.Text-Right > footer:after
   content: '\00A0 \2014';
 }
 
-button.Dark
-{
-  background: #666;
-  border: 1px solid #444;
-  color: #FFF;
-}
-
-button.Dark:focus,
-button.Dark:hover
-{
-  background: #999;
-  border: 1px solid #888;
-}
-
-button.DropDown:after
-{
-  border-top: 4px solid #000;
-  border-right: 4px solid transparent;
-  border-left: 4px solid transparent;
-  content: "";
-  display: inline-block;
-  height: 0;
-  margin: -3px 0 0 5px;
-  vertical-align: middle;
-  width: 0;
-}
-
-button.Light
-{
-  background: #999;
-  border: 1px solid #888;
-}
-
-button.Light:focus,
-button.Light:hover
-{
-  background: #CCC;
-  border: 1px solid #BBB;
-}
-
-button.Risky
-{
-  background: #AA0000;
-  border: 1px solid #CC0000;
-  color: #FFF;
-}
-
-button.Risky:focus,
-button.Risky:hover
-{
-  background: #CC0000;
-  border: 1px solid #CC0000;
-  color: #FFF;
-}
-
-button.Suggested
-{
-  background: #0768A9;
-  border: 1px solid #2A668F;
-  color: #FFF;
-}
-
-button.Suggested:focus,
-button.Suggested:hover
-{
-  background: #000088;
-  border: 1px solid #0000AA;
-  color: #FFF;
-}
-
-div.Buttons,
-div.Buttons-Vertical
-{
-  display: inline-block;
-  position: relative;
-  vertical-align: middle;
-}
-
-div.Buttons > button,
-div.Buttons > .Button,
-div.Buttons-Vertical > button,
-div.Buttons-Vertical > .Button
-{
-  background-color: #FFF;
-  border-color: #DDD;
-  color: #333;
-  float: left;
-  position: relative;
-}
-
-div.Buttons > button:focus,
-div.Buttons > .Button:focus,
-div.Buttons-Vertical > button:focus,
-div.Buttons-Vertical > .Button:focus,
-div.Buttons > button:hover,
-div.Buttons > .Button:hover,
-div.Buttons-Vertical > button:hover,
-div.Buttons-Vertical > .Button:hover
-{
-  background-color: #E3E3E3;
-  border-color: #DDD;
-  box-shadow: none;
-  outline: none;
-  z-index: 2;
-}
-
-div.Buttons > button:active,
-div.Buttons > .Button:active,
-div.Buttons-Vertical > button:active,
-div.Buttons-Vertical > .Button:active
-{
-  background-color: #E3E3E3;
-  box-shadow: 0 0 10px #000;
-  outline: 0;
-}
-
-div.Buttons button + button,
-div.Buttons .Button + .Button
-{
-  margin-left: -1px;
-}
-
-div.Buttons > button:first-child:not(:last-of-type),
-div.Buttons > .Button:first-child:not(:last-of-type)
-{
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
-  margin-left: 0;
-}
-
-div.Buttons > button:last-child:not(:first-child),
-div.Buttons > .Button:last-child:not(:first-child)
-{
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-}
-
-div.Buttons-Vertical > button,
-div.Buttons-Vertical > .Button
-{
-  display: block;
-  float: none;
-  max-width: 100%;
-  width: 100%;
-}
-
-div.Buttons-Vertical button + button,
-div.Buttons-Vertical .Button + .Button
-{
-  margin-top: -1px;
-}
-
-div.Buttons > button:not(:first-child):not(:last-child),
-div.Buttons > .Button:not(:first-child):not(:last-child),
-div.Buttons-Vertical > button:not(:first-child):not(:last-child),
-div.Buttons-Vertical > .Button:not(:first-child):not(:last-child)
-{
-  border-radius: 0;
-}
-
-div.Buttons-Vertical > button:first-child:not(:last-child),
-div.Buttons-Vertical > .Button:first-child:not(:last-child)
-{
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 4px;
-}
-
-div.Buttons-Vertical > button:last-child:not(:first-child),
-div.Buttons-Vertical > .Button:last-child:not(:first-child)
-{
-  border-bottom-left-radius: 4px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-div.Buttons span.Caret
-{
-  margin-left: 0;
-}
-
-div.Form-Group
-{
-  margin-bottom: 15px;
-}
-
-div.Icon-Left,
-div.Icon-Right
-{
-  position: relative;
-}
-
-div.Icon-Left input:not([type="checkbox"]):not([type="file"]):not([type="image"]):not([type="radio"])
-{
-  padding-left: 32px;
-}
-
-div.Icon-Right input:not([type="checkbox"]):not([type="file"]):not([type="image"]):not([type="radio"])
-{
-  padding-right: 32px;
-}
-
-div.Icon-Left i,
-div.Icon-Right i
-{
-  display: block;
-  height: 32px;
-  position: absolute;
-  text-align: center;
-  top: 10px;
-  width: 32px;
-  z-index: 2;
-}
-
-div.Icon-Left i
-{
-  left: 0;
-}
-
-div.Icon-Right i
-{
-  right: 0;
-}
-
-div.Toolbar > div.Buttons:not(:first-child)
-{
-  margin-left: 5px;
-}
-
-div.Toolbar > div.Buttons-Vertical:not(:first-child)
-{
-  margin-top: 5px;
-}
-
 img.Rounded
 {
   border-radius: 5px;
@@ -471,29 +237,6 @@ img.Bordered
   max-width: 100%;
   padding: 5px;
   transition: all 0.2s ease-in-out;
-}
-
-form.Inline div.Form-Group
-{
-  display: inline-block;
-  margin-bottom: 0;
-  vertical-align: middle;
-}
-
-form.Inline label
-{
-  margin-bottom: 0;
-  padding-top: 5px;
-  text-align: right;
-}
-
-form.Inline input:not([type="checkbox"]):not([type="file"]):not([type="image"]):not([type="radio"]),
-form.Inline select,
-form.Inline textarea
-{
-  display: inline-block;
-  vertical-align: middle;
-  width: auto;
 }
 
 label.Checkable
@@ -527,79 +270,6 @@ li.Divider
   height: 1px;
   margin: 10px 0;
   overflow: hidden;
-}
-
-nav.Tabs
-{
-  border-bottom: 1px solid #E5E5E5;
-  clear: both;
-  min-height: 200px;
-  position: relative;
-}
-
-nav.Tabs > ol,
-nav.Tabs > ul
-{
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-nav.Tabs > ol > li,
-nav.Tabs > ul > li
-{
-  float: left;
-}
-
-nav.Tabs > ol > li > a,
-nav.Tabs > ul > li > label
-{
-  background: #FFF;
-  border: 1px solid transparent;
-  border-radius: 4px 4px 0 0;
-  color: #474747;
-  cursor: pointer;
-  display: block;
-  margin: 0 2px 0 0;
-  padding: 10px 15px;
-  position: relative;
-  text-decoration: none;
-}
-
-nav.Tabs > ol > li > input[type="radio"],
-nav.Tabs > ul > li > input[type="radio"]
-{
-  display: none;
-}
-
-nav.Tabs > ol > li > content,
-nav.Tabs > ul > li > content
-{
-  background: #FFF;
-  border: 1px solid #E5E5E5;
-  bottom: 0;
-  padding: 20px;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 43px;
-}
-
-nav.Tabs > ol > li.Active > a,
-nav.Tabs > ul > li.Active > a,
-nav.Tabs > ol > li > input[type="radio"]:checked + label,
-nav.Tabs > ul > li > input[type="radio"]:checked + label
-{
-  border: 1px solid #E5E5E5;
-  border-bottom: 1px solid #FFF;
-  cursor: default;
-  z-index: 2;
-}
-
-nav.Tabs > ol > li > input[type="radio"]:checked + label + content,
-nav.Tabs > ul > li > input[type="radio"]:checked + label + content
-{
-  z-index: 1;
 }
 
 ol.Breadcrumb
@@ -801,3 +471,343 @@ table.Hot-Tracking > tbody > tr:hover > td
 {
   background-color: #F5F5F5;
 }
+
+/******************************************************************************
+* Styling for buttons
+******************************************************************************/
+button.Dark
+{
+  background: #666 !important;
+  border: 1px solid #444 !important;
+  color: #FFF !important;
+  transition: all 0.3s ease-in-out;
+}
+
+button.Dark:focus,
+button.Dark:hover
+{
+  background: #999 !important;
+  border: 1px solid #888 !important;
+}
+
+button.Light
+{
+  background: #999 !important;
+  border: 1px solid #888 !important;
+  transition: all 0.3s ease-in-out;
+}
+
+button.Light:focus,
+button.Light:hover
+{
+  background: #CCC !important;
+  border: 1px solid #BBB !important;
+}
+
+button.Obscured,
+button.Obscured:hover,
+button.Obscured:active
+{
+  background: transparent;
+  border: 0 none;
+  border-radius: initial;
+  box-shadow: none;
+  margin: 0;
+  outline: none;
+  padding: 0;
+  transition: none;
+}
+
+button.Risky
+{
+  background: #AA0000 !important;
+  border: 1px solid #CC0000 !important;
+  color: #FFF !important;
+  transition: all 0.3s ease-in-out;
+}
+
+button.Risky:focus,
+button.Risky:hover
+{
+  background: #CC0000 !important;
+  border: 1px solid #CC0000 !important;
+  color: #FFF !important;
+}
+
+button.Suggested
+{
+  background: #0768A9 !important;
+  border: 1px solid #2A668F !important;
+  color: #FFF !important;
+  transition: all 0.3s ease-in-out;
+}
+
+button.Suggested:focus,
+button.Suggested:hover
+{
+  background: #000088 !important;
+  border: 1px solid #0000AA !important;
+  color: #FFF !important;
+}
+
+div.Buttons,
+div.Buttons-Vertical
+{
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+}
+
+div.Buttons > button,
+div.Buttons > .Button,
+div.Buttons-Vertical > button,
+div.Buttons-Vertical > .Button
+{
+  background-color: #FFF;
+  border-color: #DDD;
+  color: #333;
+  float: left;
+  position: relative;
+}
+
+div.Buttons > button:focus,
+div.Buttons > .Button:focus,
+div.Buttons-Vertical > button:focus,
+div.Buttons-Vertical > .Button:focus,
+div.Buttons > button:hover,
+div.Buttons > .Button:hover,
+div.Buttons-Vertical > button:hover,
+div.Buttons-Vertical > .Button:hover
+{
+  background-color: #E3E3E3;
+  border-color: #DDD;
+  box-shadow: none;
+  outline: none;
+  z-index: 2;
+}
+
+div.Buttons > button:active,
+div.Buttons > .Button:active,
+div.Buttons-Vertical > button:active,
+div.Buttons-Vertical > .Button:active
+{
+  background-color: #E3E3E3;
+  box-shadow: 0 0 10px #000;
+  outline: 0;
+}
+
+div.Buttons button + button,
+div.Buttons .Button + .Button
+{
+  margin-left: -1px;
+}
+
+div.Buttons > button:first-child:not(:last-of-type),
+div.Buttons > .Button:first-child:not(:last-of-type)
+{
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  margin-left: 0;
+}
+
+div.Buttons > button:last-child:not(:first-child),
+div.Buttons > .Button:last-child:not(:first-child)
+{
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+div.Buttons-Vertical > button,
+div.Buttons-Vertical > .Button
+{
+  display: block;
+  float: none;
+  max-width: 100%;
+  width: 100%;
+}
+
+div.Buttons-Vertical button + button,
+div.Buttons-Vertical .Button + .Button
+{
+  margin-top: -1px;
+}
+
+div.Buttons > button:not(:first-child):not(:last-child),
+div.Buttons > .Button:not(:first-child):not(:last-child),
+div.Buttons-Vertical > button:not(:first-child):not(:last-child),
+div.Buttons-Vertical > .Button:not(:first-child):not(:last-child)
+{
+  border-radius: 0;
+}
+
+div.Buttons-Vertical > button:first-child:not(:last-child),
+div.Buttons-Vertical > .Button:first-child:not(:last-child)
+{
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 4px;
+}
+
+div.Buttons-Vertical > button:last-child:not(:first-child),
+div.Buttons-Vertical > .Button:last-child:not(:first-child)
+{
+  border-bottom-left-radius: 4px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+div.Toolbar > div.Buttons:not(:first-child)
+{
+  margin-left: 5px;
+}
+
+div.Toolbar > div.Buttons-Vertical:not(:first-child)
+{
+  margin-top: 5px;
+}
+
+/******************************************************************************
+* Styling for form elements
+******************************************************************************/
+form.Inline div.Form-Group
+{
+  display: inline-block;
+  margin-bottom: 0;
+  vertical-align: middle;
+}
+
+form.Inline label
+{
+  margin-bottom: 0;
+  padding-top: 5px;
+  text-align: right;
+}
+
+form.Inline input:not([type="checkbox"]):not([type="file"]):not([type="image"]):not([type="radio"]),
+form.Inline select,
+form.Inline textarea
+{
+  display: inline-block;
+  vertical-align: middle;
+  width: auto;
+}
+
+div.Form-Group
+{
+  margin-bottom: 15px;
+}
+
+div.Icon-Left,
+div.Icon-Right
+{
+  position: relative;
+}
+
+div.Icon-Left input:not([type="checkbox"]):not([type="file"]):not([type="image"]):not([type="radio"])
+{
+  padding-left: 32px;
+}
+
+div.Icon-Right input:not([type="checkbox"]):not([type="file"]):not([type="image"]):not([type="radio"])
+{
+  padding-right: 32px;
+}
+
+div.Icon-Left i,
+div.Icon-Right i
+{
+  bottom: 7px;
+  display: block;
+  position: absolute;
+  text-align: center;
+  width: 32px;
+  z-index: 2;
+}
+
+div.Icon-Left i
+{
+  left: 0;
+}
+
+div.Icon-Right i
+{
+  right: 0;
+}
+
+/******************************************************************************
+* NAV tab-styling
+******************************************************************************/
+nav.Tabs
+{
+  border-bottom: 1px solid #E5E5E5;
+  clear: both;
+  min-height: 200px;
+  position: relative;
+}
+
+nav.Tabs > ol,
+nav.Tabs > ul
+{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav.Tabs > ol > li,
+nav.Tabs > ul > li
+{
+  float: left;
+}
+
+nav.Tabs > ol > li > a,
+nav.Tabs > ul > li > label
+{
+  background: #FFF;
+  border: 1px solid transparent;
+  border-radius: 4px 4px 0 0;
+  color: #474747;
+  cursor: pointer;
+  display: block;
+  margin: 0 2px 0 0;
+  padding: 10px 15px;
+  position: relative;
+  text-decoration: none;
+}
+
+nav.Tabs > ol > li > input[type="radio"],
+nav.Tabs > ul > li > input[type="radio"]
+{
+  display: none;
+}
+
+nav.Tabs > ol > li > content,
+nav.Tabs > ul > li > content
+{
+  background: #FFF;
+  border: 1px solid #E5E5E5;
+  bottom: 0;
+  padding: 20px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 43px;
+}
+
+nav.Tabs > ol > li.Active > a,
+nav.Tabs > ul > li.Active > a,
+nav.Tabs > ol > li > input[type="radio"]:checked + label,
+nav.Tabs > ul > li > input[type="radio"]:checked + label
+{
+  border: 1px solid #E5E5E5;
+  border-bottom: 1px solid #FFF;
+  cursor: default;
+  z-index: 2;
+}
+
+nav.Tabs > ol > li > input[type="radio"]:checked + label + content,
+nav.Tabs > ul > li > input[type="radio"]:checked + label + content
+{
+  z-index: 1;
+}
+
+

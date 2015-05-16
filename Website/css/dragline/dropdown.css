@@ -1,11 +1,23 @@
-﻿ol.DropDown,
+﻿button.DropDown:after
+{
+  border-top: 4px solid #000;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  content: "";
+  display: inline-block;
+  height: 0;
+  margin: -3px 0 0 5px;
+  vertical-align: middle;
+  width: 0;
+}
+
+ol.DropDown,
 ul.DropDown
 {
   background-clip: padding-box;
   background-color: #FFF;
   box-shadow: 0 5px 10px #999;
   display: none;
-  float: left;
   font-size: 14px;
   left: 0;
   list-style: none;
