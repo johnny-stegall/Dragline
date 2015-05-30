@@ -321,7 +321,7 @@ ul.Paneled > li
   border: 1px solid #DDD;
   display: block;
   margin-bottom: -1px;
-  padding: 10px 15px;
+  padding: 10px;
   position: relative;
 }
 
@@ -780,8 +780,8 @@ nav.Tabs > ul > li > input[type="radio"]
   display: none;
 }
 
-nav.Tabs > ol > li > content,
-nav.Tabs > ul > li > content
+nav.Tabs > ol > li > section,
+nav.Tabs > ul > li > section
 {
   background: #FFF;
   border: 1px solid #E5E5E5;
@@ -804,8 +804,8 @@ nav.Tabs > ul > li > input[type="radio"]:checked + label
   z-index: 2;
 }
 
-nav.Tabs > ol > li > input[type="radio"]:checked + label + content,
-nav.Tabs > ul > li > input[type="radio"]:checked + label + content
+nav.Tabs > ol > li > input[type="radio"]:checked + label + section,
+nav.Tabs > ul > li > input[type="radio"]:checked + label + section
 {
   z-index: 1;
 }

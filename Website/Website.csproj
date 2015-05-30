@@ -142,7 +142,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Tests Controller.cs" />
     <Compile Include="Controllers\Home Controller.cs" />
+    <None Include="css\dragline\accordion.scss" />
+    <None Include="css\dragline\adaptable.scss" />
     <Content Include="css\dragline\adaptable.css" />
+    <None Include="css\dragline\carousel.scss" />
     <Content Include="css\dragline\carousel.css" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -151,16 +154,29 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\dragline\accordion.css" />
+    <None Include="css\dragline\character-counter.scss" />
+    <None Include="css\dragline\classes.scss" />
     <Content Include="css\dragline\classes.css" />
     <Content Include="css\dragline\character-counter.css" />
+    <None Include="css\dragline\dropdown.scss" />
     <Content Include="css\dragline\dropdown.css" />
     <Content Include="css\dragline\elements.css" />
+    <None Include="css\dragline\embedded-fonts.scss" />
+    <None Include="css\dragline\index.scss" />
     <Content Include="css\dragline\index.css" />
+    <None Include="css\dragline\metaform.scss" />
     <Content Include="css\dragline\metaform.css" />
+    <None Include="css\dragline\modal.scss" />
     <Content Include="css\dragline\modal.css" />
+    <None Include="css\dragline\password-strength.scss" />
+    <None Include="css\dragline\printer-friendly.scss" />
     <Content Include="css\dragline\printer-friendly.css" />
+    <None Include="css\dragline\pull-out.scss" />
     <Content Include="css\dragline\pull-out.css" />
+    <None Include="css\dragline\responsive.scss" />
     <Content Include="css\dragline\responsive.css" />
+    <None Include="css\dragline\spinner.scss" />
+    <None Include="css\dragline\toasty.scss" />
     <Content Include="css\lib\normalize-3.0.0.css" />
     <Content Include="css\site.css" />
     <Content Include="css\dragline\password-strength.css" />
@@ -215,21 +231,11 @@
     <Content Include="scripts\lib\lodash-2.4.1.js" />
     <Content Include="scripts\lib\moment-2.7.0.js" />
     <Content Include="scripts\lib\requirejs-2.1.17.js" />
-    <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
@@ -298,6 +304,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\dragline\fonts\fontawesome-webfont.eot" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <Content Include="Web.config" />
+    <Content Include="css\dragline\elements.scss" />
+    <Content Include="css\dragline\all-elements.scss" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,0 +1,850 @@
+﻿/******************************************************************************
+* Base colors
+******************************************************************************/
+$color-blue: #0768A9;
+$color-blue-dark: darken($color-blue, 15%);
+$color-blue-light: lighten($color-blue, 15%);
+$color-blue-lighter: lighten($color-blue, 40%);
+$color-blue-lightest: lighten($color-blue, 57.5%);
+$color-gray: #333;
+$color-gray-light: lighten($color-gray, 20%);
+$color-gray-lighter: lighten($color-gray, 40%);
+$color-gray-lightest: lighten($color-gray, 66.5%);
+$color-green: #00AA00;
+$color-green-dark: darken($color-green, 15%);
+$color-green-light: lighten($color-green, 15%);
+$color-green-lighter: lighten($color-green, 40%);
+$color-green-lightest: lighten($color-green, 57.5%);
+$color-purple: #AA00AA;
+$color-purple-dark: darken($color-purple, 15%);
+$color-purple-light: lighten($color-purple, 15%);
+$color-purple-lighter: lighten($color-purple, 40%);
+$color-purple-lightest: lighten($color-purple, 57.5%);
+$color-red: #AA0000;
+$color-red-dark: darken($color-red, 15%);
+$color-red-light: lighten($color-red, 15%);
+$color-red-lighter: lighten($color-red, 40%);
+$color-red-lightest: lighten($color-red, 57.5%);
+$color-yellow: #FFFF00;
+$color-yellow-dark: darken($color-yellow, 15%);
+$color-yellow-light: lighten($color-yellow, 15%);
+$color-yellow-lighter: lighten($color-yellow, 30%);
+$color-yellow-lightest: lighten($color-yellow, 44%);
+
+/******************************************************************************
+* Element colors
+******************************************************************************/
+$color-body-background: #FFF;
+$color-border: $color-gray-lightest;
+$color-control-background: lighten($color-gray, 76%);
+$color-control-border: $color-border;
+$color-control-disabled: $color-gray-lighter;
+$color-control-text: $color-gray;
+$color-heading: $color-gray-light;
+$color-nav-text: #FFF;
+$color-nav-text-hover: $color-yellow-lightest;
+$color-nav-submenu: $color-text;
+$color-nav-submenu-text: $color-control-background;
+$color-text: $color-gray;
+$color-text-deemphasize: $color-gray-light;
+
+/******************************************************************************
+* Typography
+******************************************************************************/
+$font-headings: "Shadows Into Light";
+$font-headings-weight: 500;
+$font-icon: FontAwesome;
+$font-monospace: Consolas, Menlo, Monaco, "Courier New";
+$font-path: fonts/;
+$font-sans-serif: Calibri;
+$font-serif: Georgia;
+$font-size: 14px;
+$font-size-large: 1.25em;
+$font-size-small: 0.85em;
+$font-size-tiny: 0.65em;
+$font-size-h1: 2.55em;
+$font-size-h2: 2.1em;
+$font-size-h3: 1.7em;
+$font-size-h4: 1.25em;
+$font-size-h5: 1.1em;
+$font-size-h6: 1em;
+$font-size-nav: 1.5em;
+$line-height: 1.45;
+$line-height-headings: 1.1;
+
+/******************************************************************************
+* Element dimensions
+******************************************************************************/
+$border-radius: 5px;
+$control-height: floor(($font-size) * ($line-height)) + ($padding-vertical * 2);
+$padding-horizontal: 7px;
+$padding-vertical: 5px;
+$nav-height: 40;
+
+@import "embedded-fonts";
+@import "all-elements";
+@import "classes.css";
+@import "printer-friendly.scss";
+@import "responsive.scss";
+@import "accordion.scss";
+@import "adaptable.scss";
+@import "carousel.scss";
+@import "character-counter.scss";
+@import "dropdown.scss";
+@import "index.scss";
+@import "metaform.scss";
+@import "password-strength.scss";
+@import "pull-out.scss";
+@import "spinner.scss";
+@import "toasty.scss";
+
+/******************************************************************************
+* Structural page styling
+******************************************************************************/
+html
+{
+  font-size: $font-size;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body
+{
+  background: $color-body-background;
+  color: $color-text;
+  font-family: $font-sans-serif;
+  font-size: $font-size;
+  height: 100%;
+  line-height: $line-height;
+  padding: $nav-height + "px 10px 10px 10px";
+
+  header > nav
+  {
+    background: $color-blue;
+    border: 1px solid transparent;
+    color: $color-nav-text;
+    height: ($nav-height + 20) + "px";
+    left: 0;
+    margin: 0 -10px;
+    padding: 0 20px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 999;
+
+    a.Logo
+    {
+      float: right;
+    }
+
+    label[for="chkNavigation"]
+    {
+      cursor: pointer;
+      display: inline-block;
+      font-family: $font-icon;
+      font-size: $font-size-nav;
+      font-weight: normal;
+      line-height: $nav-height + "px";
+      margin: 0;
+      padding: 0;
+    }
+
+    label[for="chkNavigation"]:before
+    {
+      content: "\f0c9";
+    }
+
+    ul
+    {
+      background: $color-nav-submenu;
+      height: 10000px;
+      left: -100%;
+      list-style: none;
+      margin: 0;
+      padding: 0 0 0 10px;
+      position: absolute;
+      top: $nav-height + "px";
+      transition: all 0.5s ease-in-out;
+      width: 75%;
+      z-index: 9999;
+
+      li
+      {
+        color: $color-nav-submenu-text;
+        font-size: $font-size-nav;
+        padding: 3px 10px;
+        position: relative;
+
+        a > span:first-child ~ *
+        {
+          display: none;
+        }
+
+        a:focus + ul
+        {
+          max-height: 500px;
+        }
+
+        input[type="search"]
+        {
+          border-radius: 20px;
+          margin-top: 5px;
+          width: 100%;
+        }
+
+        ul
+        {
+          font-size: $font-size;
+          list-style: none;
+          margin: 0 0 0 10px;
+          max-height: 0;
+          overflow: hidden;
+          padding: 0;
+          transition: max-height 0.5s ease-in-out;
+        }
+      }
+
+      li:not(:first-child)
+      {
+        border-top: 1px solid $color-border;
+      }
+    }
+
+    #chkNavigation:checked + ul
+    {
+      left: 0;
+    }
+  }
+
+  header > nav ul > li
+  {
+    a
+    {
+      color: $color-nav-text;
+      display: inline-block;
+      transition: color 0.5s ease-in-out;
+
+      i
+      {
+        display: inline-block;
+        padding-right: 5px;
+      }
+    }
+
+    a:focus,
+    a:hover
+    {
+      color: $color-nav-text-hover;
+      outline: none;
+      text-decoration: none;
+    }
+  }
+}
+
+article,
+footer,
+header,
+main,
+nav,
+section
+{
+  position: relative;
+}
+
+/******************************************************************************
+* Form element styling
+******************************************************************************/
+button,
+input,
+select,
+textarea
+{
+  background-color: $color-control-background;
+  border: 1px solid $color-control-border;
+  border-radius: $form-border-radius;
+  box-shadow: inset 0 1px 1px $color-gray-lighter;
+  box-sizing: border-box !important;
+  color: $color-control-text;
+  font-family: inherit;
+  font-size: $font-size;
+  font-weight: normal;
+  line-height: $line-height;
+  padding: $padding-vertical $padding-horizontal;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+/* These are not semantic and should be avoided */
+input[type="button"],
+input[type="image"],
+input[type="submit"]
+{
+  display: none !important;
+}
+
+button
+{
+  background: $color-control-background;
+  cursor: pointer;
+  display: inline-block;
+  font-size: $font-size;
+  height: $control-height;
+  margin-bottom: 0;
+  text-align: center;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+button:active,
+button.Active
+{
+  background-color: $color-control-background;
+  background-image: none;
+  box-shadow: inset 0 3px 5px $color-gray-lighter;
+  outline: 0;
+}
+
+button:focus
+{
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+button:focus,
+button:hover
+{
+  background-color: $color-control-background;
+  color: $color-text;
+  text-decoration: none;
+}
+
+input,
+select,
+textarea
+{
+  background-image: none;
+  display: block;
+  height: $control-height;
+}
+
+input[required]:invalid,
+input[required]:invalid,
+select[required]:invalid,
+textarea[required]:invalid
+{
+  border-color: $color-red;
+  box-shadow: inset 0 1px 1px $color-gray-lighter, 0 0 8px $color-red;
+}
+
+button[disabled],
+fieldset[disabled] > button,
+input[disabled],
+input[readonly],
+select[disabled],
+textarea[disabled],
+textarea[readonly]
+{
+  background-color: $color-control-disabled;
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+button:focus,
+input:focus,
+select:focus,
+textarea:focus
+{
+  border-color: $color-blue;
+  box-shadow: inset 0 1px 1px $color-gray-lighter, 0 0 8px $color-blue;
+  outline: 0;
+}
+
+input[type="checkbox"],
+input[type="radio"]
+{
+  border: 0 none;
+  border-radius: 0;
+  display: inline-block;
+  height: auto;
+  line-height: normal;
+  margin: 2px 2px 0 0;
+  vertical-align: text-top;
+  width: auto;
+}
+
+input[type="checkbox"]:focus,
+input[type="radio"]:focus
+{
+  box-shadow: none;
+  outline: none;
+}
+
+input[type="file"]
+{
+  display: block;
+}
+
+select[multiple],
+select[size]
+{
+  height: auto;
+}
+
+textarea
+{
+  height: auto;
+}
+
+fieldset
+{
+  border: 0;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
+label
+{
+  display: inline-block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+legend
+{
+  border: 0;
+  border-bottom: 1px solid $color-control-border;
+  color: $color-text;
+  display: block;
+  font-size: $font-size-h3;
+  line-height: inherit;
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+output
+{
+  color: $color-text;
+  display: block;
+  font-size: $font-size;
+  line-height: $line-height;
+  padding-top: $padding-vertical;
+}
+
+/******************************************************************************
+* Header styling
+******************************************************************************/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6
+{
+  color: $color-heading;
+  font-family: $font-headings;
+  font-weight: $font-headings-weight;
+  line-height: $line-height-headings;
+}
+
+h1,
+h2,
+h3
+{
+  margin: 1em 0 0.5em 0;
+}
+
+h4,
+h5,
+h6
+{
+  margin: 0.5em 0;
+}
+
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small
+{
+  color: $color-text-gray;
+  font-weight: normal;
+  line-height: initial;
+}
+
+h1 small,
+h2 small,
+h3 small
+{
+  font-size: $font-size-tiny;
+}
+
+h4 small,
+h5 small,
+h6 small
+{
+  font-size: $font-size-small;
+}
+
+h1
+{
+  border-bottom: 1px solid $color-control-border;
+  font-size: $font-size-h1;
+  padding-bottom: $padding-vertical;
+}
+
+h2
+{
+  font-size: $font-size-h2;
+}
+
+h3
+{
+  font-size: $font-size-h3;
+}
+
+h4
+{
+  font-size: $font-size-h4;
+}
+
+h5
+{
+  font-size: $font-size-h5;
+  text-transform: uppercase;
+}
+
+h6
+{
+  font-size: $font-size-h6;
+  text-transform: uppercase;
+}
+
+/******************************************************************************
+* Text element styling
+******************************************************************************/
+code,
+kbd,
+pre,
+samp
+{
+  font-family: $font-monospace;
+}
+
+a
+{
+  color: $color-blue;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+
+a:hover,
+a:focus
+{
+  color: $color-blue-dark;
+  text-decoration: underline;
+}
+
+a:focus
+{
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+abbr
+{
+  border-bottom: 1px dotted $color-control-border;
+  cursor: help;
+}
+
+address
+{
+  font-style: normal;
+  line-height: $line-height;
+  margin-bottom: 20px;
+}
+
+blockquote
+{
+  border-left: 5px solid $color-control-border;
+  font-size: $font-size-h4;
+  margin: 0 0 20px;
+  padding: 10px 20px;
+}
+
+blockquote:before,
+blockquote:after
+{
+  content: "";
+}
+
+blockquote > footer:before
+{
+  content: '\2014 \00A0';
+}
+
+blockquote > footer
+{
+  color: $color-gray-lighter;
+  display: block;
+  font-size: $font-size-small;
+  line-height: $line-height;
+}
+
+cite
+{
+  font-style: normal;
+}
+
+code
+{
+  background-color: $color-blue-lightest;
+  border-radius: $border-radius;
+  color: $color-blue;
+  padding: $padding-vertical $padding-horizontal;
+  white-space: nowrap;
+}
+
+kbd
+{
+  background-color: $color-text;
+  border-radius: $border-radius;
+  box-shadow: inset 0 -1px 0 $color-gray-lighter;
+  color: $color-control-background;
+  padding: $padding-vertical $padding-horizontal;
+}
+
+mark
+{
+  background: $color-yellow-lightest;
+}
+
+p
+{
+  margin: 1em 0;
+}
+
+pre
+{
+  background-color: $color-control-background;
+  border: 1px solid $color-control-border;
+  border-radius: $border-radius;
+  color: $color-text;
+  display: block;
+  font-size: $font-size;
+  line-height: $line-height;
+  margin: 0 0 10px;
+  padding: $padding-vertical $padding-horizontal;
+  word-break: break-all;
+  word-wrap: break-word;
+  
+  code
+  {
+    background-color: transparent;
+    border-radius: 0;
+    color: inherit;
+    font-size: inherit;
+    padding: 0;
+    white-space: pre-wrap;
+  }
+}
+
+small
+{
+  font-size: $font-size-small;
+}
+
+/******************************************************************************
+* List styling
+******************************************************************************/
+dl
+{
+  margin: 0;
+}
+
+dt,
+dd
+{
+  line-height: $line-height;
+}
+
+dt
+{
+  font-weight: bold;
+}
+
+dd
+{
+  margin-left: 0;
+}
+
+ol,
+ul
+{
+  margin-bottom: 10px;
+  margin-top: 0;
+}
+
+ul
+{
+  list-style: disc;
+}
+
+ul ul,
+ol ul,
+ul ol,
+ol ol
+{
+  margin-bottom: 0;
+}
+
+/******************************************************************************
+* Table styling
+******************************************************************************/
+table
+{
+  background-color: transparent;
+  margin-bottom: 20px;
+  max-width: 100%;
+  width: 100%;
+}
+
+th
+{
+  text-align: left;
+}
+
+table > thead > tr > th,
+table > tbody > tr > td,
+table > tfoot > tr > td
+{
+  border-top: 1px solid $color-control-border;
+  line-height: $line-height;
+  padding: $padding-vertical $padding-horizontal;
+}
+
+table > thead > tr > th
+{
+  border-bottom: 2px solid $color-control-border;
+  vertical-align: bottom;
+}
+
+table > caption + thead > tr:first-child > th,
+table > colgroup + thead > tr:first-child > th,
+table > thead:first-child > tr:first-child > th,
+table > caption + thead > tr:first-child > td,
+table > colgroup + thead > tr:first-child > td,
+table > thead:first-child > tr:first-child > td
+{
+  border-top: 0;
+}
+
+/******************************************************************************
+* Meter styling
+******************************************************************************/
+meter
+{
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: 0 none;
+  border-radius: $border-radius;
+  display: block;
+  height: $control-height;
+}
+
+meter::-webkit-meter-bar
+{
+  background: $color-control-background;
+  box-shadow: 0 2px 5px $color-gray-lighter inset;
+}
+
+meter::-webkit-meter-optimum-value
+{
+  background: $color-green;
+  box-shadow: 0 2px 5px $color-gray-lighter inset;
+}
+
+meter::-webkit-meter-suboptimum-value
+{
+  background: $color-yellow;
+  box-shadow: 0 2px 5px $color-gray-lighter inset;
+}
+
+meter::-webkit-meter-even-less-good-value
+{
+  background: $color-red;
+  box-shadow: 0 2px 5px $color-gray-lighter inset;
+}
+
+/******************************************************************************
+* Progress bar styling
+******************************************************************************/
+progress
+{
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background: $color-control-background;
+  border: 0 none;
+  border-radius: $border-radius;
+  color: $color-blue;
+  height: $control-height;
+}
+
+progress::-webkit-progress-bar
+{
+  border-radius: $border-radius;
+}
+
+progress[value]::-webkit-progress-bar
+{
+  background: $color-control-background;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+progress[value]::-webkit-progress-value
+{
+  background: $color-blue;
+  border-radius: $border-radius;
+}
+
+progress:not([value])
+{
+  display: none;
+}
+
+/******************************************************************************
+* Other element styling
+******************************************************************************/
+figure
+{
+  margin: 0;
+}
+
+img
+{
+  vertical-align: middle;
+}
+
+hr
+{
+  border: 0;
+  border-top: 1px solid $color-control-border;
+  clear: both;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

@@ -16,10 +16,10 @@
 
 .Toasty > div
 {
-  background: #222;
+  background: $color-text;
   border: 1px solid #000;
-  border-radius: 5px;
-  box-shadow: 0 0 10px #333;
+  border-radius: $border-radius;
+  box-shadow: 0 0 10px $color-gray-lighter;
   color: #FFF;
   margin: 10px 0;
   max-height: 150px;
@@ -93,37 +93,37 @@
 
 .Toasty > div.Error
 {
-  background: #F2DEDE;
-  border: 1px solid #AA0000;
-  color: #AA0000;
+  background: $color-red-lightest;
+  border: 1px solid $color-red;
+  color: $color-red;
 }
 
 .Toasty > div.Information
 {
-  background: #D9EDF7;
-  border: 1px solid #0000AA;
-  color: #0000AA;
+  background: $color-blue-lightest;
+  border: 1px solid $color-blue;
+  color: $color-blue;
 }
 
 .Toasty > div.Light
 {
-  background: #F5F5F5;
-  border: 1px solid #DDD;
-  color: #000;
+  background: $color-control-background;
+  border: 1px solid $color-border;
+  color: $color-text;
 }
 
 .Toasty > div.Success
 {
-  background: #DFF0D8;
-  border: 1px solid #00AA00;
-  color: #00AA00;
+  background: $color-green-lightest;
+  border: 1px solid $color-green;
+  color: $color-green;
 }
 
 .Toasty > div.Warning
 {
-  background: #FCF8E3;
-  border: 1px solid #D38601;
-  color: #D38601;
+  background: $color-yellow-lightest;
+  border: 1px solid $color-yellow-dark;
+  color: $color-yellow-dark;
 }
 
 .Toasty > div > large

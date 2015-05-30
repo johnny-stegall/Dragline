@@ -8,40 +8,28 @@ namespace Dragline
     // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725
     public static void RegisterBundles(BundleCollection bundles)
     {
-      var dependencyCssBundle = new StyleBundle("~/css/lib");
-      dependencyCssBundle.Include("~/css/lib/normalize-{version}.css");
+      var draglineCssBundle = new StyleBundle("~/dragline-styling");
+      draglineCssBundle.Include("~/css/lib/normalize-{version}.css",
+        "~/css/dragline/elements.css",
+        "~/css/dragline/classes.css",
+        "~/css/dragline/printer-friendly.css",
+        "~/css/dragline/responsive.css",
+        "~/css/dragline/modal.css",
+        "~/css/dragline/toasty.css");
 
-      var draglineCssBundle = new StyleBundle("~/css/dragline");
-      draglineCssBundle.Include("~/css/dragline/elements.css",
-            "~/css/dragline/classes.css",
-            "~/css/dragline/printer-friendly.css",
-            "~/css/dragline/responsive.css",
-            "~/css/dragline/modal.css",
-            "~/css/dragline/toasty.css");
-
-      var dependencyBundle = new ScriptBundle("~/scripts/lib");
-#if DEBUG
+      var dependencyBundle = new ScriptBundle("~/library-scripts");
       dependencyBundle.Include("~/scripts/lib/jquery-{version}.js",
         "~/scripts/lib/jquery-ui-{version}.js",
         "~/scripts/lib/knockout-{version}.js",
         "~/scripts/lib/knockout-mapping-{version}.js",
         "~/scripts/lib/lazy-{version}.js",
         "~/scripts/lib/moment-{version}.js");
-#else
-      dependencyBundle.Include("//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js",
-        "~/scripts/lib/jquery-ui-{version}.js",
-        "//cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js",
-        "//cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.min.js",
-        "~/scripts/lib/lazy-{version}.js",
-        "//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js");
-#endif
 
-      var draglineBundle = new ScriptBundle("~/scripts/dragline");
+      var draglineBundle = new ScriptBundle("~/dragline-scripts");
       draglineBundle.Include("~/scripts/dragline/knockout-bindings.js",
         "~/scripts/dragline/modal.js",
         "~/scripts/dragline/toasty.js");
 
-      bundles.Add(dependencyCssBundle);
       bundles.Add(draglineCssBundle);
       bundles.Add(dependencyBundle);
       bundles.Add(draglineBundle);

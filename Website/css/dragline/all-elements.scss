@@ -1,0 +1,21 @@
+﻿/******************************************************************************
+* Apply to all elements
+******************************************************************************/
+*
+{
+  box-sizing: border-box;
+}
+
+*:before,
+*:after
+{
+  box-sizing: border-box;
+}
+
+[draggable]
+{
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}

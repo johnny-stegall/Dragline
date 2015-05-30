@@ -14,9 +14,6 @@
 
   var _defaults =
   {
-    FadeIn: 500,
-    FadeOut: 1000,
-    HangTime: 5000,
     MaxMessages: 0
   };
 
@@ -71,47 +68,10 @@
     ****************************************************************************/
     addImage: function(alertDiv, imageUrl)
     {
-      var offsetHeight = parseInt(alertDiv.css("paddingTop"))
-        + parseInt(alertDiv.css("paddingBottom"))
-        + parseInt(alertDiv.css("borderWidth"));
-
       var alertImage = $("<img />")
-        .attr("src", imageUrl)
-        .css("marginBottom", alertDiv.height() - offsetHeight + "px");
+        .attr("src", imageUrl);
         
       alertDiv.prepend(alertImage);
-    },
-    
-    /****************************************************************************
-    * Sets event-handlers on an alert to make it go boom after the specified
-    * amount of time. A toast also needs to stick around, even if it's in the
-    * middle of disappearing if a user gets touchy with the bread.
-    *
-    * @param alertId {int} The alert ID.
-    * @param alertDiv {jQuery} The DIV element containing the alert.
-    ****************************************************************************/
-    applyTimeBomb: function(alertId, alertDiv)
-    {
-      Toasty["Timer-" + alertId] = setTimeout(function()
-      {
-        $.Toasty.remove(alertId);
-      }, Toasty.Options.HangTime);
-      alertDiv.bind("mouseenter mouseleave", function(event)
-      {
-        if (event.type === "mouseenter")
-        {
-          clearTimeout(Toasty["Timer-" + alertId]);
-          delete Toasty["Timer-" + alertId];
-          alertDiv.stop().css({ opacity: "0.75", height: "auto" });
-        }
-        else
-        {
-          Toasty["Timer-" + alertId] = setTimeout(function()
-          {
-            $.Toasty.remove(alertId);
-          }, Toasty.Options.HangTime);
-        }
-      });
     },
     
     /****************************************************************************
@@ -123,12 +83,9 @@
     styleAlert: function(alertDiv, parameters)
     {
       if (parameters.CssClass)
-      {
         alertDiv.addClass(parameters.CssClass);
-        return;
-      }
-      
-      alertDiv.addClass(parameters.Type);
+      else
+        alertDiv.addClass(parameters.Type);
     }
   };
 
@@ -165,7 +122,11 @@
       var alertId = Toasty.MessageCount;
       
       var alertDiv = $("<div />")
-        .attr("id", "Toasty-" + alertId);
+        .attr("id", "Toasty-" + alertId)
+        .on("transitionend.widgets.toasty", function(e)
+        {
+          $.Toasty.detachToast(alertDiv, e);
+        });
       
       Toasty.styleAlert(alertDiv, parameters);
       
@@ -175,25 +136,31 @@
       if (parameters.Title)
         alertDiv.append("<large>" + parameters.Title + "</large>");
 
-      alertDiv.append($("<p>" + parameters.Text + "</p>"));
+      alertDiv.append($("<span>" + parameters.Text + "</span>"));
       
       if (parameters.MaxMessages > 0 && Toasty.Visible >= parameters.MaxMessages)
         return;
 
-      Toasty.Visible++;
-      
-      if (!Toasty.Element.is(":visible"))
-        Toasty.Element.css("display", "block");
-      
-      Toasty.Element.append(alertDiv);
-      alertDiv.fadeIn(Toasty.Options.FadeIn);
-      
       if (parameters.ImageUrl)
         Toasty.addImage(alertDiv, parameters.ImageUrl);
+
+      Toasty.Visible++;
+      Toasty.Element.append(alertDiv);
       
-      if (!parameters.Sticky)
-        Toasty.applyTimeBomb(alertId, alertDiv);
-      
+      // Delay briefly before adding classes otherwise transitions are ignored
+      window.setTimeout(function()
+      {
+        alertDiv.addClass("Toast");
+
+        if (!parameters.Sticky)
+        {
+          window.setTimeout(function()
+          {
+            alertDiv.addClass("Fade");
+          }, 1000);
+        }
+      }, 1000);
+
       return alertId;
     },
 

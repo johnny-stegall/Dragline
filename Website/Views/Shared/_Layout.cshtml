@@ -5,44 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Title</title>
     <link type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet" />
-    @Styles.Render("~/css/lib")
-    @Styles.Render("~/css/dragline")
+    @Styles.Render("~/dragline-styling")
     <link type="text/css" href="~/css/site.css" rel="stylesheet" />
     @RenderSection("PageStyles", false)
-    @Scripts.Render("~/scripts/lib")
-    @Scripts.Render("~/scripts/dragline")
+    @Scripts.Render("~/library-scripts")
+    @Scripts.Render("~/dragline-scripts")
     @RenderSection("PageScripts", false)
   </head>
   <body>
-    <nav>
-      <a href="/" class="Logo">
-        <img src="~/images/dragline-48px.png" style="width: 40px;" />
-      </a>
+    <header>
+      <nav>
+        <a href="/" class="Logo">
+          <img src="~/images/dragline-48px.png" style="width: 40px;" />
+        </a>
 
-      <label for="chkNavigation"></label>
-      <input type="checkbox" id="chkNavigation" class="Hidden" />
-      
-      <ul>
-        <li>
-          <a href="~/principles">
-            <i class="fa fa-gavel"></i>
-            <span>Principles</span>
-          </a>
-        </li>
-        <li>
-          <a href="~/styling">
-            <i class="fa fa-paw"></i>
-            <span>Styling</span>
-          </a>
-        </li>
-        <li>
-          <a href="~/components">
-            <i class="fa fa-cogs"></i>
-            <span>Components</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+        <label for="chkNavigation"></label>
+        <input type="checkbox" id="chkNavigation" class="Hidden" />
+
+        <ul>
+          <li>
+            <a href="~/principles">
+              <i class="fa fa-gavel"></i>
+              <span>Principles</span>
+            </a>
+          </li>
+          <li>
+            <a href="~/styling">
+              <i class="fa fa-paw"></i>
+              <span>Styling</span>
+            </a>
+          </li>
+          <li>
+            <a href="~/components">
+              <i class="fa fa-cogs"></i>
+              <span>Components</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
 
     <main>
       @RenderBody()

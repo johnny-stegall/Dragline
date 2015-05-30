@@ -1,0 +1,14 @@
+﻿/******************************************************************************
+* Embedded fonts
+******************************************************************************/
+@font-face
+{
+  font-family: $font-headings;
+  src: "url(" + $font-path + "Shadows-Into-Light.ttf)";
+}
+
+@font-face
+{
+  font-family: $font-sans-serif;
+  src: "url(" + $font-path + "Calibri.ttf)";
+}
