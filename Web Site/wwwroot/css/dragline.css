@@ -1,0 +1,2760 @@
+/******************************************************************************
+* Embedded fonts
+******************************************************************************/
+@font-face {
+  font-family: "Shadows Into Light";
+  src: "url(fonts/Shadows-Into-Light.ttf)"; }
+
+@font-face {
+  font-family: Calibri;
+  src: "url(fonts/Calibri.ttf)"; }
+
+/******************************************************************************
+* Browser normalization
+******************************************************************************/
+* {
+  box-sizing: border-box; }
+
+*:before,
+*:after {
+  box-sizing: border-box; }
+
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none; }
+
+html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0; }
+
+a:active {
+  outline: 0; }
+
+a:hover {
+  outline: 0; }
+
+abbr[title] {
+  border-bottom: 1px dotted; }
+
+audio:not([controls]) {
+  display: none;
+  height: 0; }
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  cursor: pointer; }
+
+button[disabled],
+html input[disabled] {
+  cursor: default; }
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit;
+  font: inherit;
+  margin: 0; }
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0; }
+
+button,
+select {
+  text-transform: none; }
+
+button {
+  overflow: visible; }
+
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em; }
+
+dfn {
+  font-style: italic; }
+
+fieldset {
+  border: 1px solid #C0C0C0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em; }
+
+figure {
+  margin: 1em 40px; }
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0; }
+
+hr {
+  box-sizing: content-box;
+  height: 0; }
+
+input {
+  line-height: normal; }
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto; }
+
+input[type="search"] {
+  -webkit-appearance: textfield;
+  box-sizing: content-box; }
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none; }
+
+legend {
+  border: 0;
+  padding: 0; }
+
+optgroup {
+  font-weight: bold; }
+
+pre {
+  overflow: auto; }
+
+progress {
+  vertical-align: baseline; }
+
+small {
+  font-size: 80%; }
+
+strong {
+  font-weight: bold; }
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline; }
+
+sup {
+  top: -0.5em; }
+
+sub {
+  bottom: -0.25em; }
+
+svg:not(:root) {
+  overflow: hidden; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+td,
+th {
+  padding: 0; }
+
+template {
+  display: none; }
+
+textarea {
+  overflow: auto; }
+
+/******************************************************************************
+* Coloring
+******************************************************************************/
+.Info {
+  color: #AA0000; }
+
+.Risky {
+  color: #AA0000; }
+
+.Success {
+  color: #00AA00; }
+
+.Warning {
+  color: #FFFF00; }
+
+/******************************************************************************
+* Formatting
+******************************************************************************/
+.Bold {
+  font-weight: bold; }
+
+.Text-Center {
+  text-align: center; }
+
+.Text-Justify {
+  text-align: justify; }
+
+.Text-Left {
+  text-align: left; }
+
+.Text-Right {
+  text-align: right; }
+
+/******************************************************************************
+* Grid system
+******************************************************************************/
+.Column.Width-100,
+.Column.Width-90,
+.Column.Width-80,
+.Column.Width-75,
+.Column.Width-66,
+.Column.Width-60,
+.Column.Width-50 {
+  float: left;
+  padding: 0.75rem 1rem; }
+
+.Row {
+  display: block; }
+
+.Row-Padded {
+  display: block;
+  margin-top: 0.75rem; }
+
+.Row-Padded:first-child {
+  margin-top: 0; }
+
+.Row-Padded > .Column + .Column {
+  padding-left: 1rem; }
+
+.Width-100 {
+  width: 100%; }
+
+.Width-90 {
+  width: 90%; }
+
+.Width-80 {
+  width: 80%; }
+
+.Width-75 {
+  width: 75%; }
+
+.Width-66 {
+  width: 66.66666667%; }
+
+.Width-60 {
+  width: 60%; }
+
+.Width-50:not(th),
+.Width-40:not(th),
+.Width-33:not(th),
+.Width-25:not(th),
+.Width-20:not(th),
+.Width-10:not(th) {
+  width: 100%; }
+
+/******************************************************************************
+* Placement
+******************************************************************************/
+.Block-Centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
+
+.Clear:before,
+.Clear:after,
+.Row:before,
+.Row:after,
+.Row-Padded:before,
+.Row-Padded:after,
+nav:before,
+nav:after,
+section.Container:before,
+section.Container:after {
+  content: " ";
+  display: table; }
+
+.Clear:after,
+.Row:after,
+.Row-Padded:after,
+nav:after,
+section.Container:after {
+  clear: both; }
+
+.Float-Left {
+  float: left; }
+
+.Float-Right {
+  float: right; }
+
+.Hidden {
+  display: none !important; }
+
+.Invisible {
+  visibility: hidden !important; }
+
+/******************************************************************************
+* Button styling
+******************************************************************************/
+button,
+.Button {
+  background-color: whitesmoke;
+  background-image: none;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap; }
+  button:active, button.Active,
+  .Button:active,
+  .Button.Active {
+    background-image: none;
+    box-shadow: inset 0 3px 5px #999999;
+    outline: 0; }
+    button:active:focus, button.Active:focus,
+    .Button:active:focus,
+    .Button.Active:focus {
+      border-color: #0768A9;
+      box-shadow: inset 0 1px 1px #999999, 0 0 8px #0768A9;
+      outline: thin dotted;
+      outline: 5px auto -webkit-focus-ring-color;
+      outline-offset: -2px; }
+  button:focus, button:hover,
+  .Button:focus,
+  .Button:hover {
+    background-color: whitesmoke;
+    color: #333;
+    text-decoration: none; }
+  button:disabled, button.Disabled,
+  .Button:disabled,
+  .Button.Disabled {
+    background-color: #999999;
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 0.65;
+    pointer-events: none; }
+
+button.Dark,
+.Button.Dark {
+  background: #666666 !important;
+  border: 1px solid #333 !important;
+  color: #FFF !important; }
+  button.Dark:focus, button.Dark:hover,
+  .Button.Dark:focus,
+  .Button.Dark:hover {
+    background: #999999 !important;
+    border: 1px solid #666666 !important; }
+
+button.Ethereal,
+button.Ethereal:hover,
+button.Ethereal:active {
+  background: transparent;
+  border: 0 none;
+  border-radius: initial;
+  box-shadow: none;
+  margin: 0;
+  outline: none;
+  padding: 0;
+  transition: none; }
+
+button.Link {
+  color: #0768A9;
+  border-radius: 0; }
+  button.Link, button.Link:active, button.Link:disabled, button.Link:focus, button.Link:hover {
+    background: transparent;
+    border: 0 none;
+    box-shadow: none;
+    margin: 0;
+    outline: none;
+    padding: 0; }
+  button.Link:focus, button.Link:hover {
+    color: #043b60;
+    text-decoration: underline;
+    background-color: transparent; }
+  button.Link:disabled {
+    color: #999999;
+    text-decoration: none; }
+
+button.Light,
+.Button.Light {
+  background: #999999 !important;
+  border: 1px solid #666666 !important; }
+  button.Light:focus, button.Light:hover,
+  .Button.Light:focus,
+  .Button.Light:hover {
+    background: #dddddd !important;
+    border: 1px solid #999999 !important; }
+
+button.Risky,
+.Button.Risky {
+  background: #AA0000 !important;
+  border: 1px solid #5e0000 !important;
+  color: #FFF !important; }
+  button.Risky:focus, button.Risky:hover,
+  .Button.Risky:focus,
+  .Button.Risky:hover {
+    background: #5e0000 !important;
+    border: 1px solid #5e0000 !important;
+    color: #FFF !important; }
+
+button.Suggested {
+  background: #0768A9 !important;
+  border: 1px solid #043b60 !important;
+  color: #FFF !important; }
+  button.Suggested:focus, button.Suggested:hover {
+    background: #043b60 !important;
+    border: 1px solid #043b60 !important;
+    color: #FFF !important; }
+
+input[type="button"],
+input[type="image"],
+input[type="submit"] {
+  display: none !important; }
+
+/******************************************************************************
+* Toolbar and Ribbon styling
+******************************************************************************/
+div.Ribbon div.Toolbar:not(:first-child) {
+  margin-left: 5px; }
+
+div.Ribbon div.Toolbar-Vertical:not(:first-child) {
+  margin-top: 5px; }
+
+div.Toolbar,
+div.Toolbar-Vertical {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle; }
+  div.Toolbar button,
+  div.Toolbar .Button,
+  div.Toolbar-Vertical button,
+  div.Toolbar-Vertical .Button {
+    background-color: whitesmoke;
+    border-color: #dddddd;
+    color: #333;
+    float: left;
+    position: relative; }
+  div.Toolbar button:focus,
+  div.Toolbar .Button:focus,
+  div.Toolbar button:hover,
+  div.Toolbar .Button:hover,
+  div.Toolbar-Vertical button:focus,
+  div.Toolbar-Vertical .Button:focus,
+  div.Toolbar-Vertical button:hover,
+  div.Toolbar-Vertical .Button:hover {
+    background-color: whitesmoke;
+    border-color: #dddddd;
+    box-shadow: none;
+    outline: none;
+    z-index: 2; }
+  div.Toolbar button:active,
+  div.Toolbar button.Active,
+  div.Toolbar .Button:active,
+  div.Toolbar .Button.Active,
+  div.Toolbar-Vertical button:active,
+  div.Toolbar-Vertical button.Active,
+  div.Toolbar-Vertical .Button:active,
+  div.Toolbar-Vertical .Button.Active {
+    background-color: whitesmoke;
+    box-shadow: 0 0 10px #999999;
+    outline: 0; }
+  div.Toolbar button:not(:first-child):not(:last-child),
+  div.Toolbar .Button:not(:first-child):not(:last-child),
+  div.Toolbar button:not(:first-child):not(:last-child),
+  div.Toolbar .Button:not(:first-child):not(:last-child),
+  div.Toolbar-Vertical button:not(:first-child):not(:last-child),
+  div.Toolbar-Vertical .Button:not(:first-child):not(:last-child),
+  div.Toolbar-Vertical button:not(:first-child):not(:last-child),
+  div.Toolbar-Vertical .Button:not(:first-child):not(:last-child) {
+    border-radius: 0; }
+
+div.Toolbar button + button,
+div.Toolbar .Button + .Button {
+  margin-left: -1px; }
+
+div.Toolbar button:first-child:not(:last-of-type),
+div.Toolbar .Button:first-child:not(:last-of-type) {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  margin-left: 0; }
+
+div.Toolbar button:last-child:not(:first-child),
+div.Toolbar .Button:last-child:not(:first-child) {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0; }
+
+div.Toolbar-Vertical button,
+div.Toolbar-Vertical .Button {
+  display: block;
+  float: none;
+  max-width: 100%;
+  width: 100%; }
+
+div.Toolbar-Vertical button + button,
+div.Toolbar-Vertical .Button + .Button {
+  margin-top: -1px; }
+
+div.Toolbar-Vertical button:first-child:not(:last-child),
+div.Toolbar-Vertical .Button:first-child:not(:last-child) {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 4px; }
+
+div.Toolbar-Vertical button:last-child:not(:first-child),
+div.Toolbar-Vertical .Button:last-child:not(:first-child) {
+  border-bottom-left-radius: 4px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0; }
+
+/******************************************************************************
+* Form control styling
+******************************************************************************/
+input,
+select,
+textarea {
+  background-color: whitesmoke;
+  background-image: none;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  box-sizing: border-box !important;
+  color: #333;
+  display: block;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.45;
+  padding: 0.25rem 0.375rem;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  width: 100%; }
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: #0768A9;
+    box-shadow: inset 0 1px 1px #999999, 0 0 8px #0768A9;
+    outline: none; }
+  input[required]:invalid,
+  select[required]:invalid,
+  textarea[required]:invalid {
+    border-color: #AA0000;
+    box-shadow: inset 0 1px 1px #999999, 0 0 8px #AA0000; }
+  input:disabled, input[readonly],
+  select:disabled,
+  select[readonly],
+  textarea:disabled,
+  textarea[readonly] {
+    background-color: #999999;
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 0.65;
+    pointer-events: none; }
+  input::placeholder,
+  select::placeholder,
+  textarea::placeholder {
+    color: #999999;
+    opacity: 1; }
+
+input[type="checkbox"],
+input[type="radio"] {
+  border: 0 none;
+  border-radius: 0;
+  display: inline-block;
+  height: auto;
+  line-height: normal;
+  margin: 2px 2px 0 0;
+  vertical-align: text-top;
+  width: auto; }
+  input[type="checkbox"]:focus,
+  input[type="radio"]:focus {
+    box-shadow: none;
+    outline: none; }
+
+input[type="file"],
+input[type="range"] {
+  display: block; }
+
+select::-ms-expand {
+  background-color: transparent;
+  border: 0; }
+
+select[multiple],
+select[size] {
+  height: auto; }
+
+textarea {
+  height: auto; }
+
+/******************************************************************************
+* Form element groups
+******************************************************************************/
+.Form-Group {
+  margin-bottom: 1rem; }
+  .Form-Group.Icon-Left, .Form-Group.Icon-Right {
+    position: relative; }
+    .Form-Group.Icon-Left i, .Form-Group.Icon-Right i {
+      bottom: 7px;
+      position: absolute;
+      text-align: center;
+      width: 32px;
+      z-index: 2; }
+  .Form-Group.Icon-Left input:not([type="checkbox"]):not([type="file"]):not([type="image"]):not([type="radio"]) {
+    padding-left: 32px; }
+  .Form-Group.Icon-Right input:not([type="checkbox"]):not([type="file"]):not([type="image"]):not([type="radio"]) {
+    padding-right: 32px; }
+  .Form-Group.Icon-Left i {
+    left: 0; }
+  .Form-Group.Icon-Right i {
+    right: 0; }
+
+form.Inline .Form-Group {
+  display: inline-flex;
+  margin-bottom: 0;
+  vertical-align: middle; }
+
+form.Inline input:not([type="checkbox"]):not([type="file"]):not([type="image"]):not([type="radio"]),
+form.Inline select,
+form.Inline textarea {
+  display: inline-block;
+  flex-grow: 1;
+  vertical-align: middle;
+  width: auto; }
+
+form.Inline label {
+  margin-bottom: 0;
+  padding: 0.375rem 0.25rem; }
+
+form[clean] input,
+form[clean] select,
+form[clean] textarea {
+  border-color: transparent;
+  box-shadow: none;
+  outline: none; }
+
+/******************************************************************************
+* Meter styling
+******************************************************************************/
+meter {
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: 0 none;
+  border-radius: 3px;
+  display: block; }
+
+meter::-webkit-meter-bar {
+  background: whitesmoke;
+  box-shadow: 0 2px 5px #999999 inset; }
+
+meter::-webkit-meter-optimum-value {
+  background: #00AA00;
+  box-shadow: 0 2px 5px #999999 inset; }
+
+meter::-webkit-meter-suboptimum-value {
+  background: #FFFF00;
+  box-shadow: 0 2px 5px #999999 inset; }
+
+meter::-webkit-meter-even-less-good-value {
+  background: #AA0000;
+  box-shadow: 0 2px 5px #999999 inset; }
+
+/******************************************************************************
+* Progress bar styling
+******************************************************************************/
+progress {
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background: whitesmoke;
+  border: 0 none;
+  border-radius: 3px;
+  color: #0768A9; }
+
+progress::-webkit-progress-bar {
+  border-radius: 3px; }
+
+progress[value]::-webkit-progress-bar {
+  background: whitesmoke;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset; }
+
+progress[value]::-webkit-progress-value {
+  background: #0768A9;
+  border-radius: 3px; }
+
+progress:not([value]) {
+  display: none; }
+
+/******************************************************************************
+* Miscellaneous form element styling
+******************************************************************************/
+fieldset {
+  border: 0;
+  margin: 0;
+  min-width: 0;
+  padding: 0; }
+
+figure {
+  margin: 0; }
+
+hr {
+  border: 0;
+  border-top: 1px solid #dddddd;
+  clear: both;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem; }
+
+img {
+  vertical-align: middle; }
+
+img.Rounded {
+  border-radius: 3px; }
+
+img.Circle {
+  border-radius: 50%; }
+
+img.Bordered {
+  background-color: whitesmoke;
+  border: 1px solid #dddddd;
+  display: inline-block;
+  max-width: 100%;
+  padding: 5px;
+  transition: all 0.2s ease-in-out; }
+
+label {
+  display: inline-block;
+  font-weight: bold;
+  margin-bottom: 0.1rem; }
+
+label.Checkable {
+  cursor: pointer;
+  font-weight: normal;
+  padding-top: 0; }
+  label.Checkable input[type="checkbox"],
+  label.Checkable input[type="radio"] {
+    margin-top: -2px;
+    vertical-align: middle; }
+
+label.ScreenReader {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px; }
+
+legend {
+  border: 0;
+  border-bottom: 1px solid #dddddd;
+  color: #333;
+  display: block;
+  font-size: 1.45em;
+  line-height: inherit;
+  margin-bottom: 1.5rem;
+  padding: 0;
+  width: 100%; }
+
+/******************************************************************************
+* List styling
+******************************************************************************/
+dl {
+  margin: 0; }
+
+dt,
+dd {
+  line-height: 1.45; }
+
+dt {
+  font-weight: bold; }
+
+dd {
+  margin-left: 0; }
+
+li.Divider {
+  background-color: whitesmoke;
+  height: 1px;
+  margin: 0.75rem 0;
+  overflow: hidden; }
+
+ol,
+ul {
+  margin-bottom: 0.75rem;
+  margin-top: 0; }
+
+ul {
+  list-style: disc; }
+
+ul ul,
+ol ul,
+ul ol,
+ol ol {
+  margin-bottom: 0; }
+
+ol.Inline,
+ul.Inline {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+  ol.Inline li,
+  ul.Inline li {
+    display: inline-block;
+    padding: 0 0.375rem; }
+
+ol.Paneled,
+ul.Paneled {
+  padding-left: 0; }
+  ol.Paneled li,
+  ul.Paneled li {
+    background-color: #FFF;
+    border: 1px solid #dddddd;
+    display: block;
+    margin-bottom: -1px;
+    padding: 0.75rem;
+    position: relative; }
+  ol.Paneled li:first-child,
+  ul.Paneled li:first-child {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px; }
+  ol.Paneled li:last-child,
+  ul.Paneled li:last-child {
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px; }
+
+ol.Unstyled,
+ul.Unstyled {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+
+/******************************************************************************
+* Structural page styling
+******************************************************************************/
+html {
+  font-size: 14px;
+  -webkit-tap-highlight-color: transparent; }
+
+body {
+  background: #FFF;
+  color: #333;
+  font-family: Calibri;
+  font-size: 14px;
+  height: 100%;
+  line-height: 1.45;
+  padding: 60px 10px 10px 10px; }
+  body header > nav {
+    background: #0768A9;
+    border: 1px solid transparent;
+    color: #FFF;
+    height: 40px;
+    left: 0;
+    margin: 0 -10px 20px 0;
+    padding: 0 20px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 999; }
+    body header > nav a.Logo {
+      float: right; }
+    body header > nav label[for="chkNavigation"] {
+      cursor: pointer;
+      display: inline-block;
+      font-family: FontAwesome;
+      font-size: 1.25em;
+      font-weight: normal;
+      line-height: 40px;
+      margin: 0;
+      padding: 0; }
+      body header > nav label[for="chkNavigation"]:before {
+        content: "\f0c9"; }
+    body header > nav #chkNavigation {
+      display: none; }
+      body header > nav #chkNavigation:checked + ul {
+        left: -1px; }
+    body header > nav ul {
+      background: #333;
+      height: 10000px;
+      left: -100%;
+      list-style: none;
+      margin: 0;
+      padding: 0 0 0 10px;
+      position: absolute;
+      top: 39px;
+      transition: all 0.5s ease-in-out;
+      width: 75%;
+      z-index: 9999; }
+      body header > nav ul li {
+        color: #dddddd;
+        font-size: 1.25em;
+        padding: 0.25rem 0.75rem;
+        position: relative; }
+        body header > nav ul li a > span:first-child ~ * {
+          display: none; }
+        body header > nav ul li a:focus + ul {
+          max-height: 500px; }
+        body header > nav ul li input[type="search"] {
+          border-radius: 20px;
+          margin-top: 0.375rem;
+          width: 100%; }
+        body header > nav ul li ul {
+          font-size: 14px;
+          list-style: none;
+          margin: 0 0 0 0.75rem;
+          max-height: 0;
+          overflow: hidden;
+          padding: 0;
+          transition: max-height 0.5s ease-in-out; }
+      body header > nav ul li:not(:first-child) {
+        border-top: 1px solid #dddddd; }
+  body header > nav ul > li a {
+    color: #FFF;
+    display: inline-block;
+    transition: color 0.5s ease-in-out; }
+    body header > nav ul > li a i {
+      display: inline-block;
+      padding-right: 0.375rem; }
+  body header > nav ul > li a:focus,
+  body header > nav ul > li a:hover {
+    color: lightyellow;
+    outline: none;
+    text-decoration: none; }
+
+article,
+footer,
+header,
+main,
+nav,
+section {
+  position: relative; }
+
+section.Container {
+  margin-left: auto;
+  margin-right: auto; }
+
+/******************************************************************************
+* Table styling
+******************************************************************************/
+table {
+  background-color: transparent;
+  margin-bottom: 1.5rem;
+  max-width: 100%;
+  width: 100%; }
+  table thead > tr > th,
+  table tbody > tr > td,
+  table tfoot > tr > td {
+    border-top: 1px solid #dddddd;
+    line-height: 1.45;
+    padding: 0.25rem 0.375rem; }
+  table caption + thead > tr:first-child > th,
+  table colgroup + thead > tr:first-child > th,
+  table caption + thead > tr:first-child > td,
+  table colgroup + thead > tr:first-child > td {
+    border-top: 0; }
+  table > tr {
+    display: none; }
+  table thead > tr > th {
+    border-bottom: 2px solid #dddddd;
+    text-align: left;
+    vertical-align: bottom; }
+  table tbody tr > td.NoPad {
+    padding: 0; }
+  table tbody tr.Active > td {
+    background-color: whitesmoke; }
+  table tbody tr.Risky > td {
+    background-color: #ffd0d0; }
+  table tbody tr.Info > td {
+    background-color: #d8eefd; }
+  table tbody tr.Success > td {
+    background-color: #d0ffd0; }
+  table tbody tr.Warning > td {
+    background-color: lightyellow; }
+
+table.Bordered {
+  border: 1px solid #dddddd; }
+  table.Bordered thead > tr > th,
+  table.Bordered tbody > tr > td,
+  table.Bordered tfoot > tr > td {
+    border: 1px solid #dddddd; }
+  table.Bordered thead > tr > th {
+    border-bottom-width: 2px; }
+
+table.Hot-Tracking > tbody > tr:hover > td {
+  background-color: whitesmoke; }
+
+table.Striped > tbody > tr:nth-child(odd) > td {
+  background-color: whitesmoke; }
+
+/******************************************************************************
+* Header styling
+******************************************************************************/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #666666;
+  font-family: "Shadows Into Light";
+  font-weight: 500;
+  line-height: 1.1; }
+
+h1,
+h2,
+h3 {
+  margin: 1em 0 0.5em 0; }
+
+h4,
+h5,
+h6 {
+  margin: 0.5em 0; }
+
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small {
+  color: #999999;
+  font-weight: normal;
+  line-height: initial; }
+
+h1 small,
+h2 small,
+h3 small {
+  font-size: 0.65em; }
+
+h4 small,
+h5 small,
+h6 small {
+  font-size: 0.85em; }
+
+h1 {
+  border-bottom: 1px solid #dddddd;
+  font-size: 2.55em; }
+
+h2 {
+  font-size: 2.1em; }
+
+h3 {
+  font-size: 1.7em; }
+
+h4 {
+  font-size: 1.25em; }
+
+h5 {
+  font-size: 1.1em;
+  text-transform: uppercase; }
+
+h6 {
+  font-size: 1em;
+  text-transform: uppercase; }
+
+/******************************************************************************
+* Monospace font elements
+******************************************************************************/
+code,
+kbd,
+pre,
+samp {
+  font-family: Consolas, Menlo, Monaco, "Courier New"; }
+
+code {
+  background-color: #d8eefd;
+  border-radius: 3px;
+  color: #0768A9;
+  padding: 0.25rem 0.375rem;
+  white-space: nowrap; }
+
+kbd {
+  background-color: #333;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #999999;
+  color: whitesmoke;
+  padding: 0.25rem 0.375rem; }
+
+pre {
+  background-color: whitesmoke;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  color: #333;
+  display: block;
+  font-size: 14px;
+  line-height: 1.45;
+  margin: 0 0 0.75rem;
+  padding: 0.25rem 0.375rem;
+  word-break: break-all;
+  word-wrap: break-word; }
+  pre code {
+    background-color: transparent;
+    border-radius: 0;
+    color: inherit;
+    font-size: inherit;
+    padding: 0;
+    white-space: pre-wrap; }
+
+/******************************************************************************
+* Hyperlinks
+******************************************************************************/
+a {
+  color: #0768A9;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out; }
+  a:hover, a:focus {
+    color: #043b60;
+    text-decoration: underline; }
+  a:focus {
+    outline: thin dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px; }
+
+a.Risky:hover {
+  color: #5e0000; }
+
+a.Info:hover {
+  color: #043b60; }
+
+a.Success:hover {
+  color: #005e00; }
+
+a.Warning:hover {
+  color: #b3b300; }
+
+/******************************************************************************
+* Other content elements
+******************************************************************************/
+abbr {
+  border-bottom: 1px dotted #dddddd;
+  cursor: help; }
+
+address {
+  font-style: normal;
+  line-height: 1.45;
+  margin-bottom: 1.5rem; }
+
+blockquote {
+  border-left: 5px solid #dddddd;
+  font-size: 1.25em;
+  margin: 0 0 1.5rem;
+  padding: 0.75rem 1.5rem; }
+  blockquote:before, blockquote:after {
+    content: ""; }
+  blockquote footer {
+    color: #999999;
+    display: block;
+    font-size: 0.85em;
+    line-height: 1.45; }
+    blockquote footer:before {
+      content: '\2014 \00A0'; }
+
+blockquote.Text-Right footer:before {
+  content: ""; }
+
+blockquote.Text-Right footer:after {
+  content: '\00A0 \2014'; }
+
+cite {
+  font-style: normal; }
+
+mark {
+  background: lightyellow; }
+
+output {
+  color: #333;
+  display: block;
+  font-size: 14px;
+  line-height: 1.45;
+  padding-top: 0.25rem; }
+
+p {
+  margin: 1em 0; }
+
+small {
+  font-size: 0.85em; }
+
+@media print {
+  * {
+    color: #000 !important;
+    text-shadow: none !important;
+    background: transparent !important;
+    box-shadow: none !important; }
+  a,
+  a:visited {
+    text-decoration: underline; }
+  a[href]:after {
+    content: " (" attr(href) ")"; }
+  a[href^="javascript:"]:after,
+  a[href^="#"]:after {
+    content: ""; }
+  abbr[title]:after {
+    content: " (" attr(title) ")"; }
+  blockquote,
+  pre {
+    border: 1px solid #dddddd;
+    page-break-inside: avoid; }
+  button > .caret {
+    border-top-color: #000 !important; }
+  h2,
+  h3 {
+    page-break-after: avoid; }
+  h2,
+  h3,
+  p {
+    orphans: 3;
+    widows: 3; }
+  img {
+    max-width: 100% !important; }
+  img,
+  tr {
+    page-break-inside: avoid; }
+  label {
+    border: 1px solid #000; }
+  select {
+    background: #FFF !important; }
+  nav {
+    display: none; }
+  table {
+    border-collapse: collapse !important; }
+  table.Bordered th,
+  table.Bordered td {
+    border: 1px solid #dddddd !important; }
+  td,
+  th {
+    background-color: #FFF !important; }
+  thead {
+    display: table-header-group; }
+  .Print-Block {
+    display: block !important; }
+  .Print-Hidden {
+    display: none !important; }
+  .Print-Inline {
+    display: inline !important; }
+  .Print-Inline-Block {
+    display: inline-block !important; } }
+
+/******************************************************************************
+* Element modifications
+******************************************************************************/
+img.Responsive {
+  height: auto;
+  max-width: 100%; }
+
+/******************************************************************************
+* Other mobile devices (typically phones)
+******************************************************************************/
+@media screen and (max-width: 767px) {
+  table {
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    border: 1px solid #dddddd;
+    margin-bottom: 1rem;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    width: 100%; }
+  .Mobile-Hidden {
+    display: none !important; }
+  div.Responsive {
+    border: 1px solid #dddddd;
+    margin-bottom: 1rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%; } }
+
+/******************************************************************************
+* Tablets in portrait mode
+******************************************************************************/
+@media screen and (min-width: 768px) {
+  body header nav a.Logo {
+    float: none;
+    margin-left: 0.75rem; }
+  body header nav label[for="chkNavigation"] {
+    display: none; }
+  body header nav ul {
+    background-color: transparent;
+    display: block !important;
+    font-size: 1.5rem;
+    height: auto;
+    left: 0;
+    line-height: 40px;
+    margin: 0;
+    padding: 0 20px 0 80px;
+    position: fixed;
+    top: 0;
+    visibility: visible;
+    width: 100%; }
+    body header nav ul li {
+      display: inline-block;
+      margin: 0 1rem;
+      padding: 0; }
+      body header nav ul li ul {
+        background-clip: padding-box;
+        background-color: #FFF;
+        box-shadow: 0 5px 10px #999999;
+        margin: 0;
+        min-width: 150px;
+        position: absolute;
+        top: 40px;
+        transition: all 0.5s ease-in-out; }
+        body header nav ul li ul li > a {
+          clear: both;
+          color: #333;
+          display: block;
+          line-height: 1.45;
+          padding: 0.25rem 1.5rem;
+          white-space: nowrap; }
+        body header nav ul li ul li > a:hover {
+          color: #999999; }
+      body header nav ul li a:focus + ul {
+        padding: 0.375rem 0;
+        z-index: 999; }
+      body header nav ul li a > span:first-child ~ * {
+        display: inline-block; }
+    body header nav ul li:not(:first-child) {
+      border-top: 0 none; }
+    body header nav ul li:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(3)) > a > span:first-child {
+      display: none; }
+  dt {
+    clear: left;
+    float: left;
+    font-weight: bold;
+    overflow: hidden;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 150px; }
+  dd {
+    margin-left: 180px; }
+  .Width-50 {
+    width: 50% !important; }
+  .Width-40 {
+    width: 40% !important; }
+  .Width-33 {
+    width: 33.33333333% !important; }
+  .Width-25 {
+    width: 25% !important; }
+  .Width-20 {
+    width: 20% !important; }
+  .Width-10 {
+    width: 10% !important; } }
+
+/******************************************************************************
+* Tablets in landscape mode
+******************************************************************************/
+@media screen and (min-width: 992px) {
+  .Column.Width-40,
+  .Column.Width-33,
+  .Column.Width-25,
+  .Column.Width-20,
+  .Column.Width-10 {
+    float: left;
+    padding: 0.75rem 1rem; } }
+
+/******************************************************************************
+* Desktop computers
+******************************************************************************/
+div.Accordion-Vertical > *,
+div.Accordion-Horizontal > * {
+  transition: all 0.3s ease-in-out; }
+
+div.Accordion-Vertical > header,
+div.Accordion-Horizontal > header {
+  background: whitesmoke;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 0;
+  overflow: hidden;
+  padding: 0.375rem; }
+
+div.Accordion-Vertical > header.Expanded,
+div.Accordion-Horizontal > header.Expanded {
+  background: #0768A9;
+  border-radius: 3px 3px 0 0;
+  color: #FFF;
+  cursor: default; }
+
+div.Accordion-Vertical > section,
+div.Accordion-Horizontal > section {
+  border: 0 none;
+  color: #FFF;
+  height: 0;
+  margin: 0;
+  overflow: hidden;
+  padding: 0; }
+
+div.Accordion-Vertical {
+  float: left;
+  width: 100%; }
+
+div.Accordion-Vertical > section {
+  border-radius: 0 0 3px 3px;
+  width: 100%; }
+
+div.Accordion-Vertical > header.Expanded + section {
+  border: 1px solid #dddddd;
+  border-left: 0 none;
+  color: #333;
+  height: auto;
+  padding: 0.375rem; }
+
+div.Accordion-Horizontal {
+  float: right;
+  height: 100%; }
+
+div.Accordion-Horizontal > header {
+  float: left;
+  height: 100%;
+  margin: 0;
+  position: relative;
+  width: 55px; }
+
+div.Accordion-Horizontal > header > div {
+  bottom: 90px;
+  cursor: pointer;
+  position: absolute;
+  right: -65px;
+  transform: rotate(-90deg);
+  width: 190px; }
+
+div.Accordion-Horizontal > header.Expanded > div {
+  cursor: default; }
+
+div.Accordion-Horizontal > section {
+  border-radius: 0 3px 3px 0;
+  float: left;
+  height: 100%;
+  width: 0; }
+
+div.Accordion-Horizontal > header.Expanded + section {
+  border: 1px solid #dddddd;
+  border-left: 0 none;
+  color: #333;
+  min-width: 200px;
+  padding: 0.375rem; }
+
+body.Disable-Text-Selection * {
+  -ms-user-select: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none; }
+
+div.AdapTable {
+  position: relative; }
+
+div.AdapTable table {
+  margin-bottom: 0; }
+
+div.AdapTable table th > a > i {
+  margin-left: 0.2rem; }
+
+div.AdapTable table > tbody > tr > td > i.fa-cog {
+  visibility: hidden; }
+
+div.AdapTable table > tbody > tr:hover > td > i.fa-cog {
+  visibility: visible; }
+
+div.AdapTable table > tbody > td {
+  padding: 0.375rem 0.5rem; }
+
+div.AdapTable > section:last-of-type {
+  border-top: 1px solid #dddddd;
+  padding: 0.5rem; }
+
+div.AdapTable > section:last-of-type > div {
+  float: left; }
+
+div.AdapTable > section:last-of-type > ol {
+  float: right; }
+
+div.AdapTable > section:last-of-type > ol > li {
+  float: left;
+  margin: 0;
+  padding: 0; }
+
+div.AdapTable > section:last-of-type > ol > li:not(:first-child) {
+  margin-left: 5px; }
+
+/******************************************************************************
+* Styling for jQuery UI Sortables
+******************************************************************************/
+div.AdapTable > section ol,
+div.AdapTable > section ul,
+#olAdapTable {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important; }
+
+div.AdapTable > section li,
+div.AdapTable li.AdapTable-Sortable {
+  list-style: none !important; }
+
+div.AdapTable li.AdapTable-Sortable {
+  background: white;
+  float: left;
+  font-size: 1em;
+  margin: 0;
+  padding: 0; }
+
+div.AdapTable li.AdapTable-Sortable > table {
+  margin-bottom: 0; }
+
+div.AdapTable th.AdapTable-Movable {
+  cursor: move; }
+
+div.AdapTable th.AdapTable-Movable:before {
+  color: #333;
+  content: "\f142";
+  display: inline-block;
+  font-family: FontAwesome;
+  font-size: 13px;
+  margin: 0 2px 0 -4px;
+  vertical-align: middle;
+  visibility: hidden; }
+
+div.AdapTable th.AdapTable-Movable:hover:before {
+  visibility: visible; }
+
+div.AdapTable .ui-sortable-placeholder {
+  background: #FFF;
+  border: 1px dashed #dddddd !important;
+  visibility: visible !important; }
+
+#olAdapTable > .ui-sortable-placeholder * {
+  opacity: 0;
+  visibility: hidden; }
+
+/******************************************************************************
+* Dropdown menu styling
+******************************************************************************/
+div.AdapTable > div[role="menu"] {
+  background-clip: padding-box;
+  background-color: whitesmoke;
+  box-shadow: 0 5px 10px #999999;
+  display: none;
+  font-size: 14px;
+  max-height: 195px;
+  margin: 2px 0 0;
+  overflow-y: auto;
+  padding: 10px 20px 5px 10px;
+  position: absolute;
+  text-align: left;
+  z-index: 999; }
+
+div.AdapTable > div[role="menu"] * {
+  white-space: nowrap; }
+
+div.AdapTable > div[role="menu"] ol,
+div.AdapTable > div[role="menu"] ul,
+div.AdapTable > div[role="menu"] li {
+  list-style: none !important;
+  margin: 0;
+  padding: 0; }
+
+/******************************************************************************
+* Action styling
+******************************************************************************/
+div.AdapTable div.Actions {
+  float: right;
+  padding: 5px 0;
+  text-align: right; }
+
+div.AdapTable div.Actions > i.fa {
+  cursor: pointer;
+  font-size: 18px; }
+
+div.AdapTable div.Actions > i.fa:not(:last-child) {
+  margin-right: 10px; }
+
+div.AdapTable div.Actions > ol.Columns {
+  display: none; }
+
+div.AdapTable div.Actions > ol.Columns > li:hover {
+  background-color: whitesmoke;
+  text-decoration: none; }
+
+div.AdapTable div.Actions > ol.Columns > li > label {
+  margin-bottom: 0; }
+
+/******************************************************************************
+* Filter styling
+******************************************************************************/
+div.AdapTable > div[role="menu"] > form > div:last-child {
+  margin-top: 10px; }
+
+div.AdapTable > div[role="menu"] > form > div:last-child > button:not(:first-child) {
+  margin-left: 5px; }
+
+div.AdapTable > div[role="menu"] > form input,
+div.AdapTable > div[role="menu"] > form select,
+div.AdapTable > div[role="menu"] > form textarea {
+  display: inline-block;
+  margin: 0 5px;
+  width: auto; }
+
+div.AdapTable div[role="menu"] label > input[type="number"] {
+  width: 60px; }
+
+div.AdapTable div[role="menu"] label > input[type="date"] {
+  width: 150px; }
+
+div.AdapTable div.Filters button {
+  border: 1px solid #dddddd;
+  box-shadow: none;
+  outline: none;
+  padding: 2px 10px; }
+
+div.AdapTable div.Filters button.Filter:after,
+div.AdapTable div.Filters > button.More:after {
+  content: "\f0d7";
+  font-family: FontAwesome;
+  margin-left: 3px; }
+
+div.AdapTable div.Filters > button:not(:last-child) {
+  margin-right: 5px; }
+
+div.AdapTable div.Filters button:active,
+div.AdapTable div.Filters button:hover,
+div.AdapTable div.Filters button:focus {
+  background-color: transparent;
+  border: 1px solid #dddddd; }
+
+div.AdapTable div.Filters > button.More {
+  margin-right: 10px; }
+
+div.AdapTable div.Filters > button.Search {
+  margin-left: 10px; }
+
+div.AdapTable div.Filters > input[type="search"] {
+  display: inline-block;
+  padding: 2px 5px;
+  width: 150px; }
+
+div.AdapTable div.Filters > ol.More-Filters {
+  display: none; }
+
+/******************************************************************************
+* Group styling
+******************************************************************************/
+div.AdapTable div.Groups {
+  float: left;
+  position: relative; }
+
+div.AdapTable div.Groups > ol {
+  float: left; }
+
+div.AdapTable div.Groups > ol > li {
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  cursor: move;
+  display: inline-block;
+  margin: 0 5px;
+  padding: 8px 5px; }
+
+div.Groups > ol:empty + div.Add-Group,
+div.Groups > ol:not(:empty) ~ div.Remove-Group {
+  display: inline-block; }
+
+div.Groups > ol:not(:empty) + div.Add-Group,
+div.Groups > ol:empty ~ div.Remove-Group {
+  display: none; }
+
+div.Groups > div.Add-Group,
+div.Groups > div.Remove-Group {
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  color: #333;
+  display: inline-block;
+  margin: 0;
+  padding: 5px; }
+
+div.Groups > div.Remove-Group {
+  float: right;
+  margin-left: 25px;
+  padding: 5px 10px; }
+
+div.Groups > div.Add-Group > i.fa,
+div.Groups > div.Remove-Group > i.fa {
+  color: #333;
+  font-size: 1.7em; }
+
+div.AdapTable li.Group,
+div.AdapTable li.Cannot-Group,
+div.AdapTable div.Groups li.ui-sortable-placeholder {
+  height: 39px !important;
+  min-width: 75px;
+  overflow: hidden;
+  text-align: center;
+  width: auto !important; }
+
+div.AdapTable div.Groups li.ui-sortable-placeholder {
+  float: none;
+  margin-bottom: -15px; }
+
+div.AdapTable li.Group {
+  border: 1px solid #dddddd;
+  cursor: move; }
+
+div.AdapTable li.Cannot-Group {
+  background: #ffd0d0 !important;
+  border: 1px solid #AA0000;
+  color: #AA0000;
+  cursor: move;
+  line-height: 39px; }
+
+div.AdapTable li.Group > table,
+div.AdapTable li.Cannot-Group > table {
+  display: none; }
+
+div.AdapTable table > tbody > tr[role="group"] > td {
+  background-color: whitesmoke; }
+
+div.AdapTable table > tbody > tr[role="group"] > td > i {
+  cursor: pointer; }
+
+div.AdapTable table > tbody > tr[role="group"] > td > i.fa-chevron-down,
+div.AdapTable table > tbody > tr[role="group"] > td > i.fa-chevron-up {
+  font-size: 12px;
+  margin: -3px 2px 0 2px;
+  vertical-align: middle; }
+
+div.AdapTable table > tbody > tr[role="group"] > td > i.fa-calculator {
+  display: none;
+  float: right;
+  margin-top: 3px; }
+
+div.AdapTable table > tbody > tr[role="group"]:hover > td > i.fa-calculator {
+  display: inline-block; }
+
+div.AdapTable table > tbody > tr.Aggregates {
+  display: none; }
+
+div.AdapTable table > tbody > tr.Aggregates > td {
+  font-weight: bold; }
+
+/******************************************************************************
+* Printer-friendly styling
+******************************************************************************/
+@media print {
+  div.AdapTable > table > thead {
+    display: table-header-group; }
+  div.AdapTable > table > tbody > tr[role="group"] > td {
+    background: whitesmoke; }
+  div.AdapTable i.fa {
+    display: none; }
+  div.AdapTable > section {
+    display: none; } }
+
+/******************************************************************************
+* Badge styling
+******************************************************************************/
+span.Badge {
+  background-color: #999999;
+  border-radius: 10px;
+  color: #FFF;
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: bold;
+  line-height: initial;
+  min-width: 10px;
+  padding: 0.2rem 0.5rem;
+  text-align: center;
+  vertical-align: baseline;
+  white-space: nowrap; }
+  span.Badge:empty {
+    display: none; }
+  span.Badge.Info {
+    background: #0768A9; }
+  span.Badge.Risky {
+    background: #AA0000; }
+  span.Badge.Success {
+    background: #00AA00; }
+  span.Badge.Warning {
+    background: #FFFF00; }
+
+/******************************************************************************
+* Breadcrumb styling
+******************************************************************************/
+ol.Breadcrumb {
+  background-color: whitesmoke;
+  border-radius: 3px;
+  list-style: none;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 1rem; }
+  ol.Breadcrumb li {
+    display: inline-block; }
+  ol.Breadcrumb li + li:before {
+    color: #333;
+    content: "/\00a0";
+    padding: 0 0.375rem; }
+
+.Carousel {
+  overflow: hidden;
+  position: relative; }
+
+.Carousel > .Seat {
+  position: absolute;
+  transition: 0.6s ease-in-out left;
+  top: 0; }
+
+.Carousel > .Seat.Left {
+  left: -100%; }
+
+.Carousel > .Seat.Right {
+  left: 100%; }
+
+.Carousel > .Seat.Active {
+  left: 0; }
+
+.Carousel > ol {
+  bottom: 20px;
+  left: 50%;
+  list-style: none;
+  margin: 0 0 0 -30%;
+  padding: 0;
+  position: absolute;
+  text-align: center;
+  width: 60%;
+  z-index: 99; }
+
+.Carousel > ol > li {
+  background: #000;
+  border: 1px solid #FFF;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-block;
+  height: 10px;
+  margin: 1px;
+  text-indent: -999px;
+  width: 10px; }
+
+.Carousel > ol > li.Active {
+  background: #FFF;
+  border: 1px solid #000;
+  height: 12px;
+  margin: 0;
+  width: 12px; }
+
+.Carousel > a {
+  bottom: 0;
+  color: #FFF;
+  font-size: 2.25rem;
+  opacity: 0.5;
+  position: absolute;
+  text-align: center;
+  text-shadow: 0 1px 2px #000;
+  top: 0;
+  width: 10%; }
+
+.Carousel > a:hover {
+  opacity: 0.9; }
+
+.Carousel > a.Right {
+  right: 0; }
+
+.Carousel > a.Left {
+  left: 0; }
+
+.Carousel > a > i {
+  position: absolute;
+  height: 30px;
+  top: 50%;
+  width: 30px; }
+
+.Carousel > a.Left > i {
+  left: 50%;
+  margin-left: -18px; }
+
+.Carousel > a.Right > i {
+  left: 50%;
+  margin-left: -15px; }
+
+label.Character-Counter {
+  left: -100%;
+  position: relative;
+  transition: all 0.5s ease-in-out; }
+
+label.Counting {
+  left: 0; }
+
+button.DropDown:after {
+  border-top: 4px solid #000;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  content: "";
+  display: inline-block;
+  height: 0;
+  margin: -0.2rem 0 0 0.375rem;
+  vertical-align: middle;
+  width: 0; }
+
+ol.DropDown,
+ul.DropDown {
+  background-clip: padding-box;
+  background-color: #FFF;
+  box-shadow: 0 5px 10px #999999;
+  display: none;
+  font-size: 1rem;
+  left: 0;
+  list-style: none;
+  margin: 0.15rem 0 0;
+  min-width: 150px;
+  padding: 0.375rem 0;
+  position: absolute;
+  text-align: left;
+  top: 100%;
+  z-index: 999; }
+
+ol.DropDown > li > a,
+ul.DropDown > li > a {
+  clear: both;
+  color: #333;
+  display: block;
+  line-height: 1.45;
+  padding: 0.2rem 1.5rem;
+  white-space: nowrap; }
+
+ol.DropDown > li > a:focus,
+ol.DropDown > li > a:hover,
+ul.DropDown > li > a:focus,
+ul.DropDown > li > a:hover {
+  background-color: whitesmoke;
+  text-decoration: none; }
+
+ul.Index ul {
+  display: none;
+  padding-left: 1.5rem; }
+
+ul.Index li > a {
+  color: #0768A9; }
+
+ul.Index li.Active > a {
+  color: #0000AA;
+  font-weight: bold; }
+
+ul.Index li.Active ul {
+  display: block; }
+
+div.Infinite-Scroll > div.Top-Spacer,
+div.Infinite-Scroll > div.Bottom-Spacer {
+  height: 0px;
+  visibility: hidden; }
+
+form.Metaform > fieldset {
+  border-top: 1px solid #dddddd;
+  clear: none;
+  margin: 1rem 0 0 0;
+  min-width: 0;
+  padding: 1rem 0.75rem;
+  position: relative; }
+
+form.Metaform > fieldset > header {
+  background: #FFF;
+  color: #333;
+  font-size: 1.3rem;
+  font-weight: bold;
+  left: 20px;
+  padding: 0 0.5rem;
+  position: absolute;
+  top: -12px;
+  z-index: 2; }
+
+form.Metaform i.Anchor {
+  background: #FFF;
+  color: #dddddd;
+  cursor: move;
+  font-size: 1.3rem;
+  position: absolute; }
+
+form.Metaform > fieldset > i.Anchor {
+  display: none;
+  left: 0;
+  padding: 0 0.5rem;
+  top: -0.75rem; }
+
+form.Metaform > fieldset > i.fa-chevron-down,
+form.Metaform > fieldset > i.fa-chevron-up {
+  background: #FFF;
+  cursor: pointer;
+  font-size: 1.15rem;
+  left: 0;
+  padding: 0 0.2rem;
+  position: absolute;
+  top: -0.75rem; }
+
+form.Metaform > fieldset > i.fa-close {
+  background: #FFF;
+  color: #dddddd;
+  cursor: pointer;
+  display: none;
+  right: 0;
+  position: absolute;
+  top: -0.55rem; }
+
+form.Metaform > fieldset.Movable > i.Anchor,
+form.Metaform > fieldset.Movable > i.fa-close {
+  display: inline-block; }
+
+form.Metaform > fieldset.Movable > i.fa-chevron-down,
+form.Metaform > fieldset.Movable > i.fa-chevron-up {
+  display: none; }
+
+form.Metaform ol.Forms {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+
+form.Metaform ol.Forms > li.Form-Group > i {
+  background: transparent;
+  color: #dddddd;
+  display: none;
+  font-size: 1rem;
+  position: absolute;
+  z-index: 2; }
+
+form.Metaform ol.Forms > li.Form-Group > i.Anchor {
+  left: 0.375rem;
+  top: 0.7rem; }
+
+form.Metaform ol.Forms > li.Form-Group > i.fa-close {
+  cursor: pointer;
+  right: 0.375rem;
+  top: 0.75rem; }
+
+form.Metaform ol.Forms.Movable > li {
+  border: 1px solid #dddddd;
+  border-radius: 3px; }
+
+form.Metaform ol.Forms.Movable > li.Form-Group > i {
+  display: inline-block; }
+
+form.Metaform ol.Forms.Movable input,
+form.Metaform ol.Forms.Movable select,
+form.Metaform ol.Forms.Movable textarea {
+  cursor: default; }
+
+form.Metaform .Sortable-Placeholder {
+  border: 1px dashed #dddddd !important;
+  clear: none;
+  display: inline-block;
+  height: 35px;
+  margin-bottom: -1rem !important;
+  width: 50%; }
+
+form.Metaform.Inline li.Form-Group {
+  display: inline-block;
+  margin-bottom: 0.375rem;
+  position: relative;
+  width: 50%; }
+
+form.Metaform.Inline input:not([type="checkbox"]):not([type="file"]):not([type="image"]):not([type="radio"]),
+form.Metaform.Inline select,
+form.Metaform.Inline textarea {
+  width: 200px; }
+
+form.Metaform.Inline label {
+  padding-right: 0.5rem;
+  width: 150px; }
+
+form.Metaform textarea {
+  height: 117px; }
+
+form.Metaform:not(.New) input.Editable,
+form.Metaform:not(.New) select.Editable,
+form.Metaform:not(.New) textarea.Editable,
+form.Metaform > fieldset > ol.Forms.Movable input,
+form.Metaform > fieldset > ol.Forms.Movable select,
+form.Metaform > fieldset > ol.Forms.Movable textarea {
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  box-shadow: none; }
+
+form.Metaform:not(.New) input.Editable:focus,
+form.Metaform:not(.New) select.Editable:focus,
+form.Metaform:not(.New) textarea.Editable:focus,
+form.Metaform:not(.New) input.Editable:hover,
+form.Metaform:not(.New) select.Editable:hover,
+form.Metaform:not(.New) textarea.Editable:hover {
+  background: #FFF !important;
+  border: 1px solid #dddddd !important;
+  box-shadow: inset 0 1px 1px #999999; }
+
+/******************************************************************************
+* Modal dialog styles
+******************************************************************************/
+#divBackdrop {
+  background: #999999;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  transition: all 0.3s;
+  visibility: hidden;
+  width: 100%;
+  z-index: 9998; }
+
+#dlgModal {
+  backface-visibility: hidden;
+  background: #FFF;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  box-shadow: 0 0 10px 0 #999999;
+  height: auto;
+  left: 50%;
+  max-width: 800px;
+  min-height: 150px;
+  min-width: 320px;
+  opacity: 0;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease-out;
+  visibility: hidden;
+  width: 50%;
+  z-index: 9999; }
+
+#dlgModal.Visible {
+  opacity: 1;
+  visibility: visible; }
+
+#dlgModal.Visible ~ #divBackdrop {
+  opacity: 0.75;
+  visibility: visible; }
+
+/******************************************************************************
+* Modal content styles
+******************************************************************************/
+#dlgModal > header {
+  border-bottom: 1px solid #dddddd;
+  padding: 0.75rem; }
+
+#dlgModal > header > span {
+  font-size: 1.5rem;
+  font-weight: normal;
+  line-height: 1.45;
+  margin: 0.75rem 1em 0 0; }
+
+#dlgModal > header > button {
+  background: transparent;
+  border: 0 none;
+  font-size: 1.5rem;
+  float: right;
+  height: 1.5em;
+  margin-top: -0.5rem;
+  opacity: 0.4;
+  outline: 0 none; }
+
+#dlgModal > section {
+  padding: 0.75rem; }
+
+/******************************************************************************
+* Modal content styles
+******************************************************************************/
+#dlgModal.FadeAndScale {
+  transform: translate(-50%, -50%) scale(0); }
+
+#dlgModal.FadeAndScale.Visible {
+  transform: translate(-50%, -50%) scale(1); }
+
+#dlgModal.Newspaper {
+  transform: translate(-50%, -50%) scale(0) rotate(720deg); }
+
+#dlgModal.Newspaper.Visible {
+  transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+
+#dlgModal.SlideFromBottom {
+  transform: translate(-50%, 150%); }
+
+#dlgModal.SlideFromLeft {
+  transform: translate(-150%, -50%); }
+
+#dlgModal.SlideFromRight {
+  transform: translate(150%, -50%); }
+
+#dlgModal.SlideFromTop {
+  transform: translate(-50%, -150%); }
+
+#dlgModal.SlideFromBottom.Visible,
+#dlgModal.SlideFromLeft.Visible,
+#dlgModal.SlideFromRight.Visible,
+#dlgModal.SlideFromTop.Visible {
+  transform: translate(-50%, -50%); }
+
+/******************************************************************************
+* Mobile devices (typically phones)
+******************************************************************************/
+@media screen and (max-width: 767px) {
+  #dlgModal {
+    max-width: 720px;
+    min-width: 300px;
+    width: 95%; } }
+
+div.PasswordStrength {
+  display: inline-block;
+  position: relative; }
+
+div.Strength {
+  display: none; }
+
+div.Strength > div.Meter {
+  background: whitesmoke;
+  height: 0.375rem;
+  margin: 0.25rem 0; }
+
+div.Strength > div.Meter > span,
+div.Strength.Weak > div.Meter > span {
+  background: #AA0000;
+  display: block;
+  height: 100%;
+  width: 25%; }
+
+div.Strength.Fair > div.Meter > span {
+  background: #FAFA00;
+  width: 50%; }
+
+div.Strength.Moderate > div.Meter > span {
+  background: #0000AA;
+  width: 75%; }
+
+div.Strength.Strong > div.Meter > span {
+  background: #00AA00;
+  width: 100%; }
+
+.Pull-Out {
+  position: absolute;
+  z-index: 998; }
+
+.Pull-Out.Fixed {
+  position: fixed; }
+
+.Pull-Out > i.fa {
+  padding: 0.375rem 0.2rem;
+  position: absolute; }
+
+.Pull-Out > i.fa:hover {
+  visibility: hidden; }
+
+.Pull-Out > div {
+  background: #FFF;
+  border: 0 none;
+  display: block;
+  height: 0;
+  overflow: hidden;
+  padding: 0.375rem;
+  width: 0; }
+
+.Pull-Out > div > label:first-child,
+.Pull-Out > i.fa {
+  background: whitesmoke;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  cursor: pointer; }
+
+.Pull-Out > input[type="checkbox"],
+.Pull-Out > div > label:first-child {
+  position: absolute;
+  right: -1px;
+  top: 0; }
+
+.Pull-Out > div > label:first-child {
+  padding: 0.375rem 0.5rem 0.375rem 0.45rem;
+  transform: rotate(90deg); }
+
+.Pull-Out > input[type="checkbox"]:checked ~ div > label:first-child {
+  transform: rotate(0deg); }
+
+.Pull-Out.Bottom,
+.Pull-Out.Top {
+  height: 0;
+  left: 0;
+  width: 100%; }
+
+.Pull-Out.Left,
+.Pull-Out.Right {
+  height: 100%;
+  padding-top: 40px;
+  top: 0;
+  width: 0; }
+
+.Pull-Out.Bottom > i.fa,
+.Pull-Out.Top > i.fa {
+  left: 50%; }
+
+.Pull-Out.Left > i.fa,
+.Pull-Out.Right > i.fa {
+  top: 50%; }
+
+.Pull-Out.Bottom > div,
+.Pull-Out.Top > div {
+  transition: height 0.5s ease-in-out; }
+
+.Pull-Out.Left > div,
+.Pull-Out.Right > div {
+  transition: width 0.5s ease-in-out; }
+
+.Pull-Out.Bottom {
+  bottom: 0; }
+
+.Pull-Out.Bottom > i.fa {
+  border-bottom: 0 none;
+  bottom: 0; }
+
+.Pull-Out.Bottom > i.fa:before {
+  content: "\f077"; }
+
+.Pull-Out.Bottom > input[type="checkbox"]:checked ~ div,
+.Pull-Out.Bottom > i.fa:hover + div,
+.Pull-Out.Bottom > div:hover {
+  border: 1px solid #dddddd;
+  height: 300px;
+  width: 100%; }
+
+.Pull-Out.Left {
+  left: 0; }
+
+.Pull-Out.Left > i.fa {
+  border-left: 0 none;
+  left: 0; }
+
+.Pull-Out.Left > i.fa:before {
+  content: "\f054"; }
+
+.Pull-Out.Left > input[type="checkbox"]:checked ~ div,
+.Pull-Out.Left > i.fa:hover + div,
+.Pull-Out.Left > div:hover {
+  border: 1px solid #dddddd;
+  height: 100%;
+  width: 300px; }
+
+.Pull-Out.Right {
+  right: 0; }
+
+.Pull-Out.Right > i.fa {
+  border-right: 0 none;
+  right: 0; }
+
+.Pull-Out.Right > i.fa:before {
+  content: "\f053"; }
+
+.Pull-Out.Right > div {
+  position: absolute;
+  right: 0; }
+
+.Pull-Out.Right > input[type="checkbox"]:checked ~ div,
+.Pull-Out.Right > i.fa:hover + div,
+.Pull-Out.Right > div:hover {
+  border: 1px solid #dddddd;
+  height: 100%;
+  width: 300px; }
+
+.Pull-Out.Top {
+  top: 40px; }
+
+.Pull-Out.Top > i.fa {
+  border-top: 0 none;
+  top: 0; }
+
+.Pull-Out.Top > i.fa:before {
+  content: "\f078"; }
+
+.Pull-Out.Top > input[type="checkbox"]:checked ~ div,
+.Pull-Out.Top > i.fa:hover + div,
+.Pull-Out.Top > div:hover {
+  border: 1px solid #dddddd;
+  height: 300px;
+  width: 100%; }
+
+/******************************************************************************
+* Clock spinner
+******************************************************************************/
+@-webkit-keyframes clock {
+  to {
+    transform: rotate(1turn); } }
+
+@keyframes clock {
+  to {
+    transform: rotate(1turn); } }
+
+.Clock {
+  border: 6px solid #0768A9;
+  border-radius: 24px;
+  display: inline-block;
+  height: 48px;
+  overflow: hidden;
+  position: relative;
+  text-indent: -9999px;
+  width: 48px; }
+
+.Clock:before {
+  -webkit-animation: clock 1250ms infinite linear;
+  animation: clock 1250ms infinite linear;
+  background: #0768A9;
+  border-radius: 3px;
+  content: "";
+  display: block;
+  position: absolute;
+  height: 19.2px;
+  left: 15px;
+  top: 15px;
+  transform-origin: 3px 3px;
+  width: 6px; }
+
+.Clock:after {
+  -webkit-animation: clock 15000ms infinite linear;
+  animation: clock 12500ms infinite linear;
+  background: #0768A9;
+  border-radius: 3px;
+  content: "";
+  display: block;
+  height: 16px;
+  left: 15px;
+  position: absolute;
+  top: 15px;
+  transform-origin: 3px 3px;
+  width: 6px; }
+
+/******************************************************************************
+* Default spinner
+******************************************************************************/
+@-webkit-keyframes spin {
+  to {
+    transform: rotate(1turn); } }
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn); } }
+
+.Spinner {
+  -webkit-animation: spin 0.75s infinite steps(8);
+  animation: spin 0.75s infinite steps(8);
+  display: inline-block;
+  height: 5em;
+  font-size: 12px;
+  margin: 0 0.5em;
+  overflow: hidden;
+  position: relative;
+  text-indent: 999em;
+  width: 5em; }
+
+.Spinner:before,
+.Spinner:after,
+.Spinner > div:before,
+.Spinner > div:after {
+  background: #82cafa;
+  border-radius: 0.2em;
+  box-shadow: 0 3.5em #999999;
+  /* container height - part height */
+  content: "";
+  height: 1.5em;
+  left: 2.25em;
+  /* (container width - part width) / 2  */
+  position: absolute;
+  top: 0;
+  transform-origin: 50% 2.5em;
+  /* container height / 2 */
+  width: 0.5em; }
+
+.Spinner:before {
+  background: #043b60; }
+
+.Spinner:after {
+  background: #0768A9;
+  transform: rotate(-45deg); }
+
+.Spinner > div:before {
+  background: #82cafa;
+  transform: rotate(-90deg); }
+
+.Spinner > div:after {
+  background: #d8eefd;
+  transform: rotate(-135deg); }
+
+/******************************************************************************
+* Heart spinner
+******************************************************************************/
+@-webkit-keyframes heartbeat {
+  0% {
+    transform: rotate(45deg) scale(1); }
+  14% {
+    transform: rotate(45deg) scale(1.3); }
+  28% {
+    transform: rotate(45deg) scale(1); }
+  42% {
+    transform: rotate(45deg) scale(1.3); }
+  70% {
+    transform: rotate(45deg) scale(1); } }
+
+@keyframes heartbeat {
+  0% {
+    transform: rotate(45deg) scale(1); }
+  14% {
+    transform: rotate(45deg) scale(1.3); }
+  28% {
+    transform: rotate(45deg) scale(1); }
+  42% {
+    transform: rotate(45deg) scale(1.3); }
+  70% {
+    transform: rotate(45deg) scale(1); } }
+
+.Heartbeat {
+  -webkit-animation: heartbeat 1300ms ease 0s infinite normal;
+  animation: heartbeat 1300ms ease 0s infinite normal;
+  display: inline-block;
+  height: 36px;
+  position: relative;
+  overflow: hidden;
+  text-indent: -9999px;
+  transform: rotate(45deg) scale(1);
+  transform-origin: 50% 50%;
+  width: 36px; }
+
+.Heartbeat:after,
+.Heartbeat:before {
+  background: #EE8877;
+  content: "";
+  position: absolute; }
+
+.Heartbeat:before {
+  border-bottom-left-radius: 12px;
+  border-top-left-radius: 12px;
+  height: 24px;
+  left: 0;
+  top: 12px;
+  width: 36px; }
+
+.Heartbeat:after {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  height: 12px;
+  left: 12px;
+  top: 0;
+  width: 24px; }
+
+/******************************************************************************
+* Wheel spinner
+******************************************************************************/
+@-webkit-keyframes wheel {
+  to {
+    transform: rotate(1turn); } }
+
+@keyframes wheel {
+  to {
+    transform: rotate(1turn); } }
+
+.Wheel {
+  -webkit-animation: wheel 1.4s infinite linear;
+  animation: wheel 1.4s infinite linear;
+  background: #0768A9;
+  background: -moz-linear-gradient(left, #0768A9 10%, rgba(255, 255, 255, 0) 42%);
+  background: -webkit-linear-gradient(left, #0768A9 10%, rgba(255, 255, 255, 0) 42%);
+  background: -o-linear-gradient(left, #0768A9 10%, rgba(255, 255, 255, 0) 42%);
+  background: -ms-linear-gradient(left, #0768A9 10%, rgba(255, 255, 255, 0) 42%);
+  background: linear-gradient(to right, #0768A9 10%, rgba(255, 255, 255, 0) 42%);
+  border-radius: 50%;
+  font-size: 10px;
+  height: 11em;
+  position: relative;
+  text-indent: -9999em;
+  width: 11em; }
+
+.Wheel:before {
+  background: #0768A9;
+  border-radius: 100% 0 0 0;
+  content: "";
+  height: 50%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 50%; }
+
+.Wheel:after {
+  background: #FFF;
+  border-radius: 50%;
+  bottom: 0;
+  content: "";
+  height: 75%;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 75%; }
+
+/******************************************************************************
+* Tab styling
+******************************************************************************/
+nav.Tabs {
+  border-bottom: 1px solid #dddddd;
+  clear: both;
+  min-height: 200px;
+  position: relative; }
+  nav.Tabs ol,
+  nav.Tabs ul {
+    list-style: none;
+    margin: 0;
+    padding: 0; }
+    nav.Tabs ol li,
+    nav.Tabs ul li {
+      float: left; }
+      nav.Tabs ol li a,
+      nav.Tabs ol li label,
+      nav.Tabs ul li a,
+      nav.Tabs ul li label {
+        background: #FFF;
+        border: 1px solid transparent;
+        border-radius: 3px 3px 0 0;
+        color: #333;
+        cursor: pointer;
+        display: block;
+        margin: 0 2px 0 0;
+        padding: 0.75rem 1rem;
+        position: relative;
+        text-decoration: none; }
+      nav.Tabs ol li input[type="radio"],
+      nav.Tabs ul li input[type="radio"] {
+        display: none; }
+      nav.Tabs ol li section,
+      nav.Tabs ul li section {
+        background: #FFF;
+        border: 1px solid #dddddd;
+        bottom: 0;
+        padding: 1.5rem;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 43px; }
+      nav.Tabs ol li.Active > a,
+      nav.Tabs ol li input[type="radio"]:checked + label,
+      nav.Tabs ul li.Active > a,
+      nav.Tabs ul li input[type="radio"]:checked + label {
+        border: 1px solid #dddddd;
+        border-bottom: 1px solid #FFF;
+        cursor: default;
+        z-index: 2; }
+      nav.Tabs ol li input[type="radio"]:checked + label + section,
+      nav.Tabs ul li input[type="radio"]:checked + label + section {
+        z-index: 1; }
+
+.Toasty {
+  height: auto;
+  min-width: 250px;
+  position: fixed;
+  right: 10px;
+  top: 40px;
+  width: 10%;
+  z-index: 9995; }
+
+.Toasty:empty {
+  display: none; }
+
+.Toasty > div {
+  background: #333;
+  border: 1px solid #000;
+  border-radius: 3px;
+  box-shadow: 0 0 10px #999999;
+  color: #FFF;
+  margin: 0.75rem 0;
+  max-height: 150px;
+  opacity: 0;
+  overflow: hidden;
+  padding: 0.375rem;
+  position: relative;
+  -moz-transition: margin 0.5s ease-in-out, max-height 0.5s ease-in-out, padding 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  -ms-transition: margin 0.5s ease-in-out, max-height 0.5s ease-in-out, padding 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  -webkit-transition: margin 0.5s ease-in-out, max-height 0.5s ease-in-out, padding 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  transition: margin 0.5s ease-in-out, max-height 0.5s ease-in-out, padding 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  width: 100%; }
+
+.Toasty div.Toast {
+  opacity: 0.9; }
+
+.Toasty > div.Fade {
+  margin: 0;
+  max-height: 0;
+  opacity: 0;
+  padding: 0;
+  -moz-transition-delay: 4s, 4s, 4s, 3s;
+  -ms-transition-delay: 4s, 4s, 4s, 3s;
+  -webkit-transition-delay: 4s, 4s, 4s, 3s;
+  transition-delay: 4s, 4s, 4s, 3s; }
+
+.Toasty > div.Acknowledged {
+  margin: 0;
+  max-height: 0;
+  opacity: 0;
+  padding: 0;
+  -moz-transition-delay: 1s, 1s, 1s, 0s;
+  -ms-transition-delay: 1s, 1s, 1s, 0s;
+  -webkit-transition-delay: 1s, 1s, 1s, 0s;
+  transition-delay: 1s, 1s, 1s, 0s; }
+
+.Toasty > div:hover:not(.Acknowledged) {
+  margin: 0.75rem 0 !important;
+  max-height: 150px !important;
+  opacity: 0.9 !important;
+  padding: 0.375rem !important;
+  -moz-transition-transition-duration: 0s;
+  -ms-transition-transition-duration: 0s;
+  -webkit-transition-transition-duration: 0s;
+  transition-duration: 0s;
+  -moz-transition-delay: 0s;
+  -ms-transition-delay: 0s;
+  -webkit-transition-delay: 0s;
+  transition-delay: 0s; }
+
+.Toasty > div.Error {
+  background: #ffd0d0;
+  border: 1px solid #AA0000;
+  color: #AA0000; }
+
+.Toasty > div.Information {
+  background: #d8eefd;
+  border: 1px solid #0768A9;
+  color: #0768A9; }
+
+.Toasty > div.Light {
+  background: whitesmoke;
+  border: 1px solid #dddddd;
+  color: #333; }
+
+.Toasty > div.Success {
+  background: #d0ffd0;
+  border: 1px solid #00AA00;
+  color: #00AA00; }
+
+.Toasty > div.Warning {
+  background: lightyellow;
+  border: 1px solid #b3b300;
+  color: #b3b300; }
+
+.Toasty > div > large {
+  display: block;
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+  text-align: center; }
+
+.Toasty > div > button {
+  background: transparent;
+  border: 0 none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1.5rem;
+  opacity: 0.5;
+  padding: 0;
+  position: absolute;
+  right: 5px;
+  top: 0; }
+
+.Toasty > div > img {
+  float: left;
+  height: 48px;
+  margin: 0 0.75rem 0.75rem 0;
+  width: 48px; }

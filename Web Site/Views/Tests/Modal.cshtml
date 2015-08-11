@@ -1,0 +1,290 @@
+﻿@{
+    ViewBag.Title = "Modal Unit Tests";
+}
+
+@section Styles
+{
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/qunit/1.16.0/qunit.min.css" />
+}
+
+@section Scripts
+{
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/qunit/1.16.0/qunit.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/blanket.js/1.1.4/blanket.min.js"></script>
+  <script src="~/scripts/dragline/jQuery/modal.js" data-cover></script>
+}
+
+<div id="qunit"></div>
+
+<div>
+  <button type="button" data-modal="#facePalm" data-title="Fail" data-callback="modalCallback">Modal Dialog (Default)</button>
+  <button type="button" data-modal="#facePalm" data-title="Fail" data-options="{ 'Effect': 'Newspaper' }">Modal Dialog (Newspaper)</button>
+  <button type="button" data-modal="#facePalm" data-title="Fail" data-options="{ 'Effect': 'Fade' }">Modal Dialog (Fade)</button>
+</div>
+
+<script type="text/html" id="facePalm">
+  <div class="Text-Center">
+    <img src="/images/memes/jesus-facepalm.jpg" />
+  </div>
+</script>
+
+<script type="text/javascript">
+  var declarativeCallbacks = 0;
+
+  function modalCallback()
+  {
+    declarativeCallbacks++;
+  }
+
+  QUnit.test("Declarative Modal", function(assert)
+  {
+    // Arrange
+    var modalButtons = $("button[data-modal]");
+    var documentClickEvents = $._data($(document)[0], "events").click;
+    var waitForModal = assert.async();
+
+    // Act & Assert
+    for (var clickIndex = 0; clickIndex < documentClickEvents.length; clickIndex++)
+    {
+      if (documentClickEvents[clickIndex].namespace === "widgets.modal")
+      {
+        assert.equal(documentClickEvents[clickIndex].selector, "[data-modal]");
+        break;
+      }
+    }
+
+    modalButtons.first().click();
+
+    window.setTimeout(function()
+    {
+      assert.equal($("#dlgModal").length, 1);
+      assert.equal($("#divBackdrop").length, 1);
+      assert.equal($("#dlgModal").next().attr("id"), "divBackdrop");
+      assert.equal($("#dlgModal > header > span").text(), "Fail");
+      assert.ok(declarativeCallbacks > 0);
+
+      waitForModal();
+    }, 500);
+  });
+
+  QUnit.test("showDialog()", function(assert)
+  {
+    // Arrange
+    var facePalm = $("#facePalm");
+    var modalTitle = "Epic Fail";
+    var waitForModal = assert.async();
+
+    // Act
+    $.Modal.showDialog(facePalm, modalTitle, { CloseButton: false });
+
+    // Assert
+    window.setTimeout(function()
+    {
+      assert.equal($("#dlgModal > header > span").text(), modalTitle);
+      assert.equal($("#dlgModal > header > button").css("display"), "none");
+      waitForModal();
+
+      $.Modal.hideDialog();
+    }, 500);
+  });
+
+  QUnit.test("showDialog() With Callback", function(assert)
+  {
+    // Arrange
+    var facePalm = $("#facePalm");
+    var modalTitle = "Epic Fail";
+    var waitForModal = assert.async();
+    var callbackInvoked = false;
+
+    // Act
+    $.Modal.showDialog(facePalm, modalTitle, { CloseButton: false }, function()
+    {
+      callbackInvoked = true;
+    });
+
+    // Assert
+    window.setTimeout(function()
+    {
+      assert.equal($("#dlgModal > header > span").text(), modalTitle);
+      assert.equal($("#dlgModal > header > button").css("display"), "none");
+      waitForModal();
+
+      $.Modal.hideDialog();
+    }, 500);
+  });
+
+  QUnit.test("showDialog() Without Content", function(assert)
+  {
+    // Arrange
+    var facePalm = $("#facePalm");
+    var modalTitle = "Epic Fail";
+
+    // Act & Assert
+    assert.throws(function()
+    {
+      $.Modal.showDialog(null, modalTitle, { CloseButton: false });
+    }, "The content element is required.");
+  });
+
+  QUnit.test("showDialog() Without Title", function(assert)
+  {
+    // Arrange
+    var facePalm = $("#facePalm");
+    var modalTitle = "Epic Fail";
+
+    // Act & Assert
+    assert.throws(function()
+    {
+      $.Modal.showDialog(facePalm, "", { CloseButton: false });
+    }, "The content element is required.");
+  });
+
+  QUnit.test("hideDialog()", function(assert)
+  {
+    // Arrange
+    var facePalm = $("#facePalm");
+    var modalTitle = "Epic Fail";
+    var waitForModal = assert.async();
+
+    // Act
+    $.Modal.showDialog(facePalm, modalTitle, { CloseButton: false });
+
+    // Assert
+    window.setTimeout(function()
+    {
+      $.Modal.hideDialog();
+
+      window.setTimeout(function()
+      {
+        assert.equal($("#dlgModal").css("opacity"), 0);
+        assert.equal($("#divBackdrop").css("opacity"), 0);
+
+        waitForModal();
+      }, 500);
+    }, 500);
+  });
+
+  QUnit.test("prompt()", function(assert)
+  {
+    // Arrange
+    var waitForModal = assert.async();
+    var promptTitle = "Call to Action";
+    var promptMessage = "This is prompting you to respond to a call to action.";
+    var buttonText = "No, I don't want to";
+    var callbackInvoked = false;
+
+    // Act
+    $.Modal.prompt(promptTitle,
+      promptMessage,
+      [
+        {
+          Callback: function()
+          {
+            callbackInvoked = true;
+            $.Modal.hideDialog();
+          },
+          CssClasses: "Suggested",
+          Text: buttonText
+        }]);
+
+    // Assert
+    window.setTimeout(function()
+    {
+      var dlgModal = $("#dlgModal");
+
+      assert.ok(dlgModal.is(":visible"));
+      assert.equal(dlgModal.find("header > span").text(), promptTitle);
+      assert.ok(dlgModal.find("section > p").hasClass("Text-Center"));
+      assert.equal(dlgModal.find("section > p").text(), promptMessage);
+      assert.ok(dlgModal.find("section button").hasClass("Suggested"));
+      assert.equal(dlgModal.find("section button").text(), buttonText);
+
+      dlgModal.find("section button").click();
+      assert.ok(callbackInvoked);
+
+      waitForModal();
+    }, 500);
+  });
+
+  QUnit.test("promptToDelete()", function(assert)
+  {
+    // Arrange
+    var waitForModal = assert.async();
+    var promptTitle = "Confirm Removal";
+    var promptMessage = "Are you sure you want to delete this?";
+    var callbackInvoked = false;
+
+    // Act
+    $.Modal.promptToDelete(function()
+    {
+      callbackInvoked = true;
+    });
+
+    // Assert
+    window.setTimeout(function()
+    {
+      var dlgModal = $("#dlgModal");
+
+      assert.equal(dlgModal.find("header > span").text(), promptTitle);
+      assert.ok(dlgModal.find("section > p").hasClass("Text-Center"));
+      assert.equal(dlgModal.find("section > p").text(), promptMessage);
+      assert.equal(dlgModal.find("section button:first").text(), "Delete");
+      assert.equal(dlgModal.find("section button:last").text(), "Cancel");
+
+      dlgModal.find("section button:first").click();
+      assert.ok(callbackInvoked);
+
+      window.setTimeout(function()
+      {
+        $.Modal.hideDialog();
+        waitForModal();
+      }, 500)
+    }, 500);
+  });
+
+  QUnit.test("promptToSave()", function(assert)
+  {
+    // Arrange
+    var waitForModal = assert.async();
+    var promptTitle = "Unsaved Changes";
+    var promptMessage = "There are unsaved changes. What would you like to do?";
+    var callbackScore = 0;
+
+    // Act
+    $.Modal.promptToSave(function()
+    {
+      callbackScore++;
+    },
+    function()
+    {
+      callbackScore += 2;
+    },
+    $.Modal.hideDialog);
+
+    // Assert
+    window.setTimeout(function()
+    {
+      var dlgModal = $("#dlgModal");
+
+      assert.ok(dlgModal.is(":visible"));
+      assert.equal(dlgModal.find("header > span").text(), promptTitle);
+      assert.equal(dlgModal.find("section > p").text(), promptMessage);
+      assert.ok(dlgModal.find("section button").hasClass("Suggested"));
+      assert.equal(dlgModal.find("section button:first").text(), "Save and Continue");
+      assert.equal(dlgModal.find("section button:eq(1)").text(), "Continue Without Saving");
+      assert.equal(dlgModal.find("section button:last").text(), "Cancel");
+
+      dlgModal.find("section button:first").click();
+      assert.equal(callbackScore, 1);
+
+      dlgModal.find("section button:eq(1)").click();
+      assert.equal(callbackScore, 3);
+
+      window.setTimeout(function()
+      {
+        $.Modal.hideDialog();
+        waitForModal();
+      }, 500)
+    }, 500);
+  });
+</script>

@@ -1,0 +1,843 @@
+﻿@{
+  ViewBag.Title = "AdapTable Unit Tests";
+}
+
+@section Styles
+{
+  <link type="text/css" rel="stylesheet" href="~/css/adaptable.css" />
+  <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.15.0.css" />
+}
+
+@section Scripts
+{
+  <script type="text/javascript" src="//code.jquery.com/qunit/qunit-1.16.0.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/blanket.js/1.1.4/blanket.min.js"></script>
+  <script type="text/javascript" src="~/scripts/jQuery/adaptable.js"></script>
+  <script type="text/javascript" src="~/scripts/jQuery/adaptable/script-loader.js"></script>
+  <script type="text/javascript" src="~/scripts/jQuery/adaptable/state.js"></script>
+  <script type="text/javascript" src="~/scripts/jQuery/adaptable/filtering.js" data-cover></script>
+}
+
+<div id="qunit"></div>
+
+<table id="tblAdapTable" class="Hot-Tracking">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Breed</th>
+      <th>Name</th>
+      <th>How Acquired</th>
+      <th>Acquisition Date</th>
+      <th>Acquisition Age</th>
+      <th>Acquisition Price</th>
+      <th>Loss Date</th>
+      <th>Loss Reason</th>
+      <th>
+        <i class="fa fa-cog" style="cursor: pointer;" />
+      </th>
+    </tr>
+  </thead>
+  <tbody data-bind="foreach: Pets">
+    <tr>
+      <td data-bind="text: Type"></td>
+      <td data-bind="text: Breed"></td>
+      <td data-bind="text: Name"></td>
+      <td data-bind="text: $data['How Acquired']"></td>
+      <td class="Text-Right" data-bind="text: $data['Acquisition Date'].toDateString()"></td>
+      <td class="Text-Right" data-bind="text: $data['Acquisition Age']"></td>
+      <td class="Text-Right" data-bind="text: $data['Acquisition Price']"></td>
+      <td class="Text-Right" data-bind="text: $data['Loss Date'].toDateString()"></td>
+      <td data-bind="text: $data['Loss Reason']"></td>
+      <td>
+        <i class="fa fa-cog" style="cursor: pointer;" />
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+  var Setup =
+  {
+    Pets:
+    [
+      { "Type": "Lizard", "Breed": "Water Dragon", "Name": "Leviathan", "Acquisition Date": new Date("6/10/1993"), "Acquisition Age": .5, "How Acquired": "Purchased", "Acquisition Price": 40, "Loss Date": new Date("8/12/1998"), "Loss Reason": "Sold" },
+      { "Type": "Dog", "Breed": "Rotweiler", "Name": "Hercules", "Acquisition Date": new Date("1/5/1993"), "Acquisition Age": 0.5, "How Acquired": "Purchased", "Acquisition Price": 600, "Loss Date": new Date("9/1/1998"), "Loss Reason": "Put down by step mom" },
+      { "Type": "Dog", "Breed": "Rotweiler", "Name": "Mel", "Acquisition Date": new Date("4/2/1994"), "Acquisition Age": 0.5, "How Acquired": "Daughter of Hercules", "Acquisition Price": 0, "Loss Date": new Date("9/1/1998"), "Loss Reason": "Put down by step mom" },
+      { "Type": "Scorpion", "Breed": "Emperor", "Name": "Sting", "Acquisition Date": new Date("11/4/1994"), "Acquisition Age": 1, "How Acquired": "Purchased", "Acquisition Price": 34.99, "Loss Date": new Date("4/10/1995"), "Loss Reason": "Black Widows" },
+      { "Type": "Cat", "Breed": "Unknown", "Name": "Chocolate", "Acquisition Date": new Date("5/3/1998"), "Acquisition Age": 1, "How Acquired": "Found", "Acquisition Price": 0, "Loss Date": new Date("6/19/2012"), "Loss Reason": "Old Age" },
+      { "Type": "Lizard", "Breed": "Asian Water Monitor", "Name": "Vincent", "Acquisition Date": new Date("6/6/1999"), "Acquisition Age": 0.5, "How Acquired": "Purchased", "Acquisition Price": 119.99, "Loss Date": new Date("5/20/2001"), "Loss Reason": "Ex-girlfriend let out" },
+      { "Type": "Lizard", "Breed": "Leopard Gecko", "Name": "Phallic", "Acquisition Date": new Date("10/12/1999"), "Acquisition Age": 0.5, "How Acquired": "Purchased", "Acquisition Price": 29.99, "Loss Date": new Date("4/23/2012"), "Loss Reason": "Black Widows" },
+      { "Type": "Lizard", "Breed": "Leopard Gecko", "Name": "Snarky", "Acquisition Date": new Date("10/12/1999"), "Acquisition Age": 0.5, "How Acquired": "Purchased", "Acquisition Price": 29.99, "Loss Date": new Date("4/23/2012"), "Loss Reason": "Black Widows" },
+      { "Type": "Lizard", "Breed": "Leopard Gecko", "Name": "Twitch", "Acquisition Date": new Date("10/12/1999"), "Acquisition Age": 0.5, "How Acquired": "Purchased", "Acquisition Price": 29.99, "Loss Date": new Date("4/23/2012"), "Loss Reason": "Black Widows" },
+      { "Type": "Ferret", "Breed": "", "Name": "Hoppy", "Acquisition Date": new Date("6/20/2000"), "Acquisition Age": 3, "How Acquired": "Given", "Acquisition Price": 0, "Loss Date": new Date("5/13/2001"), "Loss Reason": "Given away" },
+      { "Type": "Ferret", "Breed": "", "Name": "Klepty", "Acquisition Date": new Date("6/20/2000"), "Acquisition Age": 3, "How Acquired": "Given", "Acquisition Price": 0, "Loss Date": new Date("5/13/2001"), "Loss Reason": "Given away" },
+      { "Type": "Lizard", "Breed": "Double Crested Green Basilisk", "Name": "Dumbass", "Acquisition Date": new Date("9/13/2001"), "Acquisition Age": 0.5, "How Acquired": "Purchased", "Acquisition Price": 149.99, "Loss Date": new Date("1/28/2003"), "Loss Reason": "Died" },
+      { "Type": "Cat", "Breed": "Smoosh Face Tabby", "Name": "Clyde", "Acquisition Date": new Date("10/20/2002"), "Acquisition Age": 4, "How Acquired": "Adopted", "Acquisition Price": 120, "Loss Date": new Date("2/1/2003"), "Loss Reason": "Given back" },
+      { "Type": "Cat", "Breed": "Black Tabby", "Name": "Calysto", "Acquisition Date": new Date("10/20/2002"), "Acquisition Age": 4, "How Acquired": "Adopted", "Acquisition Price": 120, "Loss Date": new Date("2/1/2003"), "Loss Reason": "Given back" },
+      { "Type": "Bird", "Breed": "Eclectus", "Name": "Xanth", "Acquisition Date": new Date("4/13/2003"), "Acquisition Age": 1, "How Acquired": "Purchased", "Acquisition Price": 1099, "Loss Date": new Date("8/19/2004"), "Loss Reason": "Given away" },
+      { "Type": "Cat", "Breed": "Unknown", "Name": "Jaz", "Acquisition Date": new Date("7/13/2003"), "Acquisition Age": 3, "How Acquired": "Adopted", "Acquisition Price": 120, "Loss Date": new Date("9/9/2004"), "Loss Reason": "Put down due to IBD" },
+      { "Type": "Bird", "Breed": "Greenwing Macaw", "Name": "Trixy", "Acquisition Date": new Date("2/20/2005"), "Acquisition Age": 0.5, "How Acquired": "Purchased", "Acquisition Price": 1300, "Loss Date": new Date(""), "Loss Reason": "" },
+      { "Type": "Lizard", "Breed": "Madagascar Crested Gecko", "Name": "Leather", "Acquisition Date": new Date("11/3/2006"), "Acquisition Age": 1, "How Acquired": "Purchased", "Acquisition Price": 39.99, "Loss Date": new Date("4/23/2012"), "Loss Reason": "Black Widows" },
+      { "Type": "Lizard", "Breed": "Madagascar Crested Gecko", "Name": "Suede", "Acquisition Date": new Date("11/3/2006"), "Acquisition Age": 1, "How Acquired": "Purchased", "Acquisition Price": 0, "Loss Date": new Date("4/23/2012"), "Loss Reason": "Black Widows" },
+      { "Type": "Lizard", "Breed": "Madagascar Crested Gecko", "Name": "Tailless", "Acquisition Date": new Date("11/3/2006"), "Acquisition Age": 1, "How Acquired": "Purchased", "Acquisition Price": 0, "Loss Date": new Date("5/30/2012"), "Loss Reason": "Let go" },
+      { "Type": "Snake", "Breed": "Boa Constrictor", "Name": "Knot", "Acquisition Date": new Date("2/4/2007"), "Acquisition Age": 0.5, "How Acquired": "Purchased", "Acquisition Price": 89.99, "Loss Date": new Date("5/5/2012"), "Loss Reason": "Sold" },
+      { "Type": "Lizard", "Breed": "Australian Frilled Dragon", "Name": "Zeal", "Acquisition Date": new Date("10/5/2008"), "Acquisition Age": 1, "How Acquired": "Purchased", "Acquisition Price": 99.98, "Loss Date": new Date("4/23/2012"), "Loss Reason": "Black Widows" },
+      { "Type": "Cat", "Breed": "Silver Bengal", "Name": "Phoebe", "Acquisition Date": new Date("3/3/2010"), "Acquisition Age": 0.5, "How Acquired": "Purchased", "Acquisition Price": 500, "Loss Date": new Date("4/30/2012"), "Loss Reason": "Gave away" },
+      { "Type": "Snake", "Breed": "Ball Python", "Name": "Morningstar", "Acquisition Date": new Date("3/9/2010"), "Acquisition Age": 4, "How Acquired": "Purchased", "Acquisition Price": 129.99, "Loss Date": new Date("4/23/2012"), "Loss Reason": "Black Widows" },
+      { "Type": "Cat", "Breed": "[F1] Savannah", "Name": "Ragnarok", "Acquisition Date": new Date("9/13/2011"), "Acquisition Age": 1.5, "How Acquired": "Purchased", "Acquisition Price": 400, "Loss Date": new Date(""), "Loss Reason": "" }
+    ],
+    ViewModel:
+    {
+      Pets: ko.observable([])
+    },
+
+    calculateAggregates: function()
+    {
+      var aggregates = {};
+      var groupedValues = {};
+
+      for (var petIndex = 0; petIndex < this.Pets.length; petIndex++)
+      {
+        if (!groupedValues[this.Pets[petIndex].Type])
+          groupedValues[this.Pets[petIndex].Type] = {};
+
+        for (var property in this.Pets[petIndex])
+        {
+          if (typeof (this.Pets[petIndex][property]) === "number")
+          {
+            if (!groupedValues[this.Pets[petIndex].Type][property])
+              groupedValues[this.Pets[petIndex].Type][property] = [];
+
+            groupedValues[this.Pets[petIndex].Type][property].push(this.Pets[petIndex][property]);
+          }
+        }
+      }
+
+      for (var type in groupedValues)
+      {
+        aggregates[type] = {};
+
+        for (var property in groupedValues[type])
+        {
+          aggregates[type][property] = 0;
+
+          for (var valueIndex = 0; valueIndex < groupedValues[type][property].length; valueIndex++)
+            aggregates[type][property] += groupedValues[type][property][valueIndex];
+
+          aggregates[type][property] /= groupedValues[type][property].length;
+        }
+      }
+
+      return aggregates;
+    },
+
+    determineIfGroupable: function(property)
+    {
+      switch (property)
+      {
+        case "Name":
+        case "Acquisition Date":
+        case "Acquisition Price":
+        case "Loss Date":
+          return false;
+        default:
+          return true;
+      }
+    },
+
+    determineIfHidable: function(property)
+    {
+      if (property === "Name" || property === "Type")
+        return false;
+      else
+        return true;
+    },
+
+    determineIfSortable: function(property)
+    {
+      if (property === "Loss Reason")
+        return false;
+      else
+        return true;
+    },
+
+    getColumns: function()
+    {
+      var columns = [];
+
+      for (var property in this.Pets[0])
+      {
+        columns.push(
+        {
+          "Aggregate": typeof (this.Pets[0][property]) === "number" ? "Average" : "None",
+          "DataType": this.getDataType(this.Pets[0][property]),
+          "Header": property,
+          "IsFilterable": true,
+          "IsGroupable": this.determineIfGroupable(property),
+          "IsHidable": this.determineIfHidable(property),
+          "IsMovable": true,
+          "IsSortable": this.determineIfSortable(property),
+          "IsVisible": true,
+          "Name": property.replace(" ", "")
+        });
+      }
+
+      columns.push({ "Aggregate": "None", "DataType": "None", "Header": null, "IsFilterable": false, "IsGroupable": false, "IsHidable": false, "IsMovable": false, "IsSortable": false, "IsVisible": true, "Name": null });
+
+      return columns;
+    },
+
+    getDataType: function(value)
+    {
+      switch (typeof (value))
+      {
+        case "string":
+          return "String";
+        case "number":
+          return "Numeric";
+        default:
+          if (value.getDate)
+            return "Timestamp";
+          else
+            return "None";
+      }
+    },
+
+    getFilterValues: function()
+    {
+      var filterValues = {};
+
+      for (var property in this.Pets)
+      {
+        filterValues[property] = [];
+
+        for (var petIndex = 0; petIndex < this.Pets.length; petIndex++)
+        {
+          if (filterValues[property].indexOf(this.Pets[petIndex][property]) < 0)
+            filterValues[property].push(this.Pets[petIndex][property]);
+        }
+      }
+    },
+
+    getPagesOfData: function()
+    {
+      var pages = [];
+
+      for (var pageIndex = 0; pageIndex < this.Pets.length / 10; pageIndex++)
+      {
+        pages.push(
+        {
+          "Items": Setup.Pets.slice((pageIndex * 10), ((pageIndex + 1) * 10))
+        });
+      }
+
+      return pages;
+    }
+  };
+
+  // Setup some cached data
+  var AdapTableCache = { Instances: [] };
+  var AdapTableInstance = {};
+  AdapTableInstance.Layout = {};
+  AdapTableInstance.Layout.Columns = Setup.getColumns();
+  AdapTableInstance.Layout.Query = { "Filters": [], "Groups": ["Type"], "PageSize": 10, "PageIndex": 0, "Sort": "Acquisition Date", "SortDirection": null };
+  AdapTableInstance.Data = {};
+  AdapTableInstance.Data.Aggregates = Setup.calculateAggregates();
+  AdapTableInstance.Data.FilterValues = Setup.getFilterValues();
+  AdapTableInstance.Data.TotalItems = Setup.Pets.length;
+  AdapTableInstance.Data.Pages = Setup.getPagesOfData();
+  AdapTableCache.Instances.push(AdapTableInstance);
+  localStorage.setItem("AdapTable: " + document.location, JSON.stringify(AdapTableCache));
+
+  /****************************************************************************
+  * Cleanup after each test.
+  ****************************************************************************/
+  QUnit.testDone(function()
+  {
+    var tblAdapTable = $("#tblAdapTable");
+    tblAdapTable.AdapTable("destroy");
+    tblAdapTable.children("tbody").empty();
+    ko.cleanNode(tblAdapTable[0]);
+    localStorage.clear();
+    localStorage.setItem('AdapTable: ' + document.location, JSON.stringify(AdapTableCache));
+  });
+
+  QUnit.test("AdapTable Filtering: Initialization", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    var filterableColumns = AdapTableInstance.Layout.Columns.filter(function(value, index)
+    {
+      return value.IsFilterable;
+    });
+
+    // Act
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Assert
+    window.setTimeout(function()
+    {
+      assert.ok(AdapTable.Filtering);
+      
+      var adaptable = tblAdapTable.data("AdapTable");
+      assert.equal(adaptable.Filtering.Instance, adaptable);
+      assert.ok(!adaptable.Filtering.Column);
+      assert.equal($._data(tblAdapTable[0], "events").repaint.length, 1);
+
+      var topSection = tblAdapTable.prev();
+      var filterDiv = topSection.children("div.Filters");
+      assert.equal(filterDiv.length, 1);
+
+      assert.equal(filterDiv.children("button.Filter").length, 3);
+      assert.equal(filterDiv.children("button.Filter:first").text(), "First Name: All");
+      assert.equal(filterDiv.children("button.Filter:nth-child(2)").text(), "Last Name: All");
+      assert.equal(filterDiv.children("button.Filter:last").text(), "Email Address: All");
+
+      assert.equal(filterDiv.children("button.More").length, 1);
+      assert.equal(filterDiv.children("ol.More-Filters").length, 1);
+      assert.equal(filterDiv.find("ol.More-Filters > li").length, filterableColumns.length - 3);
+      assert.equal(filterDiv.find("ol.More-Filters > li > label").length, filterableColumns.length - 3);
+      assert.equal(filterDiv.find("ol.More-Filters > li > label > input[type='checkbox']").length, filterableColumns.length - 3);
+
+      assert.equal(filterDiv.children("input[type='search']").length, 1);
+      assert.equal(filterDiv.children("button.Search").length, 1);
+      assert.ok(filterDiv.find("button.Search > i").hasClass("fa-search"));
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: Initialization - No Search", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    // Act
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: false,
+      CanSort: false
+    });
+
+    // Assert
+    window.setTimeout(function()
+    {
+      var adaptable = tblAdapTable.data("AdapTable");
+      var topSection = tblAdapTable.prev();
+      var filterDiv = topSection.children("div.Filters");
+
+      assert.equal(filterDiv.children("input[type='search']").length, 0);
+      assert.equal(filterDiv.children("button.Search").length, 0);
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: addFilter", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      tblAdapTable.AdapTable("addFilter", "FirstName", "=", "John");
+
+      var layout = tblAdapTable.data("Layout");
+      var filterExists = layout.Query.Filters.filter(function(value, index)
+      {
+        if (value.Column === "FirstName" && value.Operator === "=" && value.Operand === "John")
+          return true;
+      });
+
+      assert.equal(filterExists.length, 1);
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: addFilter - IN", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      tblAdapTable.AdapTable("addFilter", "FirstName", "IN", "John, Mark");
+
+      var layout = tblAdapTable.data("Layout");
+      var filterExists = layout.Query.Filters.filter(function(value, index)
+      {
+        if (value.Column === "FirstName" && value.Operator === "IN" && value.Operand === "John, Mark")
+          return true;
+      });
+
+      assert.equal(filterExists.length, 1);
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: addFilter - LIKE", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      tblAdapTable.AdapTable("addFilter", "LastName", "LIKE", "%St%");
+
+      var layout = tblAdapTable.data("Layout");
+      var filterExists = layout.Query.Filters.filter(function(value, index)
+      {
+        if (value.Column === "LastName" && value.Operator === "LIKE" && value.Operand === "%St%")
+          return true;
+      });
+
+      assert.equal(filterExists.length, 1);
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: addFilter - Update", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      tblAdapTable.AdapTable("addFilter", "FirstName", "=", "John");
+      tblAdapTable.AdapTable("addFilter", "FirstName", "=", "Mark");
+
+      var layout = tblAdapTable.data("Layout");
+
+      assert.equal(layout.Query.Filters.length, 1);
+      assert.equal(layout.Query.Filters[0].Operand, "Mark");
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: addFilter - Duplicate", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      tblAdapTable.AdapTable("addFilter", "FirstName", "=", "John");
+      tblAdapTable.AdapTable("addFilter", "FirstName", "=", "John");
+
+      var layout = tblAdapTable.data("Layout");
+
+      assert.equal(layout.Query.Filters.length, 1);
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: addFilter - No Column", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      assert.throws(function()
+      {
+        tblAdapTable.AdapTable("addFilter", null, "IN", "1, 2, 3");
+      }, "Cannot create a filter: no column was specified.");
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: addFilter - No Operator", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      assert.throws(function()
+      {
+        tblAdapTable.AdapTable("addFilter", "FirstName", "", "1, 2, 3");
+      }, "Cannot create a filter: no operator was specified.");
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: addFilter - No Operand", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      assert.throws(function()
+      {
+        tblAdapTable.AdapTable("addFilter", "FirstName", "IN", null);
+      }, "Cannot create a filter: no operand was specified.");
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: removeFilter", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      tblAdapTable.AdapTable("addFilter", "FirstName", "=", "John");
+      tblAdapTable.AdapTable("removeFilter", "FirstName");
+
+      var layout = tblAdapTable.data("Layout");
+      var filterExists = layout.Query.Filters.filter(function(value, index)
+      {
+        if (value.Column === "FirstName" && value.Operator === "=" && value.Operand === "John")
+          return true;
+      });
+
+      assert.equal(filterExists.length, 0);
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: removeFilter - No Column Specified", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      assert.throws(function()
+      {
+        tblAdapTable.AdapTable("removeFilter", "");
+      }, "Cannot remove a filter: no column name was specified.");
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: Search Box", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      var topSection = tblAdapTable.prev();
+      var filterDiv = topSection.children("div.Filters");
+
+      var searchBox = filterDiv.children("input[type='search']");
+      var searchButton = filterDiv.children("button.Search");
+      
+      searchBox.val("Stegall");
+      searchButton.click();
+
+      var layout = tblAdapTable.data("Layout");
+      var filterExists = layout.Query.Filters.filter(function(value, index)
+      {
+        if (value.Column === "" && value.Operator === "LIKE" && value.Operand === "Stegall")
+          return true;
+      });
+
+      assert.equal(filterExists.length, 1);
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: Filter Button - Lookups", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      var firstNameColumn = AdapTableInstance.Layout.Columns[0];
+      var firstNameFilterValuesCount = AdapTableInstance.Data.FilterValues[firstNameColumn.Name].length;
+
+      filterButton = tblAdapTable.parent().find("section > div.Filters > button:first")
+        .click();
+
+      assert.equal($._data(filterButton[0], "events").click.length, 1);
+
+      var adaptable = tblAdapTable.data("AdapTable");
+      assert.ok(adaptable.Menu);
+      assert.equal(adaptable.Menu.find("form > ul").length, 1);
+      assert.equal(adaptable.Menu.find("ul > li").length, firstNameFilterValuesCount);
+      assert.equal(adaptable.Menu.find("ul > li > label").length, firstNameFilterValuesCount);
+      assert.equal(adaptable.Menu.find("ul > li > label > input[type='checkbox']").length, firstNameFilterValuesCount);
+
+      var firstLookupFilter = adaptable.Menu.find("ul > li:first > label > input[type='checkbox']");
+      firstLookupFilter.click();
+
+      var layout = tblAdapTable.data("Layout");
+      var filterExists = layout.Query.Filters.filter(function(value, index)
+      {
+        if (value.Column === "FirstName" && value.Operator === "IN" && value.Operand === "Bob")
+          return true;
+      });
+
+      assert.equal(filterExists.length, 1);
+
+      firstLookupFilter.click();
+      filterExists = layout.Query.Filters.filter(function(value, index)
+      {
+        if (value.Column === "FirstName" && value.Operator === "IN" && value.Operand === "Bob")
+          return true;
+      });
+
+      assert.equal(filterExists.length, 0);
+
+      waitForDependencies();
+    }, 1000);
+  });
+
+  QUnit.test("AdapTable Filtering: Other Filter Types", function(assert)
+  {
+    // Arrange
+    var waitForDependencies = assert.async();
+    var tblAdapTable = $("#tblAdapTable");
+
+    $("#tblAdapTable").AdapTable(
+    {
+      CanChangeView: false,
+      CanFilter: true,
+      CanGroup: false,
+      CanMoveColumns: false,
+      CanSearch: true,
+      CanSort: false
+    });
+
+    // Act & Assert
+    window.setTimeout(function()
+    {
+      var adaptable = tblAdapTable.data("AdapTable");
+      var filterDiv = tblAdapTable.parent().find("div.Filters");
+      var moreButton = filterDiv.children("button.More");
+      var HireDateIndex = 4;
+      var SalaryDateIndex = 5;
+
+      moreButton.click();
+
+      assert.equal(adaptable.Menu.children("ol.More-Filters:visible").length, 1);
+
+      adaptable.Menu.find("ol.More-Filters > li:nth-child(" + HireDateIndex + ") > label > input[type='checkbox']").click();
+      adaptable.Menu.find("ol.More-Filters > li:nth-child(" + SalaryDateIndex + ") > label > input[type='checkbox']").click();
+
+      assert.equal(filterDiv.children(":last").prop("tagName").toUpperCase(), "DIV");
+
+      var additionalFiltersDiv = filterDiv.children(":last");
+      assert.equal(additionalFiltersDiv.children().length, 2);
+
+      additionalFiltersDiv.find("button:first").click();
+
+      assert.equal(adaptable.Menu.find("form > div > label > [type='radio']").length, 2);
+      assert.equal(adaptable.Menu.find("form > div:first > label").text().substr(0, 15), "Within the last");
+      assert.equal(adaptable.Menu.find("form > div:nth-child(2) > label").text().substr(0, 7), "Between");
+      assert.equal(adaptable.Menu.find("form > div").length, 3);
+      assert.equal(adaptable.Menu.find("form > div > button").length, 2);
+      assert.equal(adaptable.Menu.find("form > div > button.Suggested").length, 1);
+      assert.throws(adaptable.Menu.find("form > div:last > button.Suggested").click, "No options are checked.");
+
+      adaptable.Menu.find("form > div:first > label:first > input[type='radio']").click();
+      adaptable.Menu.find("form > div:first > label:first > input[type='number']").val(10);
+      adaptable.Menu.find("form > div:first > label:first > select").val("Hours");
+      adaptable.Menu.find("form > div:last > button.Suggested").click();
+
+      var layout = tblAdapTable.data("Layout");
+      var filterExists = layout.Query.Filters.filter(function(value, index)
+      {
+        if (value.Column === "HireDate" && value.Operator === ">=")
+          return true;
+      });
+
+      assert.equal(filterExists.length, 1);
+
+      additionalFiltersDiv.find("button:last").click();
+
+      assert.equal(adaptable.Menu.find("form > input[type='number']").length, 1);
+      assert.equal(adaptable.Menu.find("form > div").length, 1);
+      assert.equal(adaptable.Menu.find("form > div > button").length, 2);
+      assert.equal(adaptable.Menu.find("form > div > button.Suggested").length, 1);
+
+      adaptable.Menu.find("form > input[type='number']").val("33333");
+      adaptable.Menu.find("form > div > button.Suggested").click();
+
+      filterExists = layout.Query.Filters.filter(function(value, index)
+      {
+        if (value.Column === "Salary" && value.Operator === "=" && value.Operand === "33333")
+          return true;
+      });
+
+      assert.equal(filterExists.length, 1);
+
+      waitForDependencies();
+    }, 1000);
+  });
+</script>

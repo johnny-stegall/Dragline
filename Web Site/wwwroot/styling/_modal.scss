@@ -1,0 +1,152 @@
+﻿/******************************************************************************
+* Modal dialog styles
+******************************************************************************/
+#divBackdrop
+{
+  background: $color-gray-lighter;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  transition: all 0.3s;
+  visibility: hidden;
+  width: 100%;
+  z-index: 9998;
+}
+
+#dlgModal
+{
+	backface-visibility: hidden;
+  background: #FFF;
+  border: 1px solid $color-borders;
+  border-radius: $control-border-radius;
+  box-shadow: 0 0 10px 0 $color-gray-lighter;
+  height: auto;
+  left: 50%;
+  max-width: 800px;
+  min-height: 150px;
+  min-width: 320px;
+  opacity: 0;
+  position: fixed;
+  top: 50%;
+	transform: translate(-50%, -50%);
+  transition: all 0.3s ease-out;
+  visibility: hidden;
+  width: 50%;
+  z-index: 9999;
+}
+
+#dlgModal.Visible
+{
+  opacity: 1;
+  visibility: visible;
+}
+
+#dlgModal.Visible ~ #divBackdrop
+{
+  opacity: 0.75;
+  visibility: visible;
+}
+
+/******************************************************************************
+* Modal content styles
+******************************************************************************/
+#dlgModal > header
+{
+  border-bottom: 1px solid $color-borders;
+  padding: 0.75rem;
+}
+
+#dlgModal > header > span
+{
+  font-size: 1.5rem;
+  font-weight: normal;
+  line-height: $line-height;
+  margin: 0.75rem 1em 0 0;
+}
+
+#dlgModal > header > button
+{
+  background: transparent;
+  border: 0 none;
+  font-size: 1.5rem;
+  float: right;
+  height: 1.5em;
+  margin-top: -0.5rem;
+  opacity: 0.4;
+  outline: 0 none;
+}
+
+#dlgModal > section
+{
+  padding: 0.75rem;
+}
+
+/******************************************************************************
+* Modal content styles
+******************************************************************************/
+#dlgModal.Fade
+{
+}
+
+#dlgModal.FadeAndScale
+{
+  transform: translate(-50%, -50%) scale(0);
+}
+
+#dlgModal.FadeAndScale.Visible
+{
+  transform: translate(-50%, -50%) scale(1);
+}
+
+#dlgModal.Newspaper
+{
+  transform: translate(-50%, -50%) scale(0) rotate(720deg);
+}
+
+#dlgModal.Newspaper.Visible
+{
+  transform: translate(-50%, -50%) scale(1) rotate(0deg);
+}
+
+#dlgModal.SlideFromBottom
+{
+  transform: translate(-50%, 150%);
+}
+
+#dlgModal.SlideFromLeft
+{
+  transform: translate(-150%, -50%);
+}
+
+#dlgModal.SlideFromRight
+{
+  transform: translate(150%, -50%);
+}
+
+#dlgModal.SlideFromTop
+{
+  transform: translate(-50%, -150%);
+}
+
+#dlgModal.SlideFromBottom.Visible,
+#dlgModal.SlideFromLeft.Visible,
+#dlgModal.SlideFromRight.Visible,
+#dlgModal.SlideFromTop.Visible
+{
+	transform: translate(-50%, -50%);
+}
+
+/******************************************************************************
+* Mobile devices (typically phones)
+******************************************************************************/
+@media screen and (max-width: 767px)
+{
+  #dlgModal
+  {
+    max-width: 720px;
+    min-width: 300px;
+    width: 95%;
+  }
+}

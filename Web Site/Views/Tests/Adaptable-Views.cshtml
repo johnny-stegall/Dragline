@@ -1,0 +1,57 @@
+﻿@{
+  ViewBag.Title = "AdapTable Unit Tests";
+}
+
+@section Styles
+{
+  <link type="text/css" rel="stylesheet" href="~/css/adaptable.css" />
+  <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.15.0.css" />
+}
+
+@section Scripts
+{
+  <script type="text/javascript" src="//code.jquery.com/qunit/qunit-1.16.0.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/blanket.js/1.1.4/blanket.min.js"></script>
+  <script type="text/javascript" src="~/scripts/jQuery/adaptable.js"></script>
+  <script type="text/javascript" src="~/scripts/jQuery/adaptable/views.js" data-cover></script>
+}
+
+<div id="qunit"></div>
+
+<table id="tblAdapTable" class="Hot-Tracking">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Breed</th>
+      <th>Name</th>
+      <th>How Acquired</th>
+      <th>Acquisition Date</th>
+      <th>Acquisition Age</th>
+      <th>Acquisition Price</th>
+      <th>Loss Date</th>
+      <th>Loss Reason</th>
+      <th>
+        <i class="fa fa-cog" style="cursor: pointer;" />
+      </th>
+    </tr>
+  </thead>
+  <tbody data-bind="foreach: Pets">
+    <tr>
+      <td data-bind="text: Type"></td>
+      <td data-bind="text: Breed"></td>
+      <td data-bind="text: Name"></td>
+      <td data-bind="text: $data['How Acquired']"></td>
+      <td class="Text-Right" data-bind="text: $data['Acquisition Date'].toDateString()"></td>
+      <td class="Text-Right" data-bind="text: $data['Acquisition Age']"></td>
+      <td class="Text-Right" data-bind="text: $data['Acquisition Price']"></td>
+      <td class="Text-Right" data-bind="text: $data['Loss Date'].toDateString()"></td>
+      <td data-bind="text: $data['Loss Reason']"></td>
+      <td>
+        <i class="fa fa-cog" style="cursor: pointer;" />
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+</script>

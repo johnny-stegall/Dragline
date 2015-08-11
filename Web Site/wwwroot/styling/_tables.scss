@@ -1,0 +1,99 @@
+﻿/******************************************************************************
+* Table styling
+******************************************************************************/
+table
+{
+  background-color: transparent;
+  margin-bottom: 1.5rem;
+  max-width: 100%;
+  width: 100%;
+
+  thead > tr > th,
+  tbody > tr > td,
+  tfoot > tr > td
+  {
+    border-top: 1px solid $color-borders;
+    line-height: $line-height;
+    padding: $input-padding-y $input-padding-x;
+  }
+
+  caption + thead > tr:first-child > th,
+  colgroup + thead > tr:first-child > th,
+  caption + thead > tr:first-child > td,
+  colgroup + thead > tr:first-child > td
+  {
+    border-top: 0;
+  }
+
+  & > tr
+  {
+    display: none; // Not semantic, should be avoided
+  }
+
+  thead > tr > th
+  {
+    border-bottom: 2px solid $color-borders;
+    text-align: left;
+    vertical-align: bottom;
+  }
+
+  tbody
+  {
+    tr > td.NoPad
+    {
+      padding: 0;
+    }
+
+    tr.Active > td
+    {
+      background-color: $control-background-color;
+    }
+
+    tr.Risky > td
+    {
+      background-color: $color-red-lightest;
+    }
+    
+    tr.Info > td
+    {
+      background-color: $color-blue-lightest;
+    }
+
+    tr.Success > td
+    {
+      background-color: $color-green-lightest;
+    }
+
+    tr.Warning > td
+    {
+      background-color: $color-yellow-lightest;
+    }
+  }
+}
+
+table.Bordered
+{
+  border: 1px solid $color-borders;
+
+  thead > tr > th,
+  tbody > tr > td,
+  tfoot > tr > td
+  {
+    border: 1px solid $color-borders;
+  }
+
+  thead > tr > th
+  {
+    border-bottom-width: 2px;
+  }
+}
+
+table.Hot-Tracking > tbody > tr:hover > td
+{
+  background-color: $control-background-color;
+}
+
+table.Striped > tbody > tr:nth-child(odd) > td
+{
+  background-color: $control-background-color;
+}

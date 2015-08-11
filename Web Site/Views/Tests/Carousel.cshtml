@@ -1,0 +1,301 @@
+﻿@{
+    ViewBag.Title = "Carousel Unit Tests";
+}
+
+@section Styles
+{
+  <link rel="stylesheet" href="~/css/dragline/carousel.css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/qunit/1.16.0/qunit.min.css" />
+}
+
+@section Scripts
+{
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/qunit/1.16.0/qunit.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/blanket.js/1.1.4/blanket.min.js"></script>
+  <script type="text/javascript" src="~/scripts/dragline/jQuery/carousel.js"></script>
+}
+
+<div id="qunit"></div>
+
+<div id="divCarousel" style="width: 400px; height: 400px;">
+  <img src="~/images/memes/challenge-accepted.jpg" />
+  <img src="~/images/memes/expecting-batmobile.jpg" />
+  <img src="~/images/memes/grumpy-cat.jpg" />
+  <img src="~/images/memes/jesus-facepalm.jpg" />
+  <img src="~/images/memes/one-does-not-simply-fill-binders-with-women.jpg" />
+  <img src="~/images/memes/test-in-production.jpg" />
+  <img src="~/images/memes/what-if-i-told-you.jpg" />
+</div>
+
+<script type="text/javascript">
+  /****************************************************************************
+  * Cleanup after each test.
+  ****************************************************************************/
+  QUnit.testDone(function()
+  {
+    var divCarousel = $("#divCarousel");
+    if (divCarousel.data("Carousel"))
+      divCarousel.Carousel("destroy");
+  });
+
+  QUnit.test("Constructor", function(assert)
+  {
+    // Arrange
+    var waitForImage = assert.async();
+    var divCarousel = $("#divCarousel");
+    var firstSeat = divCarousel.children().first();
+
+    // Act
+    divCarousel.Carousel();
+
+    // Assert
+    assert.ok(divCarousel.data("Carousel").Timer > 0);
+    assert.ok(divCarousel.hasClass("Carousel"));
+    assert.ok(divCarousel.children().hasClass("Seat"));
+    assert.ok(divCarousel.children().hasClass("Right"));
+    assert.ok(firstSeat.hasClass("Active"));
+    assert.ok($._data(divCarousel[0], "events"));
+
+    $(document).ready(function()
+    {
+      assert.equal(divCarousel.height(), firstSeat.height());
+      assert.equal(divCarousel.width(), firstSeat.width());
+      waitForImage();
+    });
+  });
+
+  QUnit.test("Show Indicators", function(assert)
+  {
+    // Arrange
+    var divCarousel = $("#divCarousel");
+
+    // Act
+    divCarousel.Carousel({ ShowIndicators: true });
+
+    // Assert
+    assert.equal(divCarousel.children("ol").length, 1);
+    assert.equal(divCarousel.find("ol > li").length, divCarousel.data("Carousel").Seats.length);
+    assert.ok(divCarousel.find("ol > li").first().hasClass("Active"));
+  });
+
+  QUnit.test("Show Next/Previous", function(assert)
+  {
+    // Arrange
+    var divCarousel = $("#divCarousel");
+
+    // Act
+    divCarousel.Carousel({ ShowNextPrevious: true });
+
+    // Assert
+    assert.equal(divCarousel.children("a.Left").length, 1);
+    assert.equal(divCarousel.children("a.Left").attr("href"), "javascript:void(0);" + divCarousel.attr("id"));
+    assert.equal(divCarousel.find("a.Left > i").length, 1);
+    assert.ok(divCarousel.find("a.Left > i").hasClass("fa-chevron-left"));
+    assert.equal(divCarousel.children("a.Right").length, 1);
+    assert.equal(divCarousel.children("a.Right").attr("href"), "javascript:void(0);" + divCarousel.attr("id"));
+    assert.equal(divCarousel.find("a.Right > i").length, 1);
+    assert.ok(divCarousel.find("a.Right > i").hasClass("fa-chevron-right"));
+  });
+
+  QUnit.test("Slide Left", function(assert)
+  {
+    // Arrange
+    var divCarousel = $("#divCarousel");
+
+    // Act
+    divCarousel.Carousel(
+    {
+      Interval: 10000,
+      PauseOnHover: false,
+      ShowIndicators: false,
+      ShowNextPrevious: true,
+      Wrap: false
+    });
+
+    // Assert
+    assert.ok(divCarousel.hasClass("Carousel"));
+
+    var firstSeat = divCarousel.children().first();
+    assert.ok(firstSeat.hasClass("Active"));
+    assert.ok(firstSeat.height() > 0);
+    assert.ok(firstSeat.width() > 0);
+  });
+
+  QUnit.test("Non-wrapping", function(assert)
+  {
+    // Arrange
+    var waitForRotation = assert.async();
+    var divCarousel = $("#divCarousel");
+    divCarousel.Carousel({ Wrap: false });
+    var lastSeatIndex;
+
+    // Act
+    divCarousel.Carousel("rotate", "prev", function()
+    {
+      lastSeatIndex = divCarousel.Carousel("getSeatIndex");
+      assert.equal(lastSeatIndex, 0);
+      waitForRotation();
+    });
+
+    waitForRotation = assert.async();
+    divCarousel.Carousel("rotate", 6, function()
+    {
+      lastSeatIndex = divCarousel.Carousel("getSeatIndex");
+      waitForRotation();
+
+      waitForRotation = assert.async();
+      divCarousel.Carousel("rotate", "next", function()
+      {
+        // Assert
+        assert.equal(lastSeatIndex, divCarousel.data("Carousel").Seats.length - 1);
+        assert.equal(divCarousel.Carousel("getSeatIndex"), lastSeatIndex);
+
+        waitForRotation();
+      });
+    });
+  });
+
+  QUnit.test("Destructor", function(assert)
+  {
+    // Arrange
+    var divCarousel = $("#divCarousel");
+    divCarousel.Carousel();
+
+    // Act
+    divCarousel.Carousel("destroy");
+
+    // Assert
+    assert.ok(!divCarousel.data("Carousel"));
+    assert.ok(!divCarousel.hasClass("Carousel"));
+    assert.equal($._data(divCarousel[0], "events"), null);
+    assert.equal(divCarousel.children("a").length, 0);
+    assert.equal(divCarousel.children("ol").length, 0);
+    assert.ok(!divCarousel.children().hasClass("Seat"));
+    assert.ok(!divCarousel.children().hasClass("Active"));
+    assert.ok(!divCarousel.children().hasClass("Left"));
+    assert.ok(!divCarousel.children().hasClass("Right"));
+    assert.ok(divCarousel.children("header").each(function()
+    {
+      return typeof (this.onmouseover) === "undefined" || typeof (this.onmouseout) === "undefined";
+    }));
+  });
+
+  QUnit.test("Constructor Without ID", function(assert)
+  {
+    // Arrange
+    var divCarousel = $("div.Carousel");
+
+    // Act & Assert
+    assert.throws(divCarousel.Carousel, "Carousels require the ID attribute.")
+  });
+
+  QUnit.test("getSeatIndex()", function(assert)
+  {
+    // Arrange
+    var divCarousel = $("#divCarousel");
+    divCarousel.Carousel();
+
+    // Act
+    var activeSeatIndex = divCarousel.Carousel("getSeatIndex");
+    var secondSeatIndex = divCarousel.Carousel("getSeatIndex", divCarousel.children(".Seat:nth-Child(2)"));
+
+    // Assert
+    assert.equal(activeSeatIndex, 0);
+    assert.equal(secondSeatIndex, 1);
+  });
+
+  QUnit.test("pauseRotation()", function(assert)
+  {
+    // Arrange
+    var divCarousel = $("#divCarousel");
+    divCarousel.Carousel();
+
+    // Act
+    divCarousel.Carousel("pauseRotation");
+
+    // Assert
+    assert.ok(divCarousel.data("Carousel").Timer == null);
+  });
+
+  QUnit.test("resumeRotation()", function(assert)
+  {
+    // Arrange
+    var divCarousel = $("#divCarousel");
+    divCarousel.Carousel();
+
+    // Act
+    divCarousel.Carousel("resumeRotation");
+
+    // Assert
+    assert.ok(divCarousel.data("Carousel").Timer > 0);
+  });
+
+  QUnit.test("rotate()", function(assert)
+  {
+    // Arrange
+    var waitForRotation = [];
+    var waitForAllRotations = assert.async();
+    var rotateParameters = ["neXT", "next", "right", "RiGHT", "+1", "left", "Left", "-1", "back", "BaCK", "prev", "PREV", "previous", "PREVious", 3, 1, 5];
+    var waitForSliding = assert.async();
+    var divCarousel = $("#divCarousel");
+    var activeIndices = [];
+    var oldIndices = [];
+    divCarousel.Carousel();
+
+    for (var parameterIndex = 0; parameterIndex < rotateParameters.length; parameterIndex++)
+      waitForRotation.push(assert.async());
+
+    // Act
+    executeRotation(divCarousel, 0, waitForRotation, rotateParameters, oldIndices, activeIndices);
+
+    window.setTimeout(function()
+    {
+      // Assert
+      for (var parameterIndex = 0; parameterIndex < 5; parameterIndex++)
+        assert.equal(oldIndices[parameterIndex] + 1, activeIndices[parameterIndex]);
+
+      for (var parameterIndex = 5; parameterIndex < rotateParameters.length - 3; parameterIndex++)
+      {
+        if (oldIndices[parameterIndex] === 0)
+          assert.equal(6, activeIndices[parameterIndex]);
+        else
+          assert.equal(oldIndices[parameterIndex] - 1, activeIndices[parameterIndex]);
+      }
+
+      assert.equal(activeIndices[rotateParameters.length - 3], 3);
+      assert.equal(activeIndices[rotateParameters.length - 2], 1);
+      assert.equal(activeIndices[rotateParameters.length - 1], 5);
+
+      assert.throws(function()
+      {
+        divCarousel.Carousel("rotate");
+      }, "The next seat is required.");
+
+      assert.throws(function()
+      {
+        divCarousel.Carousel("rotate", "invalid");
+      }, "Invalid argument for nextSeat: invalid.");
+
+      waitForAllRotations();
+    }, rotateParameters.length * 700);
+  });
+
+  /****************************************************************************
+  * Recursive function that executes each rotation sequentially despite being
+  * asynchronous.
+  ****************************************************************************/
+  function executeRotation(divCarousel, parameterIndex, waitForRotation, rotateParameters, oldIndices, activeIndices)
+  {
+    oldIndices.push(divCarousel.Carousel("getSeatIndex"));
+
+    divCarousel.Carousel("rotate", rotateParameters[parameterIndex], function()
+    {
+      activeIndices.push(divCarousel.Carousel("getSeatIndex"));
+      waitForRotation[parameterIndex]();
+
+      parameterIndex++;
+      if (parameterIndex < rotateParameters.length)
+        executeRotation(divCarousel, parameterIndex, waitForRotation, rotateParameters, oldIndices, activeIndices);
+    });
+  }
+</script>

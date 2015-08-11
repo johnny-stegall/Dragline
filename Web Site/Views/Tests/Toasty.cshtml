@@ -1,0 +1,308 @@
+﻿@{
+  ViewBag.Title = "Toasty Unit Tests";
+}
+
+@section Styles
+{
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/qunit/1.16.0/qunit.min.css" />
+}
+
+@section Scripts
+{
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/qunit/1.16.0/qunit.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/blanket.js/1.1.4/blanket.min.js"></script>
+  <script src="~/scripts/dragline/jQuery/toasty.js" data-cover></script>
+}
+
+<div id="qunit"></div>
+
+<div id="divToasty"></div>
+
+<script type="text/javascript">
+  QUnit.test("Constructor", function(assert)
+  {
+    // Arrange
+    var divToasty = $("#divToasty");
+
+    // Act
+    divToasty.Toasty();
+
+    // Assert
+    assert.ok(divToasty.hasClass("Toasty"));
+  });
+
+  QUnit.test("Default Toast", function(assert)
+  {
+    // Arrange
+    var divToasty = $("#divToasty");
+    var title = "Default Toast";
+    var text = "This is a toast alert. It will disappear after 5 seconds.";
+    divToasty.Toasty();
+
+    // Act
+    $.Toasty.add({ Title: title, Text: text });
+
+    // Assert
+    assert.equal(divToasty.children().last().prop("tagName").toUpperCase(), "DIV");
+    assert.equal(divToasty.children().last().attr("id").substr(0, 7), "Toasty-");
+    assert.equal(divToasty.children().last().css("display"), "block");
+    assert.ok(divToasty.children().last().children().first().prop("tagName").toUpperCase(), "LARGE");
+    assert.ok(divToasty.children().last().children().first().text(), title);
+    assert.ok(divToasty.children().last().children().last().prop("tagName").toUpperCase(), "P");
+    assert.ok(divToasty.children().last().children().last().text(), text);
+    assert.equal(divToasty.find("button").length, 0);
+  });
+
+  QUnit.test("Dismissable Toast", function(assert)
+  {
+    // Arrange
+    var waitForRemoval = assert.async();
+    var divToasty = $("#divToasty");
+    divToasty.Toasty();
+
+    // Act
+    var alertId = $.Toasty.add({ Title: "Dismissable Toast", Text: "This is a toast alert. It will disappear after 5 seconds.", Dismissable: true });
+    divToasty.find("i.fa-times").click();
+
+    // Assert
+    assert.equal(divToasty.find("button").length, 1);
+    window.setTimeout(function()
+    {
+      assert.equal(divToasty.find("#Toasty-" + alertId).length, 0);
+      waitForRemoval();
+    }, 2500);
+  });
+
+  QUnit.test("Error Toast", function(assert)
+  {
+    // Arrange
+    var divToasty = $("#divToasty");
+    divToasty.Toasty();
+
+    // Act
+    $.Toasty.add({ Title: "Error", Text: "This is a toast alert. It will disappear after 5 seconds.", Type: "Error" });
+
+    // Assert
+    assert.ok(divToasty.children().last().hasClass("Error"));
+  });
+
+  QUnit.test("Image Toast", function(assert)
+  {
+    // Arrange
+    var divToasty = $("#divToasty");
+    var imageUrl = "http://findicons.com/files/icons/1036/function/48/warning.png"
+    divToasty.Toasty();
+
+    // Act
+    $.Toasty.add({ Title: "Image Toast", Text: "This is a toast alert. It will disappear after 5 seconds.", ImageUrl: imageUrl });
+
+    // Assert
+    assert.equal(divToasty.children().last().children("img").length, 1);
+    assert.equal(divToasty.children().last().children("img").attr("src"), imageUrl);
+  });
+
+  QUnit.test("Information Toast", function(assert)
+  {
+    // Arrange
+    var divToasty = $("#divToasty");
+    divToasty.Toasty();
+
+    // Act
+    $.Toasty.add({ Title: "Information", Text: "This is a toast alert. It will disappear after 5 seconds.", Type: "Information" });
+
+    // Assert
+    assert.ok(divToasty.children().last().hasClass("Information"));
+  });
+
+  QUnit.test("Light Toast", function(assert)
+  {
+    // Arrange
+    var divToasty = $("#divToasty");
+    divToasty.Toasty();
+
+    // Act
+    $.Toasty.add({ Title: "Light", Text: "This is a toast alert. It will disappear after 5 seconds.", Type: "Light" });
+
+    // Assert
+    assert.ok(divToasty.children().last().hasClass("Light"));
+  });
+
+  QUnit.test("Remove All Toasts", function(assert)
+  {
+    // Arrange
+    var divToasty = $("#divToasty");
+    var newToast = assert.async();
+    var waitForRemoval = assert.async();
+
+    divToasty.Toasty();
+
+    $.Toasty.add({ Title: "Toast", Text: "This is a toast alert. It will disappear after 5 seconds." });
+    $.Toasty.add({ Title: "Toast", Text: "This is a toast alert. It will disappear after 5 seconds." });
+    $.Toasty.add({ Title: "Toast", Text: "This is a toast alert. It will disappear after 5 seconds." });
+
+    window.setTimeout(function()
+    {
+      newToast();
+
+      // Act
+      $.Toasty.removeAll();
+
+      // Assert
+      window.setTimeout(function()
+      {
+        assert.equal(divToasty.css("display"), "none");
+
+        waitForRemoval();
+      }, 1500);
+    }, 2000);
+  });
+
+  QUnit.test("Sticky Toast", function(assert)
+  {
+    // Arrange
+    var divToasty = $("#divToasty");
+    divToasty.Toasty();
+    var moreThan5Seconds = assert.async();
+
+    // Act
+    var toastId = $.Toasty.add({ Title: "Sticky Toast", Text: "This is a toast alert. It will not disappear after 5 seconds.", Sticky: true });
+
+    // Assert
+    window.setTimeout(function()
+    {
+      assert.equal($("#Toasty-" + toastId).length, 1);
+
+      moreThan5Seconds();
+    }, 7000);
+  });
+
+  QUnit.test("Success Toast", function(assert)
+  {
+    // Arrange
+    var divToasty = $("#divToasty");
+    divToasty.Toasty();
+
+    // Act
+    $.Toasty.add({ Title: "Success", Text: "This is a toast alert. It will disappear after 5 seconds.", Type: "Success" });
+
+    // Assert
+    assert.ok(divToasty.children().last().hasClass("Success"));
+  });
+
+  QUnit.test("Toast Removal", function(assert)
+  {
+    // Arrange
+    var divToasty = $("#divToasty");
+    var title = "Removal Toast";
+    var waitForRemoval = assert.async();
+    var newToast = assert.async();
+    var waitForToast = assert.async();
+
+    divToasty.Toasty();
+
+    // Remove all toasts before starting the test
+    $.Toasty.removeAll();
+    window.setTimeout(function()
+    {
+      waitForRemoval();
+
+      var toastId = $.Toasty.add({ Title: title, Text: "This is a toast alert. It will disappear after 5 seconds." });
+      window.setTimeout(function()
+      {
+        newToast();
+
+        // Act
+        $.Toasty.remove(toastId);
+
+        // Assert
+        window.setTimeout(function()
+        {
+          assert.equal($("#Toasty-" + toastId).length, 0);
+
+          waitForToast();
+        }, 1500);
+      }, 1000);
+    }, 1500);
+  });
+
+  QUnit.test("Warning Toast", function(assert)
+  {
+    // Arrange
+    var divToasty = $("#divToasty");
+    divToasty.Toasty();
+
+    // Act
+    $.Toasty.add({ Title: "Warning", Text: "This is a toast alert. It will disappear after 5 seconds.", Type: "Warning" });
+
+    // Assert
+    assert.ok(divToasty.children().last().hasClass("Warning"));
+  });
+
+  QUnit.test("Limited Toasts", function(assert)
+  {
+    // Arrange
+    var divToasty = $("#divToasty");
+    divToasty
+      .empty()
+      .Toasty()
+      .Toasty("removeAll");
+
+    // Act
+    for (var toastIndex = 0; toastIndex < 10; toastIndex++)
+      $.Toasty.add({ Title: "Limit 3", Text: "This toast alert won't show up if there are already 3 other alerts.", MaxMessages: 3 });
+
+    // Assert
+    assert.equal(divToasty.children(":visible").length, 3);
+  });
+
+  QUnit.test("Toast With Message Only", function(assert)
+  {
+    // Arrange
+    var text = "This toast has no title.";
+    var divToasty = $("#divToasty");
+    divToasty.Toasty();
+
+    // Act
+    $.Toasty.add(text);
+    
+    // Assert
+    assert.ok(divToasty.children().last().children().last().text(), text);
+  });
+
+  QUnit.test("Toast With CssClass", function(assert)
+  {
+    // Arrange
+    var cssClass = "Something";
+    var divToasty = $("#divToasty");
+    divToasty.Toasty();
+
+    // Act
+    $.Toasty.add({ Text: "Blah blah blah", CssClass: cssClass });
+
+    // Assert
+    assert.ok(divToasty.children().last().hasClass(cssClass));
+  });
+
+  QUnit.test("Toast Without Parameters", function(assert)
+  {
+    // Arrange
+    var divToasty = $("#divToasty");
+    divToasty.Toasty();
+
+    // Act & Assert
+    assert.throws($.Toasty.add, "No message parameters supplied.");
+  });
+
+  QUnit.test("Toast With Type & CssClass Parameters", function(assert)
+  {
+    // Arrange
+    var divToasty = $("#divToasty");
+    divToasty.Toasty();
+
+    // Act & Assert
+    assert.throws(function()
+    {
+      $.Toasty.add({ Text: "Fail toast.", CssClass: "Something", Type: "Warning" });
+    }, "You can only supply the Type parameter or CssClass parameter, not both.");
+  });
+</script>
