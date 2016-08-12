@@ -1,0 +1,1489 @@
+﻿
+@{
+  ViewBag.Title = "Components";
+}
+
+<dragline-index class="Width-25" offset="60"></dragline-index>
+
+<!--
+  // TODO: Work on AdapTable
+  // TODO: Work on Metaform
+  // TODO: Move CSS into template/string
+  // TODO: Convert all qUnit tests into mocha/chutzpah tests
+-->
+<div class="Width-75">
+  <h1>Components</h1>
+
+  <article>
+    <h2 id="Accordions">Accordions</h2>
+
+    <p>
+      Accordions are used to save screen real estate by showing related content
+      on the same page without showing it all at the same time. They should be
+      used when content can be displayed in steps, such as registration where
+      one step must be completed before moving on to another step. Rarely should
+      more than a one accordion be placed on a screen.
+    </p>
+
+    <p>
+      Accordions expect pairs of <code>&lt;header&gt;</code> and
+      <code>&lt;section&gt;</code> child elements that make up the "keys" of
+      the accordion.
+    </p>
+
+    <dragline-accordion>
+      <header>Step 1: Identification</header>
+      <section>
+        <div class="Form-Group">
+          <label>First Name:</label>
+          <input type="text" />
+        </div>
+
+        <div class="Form-Group">
+          <label>Last Name:</label>
+          <input type="text" />
+        </div>
+      </section>
+      <header>Step 2: Shipping Address</header>
+      <section>
+        <div class="Form-Group">
+          <label>Street Address:</label>
+          <input type="text" />
+        </div>
+
+        <div class="Form-Group">
+          <label>Apartment/Suite:</label>
+          <input type="text" />
+        </div>
+
+        <div class="Form-Group">
+          <label>City:</label>
+          <input type="text" />
+        </div>
+
+        <div class="Form-Group">
+          <label>State:</label>
+          <input type="text" maxlength="2" />
+        </div>
+
+        <div class="Form-Group">
+          <label>ZIP Code:</label>
+          <input type="text" />
+        </div>
+      </section>
+      <header>Step 3: Billing Address</header>
+      <section>
+        <div class="Form-Group">
+          <label>
+            Same as shipping address
+            <input type="checkbox" />
+          </label>
+        </div>
+
+        <div class="Form-Group">
+          <label>Street Address:</label>
+          <input type="text" />
+        </div>
+
+        <div class="Form-Group">
+          <label>Apartment/Suite:</label>
+          <input type="text" />
+        </div>
+
+        <div class="Form-Group">
+          <label>City:</label>
+          <input type="text" />
+        </div>
+
+        <div class="Form-Group">
+          <label>State:</label>
+          <input type="text" maxlength="2" />
+        </div>
+
+        <div class="Form-Group">
+          <label>ZIP Code:</label>
+          <input type="text" />
+        </div>
+      </section>
+      <header>Step 4: Payment</header>
+      <section>
+        <div class="Form-Group">
+          <label>Credit Card Number:</label>
+          <input type="text" />
+        </div>
+
+        <div class="Form-Group">
+          <label>Expiration:</label>
+          <input type="text" />
+        </div>
+
+        <div class="Form-Group">
+          <label>CVV2:</label>
+          <input type="number" min="0" max="9999" step="1" />
+        </div>
+
+      </section>
+      <header>Step 5: Notes</header>
+      <section>
+        <div class="Form-Group">
+          <label>Notes:</label>
+          <textarea></textarea>
+        </div>
+      </section>
+    </dragline-accordion>
+
+    <h3 id="AccordionAttributes">Custom Attributes</h3>
+
+    <p>
+      Accordions support the following custom attributes:
+    </p>
+
+    <ul>
+      <li>
+        <code>collapsible</code> - A boolean attribute that when present specifies the accordion can be
+        completely collapsed.
+
+        <ul>
+          <li>
+            <input type="checkbox" id="chkAccordion-Collapsible" data-attribute="collapsible" />
+            <label for="chkAccordion-Collapsible">
+              Collapsible
+            </label>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <code>expanded</code> - A boolean attribute applied to any
+        <code>&lt;header&gt;</code> element that specifies that section should
+        be expanded.
+      </li>
+      <li>
+        <code>orientation</code> - Specifies the orientation of the
+        accordion. Supported values are "vertical" and "horizontal"; the
+        default is "vertical".
+
+        <ul>
+          <li>
+            <select id="ddlAccordion-Orientation" data-attribute="orientation">
+              <option value="horizontal">Horizontal</option>
+              <option value="vertical" selected>Vertical</option>
+            </select>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <code>toggle</code> - Specifies what event toggles an accordion
+        key. Supports "click" and "hover"; the default is "click".
+
+        <ul>
+          <li>
+            <select id="ddlAccordion-Toggle" data-attribute="toggle">
+              <option value="click" selected>Click</option>
+              <option value="hover">Hover</option>
+            </select>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </article>
+
+  <article>
+    <h2 id="Badges">Badges</h2>
+
+    <p>
+      Badges provide quick visual identification for numeric values such as
+      tallies. They should only be used for whole numbers and are best used
+      for:
+    </p>
+
+    <ul>
+      <li>After the name or label of a quantifiable thing.</li>
+      <li>Notifying the user of unread messages or alerts.</li>
+      <li>Unambiguously - they should be used singly, after a single item name.</li>
+    </ul>
+
+    <p>
+      When a badge is empty - such as no unread items - badges will simply collapse
+      (via CSS's <code>:empty</code> selector) if you leave it empty instead of
+      displaying 0.
+    </p>
+
+    <i class="fa fa-bell fa-2x"></i>
+    <dragline-badge>13</dragline-badge>
+  </article>
+
+  <article>
+    <h2 id="Breadcrumbs">Breadcrumbs</h2>
+
+    <p>
+      Breadcrumbs indicate the current page's location within a navigational
+      hierarchy. Breadcrumbs should only be used on sites with larger and more
+      complex sitemaps with more than three levels deep of hierarchical
+      content. Separators are added automatically using CSS's
+      <code>:before</code> and <code>:after</code> selectors.
+    </p>
+
+    <p>
+      Breadcrumbs expect <code>&lt;breadcrumb-item&gt;</code> elements for each navigation
+      hierarchy.
+    </p>
+
+    <dragline-breadcrumb>
+      <breadcrumb-item>Home</breadcrumb-item>
+      <breadcrumb-item>Components</breadcrumb-item>
+    </dragline-breadcrumb>
+  </article>
+
+  <article>
+    <h2 id="Cards">Cards</h2>
+
+    <p>
+      Cards are flexible content containers similar to panels in other
+      development platforms. They can be used in a variety of ways and are
+      incredibly powerful (just look at Trello for an example).
+    </p>
+
+    <dragline-card class="Width-20">
+      <p>
+        Here's some example card text to show what a default card looks like.
+      </p>
+    </dragline-card>
+
+    <h3 id="CardHeaders">Headers &amp; Footers</h3>
+
+    <p>
+      Add headers or footers to cards using <code>&lt;header&gt;</code> and
+      <code>&lt;footer&gt;</code> respectively.
+    </p>
+
+    <dragline-card class="Width-20">
+      <header>Header</header>
+
+      <p>
+        Cards look better when they have headers.
+      </p>
+    </dragline-card>
+
+    <h4 id="CardHeaderEmphasis">Emphasis</h4>
+
+    <p>
+      Add special styling that gives headers and footers more emphasis with the
+      <code>Emphasis</code> class.
+    </p>
+
+    <dragline-card class="Width-20">
+      <header class="Emphasis">Recently Reviewed</header>
+
+      <p>
+        Another awful Hollywood movie.
+      </p>
+
+      <footer class="Emphasis Text-Center">3 days ago</footer>
+    </dragline-card>
+
+    <h4 id="CardSubheaders">Subtitles</h4>
+
+    <p>
+      Subtitles can be added to card headers using <code>&lt;small&gt;</code>
+      the same way you add them to headings.
+    </p>
+
+    <dragline-card class="Width-20">
+      <header>
+        Card Header
+        <small>Supporting Subtitle</small>
+      </header>
+
+      <p>
+        Subtitles in cards follow the same rules as they do in headings.
+      </p>
+    </dragline-card>
+
+    <h3 id="Sectioned">Sectioned</h3>
+
+    <p>
+      Cards can also be style the looks as though they have content sections.
+      This gives cards a different background color and each content section
+      will have a different background color to make them stand out. Add the
+      <code>sectioned</code> class and each <code>p</code>, <code>div</code>,
+      and <code>section</code> element will be separated apart.
+    </p>
+
+    <dragline-card sectioned class="Width-20">
+      <header>To Do</header>
+
+      <p>
+        Purchase ingredients to make cat BARF food.
+      </p>
+
+      <div>
+        Mow and trim the lawn.
+      </div>
+
+      <section>
+        Laundry
+      </section>
+
+      <footer class="Text-Center">3 days left!</footer>
+    </dragline-card>
+
+    <dragline-card sectioned class="Width-20">
+      <header>To Do</header>
+
+      <ol>
+        <li>Purchase ingredients to make cat BARF food.</li>
+        <li>Mow and trim the lawn.</li>
+        <li>Laundry</li>
+      </ol>
+
+      <footer class="Text-Center">3 days left!</footer>
+    </dragline-card>
+
+    <dragline-card sectioned class="Width-20">
+      <header>To Do</header>
+
+      <section>
+        There's something else I forgot to add to the list below...
+      </section>
+
+      <ol class="Paneled">
+        <li>Purchase ingredients to make cat BARF food.</li>
+        <li>Mow and trim the lawn.</li>
+        <li>Laundry</li>
+      </ol>
+
+      <section>
+        What was it?
+      </section>
+
+      <footer class="Text-Center">3 days left!</footer>
+    </dragline-card>
+
+    <h3 id="CardDecks">Decks</h3>
+
+    <p>
+      If multiple cards of the same dimensions are desired, use decks. Decks
+      are used for displaying multiple cards together, and they don't have to
+      be the same dimensions. Decks have three different modes: Deck, Group,
+      and Column.
+    </p>
+
+    <dragline-deck>
+      <dragline-card>
+        <header>Card 1</header>
+
+        <p>This is the first card.</p>
+      </dragline-card>
+
+      <dragline-card>
+        <header>Card 2</header>
+
+        <p>This is the second card.</p>
+
+        <p>This is the second card.</p>
+      </dragline-card>
+
+      <dragline-card>
+        <header>Card 3</header>
+
+        <p>This is the third card.</p>
+
+        <p>This is the third card.</p>
+
+        <p>This is the third card.</p>
+      </dragline-card>
+
+      <dragline-card>
+        <header>Card 4</header>
+
+        <p>This is the fourth card.</p>
+
+        <p>This is the fourth card.</p>
+
+        <p>This is the fourth card.</p>
+
+        <p>This is the fourth card.</p>
+      </dragline-card>
+
+      <dragline-card>
+        <header>Card 5</header>
+
+        <p>This is the fifth card.</p>
+
+        <p>This is the fifth card.</p>
+
+        <p>This is the fifth card.</p>
+
+        <p>This is the fifth card.</p>
+
+        <p>This is the fifth card.</p>
+      </dragline-card>
+
+      <dragline-card>
+        <header>Card 6</header>
+
+        <p>This is the sixth card.</p>
+
+        <p>This is the sixth card.</p>
+
+        <p>This is the sixth card.</p>
+
+        <p>This is the sixth card.</p>
+
+        <p>This is the sixth card.</p>
+
+        <p>This is the sixth card.</p>
+      </dragline-card>
+
+      <dragline-card>
+        <header>Card 7</header>
+
+        <p>This is the seventh card.</p>
+
+        <p>This is the seventh card.</p>
+
+        <p>This is the seventh card.</p>
+
+        <p>This is the seventh card.</p>
+
+        <p>This is the seventh card.</p>
+
+        <p>This is the seventh card.</p>
+
+        <p>This is the seventh card.</p>
+      </dragline-card>
+    </dragline-deck>
+
+    <h4 id="DeckCustomAttributes">Custom Attributes</h4>
+
+    <p>
+      Cards don't support any custom attributes, but decks do. Decks support
+      the following custom attributes:
+    </p>
+
+    <ul>
+      <li>
+        <code>mode</code> - Specifies the display mode. Supported values are
+        "deck", "grouped", and "columns". The default is "deck", which is also
+        what's used if the attribute isn't specified.
+
+        <ul>
+          <li>
+            <select id="ddlCardDeck-Mode" data-attribute="mode">
+              <option value="columns">Columns</option>
+              <option value="deck" selected>Deck</option>
+              <option value="grouped">Group</option>
+            </select>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </article>
+
+  <article>
+    <h2 id="Carousels">Carousels</h2>
+
+    <p>
+      Carousels are used to cycle through elements (typically images). They can
+      be set with intervals so they act like slideshows, or manually scrolled
+      through as the user clicks (or presses an arrow key). Carousels are best
+      used for cycling through similar elements such as image galleries. They
+      are also great for saving screen real estate when multiple images don't
+      need to be displayed simultaneously on mobile devices. Caution should be
+      exercised when using more than one carousel on a page.
+    </p>
+
+    <p>
+      Carousels expect <code>&lt;carousel-item&gt;</code> elements for each item in them.
+    </p>
+
+    <dragline-carousel>
+      <carousel-item>
+        <img src="~/images/memes/challenge-accepted.jpg" />
+      </carousel-item>
+      <carousel-item>
+        <img src="~/images/memes/expecting-batmobile.jpg" />
+      </carousel-item>
+      <carousel-item>
+        <img src="~/images/memes/jesus-facepalm.jpg" />
+      </carousel-item>
+      <carousel-item>
+        <img src="~/images/memes/grumpy-cat.jpg" />
+      </carousel-item>
+      <carousel-item>
+        <img src="~/images/memes/one-does-not-simply-fill-binders-with-women.jpg" />
+      </carousel-item>
+      <carousel-item>
+        <img src="~/images/memes/test-in-production.jpg" />
+      </carousel-item>
+      <carousel-item>
+        <img src="~/images/memes/what-if-i-told-you.jpg" />
+      </carousel-item>
+    </dragline-carousel>
+
+    <h3 id="CarouselAttributes">Custom Attributes</h3>
+
+    <p>
+      Carousels support the following custom attributes:
+    </p>
+
+    <ul>
+      <li>
+        <code>direction</code> - The direction the carousel slides. The default
+        is for seats to slide right (or clockwise).
+
+        <ul>
+          <li>
+            <select id="ddlCarousel-Direction" data-attribute="direction">
+              <option value="right" selected>Right</option>
+              <option value="left">Left</option>
+            </select>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <code>interval</code> - The amount of time (in milliseconds) each seat
+        is displayed before being rotated. The default is 5000 (5 seconds).
+
+        <ul>
+          <li>
+            <input type="text" id="txtCarousel-Interval" min="0" max="10000" step="100" value="5000" data-attribute="interval" />
+          </li>
+        </ul>
+      </li>
+      <li>
+        <code>pause-on-hover:</code> Set to true to stop the carousel from
+        sliding as long as the mouse sits over the carousel. The default is false.
+
+        <ul>
+          <li>
+            <input type="checkbox" id="chkCarousel-Pause" data-attribute="pause-on-hover" />
+            <label for="chkCarousel-Pause">
+              Pause on hover
+            </label>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <code>show-indicators</code> - Set to true to show symbols in the
+        lower-center of the carousel that display the item and its location
+        within the carousel; it also allows users to click different symbols to
+        move to that item. The default is false.
+
+        <ul>
+          <li>
+            <input type="checkbox" id="chkCarousel-Indicators" data-attribute="show-indicators" />
+            <label for="chkCarousel-Indicators">
+              Show indicators
+            </label>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <code>show-next-previous</code> - Set to true to show the next/previous
+        indicators. The default is false.
+
+        <ul>
+          <li>
+            <input type="checkbox" id="chkCarousel-NextPrevious" data-attribute="show-next-previous" />
+            <label for="chkCarousel-NextPrevious">
+              Show next/previous
+            </label>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <code>wrap</code> - Set to true to have the carousel wrap around, or
+        false to have the carousel start and stop. The default is true.
+
+        <ul>
+          <li>
+            <input type="checkbox" id="chkCarousel-Wrap" checked data-attribute="wrap" />
+            <label for="chkCarousel-Wrap">
+              Wrap
+            </label>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3 id="CarouselEvents">Custom Events</h3>
+
+    <p>
+      Carousels support the following custom events:
+    </p>
+
+    <ul>
+      <li>
+        <code>rotated</code> - Triggered after the carousel completes sliding
+        an item. There are no details for this event.
+      </li>
+    </ul>
+  </article>
+
+  <article>
+    <h2 id="Index">Index</h2>
+
+    <p>
+      The index is used to create a table of contents for the page. It scours
+      the page for heading (h1-h6) elements that have an ID (they need an ID
+      to be navigatable by the browser) and creates hyperlinks that allow
+      users to quickly navigate between the headings. The headings are
+      hierarchical using standard web semantics. The index will also
+      automatically update to show the user where they're at as they scroll
+      through the page.
+    </p>
+  </article>
+
+  <article>
+    <h2 id="InfiniteScroll">Infinite Scrolling</h2>
+
+    <p>
+      Infinite scrolling is an alternative technique to paging that allows
+      visitors to retrieve "pages" of data by scrolling instead of having to
+      click page numbers of next/previous indicators. Infinite scrolling should
+      not be used as a replacement for all forms of paging.
+    </p>
+
+    <p>
+      <em>Infinite scrolling should <strong>only</strong> be used when visitors
+      aren't looking for something specific.</em>
+    </p>
+
+    <p>
+      In additional, infinite scrolling should only be considered for the
+      following circumstances:
+    </p>
+
+    <ul>
+      <li>
+        Low engagement content such as images.
+      </li>
+      <li>
+        User generated content, such as comments. This avoids consuming massive
+        quantities of data for a visitor to see a new piece of content and
+        reduces the requests to servers.
+      </li>
+      <li>
+        Historical content, such as audit logs.
+      </li>
+    </ul>
+
+    <h3 id="SmartScrolling">Smart Scrolling</h3>
+
+    <p>
+      Scrollable is a smart infinite scroller; it only loads three data pages
+      at a time: the previous page, the current page, and the next page. It
+      uses a top and bottom spacer within the <code>dragline-scrollable</code>
+      element to keep the scrollbar accurate. This ensures that if a user
+      scrolls hundreds or even thousands of elements, the browser doesn't
+      consume consume unnecessary memory. Instead of having hundreds of rows
+      in a table, there are only three pages worth of elements.
+    </p>
+
+    <h3 id="ScrollableCaching">Caching</h3>
+
+    <p>
+      To increase the efficiency of infinite scrolling, the
+      <code>dragline-scrollable</code> caches all data retrieved from the
+      server in Session Storage. This allows users to navigate throughout a
+      web site and not have to retieve all of that data all over again from
+      the server. It also allows the user to come back to the same location
+      they left.
+    </p>
+
+    <h3 id="ScrollableAttributes">Custom Attributes</h3>
+
+    <p>
+      Scrollables support the following custom attributes:
+    </p>
+
+    <ul>
+      <li>
+        <code>page-size</code> - The number of items in a page of data. The
+        default is 25.
+
+        <ul>
+          <li>
+            <input type="number" id="txtScrollable-PageSize" min="10" max="1000" step="10" value="25" data-attribute="page-size" />
+          </li>
+        </ul>
+      </li>
+      <li>
+        <code>threshold</code> - The scrolling threshold that triggers loading
+        a page of data. The default is 0.67 (67%).
+
+        <ul>
+          <li>
+            <input type="number" id="txtScrollable-Threshold" min="0.1" max="1" step="0.05" value="0.67" data-attribute="threshold" />
+          </li>
+        </ul>
+      </li>
+      <li>
+        <code>use-window</code> - A boolean attribute that when present
+        specifies that instead of using the <code>dragline-scrollable</code>
+        element as the scroll container, use the window as the scroll
+        container.
+
+        <ul>
+          <li>
+            <input type="checkbox" id="chkScrollable-UseWindow" data-attribute="use-window" />
+            <label for="chkScrollable-UseWindow">
+              Use Window
+            </label>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3 id="ScrollableEvents">Custom Events</h3>
+
+    <p>
+      Scrollables support the following custom events:
+    </p>
+
+    <ul>
+      <li>
+        <code>newPage</code> - Triggered when a new page of data needs to be
+        retrieved from the server. This event should be used to retrieve data
+        from the server. This event will trigger the <code>pageChanged</code>
+        event after caching the data. This event has the following details:
+
+        <ul>
+          <li>
+            <code>pageIndex</code> - The page number of data to retrieve from
+            the server.
+          </li>
+          <li>
+            <code>pageSize</code> - The number of items in a page.
+          </li>
+        </ul>
+      </li>
+      <li>
+        <code>thresholdReached</code> - Triggered when one of the thresholds is
+        reached. This event is used to refresh the data in the element being
+        scrolled. This event has the following details:
+
+        <ul>
+          <li>
+            <code>data</code> - An array of data that makes up the three pages
+            to load into the element.
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </article>
+
+  <article>
+    <h2 id="Meters">Meters</h2>
+
+    <p>
+      Meters (or gauges) repesent a scalar measurement within a known range, or a
+      fractional value (e.g. disk usage, query result relevance, performance
+      metrics, etc.) Unlike progress bars, meters provide minimum, maximum, and
+      optimal values; a general rule of thumb when using meters is that min <=
+      optimum <= max (if all are specified). Meters should never be used to
+      report progress.
+    </p>
+
+    <div>
+      <div>
+        <label>Disk Usage</label>
+      </div>
+
+      <meter min="0" max="100" low="25" high="75" optimum="100" value="67"></meter>
+    </div>
+
+    <div>
+      <div>
+        <label>Memory Used</label>
+      </div>
+
+      <meter min="0" max="100" low="25" high="75" optimum="0" value="15"></meter>
+    </div>
+
+    <div>
+      <div>
+        <label>Network</label>
+      </div>
+
+      <meter min="0" max="100" low="25" high="75" optimum="100" value="13"></meter>
+    </div>
+
+    <div>
+      <div>
+        <label>CPU Utilization</label>
+      </div>
+
+      <meter min="0" max="100" low="25" high="85" optimum="75" value="13"></meter>
+    </div>
+
+    <h3 id="MultiMeters">Multi-Meters</h3>
+
+    <p>
+      Meters similar to those in iTunes and iOS for categorized utilization can
+      be created using linear gradients for the <code>background</code> style.
+    </p>
+
+    <meter class="Categorized" min="0" max="100" low="25" high="85" optimum="75" value="75"></meter>
+  </article>
+
+  <article>
+    <h2 id="Modals">Modal Dialogs</h2>
+
+    <p>
+      Modal dialogs reveal information to a user that cannot be ignored. They
+      are used to force a user to respond to a call of action. Modal dialogs
+      keep a user from interacting with the main page until the dialog has
+      closed.
+    </p>
+
+    <dragline-modal id="facePalm">
+      <div class="Text-Center">
+        <img src="/images/memes/jesus-facepalm.jpg" />
+      </div>
+    </dragline-modal>
+
+    <h3 id="ModalOptions">Options</h3>
+
+    <p>
+      Modal dialogs support the following options:
+    </p>
+
+    <ul>
+      <li>
+        <code>closeButton:</code> Set to false to make a modal dialog only
+        closable by an element within the dialog box. If set to true, a close
+        button is placed in the top right corner of the modal dialog that users
+        can click to close it. The default is true.
+
+        <ul>
+          <li>
+            <input type="checkbox" id="chkModal-Closable" data-attribute="closeButton" />
+            <label for="chkModal-Closable">
+              Close Button
+            </label>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <code>effect:</code> The effect used to toggle the display of the modal
+        dialog. Options are: "Fade", "Fade And Scale", "Newspaper", "Slide From
+        Bottom", "Slide From Left", "Slide From Right", and "Slide From Top". The
+        default is "Slide From Top".
+
+        <ul>
+          <li>
+            <select id="ddlModal-Effect" data-attribute="effect">
+              <option value="Fade">Fade</option>
+              <option value="Fade And Scale" selected>Fade And Scale</option>
+              <option value="Newspaper">Newspaper</option>
+              <option value="Slide From Bottom">Slide From Bottom</option>
+              <option value="Slide From Left">Slide From Left</option>
+              <option value="Slide From Right">Slide From Right</option>
+              <option value="Slide From Top" selected>Slide From Top</option>
+            </select>
+          </li>
+        </ul>
+
+      </li>
+    </ul>
+
+    <h3 id="DeclarativeModals">Declarative Modal Dialogs</h3>
+
+    <p>
+      Modal dialogs can activated declaratively using custom attributes. At a
+      minimum, <code>modal-template</code> and <code>modal-title</code>
+      attributes are required; <code>modal-options</code> attributes can be
+      used for further customization. Note that declarative modals cannot use
+      callbacks.
+    </p>
+
+    <p>
+      <button type="button" modal-template="facePalm" modal-title="Fail">Modal Dialog (Default)</button>
+      <button type="button" modal-template="facePalm" modal-title="Fail" modal-options="{ 'Effect': 'Newspaper' }">Modal Dialog (Newspaper)</button>
+      <button type="button" modal-template="facePalm" modal-title="Fail" modal-options="{ 'Effect': 'Fade' }">Modal Dialog (Fade)</button>
+    </p>
+
+    <h3 id="ModalPrompts">Prompts</h3>
+
+    <p>
+      Modal dialogs also have built-in prompt functionality and support for a
+      couple of common prompts. Prompts can be used by invoking the
+      <code>prompt</code> function.
+    </p>
+
+    <p>
+      <button type="button" id="btnPromptDelete">Erase Hard Disk</button>
+      <button type="button" id="btnPromptSave">Encrypt Hard Disk</button>
+      <button type="button" id="btnPromptCustom">Do Nothing</button>
+    </p>
+
+    <ul>
+      <li>
+        <code>prompt(title, message, buttons)</code> - Shows the user a custom
+        prompt.
+
+        <ul>
+          <li>
+            <code>title</code> - The modal dialog title.
+          </li>
+          <li>
+            <code>message</code> - The message to display as the prompt.
+          </li>
+          <li>
+            <code>buttons</code> - An array of objects that contain button text
+            and callbacks for each button. The object can have the following
+            properties:
+
+            <ul>
+              <li>
+                <code>Callback</code> - A function to call if the user clicks
+                the button. If no callback is specified, the button will cause
+                the modal dialog to close.
+              </li>
+              <li>
+                <code>CssClasses</code> - One or more CSS classes (separated by
+                spaces) to apply to the button.
+              </li>
+              <li>
+                <code>Text</code> - The button text. This is required.
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <code>promptToDelete(message, deleteCallback)</code> - Shows the user a
+        prompt confirming if they want to delete something.
+
+        <ul>
+          <li>
+            <code>message</code> - The message to display as the prompt. If no
+            message is specified, the text defaults to <em>Are you sure you
+            want to delete this?</em>
+          </li>
+          <li>
+            <code>deleteCallback</code> - A function to call if the user clicks
+            the button. This is required.
+          </li>
+        </ul>
+      </li>
+      <li>
+        <code>promptToSave(message, saveCallback, continueCallback, cancelCallback)</code>
+        - Shows the user a prompt confirming they want to leave without saving
+        something.
+
+        <ul>
+          <li>
+            <code>message</code> - The message to display as the prompt. If no
+            message is specified, the text defaults to <em>There are unsaved
+            changes. What would you like to do?</em>
+          </li>
+          <li>
+            <code>saveCallback</code> - A function to call if the user clicks
+            the button. This is required.
+          </li>
+          <li>
+            <code>continueCallback</code> - A function to call if the user clicks
+            the button. This is required.
+          </li>
+          <li>
+            <code>cancelCallback</code> - A function to call if the user clicks
+            the button. This is required.
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </article>
+
+  <article>
+    <h2 id="PasswordStrength">Password Strength</h2>
+
+    <p>
+      Password strength shows the user the strength of the password they want to
+      use when creating an account or changing their password.
+    </p>
+
+    <div class="Form-Group">
+      <input type="password" id="txtPassword" placeholder="Password" />
+    </div>
+
+    <dragline-password-strength for="txtPassword"></dragline-password-strength>
+
+    <h3 id="PasswordStrengthAttributes">Custom Attributes</h3>
+
+    <p>
+      Password strength supports the following custom attributes:
+    </p>
+
+    <ul>
+      <li>
+        <code>for</code> - The ID of the element to watch.
+      </li>
+      <li>
+        <code>fair</code> - A regular expression used to determine if the
+        password has fair strength. The default pattern requires at least 1
+        alphanumeric character, 1 number, and the password must be at least 6
+        characters long.
+      </li>
+      <li>
+        <code>good</code> - A regular expression used to determine if the
+        password has good strength. The default pattern requires at least 1
+        uppercase characer, 1 lowercase character, 1 number, and the password
+        must be at least 8 characters long.
+      </li>
+      <li>
+        <code>strong</code> - A regular expression used to determine if the
+        password is strong. The default pattern requires at least 1 uppercase
+        characer, 1 lowercase character, 1 number, 1 special character, and the
+        password must be at least 8 characters long.
+      </li>
+    </ul>
+  </article>
+
+  <article>
+    <h2 id="ProgressBars">Progress Bars</h2>
+
+    <p>
+      Progress bars inform users that an application task is taking place and
+      will take a predictable amount of time before finished. Progress bars
+      should only be used with long running tasks in which the amount of time
+      to complete is predictable.
+    </p>
+
+    <progress value="0.67"></progress>
+
+    <h3 id="Indeterminate">Indeterminate Progress Bars</h3>
+
+    <p>
+      A progress bar with no <code>value</code> attribute is called an
+      indeterminate progress bar. These are styled not to display at all; they
+      should be avoided and replaced with a spinner.
+    </p>
+
+    <progress></progress>
+  </article>
+
+  <article>
+    <h2 id="PullOuts">Pull-Outs</h2>
+
+    <p>
+      Pull-outs are used to display information relevant to what the user is
+      working on, but that isn't necessary or may be of only marginal value to
+      the user. There should never be more than one pull-out on a page.
+    </p>
+
+    <div style="position: relative;">
+      <dragline-pull-out location="top" style="height: 10em;">
+        This is the content for a pull-out.
+      </dragline-pull-out>
+    </div>
+
+    <h3 id="PullOutAttributes">Custom Attributes</h3>
+
+    <p>
+      Pull-outs support the following custom attributes:
+    </p>
+
+    <ul>
+      <li>
+        <code>position</code> - The location of the pull-out relative to its
+        parent container. Supported values are "bottom", "left", "right", and
+        "top". The default is "top".
+
+        <ul>
+          <li>
+            <select id="ddlPullOut-Position" data-attribute="position">
+              <option value="bottom">Bottom</option>
+              <option value="left">Left</option>
+              <option value="right">Right</option>
+              <option value="top" selected>Top</option>
+            </select>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </article>
+
+  <article>
+    <h2 id="RemainingCharacters">Remaining Characters</h2>
+
+    <p>
+      Remaining characters tells users how many characters are left in a
+      textbox. They should only be used with <code>&lt;textarea&gt;</code>
+      elements, and only with <code>&lt;textarea&gt;</code> elements where
+      users will realistically hit the character limit.
+    </p>
+
+    <div class="Form-Group">
+      <label>Limited Characters:</label>
+      <textarea id="txtLimited" class="Width-25" maxlength="1000"></textarea>
+      <dragline-remaining for="txtLimited"></dragline-remaining>
+    </div>
+
+    <h3 id="RemainingCharactersAttributes">Custom Attributes</h3>
+
+    <p>
+      Remaining characters supports the following custom attributes:
+    </p>
+
+    <ul>
+      <li>
+        <code>for</code> - The ID of the element to watch.
+      </li>
+      <li>
+        <code>good-color</code> - The color of the text for the remaining
+        characters when there's over 50% remaining. The default is #00AA00.
+
+        <ul>
+          <li>
+            <input type="color" id="txtRemaining-Good" data-attribute="good-color" value="#00AA00" />
+          </li>
+        </ul>
+      </li>
+      <li>
+        <code>danger-color</code> - The color the text changes to when the user has
+        less than one-quarter of the characters remaining. The default is #AA0000.
+
+        <ul>
+          <li>
+            <input type="color" id="txtRemaining-Danger" data-attribute="danger-color" value="#AA0000" />
+          </li>
+        </ul>
+      </li>
+      <li>
+        <code>warning-color</code> - The color the text changes to when the user has
+        less than half of the characters remaining. The default is #CFD100.
+
+        <ul>
+          <li>
+            <input type="color" id="txtRemaining-Warning" data-attribute="warning-color" value="#CFD100" />
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </article>
+
+  <article>
+    <h2 id="Spinners">Spinners</h2>
+
+    <p>
+      Spinners inform users that an application task is taking place and the time
+      until completion is not predictable. Spinners are also useful for tasks
+      that will take only a few seconds because showing a progress bar is
+      unnecessary.
+    </p>
+
+    <div class="Clear">
+      <div class="Float-Left Width-20">
+        <div class="Spinner">
+          <div></div>
+        </div>
+      </div>
+
+      <div class="Float-Left Width-20">
+        <div class="Clock"></div>
+      </div>
+
+      <div class="Float-Left Width-20">
+        <div class="Heartbeat"></div>
+      </div>
+
+      <div class="Float-Left Width-20">
+        <div class="Wheel"></div>
+      </div>
+    </div>
+  </article>
+
+  <article>
+    <h2 id="Tabs">Tabs</h2>
+
+    <p>
+      Tabstrips are used to save screen real estate by showing related content
+      on the same page without showing it all at the same time. Tabstrips are
+      useful for displaying related content that can be easily categorized
+      together. Rarely should more than a one tabstrip be placed on a screen.
+    </p>
+
+    <p>
+      Tabstrips expect <code>&lt;dragline-tab&gt;</code> child elements for
+      each tab.
+    </p>
+
+    <dragline-tabstrip>
+      <dragline-tab text="Details" icon="/images/success.png">
+        Details go here.
+      </dragline-tab>
+      <dragline-tab text="Comments" icon="fa-comments">
+        Comments go here.
+      </dragline-tab>
+      <dragline-tab text="History" icon="fa-history">
+        Historical and/or audit information goes here.
+      </dragline-tab>
+    </dragline-tabstrip>
+
+    <h3 id="TabAttributes">Custom Attributes</h3>
+
+    <p>
+      Tabstrips support the following custom attributes:
+    </p>
+
+    <ul>
+      <li>
+        <code>orientation</code> - Specifies the orientation of the
+        tabstrip. Supported values are "vertical" and "horizontal"; the
+        default is "horizontal".
+
+        <ul>
+          <li>
+            <select id="ddlTabstrip-Orientation" data-attribute="orientation">
+              <option value="horizontal" selected>Horizontal</option>
+              <option value="vertical">Vertical</option>
+            </select>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </article>
+
+  <article>
+    <h2 id="Toasts">Toasts</h2>
+
+    <p>
+      A toast provides simple feedback about an operation in a small popup that
+      displays in the upper-right corner of the page. It only fills the amount of
+      space required for the message and the current activity remains visible and
+      interactive. Toasts automatically disappear after a timeout. They are more
+      elegant than JavaScript alerts and ensure consistent look and feel across
+      all browsers and operating systems. Toasts are the preferred method for
+      alerting users (as opposed to JavaScript alerts).
+    </p>
+
+    <h3 id="ToastyAttributes">Custom Attributes</h3>
+
+    <p>
+      Toasty supports the following custom attributes:
+    </p>
+
+    <ul>
+      <li>
+        <code>max</code> - The maximum number of toasts that can be created and
+        displayed. If set, toasts will not be created when the number of
+        visible toasts exceeds this number. The default (zero) is unlimited.
+
+        <ul>
+          <li>
+            <input type="number" id="txtToasty-Max" min="0" max="99" step="1" value="0" data-attribute="max" />
+          </li>
+        </ul>
+      </li>
+      <li>
+        <code>acknowledge</code> - A boolean attribute applied to any
+        <code>&lt;toast&gt;</code> element that specifies a user has
+        acknowledged the toast.
+      </li>
+      <li>
+        <code>sticky</code> - A boolean attribute applied to any
+        <code>&lt;toast&gt;</code> element that denotes a toast that doesn't
+        disappear (except for user acknowledgement).
+      </li>
+    </ul>
+
+    <h3 id="ToastyParameters">Add Parameters</h3>
+
+    <p>
+      When calling the <code>add()</code> method to create a new toast, the
+      following parameters are passed as a JavaScript object.
+    </p>
+
+    <ul>
+      <li>
+        <code>Role:</code> The role of the toast. The default is none.
+      </li>
+      <li>
+        <code>Dismissable:</code> Set to true to allow users to dismiss the
+        toast. The default is false.
+      </li>
+      <li>
+        <code>ImageUrl:</code> The URL of an image to display on the left
+        side of the toast, which appears as an icon.
+      </li>
+      <li>
+        <code>Sticky:</code> Set to true to make a toast not disappear after
+        the configured timeout. The default is false, which causes the toast to
+        disappear after the configured timeout.
+      </li>
+      <li>
+        <code>Text:</code> The text of the toast.
+      </li>
+      <li>
+        <code>Title:</code> The title displayed at the top of the toast.
+      </li>
+    </ul>
+
+    <table id="tblToastExamples">
+      <thead>
+        <tr>
+          <th>Example</th>
+          <th>Toast Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <button id="btnToast" data-toast="{ 'Title': 'Default Toast', 'Text': 'This is a toast alert. It will disappear after 5 seconds.' }">Default Alert</button>
+          </td>
+          <td>Default</td>
+        </tr>
+        <tr>
+          <td>
+            <button id="btnDismissable" data-toast="{ 'Title': 'Dismissable Toast', 'Text': 'This is a dismissable toast alert. It will disappear after 5 seconds or when you click the close button in the upper-right.', 'Dismissable': true }">Dismissable Alert</button>
+          </td>
+          <td>
+            Dismissable. By default toasts only disappear after the timeout
+            configured when the plugin was instantiated. Dismissable toasts
+            have a button in their upper-right corner that allows them to
+            be closed by users.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button id="btnError" data-toast="{ 'Title': 'Error', 'Text': 'This is an error toast alert. It will disappear after 5 seconds.', 'Role': 'Error' }">Error Alert</button>
+          </td>
+          <td>Error</td>
+        </tr>
+        <tr>
+          <td>
+            <button id="btnImage" data-toast="{ 'Title': 'Image Toast', 'Text': 'This is a toast alert with an image. It will disappear after 5 seconds.', 'ImageUrl': 'http://findicons.com/files/icons/1036/function/48/warning.png' }">Alert With Image</button>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>
+            <button id="btnInformational" data-toast="{ 'Title': 'Information', 'Text': 'This is an informational toast alert. It will disappear after 5 seconds.', 'Role': 'Info' }">Informational Alert</button>
+          </td>
+          <td>Informational</td>
+        </tr>
+        <tr>
+          <td>
+            <button id="btnLight" data-toast="{ 'Title': 'Light Toast', 'Text': 'This is a light toast alert. It will disappear after 5 seconds.', 'Role': 'Light' }">Light Alert</button>
+          </td>
+          <td>Light</td>
+        </tr>
+        <tr>
+          <td>
+            <button id="btnRemoveAll">Remove All</button>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>
+            <button id="btnSticky" data-toast="{ 'Title': 'Sticky Toast', 'Text': 'This is a sticky toast alert. It will not disappear after 5 seconds.', 'Sticky': true }">Sticky Alert</button>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>
+            <button id="btnSuccess" data-toast="{ 'Title': 'Success', 'Text': 'This is a toast alert denoting a successful action. It will disappear after 5 seconds.', 'Role': 'Success' }">Success Alert</button>
+          </td>
+          <td>Success</td>
+        </tr>
+        <tr>
+          <td>
+            <button id="btnWarning" data-toast="{ 'Title': 'Warning', 'Text': 'This is a warning toast alert. It will disappear after 5 seconds.', 'Role': 'Warning' }">Warning Alert</button>
+          </td>
+          <td>Warning</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="ToastRemoval">Removal</h3>
+
+    <p>
+      Remove a single toast by calling the <code>remove()</code> method and
+      passing it the ID of a toast. Alternatively, all toasts can be removed by
+      calling the <code>removeAll()</code> method.
+    </p>
+  </article>
+
+  <article>
+    <h2 id="Toolbars">Toolbars</h2>
+
+    <p>
+      Toolbars group a series of buttons together on a single line or column.
+      They should be used when all of the buttons in a series perform
+      functionality on the same object.
+    </p>
+
+    <dragline-toolbar>
+      <button type="button">Left</button>
+      <button type="button">Middle</button>
+      <button type="button">Right</button>
+    </dragline-toolbar>
+
+    <div class="Clear">
+      <p></p>
+    </div>
+
+    <dragline-toolbar orientation="vertical">
+      <button type="button">Top</button>
+      <button type="button">Middle</button>
+      <button type="button">Bottom</button>
+    </dragline-toolbar>
+
+    <h3 id="Ribbons">Ribbons</h3>
+
+    <p>
+      <!--
+      // TODO: Add more styling to ribbons and write about them
+      // TODO: Add a spacer for toolbars and ribbons
+      -->
+    </p>
+
+    <dragline-ribbon>
+      <dragline-toolbar>
+        <button type="button">Left</button>
+        <button type="button">Middle</button>
+        <button type="button">Right</button>
+      </dragline-toolbar>
+    </dragline-ribbon>
+
+    <h3 id="DropDownButtons">Button DropDowns</h3>
+
+    <p>
+      Dropdown buttons should be used when there are multiple <em>similar</em>
+      operations that can be performed on the same object. The button text
+      should convey the underlying actions.
+    </p>
+
+    <p>
+      When creating the menu, the menu items should be sorted in the order of
+      their usage (e.g. highest-use menu items at the top and least-use menu
+      items at the bottom). Create a separator for actions using the
+      <code>divider</code> attribute.
+    </p>
+
+    <dragline-dropdown>
+      <button type="button">Actions</button>
+      <ul id="ulDropDownActions" role="menu">
+        <li>
+          <a href="#">Action #1</a>
+        </li>
+        <li>
+          <a href="#">Action #2</a>
+        </li>
+        <li>
+          <a href="#">Action #3</a>
+        </li>
+        <li divider></li>
+        <li>
+          <a href="#">Separate Action</a>
+        </li>
+      </ul>
+    </dragline-dropdown>
+  </article>
+</div>
+
+<dragline-toasty></dragline-toasty>
+<script type="text/javascript" src="~/scripts/components.js"></script>

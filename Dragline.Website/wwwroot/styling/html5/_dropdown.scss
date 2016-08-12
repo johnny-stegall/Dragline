@@ -1,0 +1,69 @@
+﻿/******************************************************************************
+* Dropdown styling
+******************************************************************************/
+dragline-dropdown
+{
+  > button::after
+  {
+    border-top: 4px solid #000;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    content: "";
+    display: inline-block;
+    height: 0;
+    margin: -0.2rem 0 0 0.375rem;
+    vertical-align: middle;
+    width: 0;
+  }
+
+  > ol,
+  > ul
+  {
+    background-clip: padding-box;
+    background-color: #FFF;
+    box-shadow: 0 5px 10px $color-gray-lighter;
+    display: none;
+    font-size: 1rem;
+    left: 0;
+    list-style: none;
+    margin: 0.15rem 0 0;
+    min-width: 150px;
+    opacity: 0;
+    padding: 0.375rem 0;
+    position: absolute;
+    text-align: left;
+    top: 100%;
+    transition: opacity 0.5s;
+    z-index: 999;
+
+    > li
+    {
+      > a
+      {
+        clear: both;
+        color: $color-text;
+        display: block;
+        line-height: $line-height;
+        padding: 0.2rem 1.5rem;
+        white-space: nowrap;
+
+        &:focus,
+        &:hover
+        {
+          background-color: $control-background-color;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  &[active]
+  {
+    > ol,
+    > ul
+    {
+      display: block;
+      opacity: 0.9;
+    }
+  }
+}

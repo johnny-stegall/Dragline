@@ -1,0 +1,106 @@
+﻿/******************************************************************************
+* Toolbar & Ribbon styling
+******************************************************************************/
+dragline-ribbon
+{
+  > dragline-toolbar:not(:first-child)
+  {
+    margin-left: 5px;
+  }
+
+  > dragline-toolbar[orientation=vertical]:not(:first-child)
+  {
+    margin-top: 5px;
+  }
+}
+
+dragline-toolbar
+{
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+
+  > button,
+  > .Button
+  {
+    background-color: $control-background-color;
+    border-color: $color-borders;
+    color: $color-text;
+    float: left;
+    position: relative;
+
+    &:focus,
+    &:hover
+    {
+      background-color: $control-background-color;
+      border-color: $color-borders;
+      box-shadow: none;
+      outline: none;
+      z-index: 2;
+    }
+
+    &:active,
+    &.Active
+    {
+      background-color: $control-background-color;
+      box-shadow: 0 0 10px $color-gray-lighter;
+      outline: 0;
+    }
+
+    &:not(:first-child):not(:last-child)
+    {
+      border-radius: 0;
+    }
+
+    & + button,
+    & + .Button
+    {
+      margin-left: -1px;
+    }
+
+    &:first-child:not(:last-of-type)
+    {
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+      margin-left: 0;
+    }
+
+    &:last-child:not(:first-child)
+    {
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+    }
+  }
+}
+
+dragline-toolbar[orientation=vertical]
+{
+  > button,
+  > .Button
+  {
+    display: block;
+    float: none;
+    max-width: 100%;
+    width: 100%;
+
+    & + button,
+    & + .Button
+    {
+      margin-top: -1px;
+    }
+
+    &:first-child:not(:last-child)
+    {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 4px;
+    }
+
+    &:last-child:not(:first-child)
+    {
+      border-bottom-left-radius: 4px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+}

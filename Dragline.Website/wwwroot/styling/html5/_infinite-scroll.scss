@@ -1,0 +1,12 @@
+﻿/******************************************************************************
+* Infinite Scrolling styling
+******************************************************************************/
+dragline-scrollable
+{
+  > div.Top-Spacer,
+  > div.Bottom-Spacer
+  {
+    height: 0px;
+    visibility: hidden;
+  }
+}

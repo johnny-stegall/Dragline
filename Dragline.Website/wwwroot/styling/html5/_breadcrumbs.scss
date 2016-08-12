@@ -1,0 +1,23 @@
+/******************************************************************************
+* Breadcrumb styling
+******************************************************************************/
+dragline-breadcrumb
+{
+  background-color: $control-background-color;
+  border-radius: $control-border-radius;
+  display: block;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 1rem;
+
+  > breadcrumb-item
+  {
+    display: inline-block;
+
+    & + breadcrumb-item::before
+    {
+      color: $color-text;
+      content: "/\00a0";
+      padding: 0 0.375rem;
+    }
+  }
+}

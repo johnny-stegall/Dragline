@@ -1,0 +1,151 @@
+﻿@{
+  ViewBag.Title = "Infinite Scrolling Unit Tests";
+}
+
+@section Styles
+{
+  @*
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/qunit/1.16.0/qunit.min.css" />
+  *@
+}
+
+@section Scripts
+{
+  @*
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/qunit/1.16.0/qunit.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/blanket.js/1.1.4/blanket.min.js"></script>
+  *@
+}
+
+@*
+  <div id="qunit"></div>
+*@
+
+<dragline-scrollable use-window>
+  <table class="Hot-Tracking">
+    <thead>
+      <tr>
+        <th>Column 1</th>
+        <th>Column 2</th>
+        <th>Column 3</th>
+        <th>Column 4</th>
+        <th>Column 5</th>
+      </tr>
+    </thead>
+    <tbody data-bind="foreach: TableItems">
+      <tr>
+        <td data-bind="text: $data['Column 1']"></td>
+        <td data-bind="text: $data['Column 2']"></td>
+        <td data-bind="text: $data['Column 3']"></td>
+        <td data-bind="text: $data['Column 4']"></td>
+        <td data-bind="text: $data['Column 5']"></td>
+      </tr>
+    </tbody>
+  </table>
+</dragline-scrollable>
+
+<!--
+<dragline-scrollable>
+  <ol data-bind="foreach: ListItems"></ol>
+</dragline-scrollable>
+-->
+
+<script type="text/javascript">
+  let Setup =
+  {
+    addItems: function(pageIndex, pageSize)
+    {
+      pageIndex = pageIndex || 0;
+      pageSize = pageSize || 25;
+
+      let newItems = [];
+      let startIndex = pageIndex * pageSize;
+
+      for (var rowIndex = startIndex; rowIndex < startIndex + pageSize; rowIndex++)
+      {
+        let newItem = {};
+
+        for (var columnIndex = 0; columnIndex < 5; columnIndex++)
+          newItem["Column " + (columnIndex + 1)] = "Item " + (rowIndex + 1) + "-" + (columnIndex + 1);
+
+        newItems.push(newItem);
+      }
+
+      Setup.ViewModel.Items().concat(newItems);
+      return newItems;
+    },
+
+    generateData: function(event)
+    {
+      let newItems = Setup.addItems(event.detail.pageIndex, event.detail.pageSize);
+      document.querySelector("dragline-scrollable").cacheData(newItems);
+    },
+
+    refreshTable: function(event)
+    {
+      Setup.ViewModel.TableItems(event.detail.data);
+    }
+  };
+
+  document.addEventListener("DOMContentLoaded", function()
+  {
+    Setup.ViewModel =
+    {
+      Items: ko.observableArray(),
+      ListItems: ko.observableArray([]),
+      TableItems: ko.observableArray([])
+    };
+
+    let infiniteScroll = document.querySelector("dragline-scrollable");
+    infiniteScroll.addEventListener("newPage", Setup.generateData);
+    infiniteScroll.addEventListener("pageChanged", Setup.refreshTable);
+    ko.applyBindings(Setup.ViewModel, infiniteScroll);
+
+    let newItems = Setup.addItems();
+    infiniteScroll.cacheData(newItems);
+  });
+
+  /****************************************************************************
+  * Cleanup after each test.
+  ****************************************************************************/
+  //QUnit.testDone(function()
+  //{
+  //  let infiniteScrollers = $("div.Infinite-Scroll");
+  //  infiniteScrollers.AdapTable("destroy");
+
+  //  for (var scrollerIndex = 0; scrollerIndex < infiniteScrollers.length; scrollerIndex++)
+  //    ko.cleanNode(infiniteScrollers[scrollerIndex]);
+
+  //  sessionStorage.clear();
+  //});
+
+  //QUnit.test("Infinite Scrolling Window-Viewport Constructor", function(assert)
+  //{
+  //  // Arrange
+  //  let table = $("table");
+  //  ko.applyBindings(ViewModel, table[0]);
+
+  //  let newItems = Setup.addItems();
+  //  Setup.ViewModel.TableItems(newItems);
+
+  //  // Act
+  //  table.InfiniteScroll(
+  //  {
+  //    DataCallback: Setup.getDataForTable,
+  //    PagingCallback: Setup.tablePagingCallback
+  //  });
+
+  //  $("table").InfiniteScroll("cacheData", newItems);
+
+  //  // Assert
+  //  let container = table.parent();
+  //  assert.equal(container.prop("tagName").toUpperCase(), "DIV");
+  //  assert.ok(container.hasClass("Infinite-Scroll"));
+
+  //  let topSpacer = container.children(":first");
+  //  assert.ok(topSpacer.prop("tagName"), "SECTION");
+
+  //  let bottomSpacer = container.children(":last");
+  //  assert.ok(bottomSpacer.prop("tagName"), "SECTION");
+  //});
+</script>

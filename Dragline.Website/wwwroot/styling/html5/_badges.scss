@@ -1,0 +1,44 @@
+﻿/******************************************************************************
+* Badge styling
+******************************************************************************/
+dragline-badge
+{
+  background-color: $color-gray-lighter;
+  border-radius: 10px;
+  color: #FFF;
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: bold;
+  line-height: initial;
+  min-width: 1em;
+  margin: -0.5rem 0 0 -0.5rem;
+  padding: 0.25em 0.5em;
+  text-align: center;
+  vertical-align: top;
+  white-space: nowrap;
+
+  &:empty
+  {
+    display: none;
+  }
+
+  &[role=info]
+  {
+    background: $color-blue;
+  }
+
+  &[role=risky]
+  {
+    background: $color-red;
+  }
+
+  &[role=success]
+  {
+    background: $color-green;
+  }
+
+  &[role=warning]
+  {
+    background: $color-yellow;
+  }
+}

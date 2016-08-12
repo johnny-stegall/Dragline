@@ -1,0 +1,146 @@
+﻿/******************************************************************************
+* Modal dialog styles
+******************************************************************************/
+dragline-modal
+{
+  *
+  {
+    display: none;
+  }
+}
+
+div[role=backdrop]
+{
+  background: $color-gray-lighter;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  transition: opacity 0.5s;
+  width: 100%;
+  z-index: 9998;
+}
+
+dialog#modalDialog
+{
+	backface-visibility: hidden;
+  background: #FFF;
+  border: 1px solid $color-borders;
+  border-radius: $control-border-radius;
+  box-shadow: 0 0 10px 0 $color-gray-lighter;
+  height: auto;
+  left: 50%;
+  max-width: 75%;
+  min-height: 10rem;
+  min-width: 20rem;
+  opacity: 0;
+  position: fixed;
+  top: 50%;
+  transition: all 0.5s ease-out;
+	transform: translate(-50%, -50%);
+  width: 50%;
+  z-index: 9999;
+
+  > header
+  {
+    border-bottom: 1px solid $color-borders;
+    padding: 0.75rem;
+
+    > span
+    {
+      font-size: 1.5rem;
+      font-weight: normal;
+      line-height: $line-height;
+      margin: 0.75rem 1em 0 0;
+    }
+
+    > button
+    {
+      background: transparent;
+      border: 0 none;
+      font-size: 1.5rem;
+      float: right;
+      height: 1.5em;
+      margin-top: -0.5rem;
+      opacity: 0.5;
+      padding: 0 0.5em;
+    }
+
+    > section
+    {
+      padding: 0.75rem;
+    }
+  }
+
+  > footer
+  {
+    > button:not(:first-of-type)
+    {
+      margin: 0 0 0 0.5em;
+    }
+  }
+
+  &.FadeAndScale:not([active])
+  {
+    transform: translate(-50%, -50%) scale(0);
+  }
+
+  &.Newspaper:not([active])
+  {
+    transform: translate(-50%, -50%) scale(0) rotate(720deg);
+  }
+
+  &.SlideFromBottom:not([active])
+  {
+    transform: translate(-50%, 200%);
+  }
+
+  &.SlideFromLeft:not([active])
+  {
+    transform: translate(-200%, -50%);
+  }
+
+  &.SlideFromRight:not([active])
+  {
+    transform: translate(200%, -50%);
+  }
+
+  &.SlideFromTop:not([active])
+  {
+    transform: translate(-50%, -200%);
+  }
+
+  &[active]
+  {
+    opacity: 1;
+
+    & ~ div[role=backdrop]
+    {
+      opacity: 0.75;
+    }
+
+    &.FadeAndScale
+    {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    &.Newspaper
+    {
+      transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+  }
+}
+
+/******************************************************************************
+* Mobile devices (typically phones)
+******************************************************************************/
+@media screen and (max-width: 767px)
+{
+  dialog#modalDialog
+  {
+    max-width: 720px;
+    min-width: 300px;
+    width: 95%;
+  }
+}

@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dragline | @ViewBag.Title</title>
+    <link type="text/css" href="~/css/font-awesome.min.css" rel="stylesheet" />
+    <link type="text/css" href="~/css/dragline.min.css" rel="stylesheet" />
+    <link type="text/css" href="~/css/site.css" rel="stylesheet" />
+    @RenderSection("Styles", required: false)
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/" class="Logo">
+          <img src="~/images/dragline-48px.png" style="width: 40px;" />
+        </a>
+
+        <label for="chkNavigation"></label>
+        <input type="checkbox" id="chkNavigation" class="Hidden" />
+
+        <ul>
+          <li>
+            <a href="~/styling">
+              <i class="fa fa-paw"></i>
+              <span>Styling</span>
+            </a>
+          </li>
+          <li>
+            <a href="~/components">
+              <i class="fa fa-cogs"></i>
+              <span>Components</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      @RenderBody()
+    </main>
+
+    <footer>
+    </footer>
+    
+    <script type="text/javascript" src="~/scripts/lib/d3-3.4.9.js"></script>
+    <script type="text/javascript" src="~/scripts/lib/jquery-2.1.1.js"></script>
+    <script type="text/javascript" src="~/scripts/lib/jquery-ui-1.11.1.js"></script>
+    <script type="text/javascript" src="~/scripts/lib/knockout-3.3.0.js"></script>
+    <script type="text/javascript" src="~/scripts/lib/knockout-mapping-2.4.1.js"></script>
+    <script type="text/javascript" src="~/scripts/lib/lazy-0.4.js"></script>
+    <script type="text/javascript" src="~/scripts/lib/moment-2.7.0.js"></script>
+    <script type="text/javascript" src="~/scripts/lib/webcomponentsjs-0.7.12/webcomponents.min.js"></script>
+    <script type="text/javascript" src="~/scripts/html5/accordion.js"></script>
+    <script type="text/javascript" src="~/scripts/html5/carousel.js"></script>
+    <script type="text/javascript" src="~/scripts/html5/dropdown.js"></script>
+    <script type="text/javascript" src="~/scripts/html5/index.js"></script>
+    <script type="text/javascript" src="~/scripts/html5/infinite-scroll.js"></script>
+    <script type="text/javascript" src="~/scripts/html5/modal.js"></script>
+    <script type="text/javascript" src="~/scripts/html5/pull-out.js"></script>
+    <script type="text/javascript" src="~/scripts/html5/password-strength.js"></script>
+    <script type="text/javascript" src="~/scripts/html5/remaining-characters.js"></script>
+    <script type="text/javascript" src="~/scripts/html5/tabs.js"></script>
+    <script type="text/javascript" src="~/scripts/html5/toasty.js"></script>
+    @RenderSection("Scripts", required: false)
+  </body>
+</html>

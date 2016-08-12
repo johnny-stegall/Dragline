@@ -1,0 +1,169 @@
+﻿$color-nav-text: #FFF;
+$color-nav-text-hover: $color-yellow-lightest;
+$color-nav-submenu: $color-gray;
+$color-nav-submenu-text: $color-gray-lightest;
+$font-size-nav: 1.25em;
+$nav-height: 40;
+
+/******************************************************************************
+* Structural page styling
+******************************************************************************/
+html
+{
+  font-size: $font-size;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body
+{
+  background: $color-body-background;
+  color: $color-text;
+  font-family: $font-sans-serif;
+  font-size: $font-size;
+  height: 100%;
+  line-height: $line-height;
+  padding: ($nav-height + 20) + px 10px 10px 10px;
+
+  header > nav
+  {
+    background: $color-blue;
+    border: 1px solid transparent;
+    color: $color-nav-text;
+    height: $nav-height + px;
+    left: 0;
+    margin: 0 -10px 20px 0;
+    padding: 0 20px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 999;
+
+    a.Logo
+    {
+      float: right;
+    }
+
+    label[for=chkNavigation]
+    {
+      cursor: pointer;
+      display: inline-block;
+      font-family: $font-icon;
+      font-size: $font-size-nav;
+      font-weight: normal;
+      line-height: $nav-height + px;
+      margin: 0;
+      padding: 0;
+
+      &::before
+      {
+        content: "\f0c9";
+      }
+    }
+
+    #chkNavigation
+    {
+      display: none;
+
+      &:checked + ul
+      {
+        left: -1px;
+      }
+    }
+
+    ul
+    {
+      background: $color-nav-submenu;
+      height: 10000px;
+      left: -100%;
+      list-style: none;
+      margin: 0;
+      padding: 0 0 0 10px;
+      position: absolute;
+      top: ($nav-height - 1) + px;
+      transition: all 0.5s ease-in-out;
+      width: 75%;
+      z-index: 9999;
+
+      li
+      {
+        color: $color-nav-submenu-text;
+        font-size: $font-size-nav;
+        padding: 0.25rem 0.75rem;
+        position: relative;
+
+        a > span:first-child ~ *
+        {
+          display: none;
+        }
+
+        a:focus + ul
+        {
+          max-height: 500px;
+        }
+
+        input[type=search]
+        {
+          border-radius: 20px;
+          margin-top: 0.375rem;
+          width: 100%;
+        }
+
+        ul
+        {
+          font-size: $font-size;
+          list-style: none;
+          margin: 0 0 0 0.75rem;
+          max-height: 0;
+          overflow: hidden;
+          padding: 0;
+          transition: max-height 0.5s ease-in-out;
+        }
+      }
+
+      li:not(:first-child)
+      {
+        border-top: 1px solid $color-borders;
+      }
+    }
+  }
+
+  header > nav ul > li
+  {
+    a
+    {
+      color: $color-nav-text;
+      display: inline-block;
+      transition: color 0.5s ease-in-out;
+
+      i
+      {
+        display: inline-block;
+        padding-right: 0.375rem;
+      }
+    }
+
+    a:focus,
+    a:hover
+    {
+      color: $color-nav-text-hover;
+      outline: none;
+      text-decoration: none;
+    }
+  }
+}
+
+article,
+footer,
+header,
+main,
+nav,
+section
+{
+  position: relative;
+}
+
+section.Container
+{
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -1,0 +1,39 @@
+﻿/******************************************************************************
+* Index styling
+******************************************************************************/
+dragline-index::shadow
+{
+  ol
+  {
+    list-style: none;
+
+    li
+    {
+      a
+      {
+        color: $color-blue;
+        text-decoration: none;
+      }
+
+      ol
+      {
+        display: none;
+        padding-left: 1.5rem;
+      }
+
+      &[active]
+      {
+        > a
+        {
+          color: $color-blue-dark;
+          font-weight: bold;
+        }
+
+        > ol
+        {
+          display: block;
+        }
+      }
+    }
+  }
+}

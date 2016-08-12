@@ -1,8 +1,1 @@
-*.suo
-/packages/
-/Website/obj/
-/Website/bin/
-/Website/scripts/Controls/
-/Website/scripts/todo.*
-/artifacts/
 /.vs/
