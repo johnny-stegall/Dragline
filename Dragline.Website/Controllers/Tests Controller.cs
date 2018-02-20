@@ -106,12 +106,6 @@ namespace Dragline.Controllers
       return View("Infinite-Scrolling");
     }
 
-    [Route("tests/metaform")]
-    public IActionResult Metaform()
-    {
-      return View();
-    }
-
     [Route("tests/modal")]
     public IActionResult Modal()
     {

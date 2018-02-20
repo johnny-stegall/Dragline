@@ -12,7 +12,7 @@ dragline-toasty
   z-index: 9995;
 }
 
-dragline-toasty::shadow
+:host(dragline-toasty)
 {
   *
   {

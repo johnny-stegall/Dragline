@@ -21,20 +21,17 @@ dragline-tabstrip
     padding: 0.75rem 1rem;
     text-decoration: none;
 
-    &::shadow
+    > section
     {
-      > section
-      {
-        background: #FFF;
-        border: 1px solid $color-borders;
-        padding: 1rem;
-        position: absolute;
-        left: 0;
-        top: 2.05rem;
-        visibility: hidden;
-        width: 100%;
-        z-index: 1;
-      }
+      background: #FFF;
+      border: 1px solid $color-borders;
+      padding: 1rem;
+      position: absolute;
+      left: 0;
+      top: 2.05rem;
+      visibility: hidden;
+      width: 100%;
+      z-index: 1;
     }
 
     &[active]
@@ -43,7 +40,7 @@ dragline-tabstrip
       border-bottom: 1px solid transparent;
       cursor: default;
 
-      &::shadow > section
+      > section
       {
         visibility: visible;
       }

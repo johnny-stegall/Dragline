@@ -1,0 +1,193 @@
+﻿/******************************************************************************
+* Pull-Out styling
+******************************************************************************/
+dragline-pull-out
+{
+  background: #FFF;
+  position: absolute;
+  z-index: 998;
+}
+
+:host(dragline-pull-out)
+{
+  > section
+  {
+    border: 1px solid transparent;
+    margin: 0;
+    max-height: 100%;
+    max-width: 100%;
+    padding: 0;
+    position: relative;
+
+    > i
+    {
+      background: $control-background-color;
+      border: 1px solid $color-borders;
+      border-radius: $control-border-radius;
+      cursor: pointer;
+      padding: 0.35rem;
+    }
+
+    > div
+    {
+      margin: 0;
+      max-height: 0;
+      max-width: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  }
+}
+
+:host(dragline-pull-out[location=bottom]),
+:host(dragline-pull-out[location=top])
+{
+  left: 0;
+
+  > section
+  {
+    > i
+    {
+      left: 50%;
+      margin-left: calc((1em + 0.7rem) / 2 * -1);
+      position: absolute;
+    }
+
+    > div
+    {
+      max-width: 4096px;
+      opacity: 0;
+      transition: max-height 1s, opacity 1s, padding-bottom 1s, padding-top 1s;
+    }
+  }
+}
+
+:host(dragline-pull-out[location=bottom])
+{
+  bottom: 0;
+
+  > section
+  {
+    > i
+    {
+      border-bottom: 0 none;
+      top: calc((1em + 0.7rem) * -1);
+
+      &::before
+      {
+        content: "\f077";
+      }
+    }
+  }
+}
+
+:host(dragline-pull-out[location=top])
+{
+  > section
+  {
+    > i
+    {
+      border-top: 0 none;
+      bottom: calc((1em + 0.7rem) * -1);
+
+      &::before
+      {
+        content: "\f078";
+      }
+    }
+  }
+}
+
+:host(dragline-pull-out[location=left]),
+:host(dragline-pull-out[location=right])
+{
+  > section
+  {
+    > i
+    {
+      margin-top: calc((1em + 0.7rem) / 2 * -1);
+      position: absolute;
+      top: 50%;
+    }
+
+    > div
+    {
+      max-height: 2160px;
+      transition: max-width 1s, opacity 1s, padding-left 1s, padding-right 1s;
+    }
+  }
+}
+
+:host(dragline-pull-out[location=left])
+{
+  left: 0;
+
+  > section
+  {
+    > i
+    {
+      border-left: 0 none;
+      right: calc((1em + .5rem) * -1);
+
+      &::before
+      {
+        content: "\f054";
+      }
+    }
+  }
+}
+
+:host(dragline-pull-out[location=right])
+{
+  right: 0;
+
+  > section
+  {
+    > i
+    {
+      border-right: 0 none;
+      left: calc((1em + .5rem) * -1);
+
+      &::before
+      {
+        content: "\f053";
+      }
+    }
+  }
+}
+
+:host(dragline-pull-out[active])
+{
+  > section
+  {
+    border: 1px solid $color-borders;
+
+    > div
+    {
+      max-height: 2160px;
+      max-width: 4096px;
+      opacity: 1;
+      padding: 0.35rem;
+    }
+  }
+}
+
+:host(dragline-pull-out[active][location=bottom]) > i::before
+{
+  content: "\f078";
+}
+
+:host(dragline-pull-out[active][location=left]) > i::before
+{
+  content: "\f053";
+}
+
+:host(dragline-pull-out[active][location=right]) > i::before
+{
+  content: "\f054";
+}
+
+:host(dragline-pull-out[active][location=top]) > i::before
+{
+  content: "\f077";
+}

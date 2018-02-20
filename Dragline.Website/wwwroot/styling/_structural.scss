@@ -1,11 +1,4 @@
-﻿$color-nav-text: #FFF;
-$color-nav-text-hover: $color-yellow-lightest;
-$color-nav-submenu: $color-gray;
-$color-nav-submenu-text: $color-gray-lightest;
-$font-size-nav: 1.25em;
-$nav-height: 40;
-
-/******************************************************************************
+﻿/******************************************************************************
 * Structural page styling
 ******************************************************************************/
 html
@@ -70,7 +63,7 @@ body
       }
     }
 
-    ul
+    > ul
     {
       background: $color-nav-submenu;
       height: 10000px;

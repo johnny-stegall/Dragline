@@ -52,3 +52,29 @@ $line-height-headings: 1.1;
 $link-color: $color-blue;
 $link-color-hover: $color-blue-dark;
 $link-hover-decoration: underline;
+
+// Embedded fonts
+$font-headings: "Shadows Into Light";
+$font-monospace: Consolas, Menlo, Monaco, "Courier New";
+$font-path: "fonts/";
+$font-sans-serif: Calibri;
+$font-serif: Georgia;
+
+// Form controls
+$button-padding-x: 0.5rem !default;
+$button-padding-y: 1rem !default;
+$control-border-radius: 3px;
+$control-border-width: 1px;
+$control-background-color: lighten($color-gray, 76%);
+$control-background-disabled: $color-gray-lighter;
+$control-text-color: $color-gray;
+$input-padding-x: 0.375rem !default;
+$input-padding-y: 0.25rem !default;
+
+// Navigation
+$color-nav-text: #FFF;
+$color-nav-text-hover: $color-yellow-lightest;
+$color-nav-submenu: $color-gray;
+$color-nav-submenu-text: $color-gray-lightest;
+$font-size-nav: 1.25em;
+$nav-height: 40;
