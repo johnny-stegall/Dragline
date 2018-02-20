@@ -10,8 +10,13 @@
 {
   "use strict";
 
-  // Create the carousel based on the <ol> element
-  let carouselPrototype = Object.create(HTMLOListElement.prototype);
+  let carouselPrototype = Object.create(HTMLElement.prototype);
+  let template = `
+<style>
+  @import "/css/font-awesome.min.css";
+  @import "/css/dragline-components.css";
+</style>
+<slot></slot>`;
 
   /****************************************************************************
   * Invoked when created.
@@ -20,8 +25,12 @@
   {
     this.IsSliding = false;
     this.Timer = null;
-    this.createShadowRoot();
-    this.shadowRoot.innerHTML = "<style>@import url('/css/font-awesome.min.css')</style><content select=\"carousel-item\"></content>";
+
+    if (!this.querySelector("carousel-item[active]"))
+      this.querySelector("carousel-item").setAttribute("active", "");
+
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.innerHTML = template;
   };
 
   /****************************************************************************
@@ -38,10 +47,10 @@
     if (!this.hasAttribute("interval"))
       this.setAttribute("interval", "5000");
 
-    this.firstElementChild.setAttribute("active", "");
     buildIndicators.call(this);
     buildNextPrevious.call(this);
     wireEvents.call(this);
+    setDimensions.call(this);
 
     if (parseInt(this.getAttribute("interval")) > 0)
       this.resumeRotation();
@@ -75,7 +84,7 @@
   carouselPrototype.getItemIndex = function(item)
   {
     let items = this.querySelectorAll("carousel-item");
-    return items.indexOf(item || this.shadowRoot.querySelector("carousel-item[active]"));
+    return items.indexOf(item || this.querySelector("carousel-item[active]"));
   }
 
   /**************************************************************************
@@ -315,15 +324,15 @@
   }
 
   /**************************************************************************
-  * Sets the dimensions of the carousel using the dimensions of the first
-  * item in the carousel.
+  * Sets the dimensions of the carousel based on the first <carousel-item>.
   *
   * @this The <dragline-carousel> element.
   **************************************************************************/
   function setDimensions()
   {
-    this.style.height = this.firstElementChild.clientHeight + "px";
-    this.style.width = this.firstElementChild.clientWidth + "px";
+    let firstItem = this.querySelector("carousel-item");
+    this.style.height = firstItem.clientHeight + "px";
+    this.style.width = firstItem.clientWidth + "px";
   }
 
   /**************************************************************************
@@ -367,8 +376,6 @@
   **************************************************************************/
   function wireEvents()
   {
-    document.addEventListener("DOMContentLoaded", setDimensions.bind(this));
-
     if (this.hasAttribute("pause-on-hover"))
     {
       this.addEventListener("mouseenter", this.pauseRotation.bind(this));

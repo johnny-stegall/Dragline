@@ -10,16 +10,20 @@
 {
   "use strict";
 
-  // Create the badge based on HTMLElement
   let pulloutPrototype = Object.create(HTMLElement.prototype);
+  let template = `
+<style>
+  @import "/css/font-awesome.min.css";
+  @import "/css/dragline-components.css";
+</style>`;
 
   /****************************************************************************
   * Invoked when created.
   ****************************************************************************/
   pulloutPrototype.createdCallback = function()
   {
-    this.createShadowRoot();
-    this.shadowRoot.innerHTML = "<style>@import url('/css/font-awesome.min.css')</style>";
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.innerHTML = template;
   };
 
   /****************************************************************************
@@ -54,8 +58,8 @@
     let contentDiv = document.createElement("div");
     section.appendChild(contentDiv);
 
-    let content = document.createElement("content");
-    contentDiv.appendChild(content);
+    let slot = document.createElement("slot");
+    contentDiv.appendChild(slot);
   }
 
   /**************************************************************************

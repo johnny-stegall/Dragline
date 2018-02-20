@@ -11,16 +11,21 @@
 {
   "use strict";
 
-  // Create the tabstrip based on the <ol> element
-  let tabstripPrototype = Object.create(HTMLOListElement.prototype);
+  let tabstripPrototype = Object.create(HTMLElement.prototype);
+  let template = `
+<style>
+  @import "/css/font-awesome.min.css";
+  @import "/css/dragline-components.css";
+</style>
+<slot></slot>`;
 
   /****************************************************************************
   * Invoked when created.
   ****************************************************************************/
   tabstripPrototype.createdCallback = function()
   {
-    this.createShadowRoot();
-    this.shadowRoot.innerHTML = "<style>@import url('/css/font-awesome.min.css')</style><content select=\"dragline-tab\"></content>";
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.innerHTML = template;
   };
 
   /****************************************************************************
@@ -38,35 +43,11 @@
     else if (activeTabs.length > 1)
       throw new Error("Only one tab can be active at a time.");
 
+    buildTabs.call(this);
     wireEvents.call(this);
   };
 
   let Tabstrip = document.registerElement("dragline-tabstrip", { prototype: tabstripPrototype });
-
-  // Create the tab based on the <li> element
-  let tabPrototype = Object.create(HTMLLIElement.prototype);
-
-  /****************************************************************************
-  * Invoked when created.
-  ****************************************************************************/
-  tabPrototype.createdCallback = function()
-  {
-    this.createShadowRoot();
-    this.shadowRoot.innerHTML = "<style>@import url('/css/font-awesome.min.css')</style>";
-  };
-
-  /****************************************************************************
-  * Invoked when attached to the DOM.
-  ****************************************************************************/
-  tabPrototype.attachedCallback = function()
-  {
-    if (this.parentElement.tagName !== "DRAGLINE-TABSTRIP")
-      throw new Error("Tabs must be contained within tabstrips.");
-
-    buildTab.call(this);
-  };
-
-  let Tab = document.registerElement("dragline-tab", { prototype: tabPrototype });
 
   /**************************************************************************
   * Builds the internals needed to make a tab work.
@@ -76,55 +57,61 @@
   **************************************************************************/
   function activateTab(event)
   {
-    if (event.target.tagName === "DRAGLINE-TAB")
+    let tab = event.target;
+
+    while (tab && tab.tagName !== "DRAGLINE-TAB")
+      tab = tab.parentNode;
+
+    if (tab)
     {
       this.querySelector("[active]").removeAttribute("active");
-      event.target.setAttribute("active", "");
+      tab.setAttribute("active", "");
     }
   }
 
   /**************************************************************************
   * Builds the internals needed to make a tab work.
   *
-  * @this The <dragline-tab> element.
+  * @this The <dragline-tabstrip> element.
   **************************************************************************/
-  function buildTab()
+  function buildTabs()
   {
-    if (this.hasAttribute("icon"))
+    let tabs = this.querySelectorAll("dragline-tab");
+    for (let tabIndex = 0; tabIndex < tabs.length; tabIndex++)
     {
-      let icon;
+      let tab = tabs[tabIndex];
+      let section = document.createElement("section");
+      section.innerHTML = tab.innerHTML;
+      tab.innerHTML = "";
+      tab.appendChild(section);
 
-      if (this.getAttribute("icon").endsWith(".gif") || this.getAttribute("icon").endsWith(".jpg") || this.getAttribute("icon").endsWith(".png"))
+      if (tab.hasAttribute("icon"))
       {
-        icon = document.createElement("img");
-        icon.src = this.getAttribute("icon");
-        icon.style.height = "1em";
-        icon.style.width = "1em";
-      }
-      else
-      {
-        icon = document.createElement("i");
-        icon.className += this.getAttribute("icon");
+        let icon;
+
+        if (tab.getAttribute("icon").endsWith(".gif") || tab.getAttribute("icon").endsWith(".jpg") || tab.getAttribute("icon").endsWith(".png"))
+        {
+          icon = document.createElement("img");
+          icon.src = tab.getAttribute("icon");
+          icon.style.height = "1em";
+          icon.style.width = "1em";
+        }
+        else
+        {
+          icon = document.createElement("i");
+          icon.className += "fa " + tab.getAttribute("icon");
+        }
+
+        tab.insertBefore(icon, section);
       }
 
-      this.shadowRoot.appendChild(icon);
+      if (tab.hasAttribute("text"))
+      {
+        let titleSpan = document.createElement("span");
+        titleSpan.innerText = tab.getAttribute("text");
+        tab.insertBefore(titleSpan, section);
+      }
     }
-
-    let titleSpan = document.createElement("span");
-    this.shadowRoot.appendChild(titleSpan);
-
-    if (this.hasAttribute("text"))
-      titleSpan.innerText = this.getAttribute("text");
-
-    let section = document.createElement("section");
-    this.shadowRoot.appendChild(section);
-
-    let content = document.createElement("content");
-    section.appendChild(content);
-    
-    let clearDiv = document.createElement("div");
-    clearDiv.className += "Clear";
-    section.appendChild(clearDiv);
   }
 
   /**************************************************************************

@@ -1,4 +1,4 @@
-﻿var Components =
+﻿let Components =
 {
   /**************************************************************************
   * Prompts the user to do not a damn thing.

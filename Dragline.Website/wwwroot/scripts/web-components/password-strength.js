@@ -12,13 +12,18 @@
 
   // Create the password strength based on HTMLElement
   let passwordStrengthPrototype = Object.create(HTMLElement.prototype);
+  let template = `
+<style>
+  @import "/css/dragline-components.css";
+</style>`;
 
   /****************************************************************************
   * Invoked when created.
   ****************************************************************************/
   passwordStrengthPrototype.createdCallback = function()
   {
-    this.createShadowRoot();
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.innerHTML = template;
   };
 
   /****************************************************************************

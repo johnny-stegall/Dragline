@@ -10,8 +10,12 @@
 {
   "use strict";
 
-  // Create toasty based on HTMLElement
   let toastyPrototype = Object.create(HTMLElement.prototype);
+  let template = `
+<style>
+  @import "/css/font-awesome.min.css";
+  @import "/css/dragline-components.css";
+</style>`;
 
   /****************************************************************************
   * Invoked when created.
@@ -19,8 +23,9 @@
   toastyPrototype.createdCallback = function()
   {
     this.Messages = 0;
-    this.createShadowRoot();
-    this.shadowRoot.innerHTML = "<style>@import url('/css/font-awesome.min.css')</style>";
+
+    let shadowRoot = this.attachShadow({ mode: "open" });
+    shadowRoot.innerHTML = template;
   };
 
   /**************************************************************************
@@ -99,10 +104,8 @@
   **************************************************************************/
   toastyPrototype.removeAll = function()
   {
-    while (this.shadowRoot.hasChildNodes())
-      this.shadowRoot.firstChild.remove();
-
-    this.shadowRoot.innerHTML = "<style>@import url('/css/font-awesome.min.css')</style>";
+    while (this.shadowRoot.querySelector("div"))
+      this.shadowRoot.querySelector("div").remove();
   }
 
   let Toasty = document.registerElement("dragline-toasty", { prototype: toastyPrototype });

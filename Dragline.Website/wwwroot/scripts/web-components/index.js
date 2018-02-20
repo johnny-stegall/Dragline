@@ -10,8 +10,11 @@
 {
   "use strict";
 
-  // Create toasty based on HTMLElement
   let indexPrototype = Object.create(HTMLElement.prototype);
+  let template = `
+<style>
+  @import "/css/dragline-components.css";
+</style>`;
 
   /****************************************************************************
   * Invoked when created.
@@ -23,7 +26,9 @@
     this.Headings = [];
     this.ActiveHeading = null;
     this.ScrollHeight = 0;
-    this.createShadowRoot();
+
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.innerHTML = template;
   };
 
   /****************************************************************************
@@ -88,8 +93,9 @@
 
     this.ScrollHeight = getScrollHeight.call(this);
 
-    while (this.shadowRoot.hasChildNodes())
-      this.shadowRoot.firstChild.remove();
+    let existingIndex = this.shadowRoot.querySelector("ol");
+    if (existingIndex)
+      existingIndex.remove();
 
     let targetList = document.createElement("ol");
     this.shadowRoot.appendChild(targetList);
@@ -248,7 +254,7 @@
 
     if (this.Scroller == window)
     {
-      scrollTop = document.body.scrollTop + offset;
+      scrollTop = document.documentElement.scrollTop + offset;
       maxScroll = offset + scrollHeight - window.innerHeight;
     }
     else
