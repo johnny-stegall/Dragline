@@ -10,7 +10,6 @@
 {
   "use strict";
 
-  // Create the modal based on HTMLElement
   let modalPrototype = Object.create(HTMLElement.prototype);
 
   /****************************************************************************

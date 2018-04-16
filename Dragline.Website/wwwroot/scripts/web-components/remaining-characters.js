@@ -10,8 +10,7 @@
 {
   "use strict";
 
-  // Create the character counter based on the <label> element
-  let remainingPrototype = Object.create(HTMLLabelElement.prototype);
+  let remainingPrototype = Object.create(HTMLElement.prototype);
   
   /****************************************************************************
   * Invoked when created.

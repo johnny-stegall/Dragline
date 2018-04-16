@@ -1,0 +1,110 @@
+﻿.Carousel
+{
+  overflow: hidden;
+  position: relative;
+}
+
+.Carousel > .Seat
+{
+  position: absolute;
+  transition: 0.6s ease-in-out left;
+  top: 0;
+}
+
+.Carousel > .Seat.Left
+{
+  left: -100%;
+}
+
+.Carousel > .Seat.Right
+{
+  left: 100%;
+}
+
+.Carousel > .Seat.Active
+{
+  left: 0;
+}
+
+.Carousel > ol
+{
+  bottom: 20px;
+  left: 50%;
+  list-style: none;
+  margin: 0 0 0 -30%;
+  padding: 0;
+  position: absolute;
+  text-align: center;
+  width: 60%;
+  z-index: 99;
+}
+
+.Carousel > ol > li
+{
+  background: #000;
+  border: 1px solid #FFF;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-block;
+  height: 10px;
+  margin: 1px;
+  text-indent: -999px;
+  width: 10px;
+}
+
+.Carousel > ol > li.Active
+{
+  background: #FFF;
+  border: 1px solid #000;
+  height: 12px;
+  margin: 0;
+  width: 12px;
+}
+
+.Carousel > a
+{
+  bottom: 0;
+  color: #FFF;
+  font-size: 2.25rem;
+  opacity: 0.5;
+  position: absolute;
+  text-align: center;
+  text-shadow: 0 1px 2px #000;
+  top: 0;
+  width: 10%;
+}
+
+.Carousel > a:hover
+{
+  opacity: 0.9;
+}
+
+.Carousel > a.Right
+{
+  right: 0;
+}
+
+.Carousel > a.Left
+{
+  left: 0;
+}
+
+.Carousel > a > i
+{
+  position: absolute;
+  height: 30px;
+  top: 50%;
+  width: 30px;
+}
+
+.Carousel > a.Left > i
+{
+  left: 50%;
+  margin-left: -18px;
+}
+
+.Carousel > a.Right > i
+{
+  left: 50%;
+  margin-left: -15px;
+}

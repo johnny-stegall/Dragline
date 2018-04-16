@@ -50,7 +50,9 @@
     buildIndicators.call(this);
     buildNextPrevious.call(this);
     wireEvents.call(this);
-    setDimensions.call(this);
+
+    if (!this.hasAttribute("autosize"))
+      setDimensions.call(this);
 
     if (parseInt(this.getAttribute("interval")) > 0)
       this.resumeRotation();

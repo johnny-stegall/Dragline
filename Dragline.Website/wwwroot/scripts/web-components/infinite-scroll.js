@@ -10,7 +10,6 @@
 {
   "use strict";
 
-  // Create the infinite scroller based on the HTMLElement
   let infiniteScrollPrototype = Object.create(HTMLElement.prototype);
   let STORAGE_PREFIX = "Infinite Scroll: ";
 

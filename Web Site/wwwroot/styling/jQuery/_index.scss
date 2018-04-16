@@ -1,0 +1,30 @@
+﻿/******************************************************************************
+* Index styling
+******************************************************************************/
+ul.Index
+{
+  ul
+  {
+    display: none;
+    padding-left: 1.5rem;
+
+    li > a
+    {
+      color: $color-blue;
+    }
+
+    li.Active
+    {
+      a
+      {
+        color: #0000AA;
+        font-weight: bold;
+      }
+
+      ul
+      {
+        display: block;
+      }
+    }
+  }
+}

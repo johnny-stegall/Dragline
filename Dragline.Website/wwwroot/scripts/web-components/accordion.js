@@ -10,7 +10,6 @@
 {
   "use strict";
 
-  // Create the accordion based on HTMLElement
   let accordionPrototype = Object.create(HTMLElement.prototype);
 
   /****************************************************************************
