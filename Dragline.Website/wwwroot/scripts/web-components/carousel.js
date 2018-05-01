@@ -28,15 +28,6 @@
 
       this.IsSliding = false;
       this.Timer = null;
-
-      if (!this.hasAttribute("wrap"))
-        this.setAttribute("wrap", "");
-
-      if (!this.hasAttribute("direction"))
-        this.setAttribute("direction", "right");
-
-      if (!this.hasAttribute("interval"))
-        this.setAttribute("interval", "5000");
     }
 
     /****************************************************************************
@@ -75,6 +66,15 @@
     ****************************************************************************/
     connectedCallback()
     {
+      if (!this.hasAttribute("wrap"))
+        this.setAttribute("wrap", "");
+
+      if (!this.hasAttribute("direction"))
+        this.setAttribute("direction", "right");
+
+      if (!this.hasAttribute("interval"))
+        this.setAttribute("interval", "5000");
+
       if (!this.querySelector("carousel-item[active]"))
         this.querySelector("carousel-item").setAttribute("active", "");
 

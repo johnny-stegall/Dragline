@@ -27,7 +27,7 @@
       super();
 
       this.Target = document.body;
-      this.Scroller = document.getElementById(this.getAttribute("target")) || window;
+      this.Scroller = null;
       this.Headings = [];
       this.ActiveHeading = null;
       this.ScrollHeight = 0;
@@ -57,6 +57,8 @@
     ****************************************************************************/
     connectedCallback()
     {
+      this.Scroller = document.getElementById(this.getAttribute("target")) || window;
+
       wireEvents.call(this);
       trackBookmarks.call(this);
     }

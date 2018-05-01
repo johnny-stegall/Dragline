@@ -114,7 +114,6 @@ dragline-carousel
     text-align: center;
     text-shadow: 0 1px 2px #000;
     top: 0;
-    width: 10%;
 
     > i
     {
@@ -137,23 +136,11 @@ dragline-carousel
     &.Left
     {
       left: 0;
-
-      > i
-      {
-        left: 50%;
-        margin-left: -18px;
-      }
     }
 
     &.Right
     {
-      right: 0;
-
-      > i
-      {
-        left: 50%;
-        margin-left: -15px;
-      }
+      right: 30px;
     }
   }
 
