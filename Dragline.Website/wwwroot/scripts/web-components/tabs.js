@@ -11,7 +11,6 @@
 {
   "use strict";
 
-  let tabstripPrototype = Object.create(HTMLElement.prototype);
   let template = `
 <style>
   @import "/css/font-awesome.min.css";
@@ -19,35 +18,73 @@
 </style>
 <slot></slot>`;
 
-  /****************************************************************************
-  * Invoked when created.
-  ****************************************************************************/
-  tabstripPrototype.createdCallback = function()
+  class Tabstrip extends HTMLElement
   {
-    this.attachShadow({ mode: "open" });
-    this.shadowRoot.innerHTML = template;
-  };
+    // Must define observedAttributes() for attributeChangedCallback to work
+    static get observedAttributes()
+    {
+      return [""];
+    }
 
-  /****************************************************************************
-  * Invoked when attached to the DOM.
-  ****************************************************************************/
-  tabstripPrototype.attachedCallback = function()
-  {
-    if (!this.hasAttribute("orientation"))
-      this.setAttribute("orientation", "horizontal");
+    /****************************************************************************
+    * Creates an instance of Accordion.
+    ****************************************************************************/
+    constructor()
+    {
+      // Establish prototype chain and this
+      super();
 
-    let activeTabs = this.querySelectorAll("dragline-tab[active]");
+      this.attachShadow({ mode: "open" });
+      this.shadowRoot.innerHTML = template;
+    }
 
-    if (!activeTabs.length)
-      this.firstElementChild.setAttribute("active", "");
-    else if (activeTabs.length > 1)
-      throw new Error("Only one tab can be active at a time.");
+    /****************************************************************************
+    * Invoked when moved to a new document.
+    ****************************************************************************/
+    adoptedCallback()
+    {
+    }
 
-    buildTabs.call(this);
-    wireEvents.call(this);
-  };
+    /****************************************************************************
+    * Invoked when any attribute specified in observedAttributes() is added,
+    * removed, or changed.
+    *
+    * @param attributeName {string} The attribute name.
+    * @param oldValue {string} The old value.
+    * @param newValue {string} The new value.
+    ****************************************************************************/
+    attributeChangedCallback(attributeName, oldValue, newValue)
+    {
+    }
 
-  let Tabstrip = document.registerElement("dragline-tabstrip", { prototype: tabstripPrototype });
+    /****************************************************************************
+    * Invoked when first connected to the DOM.
+    ****************************************************************************/
+    connectedCallback()
+    {
+      if (!this.hasAttribute("orientation"))
+        this.setAttribute("orientation", "horizontal");
+
+      let activeTabs = this.querySelectorAll("dragline-tab[active]");
+
+      if (!activeTabs.length)
+        this.firstElementChild.setAttribute("active", "");
+      else if (activeTabs.length > 1)
+        throw new Error("Only one tab can be active at a time.");
+
+      buildTabs.call(this);
+      wireEvents.call(this);
+    }
+
+    /****************************************************************************
+    * Invoked when disconnected from the DOM.
+    ****************************************************************************/
+    disconnectedCallback()
+    {
+    }
+  }
+
+  window.customElements.define("dragline-tabstrip", Tabstrip);
 
   /**************************************************************************
   * Builds the internals needed to make a tab work.

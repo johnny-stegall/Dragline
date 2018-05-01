@@ -138,70 +138,68 @@ dragline-carousel {
       left: 100%; }
   dragline-carousel[paradox] carousel-item {
     visibility: hidden !important; }
-
-:host(dragline-carousel) > ol {
-  bottom: 20px;
-  display: none;
-  left: 50%;
-  list-style: none;
-  margin: 0 0 0 -30%;
-  padding: 0;
-  position: absolute;
-  text-align: center;
-  width: 60%;
-  z-index: 99; }
-  :host(dragline-carousel) > ol > li {
-    background: #000;
-    border: 2px solid #FFF;
-    border-radius: 10px;
-    cursor: pointer;
-    display: inline-block;
-    height: 10px;
-    margin: 1px;
-    text-indent: -999px;
-    width: 10px; }
-    :host(dragline-carousel) > ol > li[active] {
-      background: #FFF;
-      border: 2px solid #000;
-      height: 12px;
-      margin: 0;
-      width: 12px; }
-
-:host(dragline-carousel) > a {
-  bottom: 0;
-  border: 2px solid #000;
-  color: #FFF;
-  display: none;
-  font-size: 2.25rem;
-  opacity: 0.5;
-  position: absolute;
-  text-align: center;
-  text-shadow: 0 1px 2px #000;
-  top: 0;
-  width: 10%; }
-  :host(dragline-carousel) > a > i {
+  dragline-carousel > ol {
+    bottom: 20px;
+    display: none;
+    left: 50%;
+    list-style: none;
+    margin: 0 0 0 -30%;
+    padding: 0;
     position: absolute;
-    height: 30px;
-    top: 50%;
-    width: 30px; }
-  :host(dragline-carousel) > a:hover {
-    opacity: 0.9; }
-  :host(dragline-carousel) > a.Left {
-    left: 0; }
-    :host(dragline-carousel) > a.Left > i {
-      left: 50%;
-      margin-left: -18px; }
-  :host(dragline-carousel) > a.Right {
-    right: 0; }
-    :host(dragline-carousel) > a.Right > i {
-      left: 50%;
-      margin-left: -15px; }
-
-:host(dragline-carousel[show-indicators]) > ol {
-  display: block; }
-
-:host(dragline-carousel[show-next-previous]) > a {
-  display: inline-block; }
+    text-align: center;
+    width: 60%;
+    z-index: 99; }
+    dragline-carousel > ol > li {
+      background: #000;
+      border: 2px solid #FFF;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-block;
+      height: 10px;
+      margin: 1px;
+      text-indent: -999px;
+      width: 10px; }
+      dragline-carousel > ol > li[active] {
+        background: #FFF;
+        border: 2px solid #000;
+        height: 12px;
+        margin: 0;
+        width: 12px; }
+  dragline-carousel > a {
+    border: 0 none;
+    bottom: 0;
+    color: #FFF;
+    display: none;
+    font-size: 2.25rem;
+    opacity: 0.5;
+    position: absolute;
+    text-align: center;
+    text-shadow: 0 1px 2px #000;
+    top: 0;
+    width: 10%; }
+    dragline-carousel > a > i {
+      position: absolute;
+      height: 30px;
+      top: 50%;
+      width: 30px; }
+    dragline-carousel > a:focus {
+      outline: 0 none; }
+    dragline-carousel > a:hover {
+      opacity: 0.9; }
+    dragline-carousel > a.Left {
+      left: 0; }
+      dragline-carousel > a.Left > i {
+        left: 50%;
+        margin-left: -18px; }
+    dragline-carousel > a.Right {
+      right: 0; }
+      dragline-carousel > a.Right > i {
+        left: 50%;
+        margin-left: -15px; }
+  dragline-carousel[show-position] > ol {
+    display: block; }
+  dragline-carousel[show-navigation] > a {
+    display: inline-block; }
 
 /******************************************************************************
 * Card styling
@@ -398,18 +396,18 @@ dragline-dropdown[active] > ul {
 /******************************************************************************
 * Index styling
 ******************************************************************************/
-:host(dragline-index) ol {
+dragline-index ol {
   list-style: none; }
-  :host(dragline-index) ol > li a {
+  dragline-index ol > li a {
     color: #0768A9;
     text-decoration: none; }
-  :host(dragline-index) ol > li ol {
+  dragline-index ol > li ol {
     display: none;
     padding-left: 1.5rem; }
-  :host(dragline-index) ol > li[active] > a {
+  dragline-index ol > li[active] > a {
     color: #043b60;
     font-weight: bold; }
-  :host(dragline-index) ol > li[active] > ol {
+  dragline-index ol > li[active] > ol {
     display: block; }
 
 /******************************************************************************

@@ -101,7 +101,7 @@
   {
   }
 
-  let AdapTable = document.registerElement("dragline-adaptable", { prototype: adaptablePrototype });
+  window.customElements.define("dragline-adaptable", AdapTable);
 
   /**************************************************************************
   * Caches data returned from the server in sessionStorage.

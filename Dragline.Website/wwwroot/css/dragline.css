@@ -543,40 +543,32 @@ form[clean] textarea {
 * Meter styling
 ******************************************************************************/
 meter {
-  -moz-appearance: none;
-  -ms-appearance: none;
-  -o-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
   border: 0 none;
   border-radius: 3px;
   display: block; }
 
+meter::-moz-meter-bar,
 meter::-webkit-meter-bar {
-  background: whitesmoke;
+  background: none;
+  background-color: whitesmoke;
   box-shadow: 0 2px 5px #999999 inset; }
 
+meter::-moz-meter-optimum,
 meter::-webkit-meter-optimum-value {
-  background: #00AA00;
-  box-shadow: 0 2px 5px #999999 inset; }
+  background: #00AA00; }
 
+meter::-moz-meter-suboptimum,
 meter::-webkit-meter-suboptimum-value {
-  background: #FFFF00;
-  box-shadow: 0 2px 5px #999999 inset; }
+  background: #FFFF00; }
 
+meter::-moz-sub-sub-optimum,
 meter::-webkit-meter-even-less-good-value {
-  background: #AA0000;
-  box-shadow: 0 2px 5px #999999 inset; }
+  background: #AA0000; }
 
 /******************************************************************************
 * Progress bar styling
 ******************************************************************************/
 progress {
-  -moz-appearance: none;
-  -ms-appearance: none;
-  -o-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
   background: whitesmoke;
   border: 0 none;
   border-radius: 3px;

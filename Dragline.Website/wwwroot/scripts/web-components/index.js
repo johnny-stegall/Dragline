@@ -10,37 +10,66 @@
 {
   "use strict";
 
-  let indexPrototype = Object.create(HTMLElement.prototype);
-  let template = `
-<style>
-  @import "/css/dragline-components.css";
-</style>`;
-
-  /****************************************************************************
-  * Invoked when created.
-  ****************************************************************************/
-  indexPrototype.createdCallback = function()
+  class Index extends HTMLElement
   {
-    this.Target = document.body;
-    this.Scroller = document.getElementById(this.getAttribute("target")) || window;
-    this.Headings = [];
-    this.ActiveHeading = null;
-    this.ScrollHeight = 0;
+    // Must define observedAttributes() for attributeChangedCallback to work
+    static get observedAttributes()
+    {
+      return [""];
+    }
 
-    this.attachShadow({ mode: "open" });
-    this.shadowRoot.innerHTML = template;
-  };
+    /****************************************************************************
+    * Creates an instance of Accordion.
+    ****************************************************************************/
+    constructor()
+    {
+      // Establish prototype chain and this
+      super();
 
-  /****************************************************************************
-  * Invoked when attached to the DOM.
-  ****************************************************************************/
-  indexPrototype.attachedCallback = function()
-  {
-    wireEvents.call(this);
-    trackBookmarks.call(this);
+      this.Target = document.body;
+      this.Scroller = document.getElementById(this.getAttribute("target")) || window;
+      this.Headings = [];
+      this.ActiveHeading = null;
+      this.ScrollHeight = 0;
+    }
+
+    /****************************************************************************
+    * Invoked when moved to a new document.
+    ****************************************************************************/
+    adoptedCallback()
+    {
+    }
+
+    /****************************************************************************
+    * Invoked when any attribute specified in observedAttributes() is added,
+    * removed, or changed.
+    *
+    * @param attributeName {string} The attribute name.
+    * @param oldValue {string} The old value.
+    * @param newValue {string} The new value.
+    ****************************************************************************/
+    attributeChangedCallback(attributeName, oldValue, newValue)
+    {
+    }
+
+    /****************************************************************************
+    * Invoked when first connected to the DOM.
+    ****************************************************************************/
+    connectedCallback()
+    {
+      wireEvents.call(this);
+      trackBookmarks.call(this);
+    }
+
+    /****************************************************************************
+    * Invoked when disconnected from the DOM.
+    ****************************************************************************/
+    disconnectedCallback()
+    {
+    }
   }
 
-  let Index = document.registerElement("dragline-index", { prototype: indexPrototype });
+  window.customElements.define("dragline-index", Index);
 
   /**************************************************************************
   * Applies styling to the active heading to denote to users where in the
@@ -64,7 +93,7 @@
       scrollToHeading.call(this);
     }
 
-    let activeLinks = this.shadowRoot.querySelectorAll("li[active]");
+    let activeLinks = this.querySelectorAll("li[active]");
 
     for (var activeIndex = 0; activeIndex < activeLinks.length; activeIndex++)
       activeLinks[activeIndex].removeAttribute("active");
@@ -93,12 +122,12 @@
 
     this.ScrollHeight = getScrollHeight.call(this);
 
-    let existingIndex = this.shadowRoot.querySelector("ol");
+    let existingIndex = this.querySelector("ol");
     if (existingIndex)
       existingIndex.remove();
 
     let targetList = document.createElement("ol");
-    this.shadowRoot.appendChild(targetList);
+    this.appendChild(targetList);
     let listLevel = parseInt(headings[0].Heading.tagName.substr(headings[0].Heading.tagName.length - 1));
     let listItem;
 
@@ -270,13 +299,13 @@
     if (scrollTop >= maxScroll)
     {
       activeHeading = this.Headings[this.Headings.length - 1];
-      activeLink = this.shadowRoot.querySelector("[href='#" + activeHeading.Heading.id + "']");
+      activeLink = this.querySelector("[href='#" + activeHeading.Heading.id + "']");
       return this.ActiveHeading != activeHeading && activateBookmark.call(this, activeLink);
     }
     else if (this.ActiveHeading && scrollTop <= this.Headings[0].Offset)
     {
       activeHeading = this.Headings[0];
-      activeLink = this.shadowRoot.querySelector("[href='#" + activeHeading.Heading.id + "']");
+      activeLink = this.querySelector("[href='#" + activeHeading.Heading.id + "']");
       return this.ActiveHeading != activeHeading && activateBookmark.call(this, activeLink);
     }
 
@@ -284,7 +313,7 @@
     {
       if (scrollTop >= this.Headings[headerIndex].Offset && (!this.Headings[headerIndex + 1] || scrollTop <= this.Headings[headerIndex + 1].Offset))
       {
-        activeLink = this.shadowRoot.querySelector("[href='#" + this.Headings[headerIndex].Heading.id + "']");
+        activeLink = this.querySelector("[href='#" + this.Headings[headerIndex].Heading.id + "']");
         activateBookmark.call(this, activeLink);
         break;
       }
@@ -306,8 +335,8 @@
 
     this.addEventListener("click", function(event)
     {
-      if (event.path[0].tagName === "A")
-        activateBookmark.call(self, event.path[0], event);
+      if (event.target.tagName === "A")
+        activateBookmark.call(self, event.target, event);
     });
   }
 })(window, document);

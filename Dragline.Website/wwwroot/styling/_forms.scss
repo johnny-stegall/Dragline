@@ -352,38 +352,35 @@ form[clean]
 ******************************************************************************/
 meter
 {
-  -moz-appearance: none;
-  -ms-appearance: none;
-  -o-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
   border: 0 none;
   border-radius: $control-border-radius;
   display: block;
 }
 
+meter::-moz-meter-bar,
 meter::-webkit-meter-bar
 {
-  background: $control-background-color;
+  background: none;
+  background-color: $control-background-color;
   box-shadow: 0 2px 5px $color-gray-lighter inset;
 }
 
+meter::-moz-meter-optimum,
 meter::-webkit-meter-optimum-value
 {
   background: $color-green;
-  box-shadow: 0 2px 5px $color-gray-lighter inset;
 }
 
+meter::-moz-meter-suboptimum,
 meter::-webkit-meter-suboptimum-value
 {
   background: $color-yellow;
-  box-shadow: 0 2px 5px $color-gray-lighter inset;
 }
 
+meter::-moz-sub-sub-optimum,
 meter::-webkit-meter-even-less-good-value
 {
   background: $color-red;
-  box-shadow: 0 2px 5px $color-gray-lighter inset;
 }
 
 /******************************************************************************
@@ -391,11 +388,6 @@ meter::-webkit-meter-even-less-good-value
 ******************************************************************************/
 progress
 {
-  -moz-appearance: none;
-  -ms-appearance: none;
-  -o-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
   background: $control-background-color;
   border: 0 none;
   border-radius: $control-border-radius;

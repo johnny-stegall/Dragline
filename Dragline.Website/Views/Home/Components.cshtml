@@ -496,7 +496,7 @@
       item in them.
     </p>
 
-    <dragline-carousel>
+    <dragline-carousel autosize>
       <carousel-item>
         <img src="~/images/memes/challenge-accepted.jpg" />
       </carousel-item>
@@ -568,29 +568,29 @@
         </ul>
       </li>
       <li>
-        <code>show-indicators</code> - Set to true to show symbols in the
+        <code>show-position</code> - Set to true to show symbols in the
         lower-center of the carousel that display the item and its location
         within the carousel; it also allows users to click different symbols to
         move to that item. The default is false.
 
         <ul>
           <li>
-            <input type="checkbox" id="chkCarousel-Indicators" data-attribute="show-indicators" />
+            <input type="checkbox" id="chkCarousel-Indicators" data-attribute="show-position" />
             <label for="chkCarousel-Indicators">
-              Show indicators
+              Show position
             </label>
           </li>
         </ul>
       </li>
       <li>
-        <code>show-next-previous</code> - Set to true to show the next/previous
-        indicators. The default is false.
+        <code>show-navigation</code> - Set to true to show the next/previous
+        controls. The default is false.
 
         <ul>
           <li>
-            <input type="checkbox" id="chkCarousel-NextPrevious" data-attribute="show-next-previous" />
+            <input type="checkbox" id="chkCarousel-NextPrevious" data-attribute="show-navigation" />
             <label for="chkCarousel-NextPrevious">
-              Show next/previous
+              Show navigation
             </label>
           </li>
         </ul>
@@ -828,7 +828,7 @@
       be created using linear gradients for the <code>background</code> style.
     </p>
 
-    <meter class="Categorized" min="0" max="100" low="25" high="85" optimum="75" value="75"></meter>
+    <meter class="Categorized" min="0" max="100" low="25" high="85" optimum="75" value="0"></meter>
   </article>
 
   <article>

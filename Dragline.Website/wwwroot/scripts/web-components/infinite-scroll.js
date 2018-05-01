@@ -10,110 +10,142 @@
 {
   "use strict";
 
-  let infiniteScrollPrototype = Object.create(HTMLElement.prototype);
-  let STORAGE_PREFIX = "Infinite Scroll: ";
+  const STORAGE_PREFIX = "Infinite Scroll: ";
+  let template = `
+<style>
+  @import "/css/font-awesome.min.css";
+  @import "/css/dragline-components.css";
+</style>`;
 
-  /****************************************************************************
-  * Invoked when created.
-  ****************************************************************************/
-  infiniteScrollPrototype.createdCallback = function()
+  class InfiniteScroller extends HTMLElement
   {
-    this.HasLoadedData = false;
-    this.NoMoreData = false;
-    this.PageIndex = 0;
-    this.Rows = 0;
-
-    this.createShadowRoot();
-    this.shadowRoot.innerHTML = "<style>@import url('/css/font-awesome.min.css')</style><content></content>";
-  };
-
-  /****************************************************************************
-  * Invoked when attached to the DOM.
-  ****************************************************************************/
-  infiniteScrollPrototype.attachedCallback = function()
-  {
-    if (!this.hasAttribute("page-size"))
-      this.setAttribute("page-size", "25");
-
-    if (!this.hasAttribute("threshold"))
-      this.setAttribute("threshold", "0.67");
-
-    if (!this.hasAttribute("use-window"))
-      this.setAttribute("use-window", "");
-    
-    this.HeaderHeight = this.clientHeight;
-    this.ItemHeight = this.ItemHeight || calculateItemHeight.call(this);
-
-    buildSpacers.call(this);
-    wireEvents.call(this);
-  };
-
-  /****************************************************************************
-  * Invoked when attributes change.
-  *
-  * @param attributeName {string} The attribute name.
-  * @param oldValue {string} The old value.
-  * @param newValue {string} The new value.
-  ****************************************************************************/
-  infiniteScrollPrototype.attributeChangedCallback = function(attributeName, oldValue, newValue)
-  {
-    switch (attributeName)
+    // Must define observedAttributes() for attributeChangedCallback to work
+    static get observedAttributes()
     {
-      case "use-window":
-        wireEvents.call(this);
-        break;
+      return ["use-window"];
     }
-  };
 
-  /****************************************************************************
-  * Caches the data.
-  *
-  * @param newData {array} The array of data retrieved from the server.
-  ****************************************************************************/
-  infiniteScrollPrototype.cacheData = function(newData)
-  {
-    if (!newData || !newData.length)
-      this.NoMoreData = true;
-    else if (this.id)
+    /****************************************************************************
+    * Creates an instance of Accordion.
+    ****************************************************************************/
+    constructor()
     {
-      let cachedData = JSON.parse(sessionStorage.getItem(STORAGE_PREFIX + document.location)) || { Instances: {} };
-      let instanceCache = cachedData.Instances[this.id];
-      if (!instanceCache)
-      {
-        instanceCache = { Data: [] };
-        cachedData.Instances[this.id] = instanceCache;
-      }
+      // Establish prototype chain and this
+      super();
 
-      if (instanceCache.Data.indexOf(newData) > -1)
+      this.HasLoadedData = false;
+      this.NoMoreData = false;
+      this.PageIndex = 0;
+      this.Rows = 0;
+
+      this.attachShadow({ mode: "open" });
+      this.shadowRoot.innerHTML = template;
+    }
+
+    /****************************************************************************
+    * Invoked when moved to a new document.
+    ****************************************************************************/
+    adoptedCallback()
+    {
+    }
+
+    /****************************************************************************
+    * Invoked when any attribute specified in observedAttributes() is added,
+    * removed, or changed.
+    *
+    * @param attributeName {string} The attribute name.
+    * @param oldValue {string} The old value.
+    * @param newValue {string} The new value.
+    ****************************************************************************/
+    attributeChangedCallback(attributeName, oldValue, newValue)
+    {
+      switch (attributeName)
+      {
+        case "use-window":
+          wireEvents.call(this);
+          break;
+      }
+    }
+
+    /****************************************************************************
+    * Caches the data.
+    *
+    * @param newData {array} The array of data retrieved from the server.
+    ****************************************************************************/
+    cacheData(newData)
+    {
+      if (!newData || !newData.length)
         this.NoMoreData = true;
+      else if (this.id)
+      {
+        let cachedData = JSON.parse(sessionStorage.getItem(STORAGE_PREFIX + document.location)) || { Instances: {} };
+        let instanceCache = cachedData.Instances[this.id];
+        if (!instanceCache)
+        {
+          instanceCache = { Data: [] };
+          cachedData.Instances[this.id] = instanceCache;
+        }
+
+        if (instanceCache.Data.indexOf(newData) > -1)
+          this.NoMoreData = true;
+        else
+        {
+          instanceCache.Data = instanceCache.Data.concat(newData);
+          sessionStorage.setItem(STORAGE_PREFIX + document.location, JSON.stringify(cachedData));
+        }
+
+        this.Rows = instanceCache.Data.length;
+      }
       else
       {
-        instanceCache.Data = instanceCache.Data.concat(newData);
-        sessionStorage.setItem(STORAGE_PREFIX + document.location, JSON.stringify(cachedData));
+        let cachedData = JSON.parse(sessionStorage.getItem(STORAGE_PREFIX + document.location)) || [];
+
+        if (cachedData.indexOf(newData) > -1)
+          this.NoMoreData = true;
+        else
+        {
+          cachedData = cachedData.concat(newData);
+          sessionStorage.setItem(STORAGE_PREFIX + document.location, JSON.stringify(cachedData));
+        }
+
+        this.Rows = cachedData.length;
       }
 
-      this.Rows = instanceCache.Data.length;
-    }
-    else
+      let thresholdReachedEvent = new CustomEvent("thresholdReached", { detail: { "data": loadData.call(this) } });
+      this.dispatchEvent(thresholdReachedEvent);
+    };
+
+
+    /****************************************************************************
+    * Invoked when first connected to the DOM.
+    ****************************************************************************/
+    connectedCallback()
     {
-      let cachedData = JSON.parse(sessionStorage.getItem(STORAGE_PREFIX + document.location)) || [];
+      if (!this.hasAttribute("page-size"))
+        this.setAttribute("page-size", "25");
 
-      if (cachedData.indexOf(newData) > -1)
-        this.NoMoreData = true;
-      else
-      {
-        cachedData = cachedData.concat(newData);
-        sessionStorage.setItem(STORAGE_PREFIX + document.location, JSON.stringify(cachedData));
-      }
+      if (!this.hasAttribute("threshold"))
+        this.setAttribute("threshold", "0.67");
 
-      this.Rows = cachedData.length;
+      if (!this.hasAttribute("use-window"))
+        this.setAttribute("use-window", "");
+
+      this.HeaderHeight = this.clientHeight;
+      this.ItemHeight = this.ItemHeight || calculateItemHeight.call(this);
+
+      buildSpacers.call(this);
+      wireEvents.call(this);
     }
 
-    let thresholdReachedEvent = new CustomEvent("thresholdReached", { detail: { "data": loadData.call(this) } });
-    this.dispatchEvent(thresholdReachedEvent);
-  };
+    /****************************************************************************
+    * Invoked when disconnected from the DOM.
+    ****************************************************************************/
+    disconnectedCallback()
+    {
+    }
+  }
 
-  let InfiniteScroller = document.registerElement("dragline-scrollable", { prototype: infiniteScrollPrototype });
+  window.customElements.define("dragline-scrollable", InfiniteScroller);
 
   /**************************************************************************
   * Builds spacer elements above and below the target element to keep the

@@ -10,36 +10,72 @@
 {
   "use strict";
 
-  let pulloutPrototype = Object.create(HTMLElement.prototype);
   let template = `
 <style>
   @import "/css/font-awesome.min.css";
   @import "/css/dragline-components.css";
 </style>`;
 
-  /****************************************************************************
-  * Invoked when created.
-  ****************************************************************************/
-  pulloutPrototype.createdCallback = function()
+  class PullOut extends HTMLElement
   {
-    this.attachShadow({ mode: "open" });
-    this.shadowRoot.innerHTML = template;
-  };
+    // Must define observedAttributes() for attributeChangedCallback to work
+    static get observedAttributes()
+    {
+      return [""];
+    }
 
-  /****************************************************************************
-  * Invoked when attached to the DOM.
-  ****************************************************************************/
-  pulloutPrototype.attachedCallback = function()
-  {
-    if (!this.hasAttribute("location"))
-      this.setAttribute("location", "top");
+    /****************************************************************************
+    * Creates an instance of Accordion.
+    ****************************************************************************/
+    constructor()
+    {
+      // Establish prototype chain and this
+      super();
 
-    buildControls.call(this);
-    wireEvents.call(this);
-  };
+      this.attachShadow({ mode: "open" });
+      this.shadowRoot.innerHTML = template;
+    }
 
-  // Register the custom element
-  let PullOut = document.registerElement("dragline-pull-out", { prototype: pulloutPrototype });
+    /****************************************************************************
+    * Invoked when moved to a new document.
+    ****************************************************************************/
+    adoptedCallback()
+    {
+    }
+
+    /****************************************************************************
+    * Invoked when any attribute specified in observedAttributes() is added,
+    * removed, or changed.
+    *
+    * @param attributeName {string} The attribute name.
+    * @param oldValue {string} The old value.
+    * @param newValue {string} The new value.
+    ****************************************************************************/
+    attributeChangedCallback(attributeName, oldValue, newValue)
+    {
+    }
+
+    /****************************************************************************
+    * Invoked when first connected to the DOM.
+    ****************************************************************************/
+    connectedCallback()
+    {
+      if (!this.hasAttribute("location"))
+        this.setAttribute("location", "top");
+
+      buildControls.call(this);
+      wireEvents.call(this);
+    }
+
+    /****************************************************************************
+    * Invoked when disconnected from the DOM.
+    ****************************************************************************/
+    disconnectedCallback()
+    {
+    }
+  }
+
+  window.customElements.define("dragline-pull-out", PullOut);
 
   /**************************************************************************
   * Builds the pull-out controls.

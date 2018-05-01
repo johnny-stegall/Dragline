@@ -17,83 +17,110 @@
   @import "/css/dragline-components.css";
 </style>`;
 
-  /****************************************************************************
-  * Invoked when created.
-  ****************************************************************************/
-  passwordStrengthPrototype.createdCallback = function()
+  class PasswordStrength extends HTMLElement
   {
-    this.attachShadow({ mode: "open" });
-    this.shadowRoot.innerHTML = template;
-  };
-
-  /****************************************************************************
-  * Invoked when attached to the DOM.
-  ****************************************************************************/
-  passwordStrengthPrototype.attachedCallback = function()
-  {
-    if (!this.hasAttribute("for"))
-      throw new Error("The for attribute is required.");
-
-    let targetInput = document.getElementById(this.getAttribute("for"));
-
-    if (targetInput.tagName !== "INPUT")
-      throw new Error("Only <input> elements are supported for checking password strength.");
-
-    if (!this.hasAttribute("fair"))
-      this.setAttribute("fair", "^(?=.*[A-Za-z]+)(?=.*[0-9]+).{6,}$");
-
-    if (!this.hasAttribute("good"))
-      this.setAttribute("good", "^(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[0-9]+).{8,}$");
-
-    if (!this.hasAttribute("strong"))
-      this.setAttribute("strong", "^(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[0-9]+)(?=.*[^A-Za-z0-9 ]+).{8,}$");
-
-    buildStrength.call(this);
-    wireEvents.call(this);
-  };
-
-  /****************************************************************************
-  * Invoked when attributes change.
-  *
-  * @param attributeName {string} The attribute name.
-  * @param oldValue {string} The old value.
-  * @param newValue {string} The new value.
-  ****************************************************************************/
-  passwordStrengthPrototype.attributeChangedCallback = function(attributeName, oldValue, newValue)
-  {
-    switch (attributeName)
+    // Must define observedAttributes() for attributeChangedCallback to work
+    static get observedAttributes()
     {
-      case "for":
-        if (!this.hasAttribute("for"))
-          throw new Error("The for attribute is required.");
-
-        let targetInput = document.getElementById(this.getAttribute("for"));
-
-        if (targetInput.tagName !== "INPUT")
-          throw new Error("Only <input> elements are supported for checking password strength.");
-
-        wireEvents.call(this, oldValue);
-        break;
-      case "fair":
-      case "good":
-      case "strong":
-        if (newValue == null || newValue.trim() === "")
-        {
-          if (attributeName === "fair")
-            this.setAttribute("fair", "^(?=.*[A-Za-z]+)(?=.*[0-9]+).{6,}$");
-
-          if (attributeName === "good")
-            this.setAttribute("good", "^(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[0-9]+).{8,}$");
-
-          if (attributeName === "strong")
-            this.setAttribute("strong", "^(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[0-9]+)(?=.*[^A-Za-z0-9 ]+).{8,}$");
-        }
-
-        break;
+      return ["fair", "for", "good", "strong"];
     }
-  };
 
-  let PasswordStrength = document.registerElement("dragline-password-strength", { prototype: passwordStrengthPrototype });
+    /****************************************************************************
+    * Creates an instance of Accordion.
+    ****************************************************************************/
+    constructor()
+    {
+      // Establish prototype chain and this
+      super();
+
+      this.attachShadow({ mode: "open" });
+      this.shadowRoot.innerHTML = template;
+    }
+
+    /****************************************************************************
+    * Invoked when moved to a new document.
+    ****************************************************************************/
+    adoptedCallback()
+    {
+    }
+
+    /****************************************************************************
+    * Invoked when any attribute specified in observedAttributes() is added,
+    * removed, or changed.
+    *
+    * @param attributeName {string} The attribute name.
+    * @param oldValue {string} The old value.
+    * @param newValue {string} The new value.
+    ****************************************************************************/
+    attributeChangedCallback(attributeName, oldValue, newValue)
+    {
+      switch (attributeName)
+      {
+        case "for":
+          if (!this.hasAttribute("for"))
+            throw new Error("The for attribute is required.");
+
+          let targetInput = document.getElementById(this.getAttribute("for"));
+
+          if (targetInput.tagName !== "INPUT")
+            throw new Error("Only <input> elements are supported for checking password strength.");
+
+          wireEvents.call(this, oldValue);
+          break;
+        case "fair":
+        case "good":
+        case "strong":
+          if (newValue == null || newValue.trim() === "")
+          {
+            if (attributeName === "fair")
+              this.setAttribute("fair", "^(?=.*[A-Za-z]+)(?=.*[0-9]+).{6,}$");
+
+            if (attributeName === "good")
+              this.setAttribute("good", "^(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[0-9]+).{8,}$");
+
+            if (attributeName === "strong")
+              this.setAttribute("strong", "^(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[0-9]+)(?=.*[^A-Za-z0-9 ]+).{8,}$");
+          }
+
+          break;
+      }
+    }
+
+    /****************************************************************************
+    * Invoked when first connected to the DOM.
+    ****************************************************************************/
+    connectedCallback()
+    {
+      if (!this.hasAttribute("for"))
+        throw new Error("The for attribute is required.");
+
+      let targetInput = document.getElementById(this.getAttribute("for"));
+
+      if (targetInput.tagName !== "INPUT")
+        throw new Error("Only <input> elements are supported for checking password strength.");
+
+      if (!this.hasAttribute("fair"))
+        this.setAttribute("fair", "^(?=.*[A-Za-z]+)(?=.*[0-9]+).{6,}$");
+
+      if (!this.hasAttribute("good"))
+        this.setAttribute("good", "^(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[0-9]+).{8,}$");
+
+      if (!this.hasAttribute("strong"))
+        this.setAttribute("strong", "^(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[0-9]+)(?=.*[^A-Za-z0-9 ]+).{8,}$");
+
+      buildStrength.call(this);
+      wireEvents.call(this);
+    }
+
+    /****************************************************************************
+    * Invoked when disconnected from the DOM.
+    ****************************************************************************/
+    disconnectedCallback()
+    {
+    }
+  }
+
+  window.customElements.define("dragline-password-strength", PasswordStrength);
 
   /**************************************************************************
   * Builds the UI that tells the user their password's stud muffin
@@ -103,16 +130,15 @@
   **************************************************************************/
   function buildStrength()
   {
-    let meterDiv = document.createElement("div");
-    meterDiv.className += "Meter";
-    meterDiv.appendChild(document.createElement("span"));
-
     let strengthDiv = document.createElement("div");
     strengthDiv.className += "Strength";
     strengthDiv.innerHTML = "<small><strong>Strength:</strong> <span>Weak</span></small>";
-    strengthDiv.appendChild(meterDiv);
-
     this.shadowRoot.appendChild(strengthDiv);
+
+    let meterDiv = document.createElement("div");
+    meterDiv.className += "Meter";
+    meterDiv.appendChild(document.createElement("span"));
+    strengthDiv.appendChild(meterDiv);
   }
 
   /**************************************************************************

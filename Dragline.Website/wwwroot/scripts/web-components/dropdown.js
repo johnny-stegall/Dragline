@@ -10,37 +10,107 @@
 {
   "use strict";
 
-  // Create the character counter based on HTMLElement
-  let dropdownPrototype = Object.create(HTMLElement.prototype);
-
-  /****************************************************************************
-  * Invoked when attached to the DOM.
-  ****************************************************************************/
-  dropdownPrototype.attachedCallback = function()
+  class DropDown extends HTMLElement
   {
-    verifyElements.call(this);
-    wireEvents.call(this);
-  };
-  
-  let DropDown = document.registerElement("dragline-dropdown", { prototype: dropdownPrototype });
+    // Must define observedAttributes() for attributeChangedCallback to work
+    static get observedAttributes()
+    {
+      return [""];
+    }
 
-  /****************************************************************************
-  * Clears all menus.
-  *
-  * @this The <dragline-dropdown> element.
-  * @param event {event} The event.
-  ****************************************************************************/
-  function clearMenus(event)
-  {
-    if (event && event.which === 3)
-      return;
+    /****************************************************************************
+    * Creates an instance of Accordion.
+    ****************************************************************************/
+    constructor()
+    {
+      // Establish prototype chain and this
+      super();
+    }
 
-    this.removeAttribute("active");
-    let mobileBackdrop = document.getElementsByClassName("div.Dropdown-Backdrop")[0];
+    /****************************************************************************
+    * Invoked when moved to a new document.
+    ****************************************************************************/
+    adoptedCallback()
+    {
+    }
 
-    if (mobileBackdrop)
-      mobileBackdrop.remove();
+    /****************************************************************************
+    * Invoked when any attribute specified in observedAttributes() is added,
+    * removed, or changed.
+    *
+    * @param attributeName {string} The attribute name.
+    * @param oldValue {string} The old value.
+    * @param newValue {string} The new value.
+    ****************************************************************************/
+    attributeChangedCallback(attributeName, oldValue, newValue)
+    {
+    }
+
+    /****************************************************************************
+    * Clears all menus.
+    *
+    * @param event {event} The event.
+    ****************************************************************************/
+    clearMenus(event)
+    {
+      if (event && event.which === 3)
+        return;
+
+      this.removeAttribute("active");
+      let mobileBackdrop = document.getElementsByClassName("div.Dropdown-Backdrop")[0];
+
+      if (mobileBackdrop)
+        mobileBackdrop.remove();
+    }
+
+    /****************************************************************************
+    * Invoked when first connected to the DOM.
+    ****************************************************************************/
+    connectedCallback()
+    {
+      verifyElements.call(this);
+      wireEvents.call(this);
+    }
+
+    /****************************************************************************
+    * Invoked when disconnected from the DOM.
+    ****************************************************************************/
+    disconnectedCallback()
+    {
+    }
+
+    /**************************************************************************
+    * Toggles the menu.
+    *
+    * @param event {event} The event.
+    **************************************************************************/
+    toggleMenu(event)
+    {
+      if (this.querySelector("button").hasAttribute("disabled"))
+        return false;
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (!this.hasAttribute("active"))
+      {
+        // If mobile use a backdrop because click events don't delegate
+        if ("ontouchstart" in document.documentElement)
+        {
+          let mobileBackdrop = document.createElement("div");
+          mobileBackdrop.className += "DropDown-Backdrop";
+          mobileBackdrop.addEventListener("click", clearMenus.bind(this));
+        }
+
+        this.setAttribute("active", "");
+        this.querySelector("button").focus();
+      }
+      else
+        this.removeAttribute("active");
+    }
   }
+  
+  window.customElements.define("dragline-dropdown", DropDown);
 
   /**************************************************************************
   * Highlights menu items using the arrow keys.
@@ -86,37 +156,6 @@
   }
 
   /**************************************************************************
-  * Toggles the menu.
-  *
-  * @this The <dragline-dropdown> element.
-  * @param event {event} The event.
-  **************************************************************************/
-  function toggleMenu(event)
-  {
-    if (this.querySelector("button").hasAttribute("disabled"))
-      return false;
-
-    event.preventDefault();
-    event.stopPropagation();
-
-    if (!this.hasAttribute("active"))
-    {
-      // If mobile use a backdrop because click events don't delegate
-      if ("ontouchstart" in document.documentElement)
-      {
-        let mobileBackdrop = document.createElement("div");
-        mobileBackdrop.className += "DropDown-Backdrop";
-        mobileBackdrop.addEventListener("click", clearMenus.bind(this));
-      }
-
-      this.setAttribute("active", "");
-      this.querySelector("button").focus();
-    }
-    else
-      this.removeAttribute("active");
-  }
-
-  /**************************************************************************
   * Verifies the required elements exist.
   *
   * @this The <dragline-dropdown> element.
@@ -138,13 +177,13 @@
   function wireEvents()
   {
     let button = this.querySelector("button");
-    button.addEventListener("click", toggleMenu.bind(this));
+    button.addEventListener("click", this.toggleMenu.bind(this));
     button.addEventListener("keydown", highlightMenu.bind(this));
 
     let menu = this.querySelectorAll("ol, ul")[0];
     menu.addEventListener("keydown", highlightMenu.bind(this));
 
-    document.addEventListener("click", clearMenus.bind(this));
-    document.addEventListener("keydown", clearMenus.bind(this));
+    document.addEventListener("click", this.clearMenus.bind(this));
+    document.addEventListener("keydown", this.clearMenus.bind(this));
   }
 })(window, document);
