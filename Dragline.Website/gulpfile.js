@@ -56,8 +56,14 @@ gulp.task("Minify-JavaScript", function()
 {
   pump(
   [
-    gulp.src(["./wwwroot/scripts/web-components/**/*.js", "!./wwwroot/scripts/web-components/*.min.js"], { base: "." }),
-    concat("./wwwroot/scripts/web-components.min.js"),
+    gulp.src(
+    [
+      "./wwwroot/scripts/web-components/**/*.js",
+      "!./wwwroot/scripts/web-components/adaptable.js",
+      "!./wwwroot/scripts/web-components/adaptable/*.js",
+      "!./wwwroot/scripts/web-components/*.min.js"
+    ], { base: "." }),
+    concat("./wwwroot/scripts/dragline-components.min.js"),
     minifier(null, uglify).on("error", function(e)
     {
       console.log(e);
