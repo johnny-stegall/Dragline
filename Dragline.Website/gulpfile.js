@@ -62,7 +62,7 @@ gulp.task("Minify-JavaScript", function()
     {
       console.log(e);
     }),
-    gulp.dest("./wwwroot/scripts/")
+    gulp.dest(".")
   ]);
 });
 
