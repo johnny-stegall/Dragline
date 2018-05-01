@@ -42,13 +42,13 @@ gulp.task("Minify-CSS", function()
   [
     gulp.src("./wwwroot/css/dragline.css"),
     cssmin(),
-    gulp.dest(".")
+    gulp.dest("./wwwroot/css/")
   ]);
   pump(
     [
       gulp.src("./wwwroot/css/dragline-components.css"),
       cssmin(),
-      gulp.dest(".")
+      gulp.dest("./wwwroot/css/")
     ]);
 });
 
@@ -62,7 +62,7 @@ gulp.task("Minify-JavaScript", function()
     {
       console.log(e);
     }),
-    gulp.dest(".")
+    gulp.dest("./wwwroot/scripts/")
   ]);
 });
 
