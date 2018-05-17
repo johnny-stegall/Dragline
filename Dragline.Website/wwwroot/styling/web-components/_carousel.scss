@@ -10,12 +10,14 @@ dragline-carousel
   > carousel-item
   {
     display: inline-block;
+    height: 100%;
     margin: 0;
     padding: 0;
     position: absolute;
     transition: left 0.5s;
     top: 0;
     visibility: hidden;
+    width: 100%;
 
     &[active]
     {
@@ -28,6 +30,11 @@ dragline-carousel
     {
       visibility: visible;
     }
+  }
+
+  &[autosize] > carousel-item
+  {
+    overflow: visible;
   }
 
   &[direction=right],
@@ -114,6 +121,7 @@ dragline-carousel
     text-align: center;
     text-shadow: 0 1px 2px #000;
     top: 0;
+    z-index: 999;
 
     > i
     {

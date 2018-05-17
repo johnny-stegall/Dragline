@@ -5,17 +5,22 @@
   if (!window.AdapTable)
     throw new Error("AdapTable core hasn't loaded.");
 
-  /****************************************************************************
-  * Initialization.
-  *
-  * @param instance {object} An AdapTable instance.
-  ****************************************************************************/
-  AdapTable.Views = function(instance)
+  class Views
   {
-    this.Instance = instance;
-    this.Instance.Element
-      .on("repaint.widgets.adaptable", $.proxy(this.applyView, this))
-      .on("columns-moved.widgets.adaptable", $.proxy(buildColumnMenu, this));
+    /****************************************************************************
+    * Creates an instance of Views.
+    *
+    * @param instance {object} A reference to an instance of AdapTable.
+    ****************************************************************************/
+    constructor(instance)
+    {
+      this.Instance = instance;
+
+      // TODO: Add pub/sub event-handling
+      this.Instance.Element
+        .on("repaint.widgets.adaptable", $.proxy(this.applyView, this))
+        .on("columns-moved.widgets.adaptable", $.proxy(buildColumnMenu, this));
+    }
   }
 
   AdapTable.Views.prototype =

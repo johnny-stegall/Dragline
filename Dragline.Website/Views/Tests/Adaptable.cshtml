@@ -2,67 +2,20 @@
   ViewBag.Title = "AdapTable Unit Tests";
 }
 
-@section Styles
-{
-  <link type="text/css" rel="stylesheet" href="~/css/dragline/adaptable.css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/qunit/1.16.0/qunit.min.css" />
-}
-
 @section Scripts
 {
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/qunit/1.16.0/qunit.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/blanket.js/1.1.4/blanket.min.js"></script>
-  <script type="text/javascript" src="~/scripts/dragline/jQuery/adaptable.js" data-cover></script>
+  <script type="text/javascript" src="~/scripts/web-components/adaptable.js" data-cover></script>
 }
 
-<div id="qunit"></div>
+<!--
+  // TODO: Convert all qUnit tests into mocha/chutzpah tests
+-->
 
-<table id="tblAdapTable" class="Hot-Tracking">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Breed</th>
-      <th>Name</th>
-      <th>How Acquired</th>
-      <th>Acquisition Date</th>
-      <th>Acquisition Age</th>
-      <th>Acquisition Price</th>
-      <th>Loss Date</th>
-      <th>Loss Reason</th>
-      <th>
-        <i class="fa fa-cog" style="cursor: pointer;" />
-      </th>
-    </tr>
-  </thead>
-  <tbody data-bind="foreach: Pets">
-    <tr>
-      <td data-bind="text: Type"></td>
-      <td data-bind="text: Breed"></td>
-      <td data-bind="text: Name"></td>
-      <td data-bind="text: $data['How Acquired']"></td>
-      <td class="Text-Right" data-bind="text: $data['Acquisition Date'].toDateString()"></td>
-      <td class="Text-Right" data-bind="text: $data['Acquisition Age']"></td>
-      <td class="Text-Right" data-bind="text: $data['Acquisition Price']"></td>
-      <td class="Text-Right" data-bind="text: $data['Loss Date'].toDateString()"></td>
-      <td data-bind="text: $data['Loss Reason']"></td>
-      <td>
-        <i class="fa fa-cog" style="cursor: pointer;" />
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="tblAdapTable-NoThead"></table>
-
-<table id="tblAdapTable-NoTh">
-  <thead>
-    <tr>
-    </tr>
-  </thead>
-</table>
+<dragline-adaptable>
+</dragline-adaptable>
 
 <script type="text/javascript">
-  var Setup =
+  let Setup =
   {
     Pets:
     [
@@ -90,24 +43,21 @@
       { "Type": "Lizard", "Breed": "Australian Frilled Dragon", "Name": "Zeal", "Acquisition Date": new Date("10/5/2008"), "Acquisition Age": 1, "How Acquired": "Purchased", "Acquisition Price": 99.98, "Loss Date": new Date("4/23/2012"), "Loss Reason": "Black Widows" },
       { "Type": "Cat", "Breed": "Silver Bengal", "Name": "Phoebe", "Acquisition Date": new Date("3/3/2010"), "Acquisition Age": 0.5, "How Acquired": "Purchased", "Acquisition Price": 500, "Loss Date": new Date("4/30/2012"), "Loss Reason": "Gave away" },
       { "Type": "Snake", "Breed": "Ball Python", "Name": "Morningstar", "Acquisition Date": new Date("3/9/2010"), "Acquisition Age": 4, "How Acquired": "Purchased", "Acquisition Price": 129.99, "Loss Date": new Date("4/23/2012"), "Loss Reason": "Black Widows" },
-      { "Type": "Cat", "Breed": "[F1] Savannah", "Name": "Ragnarok", "Acquisition Date": new Date("9/13/2011"), "Acquisition Age": 1.5, "How Acquired": "Purchased", "Acquisition Price": 400, "Loss Date": new Date(""), "Loss Reason": "" }
+      { "Type": "Cat", "Breed": "[F1] Savannah", "Name": "Ragnarok", "Acquisition Date": new Date("9/13/2011"), "Acquisition Age": 1.5, "How Acquired": "Purchased", "Acquisition Price": 400, "Loss Date": new Date(""), "Loss Reason": "" },
+      { "Type": "Cat", "Breed": "[F4] Bengal", "Name": "Catniss", "Acquisition Date": new Date("2/20/2016"), "Acquisition Age": 0.25, "How Acquired": "Purchased", "Acquisition Price": 800, "Loss Date": new Date(""), "Loss Reason": "" }
     ],
-    ViewModel:
-    {
-      Pets: ko.observable([])
-    },
 
     calculateAggregates: function()
     {
-      var aggregates = {};
-      var groupedValues = {};
+      let aggregates = {};
+      let groupedValues = {};
 
-      for (var petIndex = 0; petIndex < this.Pets.length; petIndex++)
+      for (let petIndex = 0; petIndex < this.Pets.length; petIndex++)
       {
         if (!groupedValues[this.Pets[petIndex].Type])
           groupedValues[this.Pets[petIndex].Type] = {};
 
-        for (var property in this.Pets[petIndex])
+        for (let property in this.Pets[petIndex])
         {
           if (typeof (this.Pets[petIndex][property]) === "number")
           {
@@ -119,15 +69,15 @@
         }
       }
 
-      for (var type in groupedValues)
+      for (let type in groupedValues)
       {
         aggregates[type] = {};
 
-        for (var property in groupedValues[type])
+        for (let property in groupedValues[type])
         {
           aggregates[type][property] = 0;
 
-          for (var valueIndex = 0; valueIndex < groupedValues[type][property].length; valueIndex++)
+          for (let valueIndex = 0; valueIndex < groupedValues[type][property].length; valueIndex++)
             aggregates[type][property] += groupedValues[type][property][valueIndex];
 
           aggregates[type][property] /= groupedValues[type][property].length;
@@ -169,9 +119,9 @@
 
     getColumns: function()
     {
-      var columns = [];
+      let columns = [];
 
-      for (var property in this.Pets[0])
+      for (let property in this.Pets[0])
       {
         columns.push(
         {
@@ -211,13 +161,13 @@
 
     getFilterValues: function()
     {
-      var filterValues = {};
+      let filterValues = {};
 
-      for (var property in this.Pets)
+      for (let property in this.Pets)
       {
         filterValues[property] = [];
 
-        for (var petIndex = 0; petIndex < this.Pets.length; petIndex++)
+        for (let petIndex = 0; petIndex < this.Pets.length; petIndex++)
         {
           if (filterValues[property].indexOf(this.Pets[petIndex][property]) < 0)
             filterValues[property].push(this.Pets[petIndex][property]);
@@ -227,9 +177,9 @@
 
     getPagesOfData: function()
     {
-      var pages = [];
+      let pages = [];
 
-      for (var pageIndex = 0; pageIndex < this.Pets.length / 10; pageIndex++)
+      for (let pageIndex = 0; pageIndex < this.Pets.length / 10; pageIndex++)
       {
         pages.push(
         {
@@ -241,247 +191,226 @@
     }
   };
 
+  document.addEventListener("DOMContentLoaded", () =>
+  {
+    let adaptable = document.querySelector("dragline-adaptable");
+    adaptable.GetDataCallback = () =>
+    {
+      return Setup.Pets;
+    };
+  });
+
   // Setup some cached data
-  var AdapTableCache = { Instances: [] };
-  var AdapTableInstance = {};
-  AdapTableInstance.Layout = {};
-  AdapTableInstance.Layout.Columns = Setup.getColumns();
-  AdapTableInstance.Layout.Query = { "Filters": [], "Groups": ["Type"], "PageSize": 10, "PageIndex": 0, "Sort": "Acquisition Date", "SortDirection": null };
-  AdapTableInstance.Data = {};
-  AdapTableInstance.Data.Aggregates = Setup.calculateAggregates();
-  AdapTableInstance.Data.FilterValues = Setup.getFilterValues();
-  AdapTableInstance.Data.TotalItems = Setup.Pets.length;
-  AdapTableInstance.Data.Pages = Setup.getPagesOfData();
-  AdapTableCache.Instances.push(AdapTableInstance);
-  localStorage.setItem("AdapTable: " + document.location, JSON.stringify(AdapTableCache));
+  //let AdapTableCache = { Instances: [] };
+  //let AdapTableInstance = {};
+  //AdapTableInstance.Layout = {};
+  //AdapTableInstance.Layout.Columns = Setup.getColumns();
+  //AdapTableInstance.Layout.Query = { "Filters": [], "Groups": ["Type"], "PageSize": 10, "PageIndex": 0, "Sort": "Acquisition Date", "SortDirection": null };
+  //AdapTableInstance.Data = {};
+  //AdapTableInstance.Data.Aggregates = Setup.calculateAggregates();
+  //AdapTableInstance.Data.FilterValues = Setup.getFilterValues();
+  //AdapTableInstance.Data.TotalItems = Setup.Pets.length;
+  //AdapTableInstance.Data.Pages = Setup.getPagesOfData();
+  //AdapTableCache.Instances.push(AdapTableInstance);
+  //localStorage.setItem("AdapTable: " + document.location, JSON.stringify(AdapTableCache));
 
   /****************************************************************************
   * Cleanup after each test.
   ****************************************************************************/
-  QUnit.testDone(function()
-  {
-    var tblAdapTable = $("#tblAdapTable");
-    tblAdapTable.AdapTable("destroy");
-    tblAdapTable.children("tbody").empty();
-    ko.cleanNode(tblAdapTable[0]);
-    localStorage.setItem('AdapTable: ' + document.location, JSON.stringify(AdapTableCache));
-  });
+  //QUnit.testDone(function()
+  //{
+  //  let tblAdapTable = $("#tblAdapTable");
+  //  tblAdapTable.AdapTable("destroy");
+  //  tblAdapTable.children("tbody").empty();
+  //  ko.cleanNode(tblAdapTable[0]);
+  //  localStorage.setItem('AdapTable: ' + document.location, JSON.stringify(AdapTableCache));
+  //});
 
-  QUnit.test("AdapTable Constructor - Basic", function(assert)
-  {
-    // Arrange
-    var dependentScripts = assert.async();
-    var tblAdapTable = $("#tblAdapTable");
-    var ViewModel =
-    {
-      Employees: ko.observable(AdapTableInstance.Data.Pages[0])
-    };
+  //QUnit.test("AdapTable Constructor - Basic", function(assert)
+  //{
+  //  // Arrange
+  //  let dependentScripts = assert.async();
+  //  let tblAdapTable = $("#tblAdapTable");
+  //  let ViewModel =
+  //  {
+  //    Employees: ko.observable(AdapTableInstance.Data.Pages[0])
+  //  };
 
-    ko.applyBindings(ViewModel, tblAdapTable[0]);
+  //  ko.applyBindings(ViewModel, tblAdapTable[0]);
 
-    // Act
-    tblAdapTable.AdapTable(
-    {
-      CanChangeView: false,
-      CanFilter: false,
-      CanGroup: false,
-      CanMoveColumns: false,
-      CanSearch: false,
-      CanSort: false
-    });
+  //  // Act
+  //  tblAdapTable.AdapTable(
+  //  {
+  //    CanChangeView: false,
+  //    CanFilter: false,
+  //    CanGroup: false,
+  //    CanMoveColumns: false,
+  //    CanSearch: false,
+  //    CanSort: false
+  //  });
 
-    // Assert
-    assert.ok(AdapTable.ScriptLoader);
+  //  // Assert
+  //  assert.ok(AdapTable.ScriptLoader);
 
-    window.setTimeout(function()
-    {
-      assert.ok(AdapTable.addActionButton);
-      assert.ok(AdapTable.cacheLayout);
+  //  window.setTimeout(function()
+  //  {
+  //    assert.ok(AdapTable.addActionButton);
+  //    assert.ok(AdapTable.cacheLayout);
 
-      var adaptableContainer = tblAdapTable.parent();
-      assert.equal(adaptableContainer.prop("tagName").toUpperCase(), "DIV");
-      assert.ok(adaptableContainer.hasClass("AdapTable"));
+  //    let adaptableContainer = tblAdapTable.parent();
+  //    assert.equal(adaptableContainer.prop("tagName").toUpperCase(), "DIV");
+  //    assert.ok(adaptableContainer.hasClass("AdapTable"));
 
-      var headerSection = tblAdapTable.next();
-      assert.ok(headerSection.prop("tagName").toUpperCase(), "SECTION");
+  //    let headerSection = tblAdapTable.next();
+  //    assert.ok(headerSection.prop("tagName").toUpperCase(), "SECTION");
 
-      var footerSection = tblAdapTable.prev();
-      assert.ok(footerSection.prop("tagName").toUpperCase(), "SECTION");
+  //    let footerSection = tblAdapTable.prev();
+  //    assert.ok(footerSection.prop("tagName").toUpperCase(), "SECTION");
 
-      var divActions = footerSection.children("div.Actions");
-      assert.equal(divActions.length, 1);
-      assert.equal(divActions.children("i").length, 0);
+  //    let divActions = footerSection.children("div.Actions");
+  //    assert.equal(divActions.length, 1);
+  //    assert.equal(divActions.children("i").length, 0);
 
-      var adaptableMenu = adaptableContainer.children().last();
-      assert.equal(adaptableMenu.prop("tagName").toUpperCase(), "DIV");
-      assert.equal(adaptableMenu.attr("role"), "menu");
+  //    let adaptableMenu = adaptableContainer.children().last();
+  //    assert.equal(adaptableMenu.prop("tagName").toUpperCase(), "DIV");
+  //    assert.equal(adaptableMenu.attr("role"), "menu");
 
-      dependentScripts();
-    }, 1000);
-  });
+  //    dependentScripts();
+  //  }, 1000);
+  //});
 
-  QUnit.test("AdapTable Constructor - Full", function(assert)
-  {
-    // Arrange
-    var dependentScripts = assert.async();
-    var tblAdapTable = $("#tblAdapTable");
-    var ViewModel =
-    {
-      Employees: ko.observable(AdapTableInstance.Data.Pages[0])
-    };
+  //QUnit.test("AdapTable Constructor - Full", function(assert)
+  //{
+  //  // Arrange
+  //  let dependentScripts = assert.async();
+  //  let tblAdapTable = $("#tblAdapTable");
+  //  let ViewModel =
+  //  {
+  //    Employees: ko.observable(AdapTableInstance.Data.Pages[0])
+  //  };
 
-    ko.applyBindings(ViewModel, tblAdapTable[0]);
+  //  ko.applyBindings(ViewModel, tblAdapTable[0]);
 
-    // Act
-    tblAdapTable.AdapTable(
-    {
-      CanChangeView: true,
-      CanFilter: true,
-      CanGroup: true,
-      CanMoveColumns: true,
-      CanSearch: true,
-      CanSort: true,
-      ExcludeFooter: true,
-      ExportToExcelUrl: "http://localhost:40000/excel",
-      ExportToPdfUrl: "http://localhost:40000/pdf",
-      MovableColumns: ["FirstName", "LastName", "Email"],
-      Paging: "Pager",
-      ScriptExpiration: 48
-    });
+  //  // Act
+  //  tblAdapTable.AdapTable(
+  //  {
+  //    CanChangeView: true,
+  //    CanFilter: true,
+  //    CanGroup: true,
+  //    CanMoveColumns: true,
+  //    CanSearch: true,
+  //    CanSort: true,
+  //    ExcludeFooter: true,
+  //    ExportToExcelUrl: "http://localhost:40000/excel",
+  //    ExportToPdfUrl: "http://localhost:40000/pdf",
+  //    MovableColumns: ["FirstName", "LastName", "Email"],
+  //    Paging: "Pager",
+  //    ScriptExpiration: 48
+  //  });
 
-    // Assert
-    window.setTimeout(function()
-    {
-      var adaptable = tblAdapTable.data("AdapTable");
-      assert.equal(adaptable.Options.ExcludeFooter, true);
-      assert.equal(adaptable.Options.ScriptExpiration, 48);
+  //  // Assert
+  //  window.setTimeout(function()
+  //  {
+  //    let adaptable = tblAdapTable.data("AdapTable");
+  //    assert.equal(adaptable.Options.ExcludeFooter, true);
+  //    assert.equal(adaptable.Options.ScriptExpiration, 48);
 
-      var footerSection = tblAdapTable.prev();
-      assert.ok(footerSection.prop("tagName").toUpperCase(), "SECTION");
+  //    let footerSection = tblAdapTable.prev();
+  //    assert.ok(footerSection.prop("tagName").toUpperCase(), "SECTION");
 
-      var divActions = footerSection.children("div.Actions");
-      assert.equal(divActions.length, 1);
-      assert.equal(divActions.children("i").length, 3);
-      assert.ok(divActions.children("i:first").hasClass("fa-file-excel-o"));
-      assert.ok(divActions.children("i:nth-child(2)").hasClass("fa-file-pdf-o"));
+  //    let divActions = footerSection.children("div.Actions");
+  //    assert.equal(divActions.length, 1);
+  //    assert.equal(divActions.children("i").length, 3);
+  //    assert.ok(divActions.children("i:first").hasClass("fa-file-excel-o"));
+  //    assert.ok(divActions.children("i:nth-child(2)").hasClass("fa-file-pdf-o"));
 
-      var layout = tblAdapTable.data("Layout");
-      for (var columnIndex = 0; columnIndex < layout.Columns.length; columnIndex++)
-      {
-        if (adaptable.Options.MovableColumns.indexOf(layout.Columns[columnIndex].Name) > -1)
-          assert.ok(layout.Columns[columnIndex].IsHidable);
-        else
-          assert.ok(!layout.Columns[columnIndex].IsHideable);
-      }
+  //    let layout = tblAdapTable.data("Layout");
+  //    for (var columnIndex = 0; columnIndex < layout.Columns.length; columnIndex++)
+  //    {
+  //      if (adaptable.Options.MovableColumns.indexOf(layout.Columns[columnIndex].Name) > -1)
+  //        assert.ok(layout.Columns[columnIndex].IsHidable);
+  //      else
+  //        assert.ok(!layout.Columns[columnIndex].IsHideable);
+  //    }
 
-      assert.ok(AdapTable.Filtering);
-      assert.ok(AdapTable.Grouping);
-      assert.ok(AdapTable.Paging);
-      assert.ok(AdapTable.Positioning);
-      assert.ok(AdapTable.Sortable);
-      assert.ok(AdapTable.Sorting);
-      assert.ok(AdapTable.Views);
+  //    assert.ok(AdapTable.Filtering);
+  //    assert.ok(AdapTable.Grouping);
+  //    assert.ok(AdapTable.Paging);
+  //    assert.ok(AdapTable.Positioning);
+  //    assert.ok(AdapTable.Sortable);
+  //    assert.ok(AdapTable.Sorting);
+  //    assert.ok(AdapTable.Views);
 
-      dependentScripts();
-    }, 1000);
-  });
+  //    dependentScripts();
+  //  }, 1000);
+  //});
 
-  QUnit.test("AdapTable Constructor - No TH", function(assert)
-  {
-    // Arrange
-    var dependentScripts = assert.async();
-    var tblAdapTable = $("#tblAdapTable-NoTh");
+  //QUnit.test("AdapTable Destructor", function(assert)
+  //{
+  //  // Arrange
+  //  let dependentScripts = assert.async();
+  //  let tblAdapTable = $("#tblAdapTable");
+  //  let ViewModel =
+  //  {
+  //    Employees: ko.observable(AdapTableInstance.Data.Pages[0])
+  //  };
 
-    // Act & Assert
-    window.setTimeout(function()
-    {
-      assert.throws(tblAdapTable.AdapTable, "Table headers are required; no TH elements found.");
-      dependentScripts();
-    }, 1000);
-  });
+  //  ko.applyBindings(ViewModel, tblAdapTable[0]);
 
-  QUnit.test("AdapTable Constructor - No THEAD", function(assert)
-  {
-    // Arrange
-    var dependentScripts = assert.async();
-    var tblAdapTable = $("#tblAdapTable-NoThead");
+  //  // Act
+  //  tblAdapTable.AdapTable(
+  //  {
+  //    CanChangeView: false,
+  //    CanFilter: false,
+  //    CanGroup: false,
+  //    CanMoveColumns: false,
+  //    CanSearch: false,
+  //    CanSort: false
+  //  });
 
-    localStorage.clear();
+  //  // Assert
+  //  window.setTimeout(function()
+  //  {
+  //    tblAdapTable.AdapTable("destroy");
 
-    // Act & Assert
-    window.setTimeout(function()
-    {
-      assert.throws(tblAdapTable.AdapTable, "Table headers are required; no THEAD element found.");
-      dependentScripts();
-    }, 1000);
-  });
+  //    assert.equal(tblAdapTable.data("AdapTable"), null);
+  //    assert.equal(tblAdapTable.data("Layout"), null);
+  //    assert.equal(tblAdapTable.data("Data"), null);
+  //    assert.equal($._data(tblAdapTable[0], "events"), null);
+  //    assert.ok(tblAdapTable.next().prop("tagName").toUpperCase() !== "SECTION");
+  //    assert.ok(tblAdapTable.prev().prop("tagName").toUpperCase() !== "SECTION");
+  //    assert.ok(!tblAdapTable.parent().hasClass("AdapTable"));
 
-  QUnit.test("AdapTable Destructor", function(assert)
-  {
-    // Arrange
-    var dependentScripts = assert.async();
-    var tblAdapTable = $("#tblAdapTable");
-    var ViewModel =
-    {
-      Employees: ko.observable(AdapTableInstance.Data.Pages[0])
-    };
+  //    dependentScripts();
+  //  }, 1000);
+  //});
 
-    ko.applyBindings(ViewModel, tblAdapTable[0]);
+  //QUnit.test("AdapTable Export Buttons", function(assert)
+  //{
+  //  // Arrange
+  //  let dependentScripts = assert.async();
+  //  let tblAdapTable = $("#tblAdapTable");
 
-    // Act
-    tblAdapTable.AdapTable(
-    {
-      CanChangeView: false,
-      CanFilter: false,
-      CanGroup: false,
-      CanMoveColumns: false,
-      CanSearch: false,
-      CanSort: false
-    });
+  //  // Act
+  //  $("#tblAdapTable").AdapTable(
+  //  {
+  //    CanChangeView: false,
+  //    CanFilter: false,
+  //    CanGroup: false,
+  //    CanMoveColumns: false,
+  //    CanSearch: false,
+  //    CanSort: false,
+  //    ExportToExcelUrl: document.location,
+  //    ExportToPdfUrl: document.location
+  //  });
 
-    // Assert
-    window.setTimeout(function()
-    {
-      tblAdapTable.AdapTable("destroy");
+  //  // Assert
+  //  window.setTimeout(function()
+  //  {
+  //    assert.equal(tblAdapTable.prev().find("i.fa-file-excel-o").length, 1);
+  //    assert.equal(tblAdapTable.prev().find("i.fa-file-pdf-o").length, 1);
 
-      assert.equal(tblAdapTable.data("AdapTable"), null);
-      assert.equal(tblAdapTable.data("Layout"), null);
-      assert.equal(tblAdapTable.data("Data"), null);
-      assert.equal($._data(tblAdapTable[0], "events"), null);
-      assert.ok(tblAdapTable.next().prop("tagName").toUpperCase() !== "SECTION");
-      assert.ok(tblAdapTable.prev().prop("tagName").toUpperCase() !== "SECTION");
-      assert.ok(!tblAdapTable.parent().hasClass("AdapTable"));
-
-      dependentScripts();
-    }, 1000);
-  });
-
-  QUnit.test("AdapTable Export Buttons", function(assert)
-  {
-    // Arrange
-    var dependentScripts = assert.async();
-    var tblAdapTable = $("#tblAdapTable");
-
-    // Act
-    $("#tblAdapTable").AdapTable(
-    {
-      CanChangeView: false,
-      CanFilter: false,
-      CanGroup: false,
-      CanMoveColumns: false,
-      CanSearch: false,
-      CanSort: false,
-      ExportToExcelUrl: document.location,
-      ExportToPdfUrl: document.location
-    });
-
-    // Assert
-    window.setTimeout(function()
-    {
-      assert.equal(tblAdapTable.prev().find("i.fa-file-excel-o").length, 1);
-      assert.equal(tblAdapTable.prev().find("i.fa-file-pdf-o").length, 1);
-
-      dependentScripts();
-    }, 1500);
-  });
+  //    dependentScripts();
+  //  }, 1500);
+  //});
 </script>

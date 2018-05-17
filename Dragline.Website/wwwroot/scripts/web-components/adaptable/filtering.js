@@ -2,22 +2,20 @@
 {
   "use strict";
 
-  if (!window.AdapTable)
-    throw new Error("AdapTable core hasn't loaded.");
-
-  /****************************************************************************
-  * Initialization.
-  *
-  * @param instance {object} An AdapTable instance.
-  ****************************************************************************/
-  AdapTable.Filtering = function(instance)
+  export default class Filtering
   {
-    this.Instance = instance;
-    this.Instance.Element.on("repaint.widgets.adaptable columns-moved.widgets.adaptable", $.proxy(this.reflectFilters, this));
-  }
+    /****************************************************************************
+    * Creates an instance of Filtering.
+    *
+    * @param instance {object} A reference to an instance of AdapTable.
+    ****************************************************************************/
+    constructor(instance)
+    {
+      this.Instance = instance;
+      instance.addEventListener("layout changed", reflectFilters.bind(this));
+      instance.addEventListener("paint", reflectFilters.bind(this));
+    }
 
-  AdapTable.Filtering.prototype =
-  {
     /**************************************************************************
     * Adds a filter to the underlying query.
     *
@@ -28,7 +26,7 @@
     * @param getData {boolean} True to get data, otherwise just delete the
     * filter.
     **************************************************************************/
-    addFilter: function(columnName, operator, operand, getData)
+    addFilter(columnName, operator, operand, getData)
     {
       if (operator.toUpperCase() !== "LIKE" && (!columnName || columnName.trim().length < 1))
         throw new Error("Cannot create a filter: no column was specified.");
@@ -37,13 +35,13 @@
       else if (!operand || operand.trim().length < 1)
         throw new Error("Cannot create a filter: no operand was specified.");
 
-      var layout = this.Instance.Element.data("Layout");
+      let layout = this.Instance.Element.data("Layout");
 
       if (!layout.Query.Filters)
         layout.Query.Filters = [];
 
-      var existingFilter = Lazy(layout.Query.Filters).findWhere({ Column: columnName });
-      var column = Lazy(layout.Columns).findWhere({ Name: columnName });
+      let existingFilter = Lazy(layout.Query.Filters).findWhere({ Column: columnName });
+      let column = Lazy(layout.Columns).findWhere({ Name: columnName });
 
       if (existingFilter && column.DataType !== "Date")
       {
@@ -64,37 +62,7 @@
 
       if (getData)
         this.Instance.getData();
-    },
-
-    /**************************************************************************
-    * Updates the column filters to reflect how the data is filtered. Also
-    * adds an event-handler to update the filter buttons whenever a column is
-    * moved.
-    **************************************************************************/
-    reflectFilters: function()
-    {
-      var topSection = this.Instance.Container.children("section:first-child");
-      var divFilters = topSection.children("div.Filters");
-
-      if (!divFilters.length)
-      {
-        divFilters = $("<div />")
-          .addClass("Filters");
-
-        topSection.prepend(divFilters);
-      }
-      else
-        divFilters.empty();
-
-      buildFilteringInterface.call(this, divFilters);
-      buildMoreButton.call(this, divFilters);
-      buildSearchBox.call(this, divFilters);
-
-      var divAdditionalFilters = $("<div />")
-        .addClass("Additional-Filters");
-
-      divFilters.append(divAdditionalFilters);
-    },
+    }
 
     /**************************************************************************
     * Removes a filter from the underlying query.
@@ -104,9 +72,9 @@
     * @param getData {boolean} True to get data, otherwise just delete the
     * filter.
     **************************************************************************/
-    removeFilter: function(columnName, getData)
+    removeFilter(columnName, getData)
     {
-      var layout = this.Instance.Element.data("Layout");
+      let layout = this.Instance.Element.data("Layout");
 
       layout.Query.Filters = Lazy(layout.Query.Filters)
         .reject(function(filter, index)
@@ -131,35 +99,34 @@
   **************************************************************************/
   function buildDateFilters(formFilter, column, filters)
   {
-    var startDateInput = $("<input />")
-      .attr("type", "date")
-      .attr("id", "dteStart");
+    let startDateInput = document.createElement("input");
+    startDateInput.id = "dateStart";
+    startDateInput.type = "date";
 
-    var spanAnd = $("<span>and</span>")
-      .addClass("Hidden");
+    let spanAnd = document.createElement("span");
+    spanAnd.innerText = "and";
+    spanAnd.classList.add("Hidden");
 
-    var endDateInput = $("<input />")
-      .attr("type", "date")
-      .attr("id", "dteEnd")
-      .addClass("Hidden");
+    let endDateInput = document.createElement("input");
+    endDateInput.id = "dateEnd";
+    endDateInput.type = "date";
+    endDateInput.classList.add("Hidden");
 
     if (filters.length)
     {
-      startDateInput.val(filters[0].Operand);
+      startDateInput.value = filters[0].Operand;
 
       if (filters.length === 2)
       {
-        spanAnd.removeClass("Hidden");
-        endDateInput
-          .val(filters[1].Operand)
-          .removeClass("Hidden");
+        spanAnd.classList.remove("Hidden");
+        endDateInput.value = filters[1].Operand;
+        endDateInput.classList.remove("Hidden");
       }
     }
 
-    formFilter
-      .append(startDateInput)
-      .append(spanAnd)
-      .append(endDateInput);
+    formFilter.appendChild(startDateInput);
+    formFilter.appendChild(spanAnd);
+    formFilter.appendChild(endDateInput);
   }
 
   /**************************************************************************
@@ -171,27 +138,24 @@
   **************************************************************************/
   function buildFilterButton(container, column)
   {
-    var self = this;
+    let spanOperator = document.createElement("span");
+    spanOperator.innerText = ": ";
+    spanOperator.classList.add("Operator");
 
-    var spanOperator = $("<span />")
-      .text(": ")
-      .addClass("Operator");
+    let spanOperand = document.createElement("span");
+    spanOperand.innerText = "All";
+    spanOperand.classList.add("Operand");
 
-    var spanOperand = $("<span />")
-      .text("All")
-      .addClass("Operand");
+    let filterButton = document.createElement("button");
+    filterButton.type = "button";
+    filterButton.classList.add("Filter");
+    filterButton.innerText = column.Header;
+    // TODO: filterButton.data("Column", column);
+    filterButton.appendChild(spanOperator);
+    filterButton.appendChild(spanOperand);
 
-    var filterButton = $("<button />")
-      .attr("type", "button")
-      .addClass("Filter")
-      .data("Column", column)
-      .text(column.Header)
-      .append(spanOperator)
-      .append(spanOperand)
-      .on("click.widgets.adaptable", function(e)
-      {
-        showFilterOptions.call(self, e, column);
-      });
+    let self = this;
+    filterButton.addEventListener("click", () => showFilterOptions.call(self, e, column));
 
     container.append(filterButton);
   }
@@ -581,6 +545,36 @@
       else
         spanOperand.text(filter.Operand);
     }
+  }
+
+  /**************************************************************************
+  * Updates the column filters to reflect how the data is filtered. Also
+  * adds an event-handler to update the filter buttons whenever a column is
+  * moved.
+  **************************************************************************/
+  function reflectFilters()
+  {
+    var topSection = this.Instance.Container.children("section:first-child");
+    var divFilters = topSection.children("div.Filters");
+
+    if (!divFilters.length)
+    {
+      divFilters = $("<div />")
+        .addClass("Filters");
+
+      topSection.prepend(divFilters);
+    }
+    else
+      divFilters.empty();
+
+    buildFilteringInterface.call(this, divFilters);
+    buildMoreButton.call(this, divFilters);
+    buildSearchBox.call(this, divFilters);
+
+    var divAdditionalFilters = $("<div />")
+      .addClass("Additional-Filters");
+
+    divFilters.append(divAdditionalFilters);
   }
 
   /**************************************************************************

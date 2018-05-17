@@ -2,22 +2,19 @@
 {
   "use strict";
 
-  if (!window.AdapTable)
-    throw new Error("AdapTable core hasn't loaded.");
-
-  /****************************************************************************
-  * Initialization.
-  *
-  * @param instance {object} An AdapTable instance.
-  ****************************************************************************/
-  AdapTable.Grouping = function(instance)
+  export default class Grouping
   {
-    this.Instance = instance;
-    this.Instance.Element.on("repaint.widgets.adaptable", $.proxy(this.applyGrouping, this));
-  }
+    /****************************************************************************
+    * Creates an instance of Grouping.
+    *
+    * @param instance {object} A reference to an instance of AdapTable.
+    ****************************************************************************/
+    constructor(instance)
+    {
+      this.Instance = instance;
+      instance.addEventListener("paint", applyGrouping.bind(this));
+    }
 
-  AdapTable.Grouping.prototype =
-  {
     /**************************************************************************
     * Groups the data by the column.
     *
@@ -25,7 +22,7 @@
     * @param columnName {string} The column name.
     * @param index {int} The group index.
     **************************************************************************/
-    addGroup: function(columnName, index)
+    addGroup(columnName, index)
     {
       if (!columnName || columnName.trim().length < 1)
         throw new Error("Cannot create a group: no column was specified.");
@@ -48,30 +45,8 @@
       }
 
       this.Instance.Container.find("div.Grouping > div.Add-Group").sortable("disable");
-    },
+    }
 
-    /**************************************************************************
-    * Applies grouping to the rows.
-    **************************************************************************/
-    applyGrouping: function()
-    {
-      var layout = this.Instance.Element.data("Layout");
-      if (!layout || !layout.Query || !layout.Query.Groups || !layout.Query.Groups.length)
-        return;
-
-      addGroupDropTargets.call(this);
-      this.Instance.Container.find("div.Groups > ol > li").remove();
-
-      var self = this;
-      Lazy(layout.Query.Groups).each(function(group, index)
-      {
-        createGroup.call(self, group, index);
-      });
-
-      var data = this.Instance.Element.data("Data");
-      if (data.Pages[layout.Query.PageIndex].Items.length)
-        buildGroupRows.call(this);
-    },
 
     /**************************************************************************
     * Stops grouping the data by the specified column.
@@ -79,7 +54,7 @@
     * @this An instance of AdapTable.Grouping.
     * @param columnName {string} The column name.
     **************************************************************************/
-    removeGroup: function(columnName)
+    removeGroup(columnName)
     {
       var layout = this.Instance.Element.data("Layout");
       var column = Lazy(layout.Columns).findWhere({ Name: columnName });
@@ -95,7 +70,30 @@
       if (!layout.Query.Groups.length)
         this.Instance.Container.find("div.Grouping > div.Add-Group").sortable("enable");
     }
-  };
+  }
+
+  /**************************************************************************
+  * Applies grouping to the rows.
+  **************************************************************************/
+  function applyGrouping()
+  {
+    var layout = this.Instance.Element.data("Layout");
+    if (!layout || !layout.Query || !layout.Query.Groups || !layout.Query.Groups.length)
+      return;
+
+    addGroupDropTargets.call(this);
+    this.Instance.Container.find("div.Groups > ol > li").remove();
+
+    var self = this;
+    Lazy(layout.Query.Groups).each(function(group, index)
+    {
+      createGroup.call(self, group, index);
+    });
+
+    var data = this.Instance.Element.data("Data");
+    if (data.Pages[layout.Query.PageIndex].Items.length)
+      buildGroupRows.call(this);
+  }
 
   /**************************************************************************
   * Adds a drop target for grouping columns.

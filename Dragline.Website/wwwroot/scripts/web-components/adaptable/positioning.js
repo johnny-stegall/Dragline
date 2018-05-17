@@ -2,18 +2,18 @@
 {
   "use strict";
 
-  if (!window.AdapTable)
-    throw new Error("AdapTable core hasn't loaded.");
-
-  /****************************************************************************
-  * Initialization.
-  *
-  * @param instance {object} An AdapTable instance.
-  ****************************************************************************/
-  AdapTable.Positioning = function(instance)
+  class Positioning
   {
-    this.Instance = instance;
-    this.Instance.Element.on("repaint.widgets.adaptable", $.proxy(restoreColumnPosition, this));
+    /****************************************************************************
+    * Creates an instance of Positioning.
+    *
+    * @param instance {object} A reference to an instance of AdapTable.
+    ****************************************************************************/
+    constructor(instance)
+    {
+      this.Instance = instance;
+      instance.addEventListener("paint", restoreColumnPosition.bind(this));
+    }
   }
 
   AdapTable.Positioning.prototype =

@@ -19,7 +19,7 @@
     }
 
     /****************************************************************************
-    * Creates an instance of Accordion.
+    * Creates an instance of Carousel.
     ****************************************************************************/
     constructor()
     {
@@ -75,21 +75,16 @@
       if (!this.hasAttribute("interval"))
         this.setAttribute("interval", "5000");
 
-      if (!this.querySelector("carousel-item[active]"))
-        this.querySelector("carousel-item").setAttribute("active", "");
+      window.setTimeout(() =>
+      {
+        if (!this.querySelector("carousel-item[active]"))
+          this.querySelector("carousel-item").setAttribute("active", "");
 
-      if (this.hasAttribute("autosize"))
-        window.setTimeout(() => setDimensions.call(this), 500);
+        if (this.hasAttribute("autosize"))
+          setDimensions.call(this);
+      }, 500);
 
-      if (this.hasAttribute("show-position"))
-        togglePositionIndicators.call(this);
-
-      if (this.hasAttribute("show-navigation"))
-        toggleNavigation.call(this);
-
-      if (parseInt(this.getAttribute("interval")) > 0)
-        this.resumeRotation();
-
+      this.resumeRotation();
       wireEvents.call(this);
     }
 
@@ -134,15 +129,18 @@
     {
       let interval = parseInt(this.getAttribute("interval"));
 
-      if (this.Timer)
-        this.pauseRotation();
-
-      let self = this;
-      this.Timer = setInterval(function()
+      if (interval > 0)
       {
-        self.Direction = self.getAttribute("direction") || "right";
-        self.rotate(self.Direction);
-      }, interval);
+        if (this.Timer)
+          this.pauseRotation();
+
+        let self = this;
+        this.Timer = setInterval(function()
+        {
+          self.Direction = self.getAttribute("direction") || "right";
+          self.rotate(self.Direction);
+        }, interval);
+      }
 
       return;
     }
@@ -357,31 +355,6 @@
   }
 
   /**************************************************************************
-  * Builds indicators that match the number of images in a carousel.
-  *
-  * @this The <dragline-carousel> element.
-  **************************************************************************/
-  function togglePositionIndicators()
-  {
-    if (this.hasAttribute("show-position"))
-    {
-      let indicatorList = document.createElement("ol");
-
-      for (let itemIndex = 0; itemIndex < this.children.length; itemIndex++)
-        indicatorList.appendChild(document.createElement("li"));
-
-      indicatorList.firstElementChild.setAttribute("active", "");
-      indicatorList.addEventListener("click", moveToIndicatorItem.bind(this));
-      this.appendChild(indicatorList);
-    }
-    else
-    {
-      let indicatorList = this.querySelector("ol");
-      this.removeChild(indicatorList);
-    }
-  }
-
-  /**************************************************************************
   * Builds next/previous indicators at the right/left edges of a carousel.
   *
   * @this The <dragline-carousel> element.
@@ -417,6 +390,31 @@
       let rightLink = this.querySelector("a.Right");
       this.removeChild(leftLink);
       this.removeChild(rightLink);
+    }
+  }
+
+  /**************************************************************************
+  * Builds indicators that match the number of images in a carousel.
+  *
+  * @this The <dragline-carousel> element.
+  **************************************************************************/
+  function togglePositionIndicators()
+  {
+    if (this.hasAttribute("show-position"))
+    {
+      let indicatorList = document.createElement("ol");
+
+      for (let itemIndex = 0; itemIndex < this.children.length; itemIndex++)
+        indicatorList.appendChild(document.createElement("li"));
+
+      indicatorList.firstElementChild.setAttribute("active", "");
+      indicatorList.addEventListener("click", moveToIndicatorItem.bind(this));
+      this.appendChild(indicatorList);
+    }
+    else
+    {
+      let indicatorList = this.querySelector("ol");
+      this.removeChild(indicatorList);
     }
   }
 

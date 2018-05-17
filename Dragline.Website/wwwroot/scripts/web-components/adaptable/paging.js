@@ -2,35 +2,31 @@
 {
   "use strict";
 
-  if (!window.AdapTable)
-    throw new Error("AdapTable core hasn't loaded.");
-
-  /****************************************************************************
-  * Initialization.
-  *
-  * @param instance {object} An AdapTable instance.
-  ****************************************************************************/
-  AdapTable.Paging = function(instance)
+  export default class Paging
   {
-    this.Instance = instance;
-    this.Instance.Element.on("repaint.widgets.adaptable", $.proxy(this.configurePaging, this));
-  }
+    /****************************************************************************
+    * Creates an instance of Paging.
+    *
+    * @param instance {object} A reference to an instance of AdapTable.
+    ****************************************************************************/
+    constructor(instance)
+    {
+      this.Instance = instance;
+      instance.addEventListener("paint", configurePaging.bind(this));
+    }
 
-  AdapTable.Paging.prototype =
-  {
     /**************************************************************************
     * Configures paging.
     **************************************************************************/
-    configurePaging: function()
+    configurePaging()
     {
-      var layout = this.Instance.Element.data("Layout");
-      if (!layout || !layout.Query)
+      if (this.Instance.Layout.Query)
         return;
 
       if (this.Instance.Options.Paging.toLowerCase() === "pager")
         buildPager.call(this);
     }
-  };
+  }
 
   /****************************************************************************
   * Builds information about the page: the starting item number on the page,
@@ -39,41 +35,38 @@
   * @this An instance of AdapTable.Paging.
   * @param divPageInfo {jQuery} The DIV element that will contain the page
   * info.
-  * @param layout {object} The layout.
   * @param totalItems {int} The total number of items in the result set.
   * @param totalPages {int} The total number of pages.
   ****************************************************************************/
-  function buildPageInfo(divPageInfo, layout, totalItems, totalPages)
+  function buildPageInfo(divPageInfo, totalItems, totalPages)
   {
-    divPageInfo.empty();
+    divPageInfo.innerHTML = "";
 
-    var pageStartIndex = (layout.Query.PageIndex * layout.Query.PageSize) + 1;
+    let pageStartIndex = (this.Instance.Layout.Query.PageIndex * this.Instance.Layout.Query.PageSize) + 1;
+    let pageEndIndex;
 
-    var pageEndIndex;
-
-    if (layout.Query.PageIndex === totalPages)
+    if (this.Instance.Layout.Query.PageIndex === totalPages)
       pageEndIndex = totalItems;
     else
-      pageEndIndex = ((layout.Query.PageIndex + 1) * layout.Query.PageSize);
+      pageEndIndex = ((this.Instance.Layout.Query.PageIndex + 1) * this.Instance.Layout.Query.PageSize);
 
-    var spanPageStart = $("<span />")
-      .addClass("Adaptable-Page-Start")
-      .text(pageStartIndex);
+    let spanPageStart = document.createElement("span");
+    spanPageStart.classList.add("Adaptable-Page-Start");
+    spanPageStart.innerText = pageStartIndex;
 
-    var spanPageEnd = $("<span />")
-      .addClass("Adaptable-Page-End")
-      .text(pageEndIndex);
+    let spanPageEnd = document.createElement("span");
+    spanPageEnd.classList.add("Adaptable-Page-End");
+    spanPageEnd.innerText = pageEndIndex;
 
-    var spanTotalItems = $("<span />")
-      .addClass("Adaptable-Total-Items")
-      .text(totalItems);
+    let spanTotalItems = document.createElement("span");
+    spanTotalItems.classList.add("Adaptable-Total-Items");
+    spanTotalItems.innerText = totalItems;
 
-    divPageInfo
-      .append(spanPageStart)
-      .append("-")
-      .append(spanPageEnd)
-      .append(" of ")
-      .append(spanTotalItems);
+    divPageInfo.appendChild(spanPageStart);
+    divPageInfo.appendChild("-");
+    divPageInfo.appendChild(spanPageEnd);
+    divPageInfo.appendChild(" of ");
+    divPageInfo.appendChild(spanTotalItems);
   }
 
   /****************************************************************************
@@ -88,33 +81,57 @@
   ****************************************************************************/
   function buildPageNumbers(olPages, currentPage, totalPages)
   {
-    olPages.empty();
+    olPages.innerHTML = "";
+    let startPage = (currentPage < 3) ? 1 : currentPage;
+    let endPage = (totalPages > currentPage + 3) ? currentPage + 3 : totalPages;
 
-    var startPage = (currentPage < 3) ? 1 : currentPage;
-    var endPage = (totalPages > currentPage + 3) ? currentPage + 3 : totalPages;
-
-    for (var pageIndex = startPage; pageIndex <= endPage; pageIndex++)
+    for (let pageIndex = startPage; pageIndex <= endPage; pageIndex++)
     {
+      let pageItem = document.createElement("li");
+
       if (pageIndex == (currentPage + 1))
-        olPages.append("<li><strong>" + pageIndex + "</strong></li>");
+      {
+        let pageNumber = document.createElement("strong");
+        pageNumber.innerText = pageIndex;
+        pageItem.appendChild(pageNumber);
+      }
       else
-        olPages.append("<li><a href=\"javascript:void(0);\">" + pageIndex + "</a></li>");
+      {
+        let pageLink = document.createElement("a");
+        pageLink.href = "javascript:void(0);";
+        pageLink.innerText = pageIndex;
+        pageLink.addEventListener("click", changePage.bind(this));
+        pageItem.appendChild(pageLink);
+      }
     }
 
     if (startPage > 1)
     {
-      olPages
-        .prepend("<li>...</li>")
-        .prepend("<li><a href=\"javascript:void(0);\">1</a></li>");
+      let ellipsesItem = document.createElement("li");
+      ellipsesItem.innerText = "...";
+      olPages.insertBefore(ellipsesItem);
+
+      let noOpItem = document.createElement("li");
+      let noOpLink = document.createElement("a");
+      noOpLink.href = "javascript:void(0);";
+      noOpLink.addEventListener("click", changePage.bind(this));
+      noOpItem.appendChild(noOpLink);
+      olPages.insertBefore(noOpItem);
     }
     else if (endPage < totalPages)
     {
-      olPages
-        .append("<li>...</li>")
-        .append("<li><a href=\"javascript:void(0);\">" + totalPages + "</a></li>");
-    }
+      let ellipsesItem = document.createElement("li");
+      ellipsesItem.innerText = "...";
+      olPages.insertBefore(ellipsesItem);
 
-    olPages.find("a").on("click", $.proxy(changePage, this));
+      let noOpItem = document.createElement("li");
+      let noOpLink = document.createElement("a");
+      noOpLink.href = "javascript:void(0);";
+      noOpLink.innerText = totalPages;
+      noOpLink.addEventListener("click", changePage.bind(this));
+      noOpItem.appendChild(noOpLink);
+      olPages.insertBefore(noOpItem);
+    }
   }
 
   /****************************************************************************
@@ -125,21 +142,26 @@
   ****************************************************************************/
   function buildPager()
   {
-    var pagerSection = this.Instance.Container.children("section:last-of-type");
+    let pagerSection = this.Instance.querySelector("section:last-of-type");
+    let pagerDiv = pagerSection.querySelector("div");
+    let pagerList = pagerSection.querySelector("ol");
+    let buffer = document.createDocumentFragment();
 
-    if (!pagerSection.children("ol").length)
+    if (!pagerList)
     {
-      pagerSection
-        .append("<div />")
-        .append("<ol />");
+      pagerDiv = document.createElement("div");
+      buffer.appendChild(pagerDiv);
+
+      pagerList = document.createElement("ol");
+      buffer.appendChild(pagerList);
     }
 
-    var layout = this.Instance.Element.data("Layout");
-    var totalItems = getTotalItems.call(this);
-    var totalPages = Math.ceil(totalItems / layout.Query.PageSize);
+    let totalItems = getTotalItems.call(this);
+    let totalPages = Math.ceil(totalItems / this.Instance.Layout.Query.PageSize);
 
-    buildPageInfo.call(this, pagerSection.children("div"), layout, totalItems, totalPages);
-    buildPageNumbers.call(this, pagerSection.children("ol"), layout.Query.PageIndex, totalPages);
+    buildPageInfo.call(this, pagerDiv, layout, totalItems, totalPages);
+    buildPageNumbers.call(this, pagerList, layout.Query.PageIndex, totalPages);
+    pagerSection.appendChild(buffer);
   }
 
   /****************************************************************************
@@ -152,10 +174,9 @@
   {
     e.preventDefault();
 
-    var layout = this.Instance.Element.data("Layout");
-    layout.Query.PageIndex = parseInt($(e.target).text()) - 1;
+    this.Instance.Layout.Query.PageIndex = parseInt($(e.target).text()) - 1;
     this.Instance.getData(true);
-    this.Instance.cacheLayout(layout);
+    this.Instance.cacheLayout(this.Instance.Layout);
   }
 
   /****************************************************************************
@@ -166,8 +187,7 @@
   ****************************************************************************/
   function getTotalItems()
   {
-    var data = this.Instance.Element.data("Data");
-    return (data != null) ? data.TotalItems : 0;
+    return (this.Instance.Data != null) ? this.Instance.Data.TotalItems : 0;
   }
 })();
 

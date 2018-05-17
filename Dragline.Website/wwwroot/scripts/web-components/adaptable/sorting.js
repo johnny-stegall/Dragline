@@ -2,21 +2,19 @@
 {
   "use strict";
 
-  if (!window.AdapTable)
-    throw new Error("AdapTable core hasn't loaded.");
-
-  /****************************************************************************
-  * Initialization.
-  *
-  * @param instance {object} An AdapTable instance.
-  ****************************************************************************/
-  AdapTable.Sorting = function(instance)
+  class Sorting
   {
-    this.Instance = instance;
-
-    this.Instance.Element
-      .on("repaint.widgets.adaptable", $.proxy(this.reflectSorting, this))
-      .on("click.widgets.adaptable", "th > a", $.proxy(this.sortData, this));
+    /****************************************************************************
+    * Creates an instance of Sorting.
+    *
+    * @param instance {object} A reference to an instance of AdapTable.
+    ****************************************************************************/
+    constructor(instance)
+    {
+      this.Instance = instance;
+      instance.addEventListener("paint", reflectSorting.bind(this));
+      instance.querySelectorAll("th > a").addEventListener("paint", sortData.bind(this));
+    }
   }
 
   AdapTable.Sorting.prototype =

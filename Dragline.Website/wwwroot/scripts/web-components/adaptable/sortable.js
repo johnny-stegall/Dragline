@@ -2,20 +2,18 @@
 {
   "use strict";
 
-  if (!window.AdapTable)
-    throw new Error("AdapTable core hasn't loaded.");
-  else if (!jQuery.ui.sortable)
-    throw new Error("jQuery UI isn't detected; grouping and column positioning require jQuery UI.");
-
-  /****************************************************************************
-  * Initialization.
-  *
-  * @param instance {object} An AdapTable instance.
-  ****************************************************************************/
-  AdapTable.Sortable = function(instance)
+  class Sortable
   {
-    this.Instance = instance;
-    this.Instance.Element.on("mousedown.widgets.adaptable", "th.AdapTable-Movable", $.proxy(this.buildSortable, this));
+    /****************************************************************************
+    * Creates an instance of Sortable.
+    *
+    * @param instance {object} A reference to an instance of AdapTable.
+    ****************************************************************************/
+    constructor(instance)
+    {
+      this.Instance = instance;
+      instance.addEventListener("paint", buildSortable.bind(this));
+    }
   }
 
   AdapTable.Sortable.prototype =
