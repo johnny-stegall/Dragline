@@ -12,7 +12,49 @@
     constructor(instance)
     {
       this.Instance = instance;
+
+      instance.addEventListener("page changed", loadData.bind(this));
       instance.addEventListener("paint", configurePaging.bind(this));
+    }
+
+    /****************************************************************************
+    * Adds structure and eventing to the AdapTable instance to allow for
+    * infinite scrolling through data.
+    ****************************************************************************/
+    buildInfiniteScrolling()
+    {
+      // ENHANCEMENT: Query - Add infinte scrolling
+      //       1 - Scrolling should be based on the scrolling of the container
+      //       2 - A table row should be inserted above and below the current page of rows, with its height set to mimic the height of PageSize * TR.Height
+      //       3 - Scroll to the current page
+    }
+
+    /****************************************************************************
+    * Adds structure and eventing to the AdapTable instance to allow for
+    * paging through data.
+    ****************************************************************************/
+    buildPager()
+    {
+      let pagerSection = this.Instance.querySelector("section:last-of-type");
+      let pagerDiv = pagerSection.querySelector("div");
+      let pagerList = pagerSection.querySelector("ol");
+      let buffer = document.createDocumentFragment();
+
+      if (!pagerList)
+      {
+        pagerDiv = document.createElement("div");
+        buffer.appendChild(pagerDiv);
+
+        pagerList = document.createElement("ol");
+        buffer.appendChild(pagerList);
+      }
+
+      let totalItems = (this.Instance.Data != null) ? this.Instance.Data.TotalItems : 0;
+      let totalPages = Math.ceil(totalItems / this.Instance.Layout.Query.PageSize);
+
+      buildPagerInfo.call(this, pagerDiv, layout, totalItems, totalPages);
+      buildPagerNumbers.call(this, pagerList, layout.Query.PageIndex, totalPages);
+      pagerSection.appendChild(buffer);
     }
 
     /**************************************************************************
@@ -20,11 +62,16 @@
     **************************************************************************/
     configurePaging()
     {
-      if (this.Instance.Layout.Query)
-        return;
+      if (!this.Instance.Layout.Query)
+        this.Instance.Layout.Query = {};
 
-      if (this.Instance.Options.Paging.toLowerCase() === "pager")
-        buildPager.call(this);
+      this.Instance.Layout.Query.PageSize = 10;
+      this.Instance.Layout.Query.PageIndex = 0;
+
+      if (this.Instance.getAttribute("paging") === "pager")
+        buildPager();
+      else if (this.Instance.getAttribute("paging") === "scroll")
+        buildInfiniteScrolling();
     }
   }
 
@@ -38,7 +85,7 @@
   * @param totalItems {int} The total number of items in the result set.
   * @param totalPages {int} The total number of pages.
   ****************************************************************************/
-  function buildPageInfo(divPageInfo, totalItems, totalPages)
+  function buildPagerInfo(divPageInfo, totalItems, totalPages)
   {
     divPageInfo.innerHTML = "";
 
@@ -79,7 +126,7 @@
   * @param currentPage {int} The zero-based page index of the current page.
   * @param totalPages {int} The total number of pages.
   ****************************************************************************/
-  function buildPageNumbers(olPages, currentPage, totalPages)
+  function buildPagerNumbers(olPages, currentPage, totalPages)
   {
     olPages.innerHTML = "";
     let startPage = (currentPage < 3) ? 1 : currentPage;
@@ -135,59 +182,35 @@
   }
 
   /****************************************************************************
-  * Builds information about items per page and the total number of items and
-  * the page links.
+  * Checks sessionStorage for data, and if found and not expired, loads the
+  * cached data. If no data is found or it's expired, GetDataCallback is
+  * invoked.
   *
-  * @this An instance of AdapTable.Paging.
+  * @this An instance of AdapTable.
   ****************************************************************************/
-  function buildPager()
+  function loadData()
   {
-    let pagerSection = this.Instance.querySelector("section:last-of-type");
-    let pagerDiv = pagerSection.querySelector("div");
-    let pagerList = pagerSection.querySelector("ol");
-    let buffer = document.createDocumentFragment();
-
-    if (!pagerList)
+    if (this.Data.Items.length === 0 || this.Data.Expiration < (+new Date()))
     {
-      pagerDiv = document.createElement("div");
-      buffer.appendChild(pagerDiv);
-
-      pagerList = document.createElement("ol");
-      buffer.appendChild(pagerList);
+      this.Data.Items = this.GetDataCallback(this.Page);
+      this.Data.Expiration = (+new Date()) + (this.Expiration * 60 * 60 * 1000);
+      cacheState.call(this);
     }
 
-    let totalItems = getTotalItems.call(this);
-    let totalPages = Math.ceil(totalItems / this.Instance.Layout.Query.PageSize);
+    identifyColumns.call(this);
+    //let bindableData =
+    //{
+    //  Aggregates: this.Data.Aggregates,
+    //  FilterValues: this.Data.FilterValues,
+    //  Items: this.Data.Pages[this.Page - 1],
+    //  TotalItems: this.Data.TotalItems
+    //};
 
-    buildPageInfo.call(this, pagerDiv, layout, totalItems, totalPages);
-    buildPageNumbers.call(this, pagerList, layout.Query.PageIndex, totalPages);
-    pagerSection.appendChild(buffer);
-  }
-
-  /****************************************************************************
-  * Moves to the next page.
-  *
-  * @this An instance of AdapTable.Paging.
-  * @param e {event} The event.
-  ****************************************************************************/
-  function changePage(e)
-  {
-    e.preventDefault();
-
-    this.Instance.Layout.Query.PageIndex = parseInt($(e.target).text()) - 1;
-    this.Instance.getData(true);
-    this.Instance.cacheLayout(this.Instance.Layout);
-  }
-
-  /****************************************************************************
-  * Gets the total number of items in the query result set.
-  *
-  * @this An instance of AdapTable.Paging.
-  * @returns The number of total items in the query result set.
-  ****************************************************************************/
-  function getTotalItems()
-  {
-    return (this.Instance.Data != null) ? this.Instance.Data.TotalItems : 0;
+    let startIndex = this.Layout.Query.PageIndex * this.Layout.Query.PageSize;
+    let endIndex = startIndex + this.Layout.Query.PageSize;
+    for (let rowIndex = startIndex; rowIndex < endIndex; rowIndex++)
+    {
+      // TODO: Bind the table to this.Data.Pages[this.Page - 1]
+    }
   }
 })();
-

@@ -69,6 +69,11 @@ $card-text-color: $color-text;
       width: 100%; // Don't let cards exceed the column width
     }
   }
+
+  dragline-card
+  {
+    margin: $card-margin;
+  }
 }
 
 dragline-card
@@ -78,7 +83,6 @@ dragline-card
   border-radius: $control-border-radius;
   color: $color-text;
   display: inline-block;
-  margin: $card-margin;
   overflow-y: auto;
   padding: 1rem;
   position: relative;
